@@ -23,6 +23,7 @@ export default class API {
     }
     
     post(path, options) {
+        console.log(options['body']);
         const response = this.makeAPIRequest(path, options);
         return response;
         
