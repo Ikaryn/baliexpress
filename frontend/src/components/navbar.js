@@ -7,7 +7,6 @@ const NavBar = () => {
     return (
         <header>
             <AppBar className="navbar" >
-                <image src />
             </AppBar>
         </header>
     )
