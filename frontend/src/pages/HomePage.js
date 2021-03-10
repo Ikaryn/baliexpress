@@ -1,29 +1,29 @@
 import React from 'react';
 import NavBar from '../components/navbar';
 import API from '../util/API.js';
-
+import {
+    useHistory,
+  } from 'react-router-dom';
 
 const api = new API();
 
 const HomePage = () => {
-    const [header, setHeader] = React.useState('HomePage');
+    const history = useHistory();
+
+    const navLogin = () => {
+        history.push('/login');
+    }
     
-    React.useEffect(() => {
-        (async () => {
-            const test = await api.get('', 
-            {
-                method: 'GET', 
-                headers: {'Content-Type' : 'application/json'}
-            });
-            console.log(test);
-            setHeader(test.test);
-        })();
-    }, []);
+    const navRegister = () => {
+        history.push('/register');
+    }
+
 
     return (
         <div>
-            <NavBar />
-            <h1>hello</h1>;
+            {/* <NavBar /> */}
+            <button onClick={() => {navLogin();}}>Login Page</button>
+            <button onClick={() => {navRegister();}}>Register Page</button>
         </div>
         )
 };
