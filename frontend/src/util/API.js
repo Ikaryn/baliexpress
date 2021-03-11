@@ -17,9 +17,15 @@ export default class API {
     }    
     
     get(path, options) {
+        options['method'] = 'GET';
         const response = this.makeAPIRequest(path, options);
-        console.log("get");
-        console.log(response);
         return response;
+    }
+    
+    post(path, options) {
+        console.log(options['body']);
+        const response = this.makeAPIRequest(path, options);
+        return response;
+        
     }
 }
