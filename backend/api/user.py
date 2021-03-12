@@ -53,11 +53,12 @@ class Login(Resource):
             else:
                 return {'error':'Invalid Password'}
         else:
-            return {'error':'Invalid Login Details'}
+            abort(403, "Invalid Login ")
 
         
         # return {'asdf': 'asdf'}
 
+# api.add_resource(Login, '/login')
 # @user.route('/register')
 class Register(Resource):
     def post(self):
@@ -76,6 +77,7 @@ class Register(Resource):
         return {'token': t}
         
 
+# api.add_resource(Register, '/register')
 
 
 

@@ -50,7 +50,7 @@ const NavBar = () => {
                             </Paper>
                         </Grid>
                         <Grid item xs={1}>
-                            <AccountCircleIcon class="icon-button" fontSize="default"/>
+                            <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="default"/>
                         </Grid>
                         <Grid item xs={1}>
                             <ShoppingCartIcon class="icon-button" fontSize="default" />
