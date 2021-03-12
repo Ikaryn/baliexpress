@@ -5,8 +5,16 @@ import { AppBar, Button, Grid, InputBase, Paper, Typography } from '@material-ui
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { useHistory } from 'react-router';
 
 const NavBar = () => {
+    
+    const history = useHistory();
+    
+    // const handleProfileClick = () => {
+    //     history.push('profile')
+    // }
+
 
     return (
         <header>
