@@ -22,8 +22,14 @@ export default class API {
         return response;
     }
     
-    post(path, options) {
-        console.log(options['body']);
+    post(path, body) {
+        // console.log(options);
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        }
+        
         const response = this.makeAPIRequest(path, options);
         return response;
         

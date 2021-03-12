@@ -14,16 +14,15 @@ const Login = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     // const [inputError, setInputError] = React.useState({'username': [false, ''], 'password': [false, '']});
-    const [emailError, setEmailError] = React.useState('')
-    const [pwdError, setPwdError] = React.useState('')
+    const [emailError, setEmailError] = React.useState('');
+    const [pwdError, setPwdError] = React.useState('');
+    const [loginError, setLoginError] = React.useState('');
 
     const history = useHistory();
 
     const handleEmailChange = (value) => {
         setEmail(value);
         setEmailError('');
-        console.log("YEP")
-        console.log("Email value: ", value)
     }
 
 
@@ -35,49 +34,26 @@ const Login = () => {
             if(email !== '') console.log("email is considered not empty");
             if(checkValidEmail(email)) console.log("email is considered valid");
             setEmailError('Please enter a valid email address');
-            // const ie = setErrorMsg('username', 'Email Is empty');
-            // console.log(ie);
-            // setInputError(ie);
-            // console.log(inputError);
+
             
         }
-
-        
-
         if (password === '') {
             setPwdError('Please enter a password');
-            // const ie = setErrorMsg('password', 'Password Is empty');
-            // console.log(ie);
-            // setInputError(ie);
         }
         
-        
-        // if(username && password) {
-        //     api.post('login', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             username: username,
-        //             password: password,
-        //         }),
-        //     })
-        //     .then((res) =>{ 
-        //         localStorage.setItem('token', res.token);
-        //         // history.push('/');
-        //     })
-        // } else {
-        //     if(!username) {
-        //         console.log('hello');
-        //         // let inputErrorDup = inputError;
-        //         // inputErrorDup.username[0] = true;
-        //         // inputErrorDup.username[1] = 'Email is empty';
-        //         const ie = setErrorMsg('username', 'Email Is empty');
-        //         console.log(ie);
-        //         setInputError(ie);
-        //     }
-        // }
+        const response = await api.post('login', {email : email, password: password});
+        console.log(response);
+        if(response.token){
+            localStorage.setItem('token', response.token);
+            history.push('')
+        } else {
+            setLoginError(response.error);
+        }
+
+    }
+    
+    const handleRegisterClick = () => {
+        history.push('register');
     }
     
     // const setErrorMsg = (field, message) => {
@@ -111,13 +87,14 @@ const Login = () => {
                 <Grid item>
                     <FormControl error={pwdError === '' ? false : true}>
                         <InputLabel>Password</InputLabel>
-                        <OutlinedInput id="user-login-password" onChange={event => setPassword(event.target.value)} value={password}/>
+                        <OutlinedInput type="password" id="user-login-password" onChange={event => setPassword(event.target.value)} value={password}/>
                         <FormHelperText>{pwdError}</FormHelperText>
                     </FormControl>            
                 </Grid>
                 <Button fullWidth variant="contained" type="submit" onClick={(event) => {fetchLogin(event)}}>Submit</Button>
             </form>
-            <p>Don't have an account? Create one here!</p>
+            <Button onClick={() => handleRegisterClick()}>Don't have an account? Create one here!</Button>
+            <Typography variant="body1" color="secondary">{loginError}</Typography>
             </Grid>
         </main>
         
