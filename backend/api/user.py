@@ -2,7 +2,7 @@ from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
 # from app import api
-import secrets
+import secrets, random
 
 from flask_cors import CORS
 from flask_restful import Api
@@ -27,9 +27,40 @@ from flask_restful import Api
 # })
 
 #dummy accounts
-accounts = {'asdf':'fdsa',
-            'hey':'man',
-            'fuck':'this'}
+accounts = [   {'userId': 1529870708,
+                'name': 'John Smith',
+                'email': 'johnS@gmail.com',
+                'password': 'asdfasdf',
+                'phone':'12345678',
+                'accountType':'customer',
+                'streetAddress': '35E Crapperdown Road',
+                'city': 'Austin',
+                'country': 'USA',
+                'postcode': '67553'},
+
+                {'userId': 3533306566,
+                'name': 'Kevin Eleven',
+                'email': 'K11@gmail.com',
+                'password': 'fdsafdsa',
+                'phone':'87654321',
+                'accountType':'customer',
+                'streetAddress': '24 Bellavista Road',
+                'city': 'Sydney',
+                'country': 'Australia',
+                'postcode': '2327'},
+
+                {'userId': 2624841935,
+                'name': 'Jen',
+                'email': 'jen@gmail.com',
+                'password': 'aaabbbccc',
+                'phone':'10101010',
+                'accountType':'admin',
+                'streetAddress': '1 Tong Street',
+                'city': 'Kyoto',
+                'country': 'Japan',
+                'postcode': '3456'}]
+
+
 # @app.route('/login',strict_slashes=False)
 class Login(Resource):
     # @user.response(200, 'success', login_details)
@@ -42,18 +73,18 @@ class Login(Resource):
         email = data.get('email')
         password = data.get('password')
 
-        print(email, password)
         # unpack json object
 
         # replace this with database query for validation
-        if email in accounts:
-            if password == accounts[email]:
-                t = secrets.token_hex()
-                return {'token': t}
-            else:
-                return {'error':'Invalid Password'}
-        else:
-            return {'error':'Invalid Login Details'}
+        for user in accounts:
+            if email == user['email']:
+                if password == user['password']:
+                    t = secrets.token_hex()
+                    return {'token': t, 'userId': user['userId']}
+                else:
+                    return {'error':'Invalid Password'}
+
+        return {'error':'Invalid Login Details'}
 
         
         # return {'asdf': 'asdf'}
@@ -63,18 +94,34 @@ class Register(Resource):
     def post(self):
         print('Register attempt Recieved')
         data = request.json
-        
-        email = data.get('email')
+
         name = data.get('name')
+        email = data.get('email')
         password = data.get('password')
         phone_number = data.get('phone')
         
         if email in accounts:
             return {'error':'Email already registered'}
-            
+        else:
+            newId = random.getrandbits(32)
+            newUser = { 'userId': newId,
+                        'name': name,
+                        'email': email,
+                        'password': password,
+                        'phone': phone_number,
+                        'accountType':'customer',
+                        'streetAddress': '',
+                        'city': '',
+                        'country': '',
+                        'postcode': ''}
+            accounts.append(newUser)
+        print("Account registered", newUser)
+
         t = secrets.token_hex()
         return {'token': t}
-        
+
+
+
 
 
 
