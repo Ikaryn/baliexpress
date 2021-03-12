@@ -7,19 +7,19 @@ import {
 import routes from './routing/routes';
 import NavBar from './components/navbar';
 import NavBarSpacer from './components/NavBarSpacer';
-
+import StoreProvider from './util/store';
 
 function App() {
 
   return (
-    <div>
-    <NavBar />
-    <NavBarSpacer />
-    <BrowserRouter key="routes">
-      <Switch>{routes}</Switch>
-    </BrowserRouter>
-    </div>
-  );
+    <StoreProvider>
+      <NavBar />
+      <NavBarSpacer />
+      <BrowserRouter key="routes">
+        <Switch>{routes}</Switch>
+      </BrowserRouter>
+    </StoreProvider>
+);
 }
 
 export default App;
