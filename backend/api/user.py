@@ -121,7 +121,32 @@ class Register(Resource):
         t = secrets.token_hex()
         return {'token': t}
 
+class Profile(Resource):
+    def get(self):
+        print('Get profile attempt received')
+        data = request.json
 
+        userId = data.get('userId')
+        user = getUser(userId)
+
+        if user is None:
+            return {'error': 'User not found'}
+        else:
+            return {'accountInfo': user}
+    
+    return {'error': 'User not found'}
+
+    def put(self):
+        print('Put profile attempt received')
+        data = request.json
+
+        userId = data.get('userId')
+        user = getUser(userId)
+
+        for field in user['userInfo']:
+            user['userInfo'][field] = data.get(field)
+
+        return {'accountInfo': user}
 
 
 # api.add_resource(Register, '/register')
