@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
 import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel, Input } from '@material-ui/core';
+import { StoreContext } from '../util/store';
 // import checkValidEmail from 'RegisterPage';
 
 const api = new API();
@@ -16,6 +17,9 @@ const Login = () => {
     const [emailError, setEmailError] = React.useState('');
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
+    
+    const context = React.useContext(StoreContext);
+    const { userId: [, setUserId] } = context;
 
     const history = useHistory();
 
@@ -43,6 +47,7 @@ const Login = () => {
         console.log(response);
         if(response.token){
             localStorage.setItem('token', response.token);
+            setUserId(response.userId);
             history.push('')
         } else {
             setLoginError(response.error);
