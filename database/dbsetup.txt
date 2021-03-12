@@ -1,0 +1,31 @@
+
+1.  Install postgresql
+
+    NOTE: ignore the version number in the tutorial, install version 13.2 (the latest version)
+    Also note: I haven't tested installation on windows, please let me know if there are any issues
+    https://www.postgresqltutorial.com/postgresql-getting-started/
+
+2.  Creating "baliexpress" database
+    Open pgAdmin4
+    Set up admin password if prompted
+    Enter admin password if prompted
+    Open Servers dropdown on left of window
+    Right click "databases"
+    Create > Database...
+    Database: baliexpress
+    owner: postgres
+    click save
+
+3.  Updating your database (repeat this step as needed to keep your copy of the db up to date)
+    In pgAdmin4, right click on "baliexpress" in the menu on the left
+    click "delete/drop" and confirm that you want to delete the databases
+    repeat step 2 to make a fresh database
+    right click your new baliexpress database
+    Click "restore..."
+    Format: directory
+    Filename: find database/baliexpress in your github repo
+    click "restore"
+
+All instructions here are done using the GUI, since that tends to be more
+beginner friendly. There are ways to do all of these steps through the command
+line, but if you want to do that you'll have to work those out on your own 
