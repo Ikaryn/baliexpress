@@ -7,9 +7,10 @@ const PublicRoute = ({ component: Component, restricted, ...rest }) => (
         {...rest}
         render={(props) => (
             // had to swap ternary operator.
-            isLogin() && restricted
-            ? <Component {...props} />
-            : <Redirect to="/" />
+            // isLogin() && restricted
+            // ? <Component {...props} />
+            // : <Redirect to="/" />
+            <Component {...props} />
         )}
     />
 
