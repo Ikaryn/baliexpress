@@ -134,7 +134,7 @@ class Profile(Resource):
         else:
             return {'accountInfo': user}
     
-    return {'error': 'User not found'}
+        return {'error': 'User not found'}
 
     def put(self):
         print('Put profile attempt received')
