@@ -56,16 +56,10 @@ const Register = () => {
         }
         
         api.post('register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
                 name: name,
                 email: email,
                 password: password,
-                phone: phone,
-            }),
+                phone: phone,      
         })
         .then((res) =>{
             console.log(res);
