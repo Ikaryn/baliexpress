@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
-import {FormControl, InputLabel, Input, FormHelperText, Grid, OutlinedInput, Typography} from '@material-ui/core'; 
+import {FormControl, InputLabel, Input, FormHelperText, Grid, OutlinedInput, Typography, Button} from '@material-ui/core'; 
 
 const api = new API();
 
@@ -26,7 +26,11 @@ const Register = () => {
     function checkValidPhone (input) {
         return /^[1-9]\d*$/.test(input);
     }
-
+    
+    const handleLoginClick = () => {
+        history.push('login');
+    }
+    
     async function fetchRegister(e) {
         e.preventDefault();
         console.log(name, email, password, phone);
@@ -122,7 +126,8 @@ const Register = () => {
                     </FormControl>     
                 </Grid>
 
-                <button type="submit" onClick={(event) => {fetchRegister(event)}}>Register</button>
+                <Button type="submit" onClick={(event) => {fetchRegister(event)}}>Register</Button>
+                <Button onClick={() => handleLoginClick()}>I already have an account!</Button>
                 </form>
             </Grid>
         </div>

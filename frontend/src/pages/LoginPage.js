@@ -13,7 +13,6 @@ const Login = () => {
     
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    // const [inputError, setInputError] = React.useState({'username': [false, ''], 'password': [false, '']});
     const [emailError, setEmailError] = React.useState('');
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
@@ -25,7 +24,7 @@ const Login = () => {
         setEmailError('');
     }
 
-
+    //handle login
     async function fetchLogin(e) {
         e.preventDefault();
         console.log(email, password);
@@ -40,7 +39,6 @@ const Login = () => {
         if (password === '') {
             setPwdError('Please enter a password');
         }
-        
         const response = await api.post('login', {email : email, password: password});
         console.log(response);
         if(response.token){
@@ -55,13 +53,6 @@ const Login = () => {
     const handleRegisterClick = () => {
         history.push('register');
     }
-    
-    // const setErrorMsg = (field, message) => {
-    //     let inputErrorDup = inputError;
-    //     inputErrorDup[field][0] = true;
-    //     inputErrorDup[field][1] = message;
-    //     setInputError(inputErrorDup);
-    // }
     
 
     return (

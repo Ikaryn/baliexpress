@@ -5,3 +5,11 @@
     width: 100%;
     height: 5%;
 }
+
+.icon-button {
+    cursor: pointer;
+}
+
+.nav-bar-spacer {
+    padding-top: 5%;
+}
