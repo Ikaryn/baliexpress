@@ -34,8 +34,9 @@ const ProfilePage = () => {
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
-            const userDetails = await api.get(`user/${userId}`,{userId: userId});
-            setAccInfo(userDetails.accountInfo);
+            const userDetails = await api.get(`profile/${userId}`);
+            // setAccInfo(userDetails.accountInfo);
+            console.log(userDetails);
             
         })();
     },[]);

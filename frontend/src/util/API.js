@@ -16,8 +16,11 @@ export default class API {
         return getJSON(`${this.url}/${path}`, options);
     }    
     
-    get(path, options) {
-        options['method'] = 'GET';
+    get(path) {
+        const options = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        }
         const response = this.makeAPIRequest(path, options);
         return response;
     }
