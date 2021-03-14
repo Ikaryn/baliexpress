@@ -25,6 +25,10 @@
     Format: directory
     Filename: find database/baliexpress in your github repo
     click "restore"
+    
+4.(if you want to use sql shell)
+    when prompted with 'Database [postgres]:' type in 'baliexpress'
+    (i think thats literally it)
 
 All instructions here are done using the GUI, since that tends to be more
 beginner friendly. There are ways to do all of these steps through the command

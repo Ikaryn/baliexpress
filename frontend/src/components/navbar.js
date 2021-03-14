@@ -19,6 +19,7 @@ const NavBar = () => {
     // handle click of the profile icon
     // if user isnt logged in redirect to login page, otherwise send them to profile page
     const handleProfileClick = () => {
+        console.log(userId);
         if(userId === 0){
             history.push('login');
         } else {
@@ -50,10 +51,10 @@ const NavBar = () => {
                             </Paper>
                         </Grid>
                         <Grid item xs={1}>
-                            <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="default"/>
+                            <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="large"/>
                         </Grid>
                         <Grid item xs={1}>
-                            <ShoppingCartIcon class="icon-button" fontSize="default" />
+                            <ShoppingCartIcon class="icon-button" fontSize="large" />
                             <Typography>(0)</Typography>
                         </Grid>
                 </Grid>

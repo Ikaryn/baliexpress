@@ -40,3 +40,8 @@
     transform: rotate(360deg);
   }
 }
+
+.profile-page-container {
+  display: flex;
+  flex-direction: row;
+}
