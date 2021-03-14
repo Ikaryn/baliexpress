@@ -61,6 +61,7 @@ class Login(Resource):
                     return {'token': t, 'userId': user['userId']}
                 else:
                     return {'error':'Invalid Password'}
+        
 
         return {'error':'Invalid Login Details'}
 

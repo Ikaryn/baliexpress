@@ -1,9 +1,11 @@
-# Products have the following attributes an ID, a Name, a type, a price, and a brand
-# They have more data based upon type
-# CPU's have a No. of cores, no. of threads, a base clock, a max clock, a socket, 
-#   and a boolean for if cooler is included
-# Motherboards have a Socket, memory supported, No. of memory slots, Wi-Fi
-# Storage has Capacity, kind(SSD or HDD), and Form Factor
+from flask_restplus import Namespace, Resource, fields
+from flask import Flask, request, Response
+from flask_restful import Resource
+# from app import api
+import secrets, random
+
+from flask_cors import CORS
+from flask_restful import Api
 
 AMD_Ryzen_5_5600X = {
     "name":"AMD Ryzen 5 5600X",
@@ -159,7 +161,21 @@ Samsung870Evo = {
 cpus = [AMD_Ryzen_5_2600, AMD_Ryzen_5_3600, AMD_Ryzen_5_5600X, Intel_Core_i3_10100, Intel_Core_i5_10400, Intel_Core_i5_9400F]
 motherboards = [ASRockB550, ASRockB460, MSIB450M, Gigabyte_B450M_D53H]
 storage = [TeamMS30, CrucialBX500, WD10EZEX, Samsung870Evo]
-
+products = {
+    "cpus":cpus,
+    "motherboards":motherboards,
+    "storage":storage
+}
 # print(cpus)
 # print(motherboards)
 # print(storage)
+
+class ProductList(Resource):
+    def get(self):
+        print("Get ProductList attempt received")
+        data = request.json
+
+        category = data.get('category')
+        
+
+        return ('products':products[category])
