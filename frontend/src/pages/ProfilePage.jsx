@@ -30,11 +30,10 @@ const ProfilePage = () => {
         localStorage.removeItem('token');
         history.push('');
     }
-    
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
-            const userDetails = await api.get(`profile/${userId}`);
+            const userDetails = await api.get(`profile/${userId}?userId=${userId}`);
             // setAccInfo(userDetails.accountInfo);
             console.log(userDetails);
             

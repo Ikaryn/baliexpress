@@ -10,7 +10,7 @@ const routes = [
     <PublicRoute key="route-homepage" component={HomePage} restricted path="/" exact/>,
     <PublicRoute key="route-LoginPage" component={Login} restricted path="/login" exact/>,
     <PublicRoute key="route-LoginPage" component={Register} restricted path="/Register" exact/>,
-    <PrivateRoute key="route-profile{age" component={ProfilePage} path="/profile/:uid" exact/>
+    <PrivateRoute key="route-profilePage" component={ProfilePage} path="/profile/:id" exact/>
 ];
 
 export default routes;
