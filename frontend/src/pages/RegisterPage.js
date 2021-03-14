@@ -8,6 +8,7 @@ const api = new API();
 function checkValidEmail (input) {
     return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
 }
+
 const Register = () => {
     
     const history = useHistory();
@@ -22,6 +23,8 @@ const Register = () => {
     const [pwdError, setPwdError] = React.useState('')
     const [phoneError, setPhoneError] = React.useState('')
 
+    const [RegisterMessage, setRegisterMessage] = React.useState('');
+
 
     function checkValidPhone (input) {
         return /^[1-9]\d*$/.test(input);
@@ -34,26 +37,36 @@ const Register = () => {
     async function fetchRegister(e) {
         e.preventDefault();
         console.log(name, email, password, phone);
+        setNameError('');
+        setEmailError('');
+        setPwdError('');
+        setPhoneError('');
+
+        setRegisterMessage('');
+
+        let error = false;
 
         if (name === '') {
             setNameError('Please enter your name');
-            return;   
+            error = true;
         }
 
         if (email === '' || !checkValidEmail(email)) {
             setEmailError('Please enter a valid email address');
-            return;
+            error = true;
         }
 
         if (password === '') {
             setPwdError('Please enter a password');
-            return;
+            error = true;
         }
 
         if (phone === '' || !checkValidPhone(phone)) {
             setPhoneError('Please enter a valid phone number');
-            return;
+            error = true;
         }
+
+        if (error) return;
         
         api.post('register', {
                 name: name,
@@ -64,7 +77,13 @@ const Register = () => {
         .then((res) =>{
             console.log(res);
             // history.push('/')
+            if (res.token) {
+                setRegisterMessage('Account successfully made!')
+            } else {
+                setRegisterMessage(res.error);
+            }
         });
+
     }
 
     return (
@@ -123,6 +142,7 @@ const Register = () => {
                 <Button type="submit" onClick={(event) => {fetchRegister(event)}}>Register</Button>
                 <Button onClick={() => handleLoginClick()}>I already have an account!</Button>
                 </form>
+                <Typography variant="body1" color="secondary">{RegisterMessage}</Typography>
             </Grid>
         </div>
     )

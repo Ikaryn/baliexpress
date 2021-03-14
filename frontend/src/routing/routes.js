@@ -5,12 +5,15 @@ import HomePage from '../pages/HomePage';
 import Login from '../pages/LoginPage';
 import Register from '../pages/RegisterPage';
 import ProfilePage from '../pages/ProfilePage';
+import ProductListPage from '../pages/ProductListPage';
 
 const routes = [
     <PublicRoute key="route-homepage" component={HomePage} restricted path="/" exact/>,
     <PublicRoute key="route-LoginPage" component={Login} restricted path="/login" exact/>,
     <PublicRoute key="route-LoginPage" component={Register} restricted path="/Register" exact/>,
-    <PrivateRoute key="route-profile{age" component={ProfilePage} path="/profile/:uid" exact/>
+    <PrivateRoute key="route-profilepage" component={ProfilePage} path="/profile/:uid" exact/>,
+    <PrivateRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>
+    // <PublicRoute key="route-productList" component?
 ];
 
 export default routes;

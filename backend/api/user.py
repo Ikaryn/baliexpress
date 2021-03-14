@@ -5,39 +5,52 @@ import secrets, random
 from flask_cors import CORS
 from flask_restful import Api
 #dummy accounts
-accounts = [   {'userId': 1529870708,
-                'name': 'John Smith',
-                'email': 'johnS@gmail.com',
-                'password': 'asdfasdf',
-                'phone':'12345678',
-                'admin':False,
-                'streetAddress': '35E Crapperdown Road',
-                'city': 'Austin',
-                'country': 'USA',
-                'postcode': '67553'},
+accounts = [    {'userId': 1529870708,
+                 'userInfo': {  'name': 'John Smith',
+                                'email': 'johnS@gmail.com',
+                                'password': 'asdfasdf',
+                                'phone':'12345678',
+                                'admin':False,
+                                'streetAddress': '35E Crapperdown Road',
+                                'city': 'Austin',
+                                'country': 'USA',
+                                'postcode': '67553'},
+                 'builds': [],
+                 'orders': []},
 
                 {'userId': 3533306566,
-                'name': 'Kevin Eleven',
-                'email': 'K11@gmail.com',
-                'password': 'fdsafdsa',
-                'phone':'87654321',
-                'admin':False,
-                'streetAddress': '24 Bellavista Road',
-                'city': 'Sydney',
-                'country': 'Australia',
-                'postcode': '2327'},
-
+                 'userInfo': {'name': 'Kevin Eleven',
+                              'email': 'K11@gmail.com',
+                              'password': 'fdsafdsa',
+                              'phone':'87654321',
+                              'admin':False,
+                              'streetAddress': '24 Bellavista Road',
+                              'city': 'Sydney',
+                              'country': 'Australia',
+                              'postcode': '2327'},
+                 'builds': [],
+                 'orders': []},
+                
                 {'userId': 2624841935,
-                'name': 'Jen',
-                'email': 'jen@gmail.com',
-                'password': 'aaabbbccc',
-                'phone':'10101010',
-                'admin':False,
-                'streetAddress': '1 Tong Street',
-                'city': 'Kyoto',
-                'country': 'Japan',
-                'postcode': '3456'}]
+                 'userInfo': {'name': 'Jen',
+                              'email': 'jen@gmail.com',
+                              'password': 'aaabbbccc',
+                              'phone':'10101010',
+                              'admin':False,
+                              'streetAddress': '1 Tong Street',
+                              'city': 'Kyoto',
+                              'country': 'Japan',
+                              'postcode': '3456'},
+                 'builds': [],
+                 'orders': []},]
 
+# Function to get the account of user through userId
+def getUser (userId):
+    for account in accounts:
+        if (str(userId) == str(account['userId'])):
+            return account
+    
+    return None
 
 # @app.route('/login',strict_slashes=False)
 class Login(Resource):
@@ -55,8 +68,9 @@ class Login(Resource):
 
         # replace this with database query for validation
         for user in accounts:
-            if email == user['email']:
-                if password == user['password']:
+            if email == user['userInfo']['email']:
+                if password == user['userInfo']['password']:
+                    print('Login successful')
                     t = secrets.token_hex()
                     return {'token': t, 'userId': user['userId']}
                 else:
@@ -79,31 +93,47 @@ class Register(Resource):
         email = data.get('email')
         password = data.get('password')
         phone_number = data.get('phone')
-        
-        if email in accounts:
-            return {'error':'Email already registered'}
-        else:
-            newId = random.getrandbits(32)
-            newUser = { 'userId': newId,
-                        'name': name,
-                        'email': email,
-                        'password': password,
-                        'phone': phone_number,
-                        'accountType':'customer',
-                        'streetAddress': '',
-                        'city': '',
-                        'country': '',
-                        'postcode': ''}
-            accounts.append(newUser)
+
+        for account in accounts:
+            if email == account['userInfo']['email']:
+                return {'error':'Email already registered'}
+
+        # generating a new unique id
+        uniqueId = False
+        i = 0
+        newId = random.getrandbits(32)
+        while (not uniqueId):
+            if (newId == accounts[i]['userId']):
+                newId = random.getrandbits(32)
+                i = 0
+            else:
+                if (i == len(accounts) - 1):
+                    uniqueId = True
+                else:
+                    i += 1
+
+        newUser = {'userId': newId,
+                   'userInfo': { 'name': name,
+                                'email': email,
+                                'password': password,
+                                'phone': phone_number,
+                                'admin':False,
+                                'streetAddress': '',
+                                'city': '',
+                                'country': '',
+                                'postcode': ''},
+                   'builds': [],
+                   'orders': []}
+        accounts.append(newUser)
         print("Account registered", newUser)
 
         t = secrets.token_hex()
         return {'token': t}
 
 class Profile(Resource):
-    def get(self):
+    def get(self, id):
         print('Get profile attempt received')
-        data = request.json
+        data = request.args
 
         userId = data.get('userId')
         user = getUser(userId)
@@ -115,16 +145,17 @@ class Profile(Resource):
     
         return {'error': 'User not found'}
 
-    def put(self):
+    def put(self, id):
         print('Put profile attempt received')
         data = request.json
 
-        userId = data.get('userId')
+        userId = id
         user = getUser(userId)
 
         for field in user['userInfo']:
             user['userInfo'][field] = data.get(field)
 
+        print (user)
         return {'accountInfo': user}
 
 
