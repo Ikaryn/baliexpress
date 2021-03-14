@@ -1,38 +1,16 @@
 from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
-# from app import api
 import secrets, random
-
 from flask_cors import CORS
 from flask_restful import Api
-# import api.user
-# import api.products
-
-# app = Flask(__name__)
-# api = Api(app)
-# CORS(app)
-
-# user = api.namespace('user', description='User related operations')
-
-# login_details = user.model('login_details', {
-#                         'email': fields.String(required=True, example="test@email.com"), 
-#                         'password': fields.String(required=True, example="qwerty") })
-
-# register_details = user.model('register_details', {
-#                         'email': fields.String,
-#                         'password': fields.String,
-#                         'name': fields.String,
-#                         'phone_number': fields.String        
-# })
-
 #dummy accounts
 accounts = [   {'userId': 1529870708,
                 'name': 'John Smith',
                 'email': 'johnS@gmail.com',
                 'password': 'asdfasdf',
                 'phone':'12345678',
-                'accountType':'customer',
+                'admin':False,
                 'streetAddress': '35E Crapperdown Road',
                 'city': 'Austin',
                 'country': 'USA',
@@ -43,7 +21,7 @@ accounts = [   {'userId': 1529870708,
                 'email': 'K11@gmail.com',
                 'password': 'fdsafdsa',
                 'phone':'87654321',
-                'accountType':'customer',
+                'admin':False,
                 'streetAddress': '24 Bellavista Road',
                 'city': 'Sydney',
                 'country': 'Australia',
@@ -54,7 +32,7 @@ accounts = [   {'userId': 1529870708,
                 'email': 'jen@gmail.com',
                 'password': 'aaabbbccc',
                 'phone':'10101010',
-                'accountType':'admin',
+                'admin':False,
                 'streetAddress': '1 Tong Street',
                 'city': 'Kyoto',
                 'country': 'Japan',

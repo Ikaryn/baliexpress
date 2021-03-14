@@ -19,7 +19,7 @@ const Login = () => {
     const [loginError, setLoginError] = React.useState('');
     
     const context = React.useContext(StoreContext);
-    const { userId: [, setUserId] } = context;
+    const { userId: [userId, setUserId] } = context;
 
     const history = useHistory();
 
@@ -47,7 +47,7 @@ const Login = () => {
         console.log(response);
         if(response.token){
             localStorage.setItem('token', response.token);
-            setUserId(response.userId);
+            localStorage.setItem('userId', response.userId);
             history.push('')
         } else {
             setLoginError(response.error);

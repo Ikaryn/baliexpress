@@ -55,9 +55,15 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.users (
+    id INTEGER NOT NULL,
     username character varying(35) NOT NULL,
     password character varying(35),
     email character varying(35),
+    phone character varying(10),
+    streetAddress TEXT,
+    city TEXT,
+    country TEXT,
+    postcode CHARACTER varying(4),
     admin boolean
 );
 
