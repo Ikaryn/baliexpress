@@ -148,7 +148,6 @@ class Profile(Resource):
     def put(self, id):
         print('Put profile attempt received')
         data = request.json
-        print(data)
 
         userId = id
         user = getUser(userId)

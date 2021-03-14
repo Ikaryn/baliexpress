@@ -8,6 +8,7 @@ const api = new API();
 function checkValidEmail (input) {
     return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
 }
+
 const Register = () => {
     
     const history = useHistory();
@@ -34,26 +35,34 @@ const Register = () => {
     async function fetchRegister(e) {
         e.preventDefault();
         console.log(name, email, password, phone);
+        setNameError('');
+        setEmailError('');
+        setPwdError('');
+        setPhoneError('');
+
+        let error = false;
 
         if (name === '') {
             setNameError('Please enter your name');
-            return;   
+            error = true;
         }
 
         if (email === '' || !checkValidEmail(email)) {
             setEmailError('Please enter a valid email address');
-            return;
+            error = true;
         }
 
         if (password === '') {
             setPwdError('Please enter a password');
-            return;
+            error = true;
         }
 
         if (phone === '' || !checkValidPhone(phone)) {
             setPhoneError('Please enter a valid phone number');
-            return;
+            error = true;
         }
+
+        if (error) return;
         
         api.post('register', {
                 name: name,
