@@ -35,7 +35,7 @@ const ProfilePage = () => {
         (async () => {
             const userId = localStorage.getItem('userId');
             const userDetails = await api.get(`user/${userId}`,{userId: userId});
-            console.log(userDetails);
+            setAccInfo(userDetails.accountInfo);
             
         })();
     },[]);
