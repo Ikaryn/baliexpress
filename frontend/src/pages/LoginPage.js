@@ -33,7 +33,7 @@ const Login = () => {
 
         let error = false;
         
-        if(email === '' || checkValidEmail(email)) {
+        if (email === '' || !checkValidEmail(email)) {
             setEmailError('Please enter a valid email address');
             error = true;
         }
