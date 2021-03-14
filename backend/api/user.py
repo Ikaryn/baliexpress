@@ -95,7 +95,7 @@ class Register(Resource):
         phone_number = data.get('phone')
 
         for account in accounts:
-            if email is account['userInfo']['email']:
+            if email == account['userInfo']['email']:
                 return {'error':'Email already registered'}
 
         # generating a new unique id

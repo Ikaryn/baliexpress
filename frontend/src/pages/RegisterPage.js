@@ -23,6 +23,8 @@ const Register = () => {
     const [pwdError, setPwdError] = React.useState('')
     const [phoneError, setPhoneError] = React.useState('')
 
+    const [RegisterMessage, setRegisterMessage] = React.useState('');
+
 
     function checkValidPhone (input) {
         return /^[1-9]\d*$/.test(input);
@@ -39,6 +41,8 @@ const Register = () => {
         setEmailError('');
         setPwdError('');
         setPhoneError('');
+
+        setRegisterMessage('');
 
         let error = false;
 
@@ -73,7 +77,13 @@ const Register = () => {
         .then((res) =>{
             console.log(res);
             // history.push('/')
+            if (res.token) {
+                setRegisterMessage('Account successfully made!')
+            } else {
+                setRegisterMessage(res.error);
+            }
         });
+
     }
 
     return (
@@ -132,6 +142,7 @@ const Register = () => {
                 <Button type="submit" onClick={(event) => {fetchRegister(event)}}>Register</Button>
                 <Button onClick={() => handleLoginClick()}>I already have an account!</Button>
                 </form>
+                <Typography variant="body1" color="secondary">{RegisterMessage}</Typography>
             </Grid>
         </div>
     )
