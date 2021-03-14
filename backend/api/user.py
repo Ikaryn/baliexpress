@@ -132,7 +132,6 @@ class Register(Resource):
 
 class Profile(Resource):
     def get(self, id):
-        print(Resource)
         print('Get profile attempt received')
         data = request.args
 
@@ -146,16 +145,18 @@ class Profile(Resource):
     
         return {'error': 'User not found'}
 
-    def put(self):
+    def put(self, id):
         print('Put profile attempt received')
         data = request.json
+        print(data)
 
-        userId = data.get('userId')
+        userId = id
         user = getUser(userId)
 
         for field in user['userInfo']:
             user['userInfo'][field] = data.get(field)
 
+        print (user)
         return {'accountInfo': user}
 
 
