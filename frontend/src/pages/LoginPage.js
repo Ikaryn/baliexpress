@@ -47,9 +47,7 @@ const Login = () => {
         console.log(response);
         if(response.token){
             localStorage.setItem('token', response.token);
-            setUserId(response.userId);
-            console.log(response.userId);
-            console.log(userId);
+            localStorage.setItem('userId', response.userId);
             history.push('')
         } else {
             setLoginError(response.error);

@@ -16,11 +16,8 @@ const pageStatus = {
 
 const ProfilePage = () => {
 
-    const context = React.useContext(StoreContext);
-    const {userId : [userId]} = context;
     const [component, setComponent] = React.useState();
     const history = useHistory();
-    console.log(userId)
     
     const [accInfo, setAccInfo] = React.useState({
         name: '', email: '', phone: ''
@@ -36,10 +33,12 @@ const ProfilePage = () => {
     
     React.useEffect(() => {
         (async () => {
+            const userId = localStorage.getItem('userId');
             const userDetails = await api.get(`user/${userId}`,{userId: userId});
             console.log(userDetails);
+            
         })();
-    },[userId]);
+    },[]);
 
 
     return (

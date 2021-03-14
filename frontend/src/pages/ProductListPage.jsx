@@ -9,7 +9,7 @@ const ProductListPage = () => {
     
     React.useEffect(() => {
         (async () => {
-            const products = await api.get(`product/${category}`);
+            const products = await api.get(`product/${category}`,{catergory: category});
             if (products.products) {
                 setProducts(products.products);
             }
