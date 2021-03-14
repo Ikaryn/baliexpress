@@ -47,7 +47,6 @@ accounts = [    {'userId': 1529870708,
 # Function to get the account of user through userId
 def getUser (userId):
     for account in accounts:
-        print('comparing', userId, 'to', account['userId'])
         if (str(userId) == str(account['userId'])):
             return account
     
@@ -94,12 +93,9 @@ class Register(Resource):
         email = data.get('email')
         password = data.get('password')
         phone_number = data.get('phone')
-        print("here")
 
         for account in accounts:
-            print('asdasd')
             if email is account['userInfo']['email']:
-                print(email, "compared to ", account['userInfo']['email'])
                 return {'error':'Email already registered'}
 
         # generating a new unique id
@@ -107,7 +103,6 @@ class Register(Resource):
         i = 0
         newId = random.getrandbits(32)
         while (not uniqueId):
-            print('moshi')
             if (newId == accounts[i]['userId']):
                 newId = random.getrandbits(32)
                 i = 0
@@ -116,8 +111,6 @@ class Register(Resource):
                     uniqueId = True
                 else:
                     i += 1
-
-        print('hello')
 
         newUser = {'userId': newId,
                    'userInfo': { 'name': name,
@@ -143,10 +136,7 @@ class Profile(Resource):
         print('Get profile attempt received')
         data = request.args
 
-        print(data)
-
         userId = data.get('userId')
-        print("userId", userId)
         user = getUser(userId)
 
         if user is None:
