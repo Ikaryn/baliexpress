@@ -10,6 +10,7 @@ const api = new API();
 function checkValidEmail (input) {
     return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
 }
+
 const Login = () => {
     
     const [email, setEmail] = React.useState('');
@@ -23,27 +24,29 @@ const Login = () => {
 
     const history = useHistory();
 
-    const handleEmailChange = (value) => {
-        setEmail(value);
-        setEmailError('');
-    }
-
     //handle login
     async function fetchLogin(e) {
         e.preventDefault();
         console.log(email, password);
-        if(email === '' || checkValidEmail(email)) {
-            console.log("Email value: ", email)
-            if(email !== '') console.log("email is considered not empty");
-            if(checkValidEmail(email)) console.log("email is considered valid");
-            setEmailError('Please enter a valid email address');
+        setEmailError('');
+        setPwdError('');
 
-            
+        let error = false;
+        
+        if (email === '' || !checkValidEmail(email)) {
+            setEmailError('Please enter a valid email address');
+            error = true;
         }
+
         if (password === '') {
             setPwdError('Please enter a password');
+            error = true;
         }
+
+        if (error) return;
+
         const response = await api.post('login', {email : email, password: password});
+
         console.log(response);
         if(response.token){
             localStorage.setItem('token', response.token);
@@ -76,7 +79,7 @@ const Login = () => {
                 <Grid item>
                     <FormControl error={emailError === '' ? false : true}>
                         <InputLabel>Email Address</InputLabel>
-                        <OutlinedInput id="user-login-email" onChange={event => handleEmailChange(event.target.value)} value={email}/>
+                        <OutlinedInput id="user-login-email" onChange={event => setEmail(event.target.value)} value={email}/>
                         <FormHelperText>{emailError}</FormHelperText>
                     </FormControl>
                 </Grid>
