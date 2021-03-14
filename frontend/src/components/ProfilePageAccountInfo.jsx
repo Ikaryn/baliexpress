@@ -18,6 +18,7 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
             name={accInfo.name}
             email={accInfo.email}
             phone={accInfo.phone}
+            setEditComponent={setEditComponent}
         />
         <Grid item>
             <Button variant="contained" >Change Password</Button>

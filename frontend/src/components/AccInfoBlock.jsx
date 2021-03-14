@@ -4,11 +4,18 @@ import API from '../util/API';
 
 const api = new API();
 
-const AccInfoblock = ({editComponent, name, email, phone}) => {
+const AccInfoblock = ({editComponent, name, email, phone, setEditComponent}) => {
     
-    const [editName, setEditName] = React.useState(name);
-    const [editEmail, setEditEmail] = React.useState(email);
-    const [editPhone, setEditPhone] = React.useState(phone);
+    const [editName, setEditName] = React.useState('');
+    const [editEmail, setEditEmail] = React.useState('');
+    const [editPhone, setEditPhone] = React.useState('');
+    console.log(editName, email, phone);
+    
+    React.useEffect(()=>{
+        setEditName(name);
+        setEditEmail(email);
+        setEditPhone(phone);
+    },[email, name, phone])
     
     const handleChange = (value, flag) => {
         switch(flag) {
@@ -28,6 +35,8 @@ const AccInfoblock = ({editComponent, name, email, phone}) => {
         const body = {name: editName, email: editEmail, phone: editPhone};
         const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
         console.log(response);
+        console.log('hello')
+        setEditComponent(false);
     }
     
     return (
