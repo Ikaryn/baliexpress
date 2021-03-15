@@ -31,3 +31,17 @@ def getCategories():
     print (categories)
     cur.close()
     conn.close()
+    return categories
+
+def getProducts():
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute(
+    	"SELECT id, name, price from Products;"
+    )
+    products = cur.fetchall()
+    print (products)
+    cur.close()
+    conn.close()
+    return products
