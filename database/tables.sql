@@ -34,7 +34,7 @@ CREATE TABLE Users(
     primary key (id)
 );
 
-CREATE TABLE products(
+CREATE TABLE Products(
     id          serial,
     name        text,
     price       numeric(50, 2),
