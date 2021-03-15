@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
 from api.user import *
-from api.products import *
+from api.products import ProductList, ProductPage, products
 # import api.user
 # import api.products
 
