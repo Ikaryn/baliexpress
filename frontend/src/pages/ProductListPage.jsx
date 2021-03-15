@@ -21,32 +21,31 @@ const ProductListPage = () => {
             }
         })();
     
-    
-    },[])
+        // console.log(category);
+    },[category])
     
     return (
-        <Grid container direction="row">
-            <Typography variant="h1">PRODUCT PAGE</Typography>
-            <Grid container item direction="column" wrap='nowrap'>
-                <Paper>
-                    <Grid item style={{height: '90px', width:"50px"}}>
+        <div className="root">
+            <Grid container direction="row" className='product-list-page-container'>
+                <Grid container item direction="column" wrap='nowrap' xs={3}>
+                    <div className="product-list-filter-container">
                         <Typography>filter placeholder</Typography>
-                    </Grid>
-                </Paper>
+                    </div>
+                </Grid>
+                <Grid container item direction="row" xs={9} spacing={3}>
+                    {products.map((p) => (
+                        <Grid item xs={3}>
+                            <ProductCard 
+                                pid={p.id}
+                                name={p.name}
+                                price={p.price}
+                                category={p.type}
+                                />
+                        </Grid>
+                    ))}
+                </Grid>
             </Grid>
-            <Grid container item direction="row">
-                {products.map((p) => (
-                    <Grid item>
-                        <ProductCard 
-                            pid={p.id}
-                            name={p.name}
-                            price={p.price}
-                            category={p.type}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
-        </Grid>
+        </div>
             
     )
 
