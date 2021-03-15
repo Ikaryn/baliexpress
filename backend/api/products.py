@@ -194,7 +194,7 @@ class ProductList(Resource):
         return
     
 class ProductPage(Resource):
-    def get(self, category, id):
+    def get(self, category, productID):
         print("Product Page request received")
 
         for product in products[category]:
