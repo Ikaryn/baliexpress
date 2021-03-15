@@ -12,4 +12,7 @@ Frontend
             - this will only be for the core usage of material ui (buttons, cards, grid etc)
         - to install other packages like icons use:
             - "yarn add @material-ui/icons
- 
+Backend
+    - psycopg2
+        - https://pypi.org/project/psycopg2/
+        - can also be installed with homebrew
