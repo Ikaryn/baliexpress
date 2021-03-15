@@ -53,12 +53,12 @@ const NavBar = () => {
                             </Paper>
                         </Grid>
                         <Grid item xs={1}>
-                            {/* <IconButton> */}
-                                <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="large"/>
-                            {/* </IconButton> */}
+                            <IconButton>
+                                <AccountCircleIcon onClick={() => handleProfileClick} className="icon-button" fontSize="default"/>
+                            </IconButton>
                         </Grid>
                         <Grid item xs={1}>
-                            <ShoppingCartIcon class="icon-button" fontSize="large" />
+                            <ShoppingCartIcon className="icon-button" fontSize="default" />
                             <Typography>(0)</Typography>
                         </Grid>
                 </Grid>

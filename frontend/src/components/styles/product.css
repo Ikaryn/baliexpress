@@ -1,0 +1,21 @@
+.product-image-container {
+    max-width: 25em;
+    max-height: 25em;
+}
+
+.product-image {
+    width:100%;
+    object-fit: contain;
+}
+
+.product-info {
+    padding: 3% 10%;
+}
+
+.product-text-info {
+    padding-left: 5em;
+}
+
+.product-price-review {
+    padding-top: 2em;
+}

@@ -21,7 +21,7 @@ const ProductCard = ({pid, name, price, image, category}) => {
                     image={image}
                 /> */}
                 <CardContent>
-                    <Typography variant="h2">
+                    <Typography variant="h3">
                         {name}
                     </Typography>
                     <Typography variant="h4">

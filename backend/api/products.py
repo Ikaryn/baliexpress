@@ -7,31 +7,49 @@ import secrets, random
 from flask_cors import CORS
 from flask_restful import Api
 
+# AMD_Ryzen_5_5600X = {
+#     "id":0,
+#     "name":"AMD Ryzen 5 5600X",
+#     "type":"CPU",
+#     "brand":"AMD",
+#     "price":549,
+#     "no. of Cores":6,
+#     "no. of Threads":12,
+#     "base":3.7,
+#     "max":4.6,
+#     "socket":"AM4",
+#     "cooler included":True
+# }
 AMD_Ryzen_5_5600X = {
     "id":0,
     "name":"AMD Ryzen 5 5600X",
     "type":"CPU",
     "brand":"AMD",
     "price":549,
-    "no. of Cores":6,
-    "no. of Threads":12,
-    "base":3.7,
-    "max":4.6,
-    "socket":"AM4",
-    "cooler included":True
+    "specs": {
+        "no. of Cores":6,
+        "no. of Threads":12,
+        "base":3.7,
+        "max":4.6,
+        "socket":"AM4",
+        "cooler included":True
+    }
 }
+
 AMD_Ryzen_5_3600 = {
     "id":1,
     "name":"AMD Ryzen 5 3600",
     "type":"CPU",
     "brand":"AMD",
     "price":299,
-    "no. of Cores":6,
-    "no. of Threads":12,
-    "base":3.6,
-    "max":4.2,
-    "socket":"AM4",
-    "cooler included":True
+    "specs": {
+        "no. of Cores":6,
+        "no. of Threads":12,
+        "base":3.6,
+        "max":4.2,
+        "socket":"AM4",
+        "cooler included":True
+    }
 }
 AMD_Ryzen_5_2600 = {
     "id":2,
@@ -39,12 +57,14 @@ AMD_Ryzen_5_2600 = {
     "type":"CPU",
     "brand":"AMD",
     "price":229,
-    "no. of Cores":6,
-    "no. of Threads":12,
-    "base":3.4,
-    "max":3.9,
-    "socket":"AM4",
-    "cooler included":True
+    "specs": {
+        "no. of Cores":6,
+        "no. of Threads":12,
+        "base":3.4,
+        "max":3.9,
+        "socket":"AM4",
+        "cooler included":True
+    }
 }
 Intel_Core_i5_10400 = {
     "id":3,
@@ -52,12 +72,14 @@ Intel_Core_i5_10400 = {
     "type":"CPU",
     "brand":"Intel",
     "price":249,
-    "no. of Cores":6,
-    "no. of Threads":12,
-    "base":2.9,
-    "max":4.3,
-    "socket":"LGA 1200",
-    "cooler included":False
+    "specs": {
+        "no. of Cores":6,
+        "no. of Threads":12,
+        "base":2.9,
+        "max":4.3,
+        "socket":"LGA 1200",
+        "cooler included":False
+    }
 }
 Intel_Core_i5_9400F = {
     "id":4,
@@ -65,12 +87,14 @@ Intel_Core_i5_9400F = {
     "type":"CPU",
     "brand":"Intel",
     "price":259,
-    "no. of Cores":6,
-    "no. of Threads":6,
-    "base":2.9,
-    "max":4.1,
-    "socket":"FCLGA 1151",
-    "cooler included":False
+    "specs": {
+        "no. of Cores":6,
+        "no. of Threads":6,
+        "base":2.9,
+        "max":4.1,
+        "socket":"FCLGA 1151",
+        "cooler included":False
+    }
 }
 Intel_Core_i3_10100 = {
     "id":5,
@@ -78,12 +102,14 @@ Intel_Core_i3_10100 = {
     "type":"CPU",
     "brand":"Intel",
     "price":169,
-    "no. of Cores":4,
-    "no. of Threads":8,
-    "base":3.6,
-    "max":4.3,
-    "socket":"LGA 1200",
-    "cooler included":False
+    "specs":{
+        "no. of Cores":4,
+        "no. of Threads":8,
+        "base":3.6,
+        "max":4.3,
+        "socket":"LGA 1200",
+        "cooler included":False
+    } 
 }
 
 ASRockB550 = {
