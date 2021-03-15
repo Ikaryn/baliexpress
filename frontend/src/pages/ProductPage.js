@@ -2,6 +2,7 @@ import { Box, Button, Divider, Grid, ListItemSecondaryAction, Paper, Tab, Tabs, 
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
+import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
 import SpecificationList from '../components/SpecificationList'
@@ -28,7 +29,7 @@ const ProductPage = () => {
     const { category, pid } = useParams();
     
     const [value, setValue] = React.useState(0);
-    // const [rating, setRating] = React.useState(0);
+    const [rating, setRating] = React.useState(0);
     
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
@@ -68,8 +69,13 @@ const ProductPage = () => {
                                     <Grid item>
                                         <Typography variant="h5">${productInfo.price}.00</Typography>
                                     </Grid>
-                                    <Grid item>
-                                        <Typography variant="h6">0 reviews</Typography>
+                                    <Grid container item direction="column">
+                                        <Grid item>
+                                            <Rating value={rating}/>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h6">0 reviews</Typography>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
