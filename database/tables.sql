@@ -1,3 +1,7 @@
+DROP TYPE IF EXISTS Categories CASCADE;
+
+CREATE TYPE Categories AS ENUM ('Cases', 'Cooling', 'CPU', 'Graphics Cards', 'Memory', 'Mice', 'Monitors', 'Motherboards', 'Optical Drives', 'PSU', 'Storage' );
+
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
