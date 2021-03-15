@@ -10,6 +10,8 @@ from flask_restful import Api
 from PIL import Image
 from io import BytesIO
 
+import dbaccess
+
 # AMD_Ryzen_5_5600X = {
 #     "id":0,
 #     "name":"AMD Ryzen 5 5600X",
@@ -164,7 +166,7 @@ Intel_Core_i3_10100 = {
         "socket":"LGA 1200",
         "cooler included":False
     },
-    "image": Intel_Core_i3_10100_img 
+    "image": Intel_Core_i3_10100_img
 }
 
 ASRockB550 = {
@@ -276,12 +278,12 @@ products = {
 class ProductList(Resource):
     def get(self,category):
         print("Get ProductList attempt received")
-        
+
         return ({'products':products[category]})
 
     def put(self):
         return
-    
+
 class ProductPage(Resource):
     def get(self, category, id):
         print("Product Page request received")
@@ -289,4 +291,3 @@ class ProductPage(Resource):
         for product in products[category]:
             if productID == product['id']:
                 return ({'product':product})
-        
