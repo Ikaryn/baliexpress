@@ -3,9 +3,12 @@ from flask import Flask, request, Response
 from flask_restful import Resource
 # from app import api
 import secrets, random
-
+import os
+from base64 import b64encode
 from flask_cors import CORS
 from flask_restful import Api
+from PIL import Image
+from io import BytesIO
 
 # AMD_Ryzen_5_5600X = {
 #     "id":0,
@@ -20,6 +23,30 @@ from flask_restful import Api
 #     "socket":"AM4",
 #     "cooler included":True
 # }
+
+def getEncodedImage (category, imgName):
+    dirname = os.path.dirname(__file__)
+    path = os.path.join(dirname, 'images', category, imgName + '.jpg')
+    with open(path, 'rb') as image:
+        im_b64 = b64encode(image.read())
+        # print("Image successfully encoded:", imgName)
+    return im_b64
+
+AMD_Ryzen_5_5600X_img = getEncodedImage('CPU', 'AMD Ryzen 5 5600X')
+AMD_Ryzen_5_3600_img = getEncodedImage('CPU', 'AMD Ryzen 5 3600')
+AMD_Ryzen_5_2600_img = getEncodedImage('CPU', 'AMD Ryzen 5 2600')
+Intel_Core_i5_10400_img = getEncodedImage('CPU', 'Intel Core i5 10400')
+Intel_Core_i5_9400F_img = getEncodedImage('CPU', 'Intel Core i5 9400F')
+Intel_Core_i3_10100_img = getEncodedImage('CPU', 'Intel Core i5 10400')
+ASRockB550_img = getEncodedImage('Motherboards', 'ASRock B550 Phantom Gaming 4')
+MSIB450M_img = getEncodedImage('Motherboards', 'MSI B450M Pro VDH Max')
+ASRockB460_img = getEncodedImage('Motherboards', 'ASRock B460 Phantom Gaming 4')
+Gigabyte_B450M_D53H_img = getEncodedImage('Motherboards','Gigabyte B450M DS3H')
+TeamMS30_img = getEncodedImage('Storage', 'Team MS30 1TB M.2 SATA SSD')
+CrucialBX500_img = getEncodedImage('Storage', 'Crucial BX500 480GB 2.5 3D NAND SATA SSD')
+WD10EZEX_img = getEncodedImage('Storage', 'WD WD10EZEX 1TB Blue 3.5 7200RPM SATA3 Hard Drive')
+Samsung870Evo_img = getEncodedImage('Storage', 'Samsung 870 Evo 500GB 2.5 SATA III 6GBs V-NAND SSD MZ-77E500BW')
+
 AMD_Ryzen_5_5600X = {
     "id":0,
     "name":"AMD Ryzen 5 5600X",
@@ -33,7 +60,8 @@ AMD_Ryzen_5_5600X = {
         "max":4.6,
         "socket":"AM4",
         "cooler included":True
-    }
+    },
+    "image": AMD_Ryzen_5_5600X_img
 }
 
 AMD_Ryzen_5_3600 = {
@@ -49,7 +77,8 @@ AMD_Ryzen_5_3600 = {
         "max":4.2,
         "socket":"AM4",
         "cooler included":True
-    }
+    },
+    "image": AMD_Ryzen_5_3600_img
 }
 AMD_Ryzen_5_2600 = {
     "id":2,
@@ -64,7 +93,8 @@ AMD_Ryzen_5_2600 = {
         "max":3.9,
         "socket":"AM4",
         "cooler included":True
-    }
+    },
+    "image": AMD_Ryzen_5_2600_img
 }
 Intel_Core_i5_10400 = {
     "id":3,
@@ -79,7 +109,8 @@ Intel_Core_i5_10400 = {
         "max":4.3,
         "socket":"LGA 1200",
         "cooler included":False
-    }
+    },
+    "image": Intel_Core_i5_10400_img
 }
 Intel_Core_i5_9400F = {
     "id":4,
@@ -94,7 +125,8 @@ Intel_Core_i5_9400F = {
         "max":4.1,
         "socket":"FCLGA 1151",
         "cooler included":False
-    }
+    },
+    "image": Intel_Core_i5_9400F_img
 }
 Intel_Core_i3_10100 = {
     "id":5,
@@ -109,7 +141,8 @@ Intel_Core_i3_10100 = {
         "max":4.3,
         "socket":"LGA 1200",
         "cooler included":False
-    } 
+    },
+    "image": Intel_Core_i3_10100_img 
 }
 
 ASRockB550 = {
@@ -121,7 +154,8 @@ ASRockB550 = {
     "socket":"AM4",
     "memory supported":"DDR4",
     "no. memory slots":4,
-    "Wi-Fi":False
+    "Wi-Fi":False,
+    "image": ASRockB550_img
 }
 
 MSIB450M = {
@@ -133,7 +167,8 @@ MSIB450M = {
     "socket":"AM4",
     "memory supported":"DDR4",
     "no. memory slots":4,
-    "Wi-Fi":False
+    "Wi-Fi":False,
+    "image": MSIB450M_img
 }
 ASRockB460 = {
     "id":8,
@@ -144,7 +179,8 @@ ASRockB460 = {
     "socket":"LGA 1200",
     "memory supported":"DDR4",
     "no. memory slots":4,
-    "Wi-Fi":False
+    "Wi-Fi":False,
+    "image": ASRockB460_img
 }
 Gigabyte_B450M_D53H = {
     "id":9,
@@ -155,7 +191,8 @@ Gigabyte_B450M_D53H = {
     "socket":"AM4",
     "memory supported":"DDR4",
     "no. memory slots":4,
-    "Wi-Fi":False
+    "Wi-Fi":False,
+    "image": Gigabyte_B450M_D53H_img
 }
 TeamMS30 = {
     "id":10,
@@ -165,7 +202,8 @@ TeamMS30 = {
     "price":150,
     "capacity":"1 TB",
     "format":"SSD",
-    "form factor":"M.2"
+    "form factor":"M.2",
+    "image": TeamMS30_img
  }
 CrucialBX500 = {
     "id":11,
@@ -175,7 +213,8 @@ CrucialBX500 = {
     "price":67,
     "capacity":"480 GB",
     "format":"SSD",
-    "form factor":"2.5\""
+    "form factor":"2.5\"",
+    "image": CrucialBX500_img
  }
 WD10EZEX = {
     "id":12,
@@ -185,7 +224,8 @@ WD10EZEX = {
     "price":58,
     "capacity":"1 TB",
     "format":"HDD",
-    "form factor":"3.5\""
+    "form factor":"3.5\"",
+    "image": WD10EZEX_img
  }
 Samsung870Evo = {
     "id":13,
@@ -195,7 +235,8 @@ Samsung870Evo = {
     "price":86,
     "capacity":"500 GB",
     "format":"SSD",
-    "form factor":"2.5\""
+    "form factor":"2.5\"",
+    "image": Samsung870Evo_img
  }
 
 cpus = [AMD_Ryzen_5_2600, AMD_Ryzen_5_3600, AMD_Ryzen_5_5600X, Intel_Core_i3_10100, Intel_Core_i5_10400, Intel_Core_i5_9400F]

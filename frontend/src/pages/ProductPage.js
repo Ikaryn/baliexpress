@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, ListItemSecondaryAction, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
@@ -21,7 +21,6 @@ const TabPanel = ({children, value, index, ...other}) => {
     </div>)
 
 }
-
 
 const ProductPage = () => {
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
