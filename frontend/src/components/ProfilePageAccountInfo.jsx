@@ -10,6 +10,8 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
     const handleEditDetails = () => {
         setEditComponent(true);
     };
+
+    
     console.log(accInfo)
     return (
         <Grid container item direction="column" className="information-tab">

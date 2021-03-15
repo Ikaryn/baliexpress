@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, Grid, Input, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, Input, Typography, FormControl, FormHelperText } from '@material-ui/core';
 import API from '../util/API';
 import './styles/profilePage.css';
 
@@ -17,6 +17,15 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     const [editPCode, setEditPCode] = React.useState('');
     const [editCountry, setEditCountry] = React.useState('');
     const [editState, setEditState] = React.useState('');
+
+    const [nameError, setNameError] = React.useState('')
+    const [emailError, setEmailError] = React.useState('')
+    const [pwdError, setPwdError] = React.useState('')
+    const [phoneError, setPhoneError] = React.useState('')
+    const [cityError, setCityError] = React.useState('')
+    const [pCodeError, setPCodeError] = React.useState('')
+    const [countryError, setCountryError] = React.useState('')
+    const [stateError, setStateError] = React.useState('')
     
     console.log(shippingInfo);
     React.useEffect(()=>{
@@ -31,28 +40,37 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         setEditState(shippingInfo.state);
         
     },[accInfo, shippingInfo.addr, shippingInfo.city, shippingInfo.country, shippingInfo.pCode, shippingInfo.state])
+
+    function checkValidEmail (input) {
+        return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
+    }
+
+    function checkInputNumber (input) {
+        return /^[1-9]\d*$/.test(input);
+    }
+
+    function checkInputAlpha (input) {
+        return /^[a-zA-Z]+$/.test(input);
+    }
     
     const handleChange = (value, key) => {
         switch(key) {
             case 'name':
-                setEditName(value);
-                break;
+                return setEditName(value);
             case 'email':
-                setEditEmail(value);
-                break;
+                return setEditEmail(value);
             case 'phone':  
-                setEditPhone(value);
-                break;
+                return setEditPhone(value);
             case 'addr':
-                return setEditAddr(value);;
+                return setEditAddr(value);
             case 'city':
-                return setEditCity(value);;
+                return setEditCity(value);
             case 'pCode':
-                return setEditPCode(value);;
+                return setEditPCode(value);
             case 'country':
-                return setEditCountry(value);;
+                return setEditCountry(value);
             default:
-                return setEditState(value);;
+                return setEditState(value);
         }
     }
     
@@ -83,21 +101,95 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return editName;
             case 'email':
                 return editEmail;
-                case 'phone':
-                    return editPhone;
-                case 'addr':
-                    return editAddr;
-                case 'city':
-                    return editCity;
-                case 'pCode':
-                    return editPCode;
-                case 'country':
-                    return editCountry;
-                default:
-                    return editState;
+            case 'phone':
+                return editPhone;
+            case 'addr':
+                return editAddr;
+            case 'city':
+                return editCity;
+            case 'pCode':
+                return editPCode;
+            case 'country':
+                return editCountry;
+            default:
+                return editState;
         }
     }
+
+    const getErrorValues = (type) => {
+        switch(type) {
+            case 'name':
+                return nameError;
+            case 'email':
+                return emailError;
+            case 'phone':
+                return phoneError;
+            case 'city':
+                return cityError;
+            case 'pCode':
+                return pCodeError;
+            case 'country':
+                return countryError;
+            case 'state':
+                return stateError;
+            default:
+                return null;
+        }
+    }
+
+
+
     const handleSubmit = async () => {
+
+        setNameError('');
+        setEmailError('');
+        setPhoneError('');
+        setCityError('');
+        setPCodeError('');
+        setCountryError('');
+        setStateError('');
+
+        let error = false;
+
+        if (editName === '') {
+            setNameError('Name cannot be empty');
+            error = true;
+        }
+
+        if (editEmail === '' || !checkValidEmail(editEmail)) {
+            setEmailError('Invalid email address');
+            error = true;
+        }
+
+        if (editPhone === '' || !checkInputNumber(editPhone)) {
+            setPhoneError('Invalid phone number');
+            error = true;
+        }
+
+        if (editCity !== '' && !checkInputAlpha(editCity)) {
+            setCityError('Invalid city name');
+            error = true;
+        }
+
+        if (editPCode !== '' && !checkInputNumber(editPCode)) {
+            setPCodeError('Invalid post code');
+            error = true;
+        }
+
+        if (editCountry !== '' && !checkInputAlpha(editCountry)) {
+            setCountryError('Invalid country name');
+            error = true;
+        }
+
+        if (editState !== '' && !checkInputAlpha(editState)) {
+            setStateError('Invalid state name');
+            error = true;
+        }
+
+
+
+        if (error) return;
+
         const body = {name: editName, email: editEmail, phone: editPhone};
         const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
         console.log(response);
@@ -117,7 +209,12 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                         </Grid>
                         <Grid item className="account-info-field">
                             {editComponent === true ?
-                                <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+                            
+                                 <FormControl error={getErrorValues(value) === '' ? false : true}>
+                                    <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+                                    <FormHelperText>{getErrorValues(value)}</FormHelperText>
+                                </FormControl>
+
                             :
                                 <Typography variant="h5">{getInformationValues(value)}</Typography>
                             }
@@ -135,7 +232,11 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                         </Grid>
                         <Grid item className="account-info-field">
                             {editComponent === true ?
-                                <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+
+                                <FormControl error={getErrorValues(value) === '' ? false : true}>
+                                    <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+                                    <FormHelperText>{getErrorValues(value)}</FormHelperText>
+                                </FormControl>
                             :
                                 <Typography variant="h5">{getInformationValues(value)}</Typography>
                             }

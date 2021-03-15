@@ -27,9 +27,9 @@ const ProductListPage = () => {
     return (
         <Grid container direction="row">
             <Typography variant="h1">PRODUCT PAGE</Typography>
-            <Grid container item direction="column">
+            <Grid container item direction="column" wrap='nowrap'>
                 <Paper>
-                    <Grid item>
+                    <Grid item style={{height: '90px', width:"50px"}}>
                         <Typography>filter placeholder</Typography>
                     </Grid>
                 </Paper>
@@ -41,7 +41,7 @@ const ProductListPage = () => {
                             pid={p.id}
                             name={p.name}
                             price={p.price}
-                            
+                            category={p.type}
                         />
                     </Grid>
                 ))}

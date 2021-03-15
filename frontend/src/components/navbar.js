@@ -40,27 +40,27 @@ const NavBar = () => {
                     justify="space-between"
                     alignItems="center"
                 >
-                        <Grid item xs={1}>
-                            <ProductMenuButton/>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <Button>Build-A-PC</Button>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Paper>
-                                <InputBase placeholder="Search products..."/>
-                                <SearchIcon/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={1}>
-                            {/* <IconButton> */}
-                                <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="large"/>
-                            {/* </IconButton> */}
-                        </Grid>
-                        <Grid item xs={1}>
-                            <ShoppingCartIcon class="icon-button" fontSize="large" />
-                            <Typography>(0)</Typography>
-                        </Grid>
+                    <Grid item xs={1}>
+                        <ProductMenuButton/>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button>Build-A-PC</Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Paper>
+                            <InputBase placeholder="Search products..."/>
+                            <SearchIcon/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={1}>
+                        {/* <IconButton> */}
+                            <AccountCircleIcon onClick={() => handleProfileClick} fontSize="large"/>
+                        {/* </IconButton> */}
+                    </Grid>
+                    <Grid item xs={1}>
+                        <ShoppingCartIcon fontSize="large" />
+                        <Typography>(0)</Typography>
+                    </Grid>
                 </Grid>
             </AppBar>
         </header>
