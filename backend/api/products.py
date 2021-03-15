@@ -176,20 +176,17 @@ cpus = [AMD_Ryzen_5_2600, AMD_Ryzen_5_3600, AMD_Ryzen_5_5600X, Intel_Core_i3_101
 motherboards = [ASRockB550, ASRockB460, MSIB450M, Gigabyte_B450M_D53H]
 storage = [TeamMS30, CrucialBX500, WD10EZEX, Samsung870Evo]
 products = {
-    "cpus" : cpus,
-    "motherboards" : motherboards,
-    "storage" : storage
+    "CPU" : cpus,
+    "Motherboards" : motherboards,
+    "Storage" : storage
 }
 # print(cpus)
 # print(motherboards)
 # print(storage)
 
 class ProductList(Resource):
-    def get(self):
+    def get(self,category):
         print("Get ProductList attempt received")
-        data = request.json
-
-        category = data.get('category')
         
         return ({'products':products[category]})
 
@@ -197,12 +194,8 @@ class ProductList(Resource):
         return
     
 class ProductPage(Resource):
-    def get(self):
+    def get(self, category, id):
         print("Product Page request received")
-        data = request.json
-
-        category = data.get('category')
-        productID = data.get('id')
 
         for product in products[category]:
             if productID == product['id']:
