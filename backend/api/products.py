@@ -10,7 +10,7 @@ from flask_restful import Api
 from PIL import Image
 from io import BytesIO
 
-import dbaccess
+# from dbaccess import *
 
 # AMD_Ryzen_5_5600X = {
 #     "id":0,
