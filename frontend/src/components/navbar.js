@@ -22,17 +22,11 @@ const NavBar = () => {
     const handleProfileClick = () => {
         console.log(userId);
         if(userId === 0){
-            history.push('login');
+            history.push('/login');
         } else {
             console.log(`user id is ${userId}`);
-            history.push(`profile/${userId}`);
+            history.push(`/profile/${userId}`);
         }
-    }
-    
-    
-    const test = () => {
-    
-        history.push('login');
     }
     
 
@@ -47,10 +41,8 @@ const NavBar = () => {
                     alignItems="center"
                 >
                         <Grid item xs={1}>
-                            {/* <Button>Product categories</Button> */}
                             <ProductMenuButton/>
                         </Grid>
-                        <Button onClick={() => test()}>test</Button>
                         <Grid item xs={1}>
                             <Button>Build-A-PC</Button>
                         </Grid>
@@ -61,14 +53,14 @@ const NavBar = () => {
                             </Paper>
                         </Grid>
                         <Grid item xs={1}>
-                            <IconButton>
+                            {/* <IconButton> */}
                                 <AccountCircleIcon onClick={() => handleProfileClick} class="icon-button" fontSize="large"/>
-                            </IconButton>
+                            {/* </IconButton> */}
                         </Grid>
-                        {/* <Grid item xs={1}>
+                        <Grid item xs={1}>
                             <ShoppingCartIcon class="icon-button" fontSize="large" />
                             <Typography>(0)</Typography>
-                        </Grid> */}
+                        </Grid>
                 </Grid>
             </AppBar>
         </header>

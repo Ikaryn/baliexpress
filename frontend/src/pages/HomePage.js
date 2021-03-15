@@ -11,21 +11,21 @@ const HomePage = () => {
     const history = useHistory();
 
     const navLogin = () => {
-        history.push('login');
+        history.push('/login');
     }
     
     const navRegister = () => {
-        history.push('register');
+        history.push('/register');
     }
 
     const navCPU = () => {
-        history.push('product/CPU');
+        history.push('/product/CPU');
     }
     const navMotherboards = () => {
-        history.push('product/Motherboards');
+        history.push('/product/Motherboards');
     }
     const navStorage = () => {
-        history.push('product/Storage');
+        history.push('/product/Storage');
     }
 
     return (

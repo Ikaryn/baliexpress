@@ -59,7 +59,7 @@ const Login = () => {
     }
     
     const handleRegisterClick = () => {
-        history.push('register');
+        history.push('/register');
     }
     
 
