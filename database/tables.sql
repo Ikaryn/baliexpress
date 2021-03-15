@@ -22,15 +22,16 @@ DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews;
 
 CREATE TABLE Users(
-    id serial,
-    username varchar(35),
-    password varchar(35),
-    email varchar(40),
+    id          int GENERATED ALWAYS AS IDENTITY,
+    name        text,
+    email       varchar(40),
+    password    varchar(35),
+    phonenumber int,
     streetaddress text,
-    city text,
-    country text,
-    postcode varchar(4),
-    admin boolean,
+    city        text,
+    country     text,
+    postcode    varchar(4),
+    admin       boolean,
     primary key (id)
 );
 

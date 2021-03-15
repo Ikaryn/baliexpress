@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="<INSERT YOUR POSTGRESQL PASSWORD HERE"
+        password="jlk1njk2"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -14,28 +14,17 @@ def connect():
     return conn
 
 # "Users" table functions
-
-# returns the corresponding ID number for a given username
-def getUserIDFromUsername(username):
+# returns all db info for a given id
+def getUserInfo(id):
     conn = connect()
     cur = conn.cursor()
 
     cur.execute(
-    	"SELECT id FROM Users WHERE username = %s", [username]
+    	"SELECT * FROM Users WHERE id = %s", [id]
     )
-    id = cur.fetchall()[0][0]
-    return id
+    info = cur.fetchall()[0]
+    return info
 
-# returns the corresponding username for a given user ID
-def getUsernameFromUserID(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT username FROM Users WHERE id = %s", [id]
-    )
-    username = cur.fetchall()[0][0]
-    return username
 
 # returns the corresponding password for a given user ID
 # NOTE: likely a very insecure way of doing this
@@ -58,6 +47,17 @@ def getEmail(id):
     	"SELECT email FROM Users WHERE id = %s", [id]
     )
     email = cur.fetchall()[0][0]
+    return email
+
+# returns the corresponding user id for a given email
+def getUserIDFromEmail(email):
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute(
+    	"SELECT id FROM Users WHERE email = %s", [email]
+    )
+    id = cur.fetchall()[0][0]
     return email
 
 # returns the corresponding address for a given user id
@@ -84,12 +84,12 @@ def getAdminStatus(id):
 
 # creates a new user from given paramters
 # Note: id does not need to be specified, database generates it automatically
-def addUser(username, password, email):
+def addUser(name, password, email, phonenumber):
     conn = connect()
     cur = conn.cursor()
 
-    query =  """INSERT INTO Users (username, password, email, admin) VALUES (%s, %s, %s, 'f');"""
-    values = (username, password, email)
+    query =  """INSERT INTO Users (id, name, password, email, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 'f');"""
+    values = (name, password, email, phonenumber)
 
     cur.execute(query, values)
     conn.commit()
@@ -99,12 +99,25 @@ def addUser(username, password, email):
 
 # creates a new user with admin permissions from given parameters
 # NOTE: id does not need to be specified, database generates it automatically
-def addAdmin(username, password, email):
+def addAdmin(name, password, email, phonenumber):
     conn = connect()
     cur = conn.cursor()
 
-    query =  """INSERT INTO Users (username, password, email, admin) VALUES (%s, %s, %s, 't');"""
-    values = (username, password, email)
+    query =  """INSERT INTO Users (id, name,  password, email, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 't');"""
+    values = (name, password, email, phonenumber)
+
+    cur.execute(query, values)
+    conn.commit()
+    cur.close()
+    conn.close()
+    #TODO: error handling
+
+def updateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newCountry, newPostcode):
+    conn = connect()
+    cur = conn.cursor()
+
+    query =  """UPDATE Users SET name = %s, email = %s, password = %s, phonenumber = %s, streetaddress = %s, city = %s, country = %s, postcode = %s WHERE id = %s;"""
+    values = (newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newCountry, newPostcode, id)
 
     cur.execute(query, values)
     conn.commit()
@@ -201,3 +214,8 @@ def getProducts(type):
     cur.close()
     conn.close()
     return products
+
+print(getUserInfo(1))
+addUser('anne', 'anne@email', 'passowrd', '3124124')
+addAdmin('Jo', 'Jo@email', 'newpw', '55555555')
+updateUser('1', 'billy', 'new@email', 'radpassword', '55555', '1 street rd', 'london', 'england', 444)
