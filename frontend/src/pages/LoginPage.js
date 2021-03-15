@@ -64,7 +64,7 @@ const Login = () => {
     
 
     return (
-        <main>
+        <main className="root">
             <Grid
                 className="Login-Form-Container"
                 container

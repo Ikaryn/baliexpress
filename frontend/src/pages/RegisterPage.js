@@ -87,7 +87,7 @@ const Register = () => {
     }
 
     return (
-        <div>
+        <div className="root">
             <Grid 
                 className="Register-Form-Container"
                 container
