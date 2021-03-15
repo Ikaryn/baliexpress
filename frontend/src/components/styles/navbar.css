@@ -6,9 +6,15 @@
     height: 5%;
 }
 
-/* .icon-button {
+.navbar-logo-container {
+    height: 2em;
+}
+
+.navbar-logo {
+    width: 4%;
+    object-fit: scale-down;    
     cursor: pointer;
-} */
+}
 
 .nav-bar-spacer {
     padding-top: 10%;

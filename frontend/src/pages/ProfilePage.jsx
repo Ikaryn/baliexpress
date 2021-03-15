@@ -18,7 +18,6 @@ const pageStatus = {
 
 const ProfilePage = () => {
 
-    const [component, setComponent] = React.useState();
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
@@ -91,9 +90,9 @@ const ProfilePage = () => {
     }));
     const classes = useStyles();
     return(
-            <div className="profile-page-container">
+            <div className="root">
                 <Paper>
-                    <Grid container direction="column" className={classes.root}>
+                    <Grid container direction="column" className="profile-page-container">
                         <Tabs 
                             value={value} onChange={handleChange} 
                             aria-label="profile-tabs"
