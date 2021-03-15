@@ -279,8 +279,6 @@ class ProductList(Resource):
         
         return ({'products':products[category]})
 
-    def put(self):
-        return
     
 class ProductPage(Resource):
     def get(self, category, productID):
@@ -289,4 +287,12 @@ class ProductPage(Resource):
         for product in products[category]:
             if productID == product['id']:
                 return ({'product':product})
+        return {'error':"Product not found"}
+    
+    def post(self, product):
+        print("Product Post received")
+
+        category = product['category']
+
+        products[category].append(product)
         
