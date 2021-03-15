@@ -10,6 +10,7 @@ from flask_restful import Api
 from PIL import Image
 from io import BytesIO
 
+# from dbaccess import *
 
 # AMD_Ryzen_5_5600X = {
 #     "id":0,
@@ -280,13 +281,19 @@ class ProductList(Resource):
 
         return ({'products':products[category]})
 
-    def put(self):
-        return
 
 class ProductPage(Resource):
-    def get(self, category, id):
+    def get(self, category, productID):
         print("Product Page request received")
 
         for product in products[category]:
             if productID == product['id']:
                 return ({'product':product})
+        return {'error':"Product not found"}
+
+    def post(self, product):
+        print("Product Post received")
+
+        category = product['category']
+
+        products[category].append(product)
