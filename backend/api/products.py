@@ -8,7 +8,7 @@ from flask_cors import CORS
 from flask_restful import Api
 
 AMD_Ryzen_5_5600X = {
-    "id":0
+    "id":0,
     "name":"AMD Ryzen 5 5600X",
     "type":"CPU",
     "brand":"AMD",
@@ -21,7 +21,7 @@ AMD_Ryzen_5_5600X = {
     "cooler included":True
 }
 AMD_Ryzen_5_3600 = {
-    "id":1
+    "id":1,
     "name":"AMD Ryzen 5 3600",
     "type":"CPU",
     "brand":"AMD",
@@ -34,7 +34,7 @@ AMD_Ryzen_5_3600 = {
     "cooler included":True
 }
 AMD_Ryzen_5_2600 = {
-    "id":2
+    "id":2,
     "name":"AMD Ryzen 5 2600",
     "type":"CPU",
     "brand":"AMD",
@@ -47,7 +47,7 @@ AMD_Ryzen_5_2600 = {
     "cooler included":True
 }
 Intel_Core_i5_10400 = {
-    "id":3
+    "id":3,
     "name":"Intel Core i5-10400",
     "type":"CPU",
     "brand":"Intel",
@@ -60,7 +60,7 @@ Intel_Core_i5_10400 = {
     "cooler included":False
 }
 Intel_Core_i5_9400F = {
-    "id":4
+    "id":4,
     "name":"Intel Core i5-9400F",
     "type":"CPU",
     "brand":"Intel",
@@ -73,7 +73,7 @@ Intel_Core_i5_9400F = {
     "cooler included":False
 }
 Intel_Core_i3_10100 = {
-    "id":5
+    "id":5,
     "name":"Intel Core i3-10100",
     "type":"CPU",
     "brand":"Intel",
@@ -87,7 +87,7 @@ Intel_Core_i3_10100 = {
 }
 
 ASRockB550 = {
-    "id":6
+    "id":6,
     "name":"ASRock B550 Phantom Gaming 4 AM4 ATX Motherboard",
     "type":"motherboard",
     "brand":"ASRock",
@@ -99,7 +99,7 @@ ASRockB550 = {
 }
 
 MSIB450M = {
-    "id":7
+    "id":7,
     "name":"MSI B450M PRO-VDH MAX AM4 Micro-ATX Motherboard",
     "type":"motherboard",
     "brand":"MSI",
@@ -110,7 +110,7 @@ MSIB450M = {
     "Wi-Fi":False
 }
 ASRockB460 = {
-    "id":8
+    "id":8,
     "name":"ASRock B460 Phantom Gaming 4 LGA 1200 ATX Motherboard",
     "type":"motherboard",
     "brand":"ASRock",
@@ -121,7 +121,7 @@ ASRockB460 = {
     "Wi-Fi":False
 }
 Gigabyte_B450M_D53H = {
-    "id":9
+    "id":9,
     "name":"Gigabyte B450M DS3H WIFI AM4 Micro-ATX Motherboard",
     "type":"motherboard",
     "brand":"Gigabyte",
@@ -132,7 +132,7 @@ Gigabyte_B450M_D53H = {
     "Wi-Fi":False
 }
 TeamMS30 = {
-    "id":10
+    "id":10,
     "name":"Team MS30 1TB M.2 SATA SSD TM8PS7001T0C101",
     "type":"storage",
     "brand":"Team",
@@ -142,7 +142,7 @@ TeamMS30 = {
     "form factor":"M.2"
  }
 CrucialBX500 = {
-    "id":11
+    "id":11,
     "name":"Crucial BX500 480GB 2.5\" 3D NAND SATA SSD CT480BX500SSD1",
     "type":"storage",
     "brand":"Crucial",
@@ -152,7 +152,7 @@ CrucialBX500 = {
     "form factor":"2.5\""
  }
 WD10EZEX = {
-    "id":12
+    "id":12,
     "name":"WD WD10EZEX 1TB Blue 3.5\" 7200RPM SATA3 Hard Drive",
     "type":"storage",
     "brand":"Western Digital",
@@ -162,7 +162,7 @@ WD10EZEX = {
     "form factor":"3.5\""
  }
 Samsung870Evo = {
-    "id" = 13
+    "id":13,
     "name":"Samsung 870 Evo 500GB 2.5\" SATA III 6GB/s V-NAND SSD MZ-77E500BW",
     "type":"storage",
     "brand":"Samsung",
@@ -191,8 +191,7 @@ class ProductList(Resource):
 
         category = data.get('category')
         
-
-        return ('products':products[category])
+        return ({'products':products[category]})
 
     def put(self):
         return
@@ -205,7 +204,7 @@ class ProductPage(Resource):
         category = data.get('category')
         productID = data.get('id')
 
-        for product in products['category']:
+        for product in products[category]:
             if productID == product['id']:
-                return ('product':product)
+                return ({'product':product})
         
