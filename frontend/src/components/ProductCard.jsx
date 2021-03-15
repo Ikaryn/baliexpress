@@ -10,18 +10,18 @@ const ProductCard = ({pid, name, price, image, category}) => {
     const history = useHistory();
     
     const handleClick = () => {
-        history.push(`product/${category}/${pid}`)
+        history.push(`/product/${category}/${pid}`)
     }
     
     return (
         <Card>
             <CardActionArea onClick={() => handleClick()}>
-                <CardMedia 
+                {/* <CardMedia 
                     title="Product image"
                     image={image}
-                />
+                /> */}
                 <CardContent>
-                    <Typography variant="h2">
+                    <Typography variant="h3">
                         {name}
                     </Typography>
                     <Typography variant="h4">

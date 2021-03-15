@@ -4,6 +4,7 @@
 
 .root {
   display: flex;
+  padding-top: 10%;
 }
 
 .App-logo {
@@ -44,4 +45,5 @@
 .profile-page-container {
   display: flex;
   flex-direction: row;
+  padding: 0 10em 0 10em;
 }

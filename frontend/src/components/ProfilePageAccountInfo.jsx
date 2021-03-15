@@ -1,7 +1,6 @@
 import { Grid, Button } from '@material-ui/core';
 import React from 'react';
 import AccInfoblock from './AccInfoBlock';
-import ShippingInfoblock from './ShippingInfoBlock';
 
 
 const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
@@ -11,28 +10,26 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
     const handleEditDetails = () => {
         setEditComponent(true);
     };
+
     
-    return (<Grid container item direction="column">
-        <AccInfoblock 
-            editComponent={editComponent}
-            name={accInfo.name}
-            email={accInfo.email}
-            phone={accInfo.phone}
-            setEditComponent={setEditComponent}
-        />
-        <Grid item>
-            <Button variant="contained" >Change Password</Button>
-        </Grid> 
-        {/* <ShippingInfoblock
-            addr={shippingInfo.addr}
-            city={shippingInfo.city}
-            pCode={shippingInfo.pCode}
-            country={shippingInfo.country}
-        /> */}
-        <Grid item>
-            <Button variant="contained" onClick={()=> handleEditDetails()}>Edit Details</Button>
+    console.log(accInfo)
+    return (
+        <Grid container item direction="column" className="information-tab">
+            <AccInfoblock 
+                editComponent={editComponent}
+                accInfo={accInfo}
+                shippingInfo={shippingInfo}
+                setEditComponent={setEditComponent}
+            />
+            <Grid container item direciton="row">
+                <Grid item>
+                    <Button variant="contained" >Change Password</Button>
+                </Grid> 
+                <Grid item>
+                    <Button variant="contained" onClick={()=> handleEditDetails()}>Edit Details</Button>
+                </Grid>
+            </Grid>
         </Grid>
-    </Grid>
     )
 }
 

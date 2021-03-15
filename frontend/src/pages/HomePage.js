@@ -18,12 +18,24 @@ const HomePage = () => {
         history.push('/register');
     }
 
+    const navCPU = () => {
+        history.push('/product/CPU');
+    }
+    const navMotherboards = () => {
+        history.push('/product/Motherboards');
+    }
+    const navStorage = () => {
+        history.push('/product/Storage');
+    }
 
     return (
         <div>
             {/* <NavBar /> */}
             <button onClick={() => {navLogin();}}>Login Page</button>
             <button onClick={() => {navRegister();}}>Register Page</button>
+            <button onClick={() => {navCPU();}}>CPU page</button>
+            <button onClick={() => {navMotherboards();}}>Motherboards page</button>
+            <button onClick={() => {navStorage();}}>Storage page</button>
         </div>
         )
 };
