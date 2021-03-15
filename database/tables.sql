@@ -36,7 +36,7 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE Products(
-    id          serial,
+    id          int GENERATED ALWAYS AS IDENTITY,
     name        text,
     price       numeric(50, 2),
     type        text,
@@ -47,132 +47,132 @@ CREATE TABLE Products(
 );
 
 CREATE TABLE Orders(
-    id serial,
-    userid integer,
-    date date,
+    id      int GENERATED ALWAYS AS IDENTITY,
+    userid  integer,
+    date    date,
     primary key (id),
     foreign key (userid) references Users(id)
 );
 
 CREATE TABLE Purchased(
-    orderid integer,
-    productid integer,
-    quantity integer,
+    orderid     integer,
+    productid   integer,
+    quantity    integer,
     primary key (orderid, productid),
     foreign key (orderid) references Orders(id),
     foreign key (productid) references Users(id)
 );
 
 CREATE TABLE CPU(
-    id int,
-    manufacturer text,
-    corecount int,
+    id              int,
+    manufacturer    text,
+    corecount       int,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Cooling(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Motherboards(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Memory(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Storage(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE GraphicsCards(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Cases(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE PSU(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE OpticalDrives(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Monitors(
-    id int,
-    manufacturer text,
-    screensize text,
+    id              int,
+    manufacturer    text,
+    screensize      text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Mice(
-    id int,
-    manufacturer text,
-    colour text,
+    id              int,
+    manufacturer    text,
+    colour          text,
     primary key (id),
     foreign key (id) references Products(id)
 );
 
 CREATE TABLE Builds(
-    buildid serial,
-    userid int,
+    buildid int GENERATED ALWAYS AS IDENTITY,
+    userid  int,
     primary key (buildid),
     foreign key (userid) references Users(id)
 );
 
 CREATE TABLE BuildParts(
-    buildid int,
-    productid int,
-    quantity int,
+    buildid     int,
+    productid   int,
+    quantity    int,
     primary key (buildid, productid),
     foreign key (buildid) references Builds(buildid),
     foreign key (productid) references Products(id)
 );
 
 CREATE TABLE Reviews(
-    productid int,
-    userid int,
-    rating int,
-    reviewtext text,
-    reviewdate date,
+    productid   int,
+    userid      int,
+    rating      int,
+    reviewtext  text,
+    reviewdate  date,
     primary key (productid, userid),
     foreign key (productid) references Products(id),
     foreign key (userid) references Users(id)
