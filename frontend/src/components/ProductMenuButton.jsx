@@ -15,7 +15,7 @@ const ProductMenuButton = () => {
 
     const handleMenuButtonclick = (category) => {
         // history.push(`/product/${category}`);
-        history.push(`profile/${category}`);
+        history.push(`/product/${category}`);
     }
 
     return (

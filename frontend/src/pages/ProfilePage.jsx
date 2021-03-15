@@ -27,7 +27,7 @@ const ProfilePage = () => {
     
     const handleLogout = () => {
         localStorage.removeItem('token');
-        history.push('');
+        history.push('/');
     }
     React.useEffect(() => {
         (async () => {

@@ -31,7 +31,7 @@ const Register = () => {
     }
     
     const handleLoginClick = () => {
-        history.push('login');
+        history.push('/login');
     }
     
     async function fetchRegister(e) {
