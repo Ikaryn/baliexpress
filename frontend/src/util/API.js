@@ -16,11 +16,11 @@ export default class API {
         return getJSON(`${this.url}/${path}`, options);
     }    
     
-    put(path, body) {
+    put(path, body, header = '') {
         // console.log(options);
         const options = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...header },
             body: JSON.stringify(body)
         }
         

@@ -22,7 +22,7 @@ const ProfilePage = () => {
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
-        name: '', email: '', phone: ''
+        name: '', email: '', phone: '', password: ''
     });
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
@@ -32,6 +32,8 @@ const ProfilePage = () => {
     
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isAdmin');
         history.push('/');
     }
     
@@ -47,6 +49,7 @@ const ProfilePage = () => {
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
                 phone: userDetails.phone,
+                password: userDetails.password,
                 isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
@@ -99,68 +102,69 @@ const ProfilePage = () => {
     const classes = useStyles();
 
     return(
-            <div className="root">
-                <Paper className="profile-page-container">
-                    <Grid container >
-                        <Grid item xs={3}>
-                            <Tabs 
-                                value={value} onChange={handleChange} 
-                                aria-label="profile-tabs"
-                                orientation="vertical"
-                                className={classes.tabs}
-                                >
-                                <Tab label="Profile" />
-                                <Tab label="My Orders" />
-                                <Tab label="My Builds" />
-                                {accInfo.isAdmin && <Tab label="Add Product" />}
-                                {accInfo.isAdmin && <Tab label="View Users" />}     
-                                <Tab label="Logout" />
-                            </Tabs>
+        <div className="root">
+            <Paper className="profile-page-container">
+                <Grid container >
+                    <Grid item xs={3}>
+                        <Tabs 
+                            value={value} onChange={handleChange} 
+                            aria-label="profile-tabs"
+                            orientation="vertical"
+                            className={classes.tabs}
+                            >
+                            <Tab label="Profile" />
+                            <Tab label="My Orders" />
+                            <Tab label="My Builds" />
+                            {accInfo.isAdmin && <Tab label="Add Product" />}
+                            {accInfo.isAdmin && <Tab label="View Users" />}     
+                            {/* <Tab label="Logout" />
+                            */}
+                            <Button onClick={handleOpen}>Logout</Button>
+                        </Tabs>
+                    </Grid>
+                    <Grid item xs={9}>
+                        <TabPanel value={value} index={0}>
+                            <ProfilePageAccountInfo
+                                accInfo={accInfo}
+                                shippingInfo={shippingInfo}
+                                />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            My Orders
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            My Builds
+                        </TabPanel>      
+                        {accInfo.isAdmin && 
+                            <TabPanel value={value} index={3}>
+                                <AddProduct/>
+                            </TabPanel>   
+                        }
+                        {accInfo.isAdmin &&                     
+                            <TabPanel value={value} index={4}>
+                                <ViewUsers/>
+                            </TabPanel>
+                        }
+                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                            Logout
+                        </TabPanel>                        
+                    </Grid>
+                </Grid>
+            </Paper>
+            <Modal open={open} onClick={handleOpen}>
+                <Grid className="logout-confirmation-container">
+                    <Typography>Are you sure you want to logout?</Typography>
+                    <Grid item container direction="row" justify="center">
+                        <Grid item>
+                            <Button variant="contained" onClick={() => handleOpen()}>Cancel</Button>
                         </Grid>
-                        <Grid item xs={9}>
-                            <TabPanel value={value} index={0}>
-                                <ProfilePageAccountInfo
-                                    accInfo={accInfo}
-                                    shippingInfo={shippingInfo}
-                                    />
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                My Orders
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                My Builds
-                            </TabPanel>      
-                            {accInfo.isAdmin && 
-                                <TabPanel value={value} index={3}>
-                                    <AddProduct/>
-                                </TabPanel>   
-                            }
-                            {accInfo.isAdmin &&                     
-                                <TabPanel value={value} index={4}>
-                                    <ViewUsers/>
-                                </TabPanel>
-                            }
-                            <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
-                                Logout
-                            </TabPanel>                        
+                        <Grid item>
+                            <Button variant="contained" onClick={() => handleLogout()}>Confirm</Button>
                         </Grid>
                     </Grid>
-                </Paper>
-                <Modal open={open} onClick={handleOpen}>
-                    <Grid className="logout-confirmation-container">
-                        <Typography>Are you sure you want to logout?</Typography>
-                        <Grid item container direction="row" justify="center">
-                            <Grid item>
-                                <Button variant="contained" onClick={() => handleOpen()}>Cancel</Button>
-                            </Grid>
-                            <Grid item>
-                                <Button variant="contained" onClick={() => handleLogout()}>Confirm</Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Modal>
-            </div>
-    
+                </Grid>
+            </Modal>
+        </div>
     )
 
 }

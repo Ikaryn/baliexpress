@@ -221,8 +221,9 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                     <Typography variant="h3">Account information</Typography>
                 </Grid>
                 <Divider/>
-                {Object.keys(accInfo).map((value) => (
-                    <Grid container item direction="row" spacing={10} justify="space-between">
+                {Object.keys(accInfo).map((value) => {  
+                    if(value === 'isAdmin' || value === 'password') return '';
+                    return <Grid container item direction="row" spacing={10} justify="space-between">
                         <Grid item  className="account-info-field">
                             <Typography variant="h5">{convertFieldName(value) + ':'}</Typography>
                         </Grid>
@@ -241,7 +242,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                             }
                         </Grid>
                     </Grid>
-                ))}
+                     })}
                 <Grid item>
                     <Typography variant="h3">Shipping information</Typography>
                 </Grid>
