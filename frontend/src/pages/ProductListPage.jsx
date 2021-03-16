@@ -1,4 +1,4 @@
-import { Paper, Typography, Grid } from '@material-ui/core';
+import { Paper, Typography, Grid, TextField, Divider } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router';
 import ProductCard from '../components/ProductCard';
@@ -6,9 +6,16 @@ import API from '../util/API';
 
 const api = new API();
 
+const sortTypes = ['Popularity', 'Price-High', 'Price-Low'];
+
 const ProductListPage = () => {
     
     const [products, setProducts] = React.useState([]);
+    const [sortType, setSortType] = React.useState('Popularity')
+    
+    const handleSortChange = (value) => {
+        setSortType(value);
+    }
     
     let {category} = useParams();
     React.useEffect(() => {
@@ -20,18 +27,23 @@ const ProductListPage = () => {
                 setProducts(products.products);
             }
         })();
-    
-        // console.log(category);
-    },[category])
+    },[category]);
     
     return (
         <div className="root">
             <Grid container direction="row" className='product-list-page-container'>
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
                     <div className="product-list-filter-container">
-                        <Typography>filter placeholder</Typography>
+                        <Grid item>
+                                <Typography variant="h4">Narrow your search</Typography>
+                                <Divider />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h5">Brand:</Typography>
+                        </Grid>
                     </div>
                 </Grid>
+<<<<<<< HEAD
                 <Grid container item direction="row" xs={9} spacing={3}>
                     {products.map((p) => (
                         <Grid item xs={3}>
@@ -43,6 +55,42 @@ const ProductListPage = () => {
                                 />
                         </Grid>
                     ))}
+=======
+                <Grid container item direction="column"  xs={9}>
+                    <Grid container item>
+                        <Paper className="product-list-sort-tab">
+                            <Grid container item direction="row">
+                                <Grid item>
+                                    <Typography variant="h6">Sort by:</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <TextField 
+                                        select value={sortType} 
+                                        onChange={handleSortChange}
+                                        SelectProps={{native:true}}
+                                        >
+                                        {sortTypes.map((type) => (
+                                            <option value={type}>{type}</option>
+                                            ))}
+                                    </TextField>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
+                    <Grid container item direction="row" spacing={3}>
+                        {products.map((p) => (
+                            <Grid item xs={3}>
+                                <ProductCard 
+                                    pid={p.id}
+                                    name={p.name}
+                                    price={p.price}
+                                    image={p.image}
+                                    category={p.type}
+                                    />
+                            </Grid>
+                        ))}
+                    </Grid>
+>>>>>>> 23fad95b7c65ff18e670f465cf2019ac032d501b
                 </Grid>
             </Grid>
         </div>

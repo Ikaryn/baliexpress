@@ -179,10 +179,12 @@ ASRockB550 = {
     "type":"Motherboards",
     "brand":"ASRock",
     "price":159,
-    "socket":"AM4",
-    "memory supported":"DDR4",
-    "no. memory slots":4,
-    "Wi-Fi":False,
+    "specs": {
+        "socket":"AM4",
+        "memory supported":"DDR4",
+        "no. memory slots":4,
+        "Wi-Fi":False,
+    },
     "image": ASRockB550_img
 }
 
@@ -192,10 +194,12 @@ MSIB450M = {
     "type":"Motherboards",
     "brand":"MSI",
     "price":109,
-    "socket":"AM4",
-    "memory supported":"DDR4",
-    "no. memory slots":4,
-    "Wi-Fi":False,
+    "specs": {
+        "socket":"AM4",
+        "memory supported":"DDR4",
+        "no. memory slots":4,
+        "Wi-Fi":False,
+    },
     "image": MSIB450M_img
 }
 ASRockB460 = {
@@ -204,10 +208,12 @@ ASRockB460 = {
     "type":"Motherboards",
     "brand":"ASRock",
     "price":149,
-    "socket":"LGA 1200",
-    "memory supported":"DDR4",
-    "no. memory slots":4,
-    "Wi-Fi":False,
+    "specs": {
+        "socket":"LGA 1200",
+        "memory supported":"DDR4",
+        "no. memory slots":4,
+        "Wi-Fi":False,
+    },
     "image": ASRockB460_img
 }
 Gigabyte_B450M_D53H = {
@@ -216,10 +222,12 @@ Gigabyte_B450M_D53H = {
     "type":"Motherboards",
     "brand":"Gigabyte",
     "price":139,
-    "socket":"AM4",
-    "memory supported":"DDR4",
-    "no. memory slots":4,
-    "Wi-Fi":False,
+    "specs": {
+        "socket":"AM4",
+        "memory supported":"DDR4",
+        "no. memory slots":4,
+        "Wi-Fi":False,
+    },
     "image": Gigabyte_B450M_D53H_img
 }
 TeamMS30 = {
@@ -228,9 +236,11 @@ TeamMS30 = {
     "type":"Storage",
     "brand":"Team",
     "price":150,
-    "capacity":"1 TB",
-    "format":"SSD",
-    "form factor":"M.2",
+    "specs": {
+        "capacity":"1 TB",
+        "format":"SSD",
+        "form factor":"M.2",
+    },
     "image": TeamMS30_img
  }
 CrucialBX500 = {
@@ -239,9 +249,11 @@ CrucialBX500 = {
     "type":"Storage",
     "brand":"Crucial",
     "price":67,
-    "capacity":"480 GB",
-    "format":"SSD",
-    "form factor":"2.5\"",
+    "specs": {
+        "capacity":"480 GB",
+        "format":"SSD",
+        "form factor":"2.5\"",
+    },
     "image": CrucialBX500_img
  }
 WD10EZEX = {
@@ -250,9 +262,11 @@ WD10EZEX = {
     "type":"Storage",
     "brand":"Western Digital",
     "price":58,
-    "capacity":"1 TB",
-    "format":"HDD",
-    "form factor":"3.5\"",
+    "specs": {
+        "capacity":"1 TB",
+        "format":"HDD",
+        "form factor":"3.5\"",
+    },
     "image": WD10EZEX_img
  }
 Samsung870Evo = {
@@ -261,9 +275,11 @@ Samsung870Evo = {
     "type":"Storage",
     "brand":"Samsung",
     "price":86,
-    "capacity":"500 GB",
-    "format":"SSD",
-    "form factor":"2.5\"",
+    "specs": {
+        "capacity":"500 GB",
+        "format":"SSD",
+        "form factor":"2.5\"",
+    },
     "image": Samsung870Evo_img
  }
 

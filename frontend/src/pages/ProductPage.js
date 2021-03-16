@@ -5,10 +5,15 @@ import '../components/styles/product.css'
 import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
+<<<<<<< HEAD
 import SpecificationList from '../components/SpecificationList';
 import {
     useHistory,
   } from 'react-router-dom';
+=======
+// import SpecificationList from '../components/SpecificationList'
+
+>>>>>>> 23fad95b7c65ff18e670f465cf2019ac032d501b
 const api = new API();
 
 const TabPanel = ({children, value, index, ...other}) => {
@@ -59,8 +64,9 @@ const ProductPage = () => {
             const userDetails = response.accountInfo.userInfo;
             setIsAdmin(userDetails.admin);
         })();
-    }, [isAdmin])
-    
+    }, [])
+    console.log(productInfo.specs);
+    console.log(productInfo);
     
     return (
         <div className="root">
@@ -108,8 +114,20 @@ const ProductPage = () => {
                             {productDesc.map((v) => (<Tab label={v} />))}
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                            Specifications placeholder
+                            {/* Specifications placeholder */}
                             {/* <SpecificationList specs={productInfo.specs} /> */}
+                            <Grid container direction="column" className="product-spec-list">
+                                {productInfo.specs && Object.keys(productInfo.specs).map((key) => (
+                                    <Grid item container direction="row" justify="space-between">
+                                        <Grid item>
+                                            <Typography variant="h6">{key}:</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h6">{productInfo.specs[key]}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             Description placeholder
