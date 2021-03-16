@@ -43,7 +43,7 @@
 }
 
 .profile-page-container {
-  display: flex;
-  flex-direction: row;
-  padding: 0 10em 0 10em;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10em 0 10em;
 }

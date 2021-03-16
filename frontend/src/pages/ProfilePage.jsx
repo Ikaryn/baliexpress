@@ -4,6 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import ProfilePageAccountInfo from '../components/ProfilePageAccountInfo';
 import AddProduct from '../components/AddProduct';
+import ViewUsers from '../components/ViewUsers';
 import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
@@ -40,7 +41,8 @@ const ProfilePage = () => {
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
-                phone: userDetails.phone}
+                phone: userDetails.phone,
+                isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
@@ -90,43 +92,52 @@ const ProfilePage = () => {
         },
     }));
     const classes = useStyles();
+
     return(
-            <div className="profile-page-container">
-                <Paper>
-                    <Grid container direction="column" className={classes.root}>
-                        <Tabs 
-                            value={value} onChange={handleChange} 
-                            aria-label="profile-tabs"
-                            orientation="horizontal"
-                            className={classes.tabs}
-                        >
-                            <Tab label="Profile" />
-                            <Tab label="My Orders" />
-                            <Tab label="My Builds" />
-                            <Tab label="Add Product" />
-                            <Tab label="Logout" />
-                        </Tabs>
-                        <TabPanel value={value} index={0}>
-                            <ProfilePageAccountInfo
-                                accInfo={accInfo}
-                                shippingInfo={shippingInfo}
-                            />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            My Orders
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            My Builds
-                        </TabPanel>   
+        <div className="root profile-page-container">
+            <Paper>
+                <Grid container direction="column" className={classes.root}>
+                    <Tabs 
+                        value={value} onChange={handleChange} 
+                        aria-label="profile-tabs"
+                        orientation="horizontal"
+                        className={classes.tabs}
+                    >
+                        <Tab label="Profile" />
+                        <Tab label="My Orders" />
+                        <Tab label="My Builds" />
+                        {accInfo.isAdmin && <Tab label="Add Product" />}
+                        {accInfo.isAdmin && <Tab label="View Users" />}                        
+                        <Tab label="Logout" />
+                    </Tabs>
+                    <TabPanel value={value} index={0}>
+                        <ProfilePageAccountInfo
+                            accInfo={accInfo}
+                            shippingInfo={shippingInfo}
+                        />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        My Orders
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        My Builds
+                    </TabPanel>
+                    {accInfo.isAdmin && 
                         <TabPanel value={value} index={3}>
                             <AddProduct/>
                         </TabPanel>   
+                    }
+                    {accInfo.isAdmin &&                     
                         <TabPanel value={value} index={4}>
-                            Logout
-                        </TabPanel>                       
-                    </Grid>
-                </Paper>
-            </div>
+                            <ViewUsers/>
+                        </TabPanel>
+                    }
+                    <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                        Logout
+                    </TabPanel>                       
+                </Grid>
+            </Paper>
+        </div>
     
     )
 
