@@ -29,13 +29,13 @@ const EditProductPage = ({}) => {
         })();
     },[category, pid])
 
-    function updateItem(){
+    async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
             //api call edit
-            
+            history.push(`product/${category}/${pid}`);  
         }
     }
-    function removeItem(){
+    async function removeItem(){
         if(window.confirm('Are you sure you want to remove this product?')){
             //api call remove
             history.push('/');

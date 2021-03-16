@@ -311,9 +311,9 @@ class ProductPage(Resource):
                 return ({'product':product})
         return {'error':"Product not found"}
 
-    def post(self, product):
+    def post(self):
         print("Product Post received")
-
-        category = product['category']
+        product = request.json
+        category = product['type']
 
         products[category].append(product)
