@@ -176,7 +176,7 @@ Intel_Core_i3_10100 = {
 ASRockB550 = {
     "id":6,
     "name":"ASRock B550 Phantom Gaming 4 AM4 ATX Motherboard",
-    "type":"motherboard",
+    "type":"Motherboards",
     "brand":"ASRock",
     "price":159,
     "socket":"AM4",
@@ -189,7 +189,7 @@ ASRockB550 = {
 MSIB450M = {
     "id":7,
     "name":"MSI B450M PRO-VDH MAX AM4 Micro-ATX Motherboard",
-    "type":"motherboard",
+    "type":"Motherboards",
     "brand":"MSI",
     "price":109,
     "socket":"AM4",
@@ -201,7 +201,7 @@ MSIB450M = {
 ASRockB460 = {
     "id":8,
     "name":"ASRock B460 Phantom Gaming 4 LGA 1200 ATX Motherboard",
-    "type":"motherboard",
+    "type":"Motherboards",
     "brand":"ASRock",
     "price":149,
     "socket":"LGA 1200",
@@ -213,7 +213,7 @@ ASRockB460 = {
 Gigabyte_B450M_D53H = {
     "id":9,
     "name":"Gigabyte B450M DS3H WIFI AM4 Micro-ATX Motherboard",
-    "type":"motherboard",
+    "type":"Motherboards",
     "brand":"Gigabyte",
     "price":139,
     "socket":"AM4",
@@ -225,7 +225,7 @@ Gigabyte_B450M_D53H = {
 TeamMS30 = {
     "id":10,
     "name":"Team MS30 1TB M.2 SATA SSD TM8PS7001T0C101",
-    "type":"storage",
+    "type":"Storage",
     "brand":"Team",
     "price":150,
     "capacity":"1 TB",
@@ -236,7 +236,7 @@ TeamMS30 = {
 CrucialBX500 = {
     "id":11,
     "name":"Crucial BX500 480GB 2.5\" 3D NAND SATA SSD CT480BX500SSD1",
-    "type":"storage",
+    "type":"Storage",
     "brand":"Crucial",
     "price":67,
     "capacity":"480 GB",
@@ -247,7 +247,7 @@ CrucialBX500 = {
 WD10EZEX = {
     "id":12,
     "name":"WD WD10EZEX 1TB Blue 3.5\" 7200RPM SATA3 Hard Drive",
-    "type":"storage",
+    "type":"Storage",
     "brand":"Western Digital",
     "price":58,
     "capacity":"1 TB",
@@ -258,7 +258,7 @@ WD10EZEX = {
 Samsung870Evo = {
     "id":13,
     "name":"Samsung 870 Evo 500GB 2.5\" SATA III 6GB/s V-NAND SSD MZ-77E500BW",
-    "type":"storage",
+    "type":"Storage",
     "brand":"Samsung",
     "price":86,
     "capacity":"500 GB",

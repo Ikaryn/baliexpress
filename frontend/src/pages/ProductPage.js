@@ -40,6 +40,7 @@ const ProductPage = () => {
     
     React.useEffect(() => {
         (async () => {
+            console.log(category)
             const products = await api.get(`product/${category}`);
             console.log(products)
             const product = products.products.filter((p) => p.id === Number(pid));
