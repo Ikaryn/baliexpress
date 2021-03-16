@@ -22,7 +22,7 @@ const ProfilePage = () => {
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
-        name: '', email: '', phone: ''
+        name: '', email: '', phone: '', password: ''
     });
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
@@ -47,6 +47,7 @@ const ProfilePage = () => {
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
                 phone: userDetails.phone,
+                password: userDetails.password,
                 isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
