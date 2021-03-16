@@ -31,13 +31,35 @@ const EditProductPage = ({}) => {
 
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
-            //api call edit
+            const options = {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'edit product',
+                },
+                body: JSON.stringify({
+                    id: pid
+                })
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            console.log(res);
             history.push(`product/${category}/${pid}`);  
         }
     }
     async function removeItem(){
         if(window.confirm('Are you sure you want to remove this product?')){
-            //api call remove
+            const options = {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: pid
+                })
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}`, options);
             history.push('/');
         }
     }

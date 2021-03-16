@@ -7,7 +7,6 @@ const ViewUsers = ({}) => {
     const [users, setUsers] = React.useState([]);
     React.useEffect(() => {
         (async () => {
-            console.log("SSSSSSSSSSSSSSSS")
             const options = {
                 method: 'GET',
                 headers: { 
@@ -17,7 +16,6 @@ const ViewUsers = ({}) => {
             }
             const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
-            console.log("SSSSSSSSSSSSSSSS1")
             setUsers(res.user);
         })();
     },[])

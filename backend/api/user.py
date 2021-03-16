@@ -240,6 +240,7 @@ class Profile(Resource):
 
             # Needs productId to get the right product for editing
             productId = data.get('id')
+            print(productId)
             product = p.getProduct(productId)
             for field in product:
                 if field == 'image':
