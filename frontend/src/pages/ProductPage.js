@@ -66,10 +66,10 @@ const ProductPage = () => {
                                     <Typography variant="h6">{productInfo.brand}</Typography>
                                 </Grid>
                                 <Grid item container direction="row" justify="space-between" className="product-price-review">
-                                    <Grid item>
+                                    <Grid item xs={2}>
                                         <Typography variant="h5">${productInfo.price}.00</Typography>
                                     </Grid>
-                                    <Grid container item direction="column">
+                                    <Grid container item direction="column" xs={2}>
                                         <Grid item>
                                             <Rating value={rating}/>
                                         </Grid>
@@ -78,8 +78,8 @@ const ProductPage = () => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Button variant="contained">Add to Cart</Button>
+                                <Grid item >
+                                    <Button variant="contained" className="cart-button">Add to Cart</Button>
                                 </Grid>
                         </Grid>
                 </Grid>

@@ -51,10 +51,16 @@ const NavBar = () => {
                     <Grid item xs={1}>
                         <Button>Build-A-PC</Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <Paper>
-                            <InputBase placeholder="Search products..."/>
-                            <SearchIcon/>
+                            <Grid container item direction="row" justify="space-between" alignItems="center">
+                                    <Grid item>
+                                        <InputBase placeholder="Search products..."/>
+                                    </Grid>
+                                    <Grid item>
+                                        <SearchIcon/>
+                                    </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                     <Grid item xs={1}>

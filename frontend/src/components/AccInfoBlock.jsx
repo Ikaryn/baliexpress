@@ -197,26 +197,28 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     }
     console.log(Object.keys(accInfo));
     return (
-            <Grid container item direction="column">
+            <Grid container item direction="column" spacing={2}>
                 <Grid item>
                     <Typography variant="h3">Account information</Typography>
                 </Grid>
                 <Divider/>
                 {Object.keys(accInfo).map((value) => (
-                    <Grid container item direction="row">
+                    <Grid container item direction="row" spacing={10} justify="space-between">
                         <Grid item  className="account-info-field">
                             <Typography variant="h5">{convertFieldName(value) + ':'}</Typography>
                         </Grid>
                         <Grid item className="account-info-field">
                             {editComponent === true ?
-                            
-                                 <FormControl error={getErrorValues(value) === '' ? false : true}>
-                                    <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
-                                    <FormHelperText>{getErrorValues(value)}</FormHelperText>
-                                </FormControl>
-
+                                <Grid item>
+                                    <FormControl error={getErrorValues(value) === '' ? false : true}>
+                                        <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+                                        <FormHelperText>{getErrorValues(value)}</FormHelperText>
+                                    </FormControl>
+                                </Grid>
                             :
+                            <Grid item>
                                 <Typography variant="h5">{getInformationValues(value)}</Typography>
+                            </Grid>
                             }
                         </Grid>
                     </Grid>
@@ -226,24 +228,27 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 </Grid>
                 <Divider/>
                 {Object.keys(shippingInfo).map((value) => (
-                    <Grid container item direction="row">
+                    <Grid container item direction="row" spacing={10} justify="space-between">
                         <Grid item className="account-info-field">
                             <Typography variant="h5">{convertFieldName(value) + ':'}</Typography>
                         </Grid>
                         <Grid item className="account-info-field">
                             {editComponent === true ?
-
-                                <FormControl error={getErrorValues(value) === '' ? false : true}>
-                                    <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
-                                    <FormHelperText>{getErrorValues(value)}</FormHelperText>
-                                </FormControl>
+                                <Grid item>
+                                    <FormControl error={getErrorValues(value) === '' ? false : true}>
+                                        <Input value={getInformationValues(value)} onChange={(event) => {handleChange(event.target.value, value)}} />
+                                        <FormHelperText>{getErrorValues(value)}</FormHelperText>
+                                    </FormControl>
+                                </Grid>
                             :
-                                <Typography variant="h5">{getInformationValues(value)}</Typography>
+                                <Grid item>
+                                    <Typography variant="h5">{getInformationValues(value)}</Typography>
+                                </Grid>
                             }
                         </Grid>
                     </Grid>
                 ))}
-                {editComponent ?                 <Grid item>
+                {editComponent ? <Grid item>
                     <Button variant="contained" onClick={() => handleSubmit()}>Confirm Changes</Button>
                 </Grid> : ''}
             </Grid>
