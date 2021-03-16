@@ -2,9 +2,13 @@ import { Box, Button, Divider, Grid, Input, Typography } from '@material-ui/core
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
+import {
+    useHistory,
+  } from 'react-router-dom';
 const api = new API();
 
 const EditProductPage = ({}) => {
+    const history = useHistory();
     const { category, pid } = useParams();
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const [title, setTitle] = React.useState('');
@@ -25,11 +29,40 @@ const EditProductPage = ({}) => {
         })();
     },[category, pid])
 
-    function RemoveProduct(){
-        console.log("Remove product");
-        const response = api.remove(`product/${category}/${pid}`);
+    async function updateItem(){
+        if(window.confirm('Are you sure you want to edit this product?')){
+            const options = {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'edit product',
+                },
+                body: JSON.stringify({
+                    id: pid
+                })
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            console.log(res);
+            history.push(`product/${category}/${pid}`);  
+        }
     }
-
+    async function removeItem(){
+        if(window.confirm('Are you sure you want to remove this product?')){
+            const options = {
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: pid
+                })
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            history.push('/');
+        }
+    }
     return(
         <div className="root">
             <Grid container item direction="column" className="information-tab">
@@ -42,8 +75,8 @@ const EditProductPage = ({}) => {
                 <Input onChange={(event) => {}} placeholder="Description" />
                 <Input onChange={(event) => {}} placeholder="Warranty" />
 
-                <Button onClick={() => {}}>Update Item</Button>
-                <Button onClick={() => {RemoveProduct()}}>Remove Item</Button>
+                <Button onClick={() => {updateItem()}}>Update Item</Button>
+                <Button onClick={() => {removeItem()}}>Remove Item</Button>
             </Grid>
         </div>
     )

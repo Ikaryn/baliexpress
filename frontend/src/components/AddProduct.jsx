@@ -3,7 +3,6 @@ import React from 'react';
 import API from '../util/API';
 
 const api = new API();
-
 const AddProduct = ({}) => {
     const [id, setId] =  React.useState('');
     const [category, setCategory] = React.useState('');
@@ -16,7 +15,7 @@ const AddProduct = ({}) => {
     const [desc, setDesc] = React.useState('');
     const [warranty, setWarranty] = React.useState('');
     
-    function AddProduct(){
+    async function AddProduct(){
         console.log("Add product ");
         
         const product = { 
@@ -31,7 +30,7 @@ const AddProduct = ({}) => {
             // warranty: warranty
             };
         console.log(product)
-        const response = api.post('addProduct', product);
+        const response = await api.post('addProduct', product);
     }
 
     return(

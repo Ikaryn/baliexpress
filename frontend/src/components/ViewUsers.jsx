@@ -5,14 +5,20 @@ import API from '../util/API';
 const api = new API();
 const ViewUsers = ({}) => {
     const [users, setUsers] = React.useState([]);
-
     React.useEffect(() => {
         (async () => {
-            //const res = await api.get();
-            const res = [];
-            setUsers(res);
+            const options = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'all users',
+                },
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            setUsers(res.user);
         })();
-    },[users])
+    },[])
 
     return(
         <Grid container item direction="column" className="information-tab">

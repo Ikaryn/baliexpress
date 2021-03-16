@@ -226,7 +226,8 @@ class Profile(Resource):
         # Change the admin status for a user
         elif requestType == 'admin status':
             print('Change admin status attempt received')
-            userId = id
+            userId = str(data.get('userId'))
+            print(userId)
             user = getUser(userId)
 
             # Change the data.get to what is needed to be received from frontend
@@ -239,6 +240,7 @@ class Profile(Resource):
 
             # Needs productId to get the right product for editing
             productId = data.get('id')
+            print(productId)
             product = p.getProduct(productId)
             for field in product:
                 if field == 'image':
