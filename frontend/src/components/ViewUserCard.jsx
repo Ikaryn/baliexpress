@@ -1,11 +1,25 @@
 import { Button, Grid, Input, Typography, Card, CardContent, CardActions, Select, MenuItem } from '@material-ui/core';
 import React from 'react';
-
+import API from '../util/API';
+const api = new API();
 const ViewUsers = ({user}) => {
     const [expand, setExpand] = React.useState(false);
-    const [role, setRole] = React.useState(user.userInfo.admin == 'True');
-    function handleSelectChange(event) {
+    const [role, setRole] = React.useState(user.userInfo.admin);
+    console.log(role, user.userInfo.admin, user.userInfo.email);
+    async function handleSelectChange(event) {
         if(window.confirm('Are you sure you want to change ' + user.userInfo.email + '\'s role?')){
+            const options = {
+                method: 'PUT',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'admin status',
+                },
+                body: JSON.stringify({
+                    admin: true
+                })
+            }
+            const userId = localStorage.getItem('userId');
+            const res = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
             setRole(event.target.value);
         }
     }
