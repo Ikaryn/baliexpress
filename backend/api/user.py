@@ -7,44 +7,44 @@ from flask_restful import Api
 from . import dbaccess as db
 
 #dummy accounts
-accounts = [    {'userId': 1529870708,
-                 'userInfo': {  'name': 'John Smith',
-                                'email': 'johnS@gmail.com',
-                                'password': 'asdfasdf',
-                                'phone':'12345678',
-                                'admin':False,
-                                'streetAddress': '35E Crapperdown Road',
-                                'city': 'Austin',
-                                'country': 'USA',
-                                'postcode': '67553'},
-                 'builds': [],
-                 'orders': []},
+# accounts = [    {'userId': 1529870708,
+#                  'userInfo': {  'name': 'John Smith',
+#                                 'email': 'johnS@gmail.com',
+#                                 'password': 'asdfasdf',
+#                                 'phone':'12345678',
+#                                 'admin':False,
+#                                 'streetAddress': '35E Crapperdown Road',
+#                                 'city': 'Austin',
+#                                 'country': 'USA',
+#                                 'postcode': '67553'},
+#                  'builds': [],
+#                  'orders': []},
 
-                {'userId': 3533306566,
-                 'userInfo': {'name': 'Kevin Eleven',
-                              'email': 'K11@gmail.com',
-                              'password': 'fdsafdsa',
-                              'phone':'87654321',
-                              'admin':False,
-                              'streetAddress': '24 Bellavista Road',
-                              'city': 'Sydney',
-                              'country': 'Australia',
-                              'postcode': '2327'},
-                 'builds': [],
-                 'orders': []},
+#                 {'userId': 3533306566,
+#                  'userInfo': {'name': 'Kevin Eleven',
+#                               'email': 'K11@gmail.com',
+#                               'password': 'fdsafdsa',
+#                               'phone':'87654321',
+#                               'admin':False,
+#                               'streetAddress': '24 Bellavista Road',
+#                               'city': 'Sydney',
+#                               'country': 'Australia',
+#                               'postcode': '2327'},
+#                  'builds': [],
+#                  'orders': []},
                 
-                {'userId': 2624841935,
-                 'userInfo': {'name': 'Jen',
-                              'email': 'jen@gmail.com',
-                              'password': 'aaabbbccc',
-                              'phone':'10101010',
-                              'admin':False,
-                              'streetAddress': '1 Tong Street',
-                              'city': 'Kyoto',
-                              'country': 'Japan',
-                              'postcode': '3456'},
-                 'builds': [],
-                 'orders': []},]
+#                 {'userId': 2624841935,
+#                  'userInfo': {'name': 'Jen',
+#                               'email': 'jen@gmail.com',
+#                               'password': 'aaabbbccc',
+#                               'phone':'10101010',
+#                               'admin':False,
+#                               'streetAddress': '1 Tong Street',
+#                               'city': 'Kyoto',
+#                               'country': 'Japan',
+#                               'postcode': '3456'},
+#                  'builds': [],
+#                  'orders': []},]
 
 # Function to get the account of user through userId
 def getUser (userId):
@@ -126,6 +126,8 @@ class Profile(Resource):
 
         user = db.getUserInfo(userId)
 
+        print("user", user)
+
         if user is None:
             return {'error': 'User not found'}
         else:
@@ -149,8 +151,9 @@ class Profile(Resource):
                         data.get('phone'),
                         data.get('addr'),
                         data.get('city'),
+                        data.get('state'),
                         data.get('country'),
-                        data.get('pCode'))
+                        data.get('postcode'))
 
         user = db.getUserInfo(userId)
         print (user)

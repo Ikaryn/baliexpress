@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="password"
+        password="asdf1234"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -26,13 +26,14 @@ def getUserInfo(id):
 
     try:
         tuple = cur.fetchall()[0]
+        print("tuple", tuple)
         info = {
             "id": tuple[0],
             "name": tuple[1],
             "email": tuple[2],
             "password": tuple[3],
-            "phonenumber": tuple[4],
-            "streetaddress": tuple[5],
+            "phone": tuple[4],
+            "streetAddress": tuple[5],
             "city": tuple[6],
             "state": tuple[7],
             "country": tuple[8],
@@ -66,12 +67,12 @@ def getAllUsers():
             "name": tuple[1],
             "email": tuple[2],
             "password": tuple[3],
-            "phonenumber": tuple[4],
-            "streetaddress": tuple[5],
+            "phone": tuple[4],
+            "streetAddress": tuple[5],
             "city": tuple[6],
             "state": tuple[7],
             "country": tuple[8],
-            "postcode": tuple[9],
+            "pCode": tuple[9],
             "admin": tuple[10]
         }
         users.append(info)
@@ -183,17 +184,18 @@ def addAdmin(name, password, email, phonenumber):
     print("Admin succesfully added")
     #TODO: error handling
 
-def updateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newCountry, newPostcode):
+def updateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode):
     conn = connect()
     cur = conn.cursor()
 
-    query =  """UPDATE Users SET name = %s, email = %s, password = %s, phonenumber = %s, streetaddress = %s, city = %s, country = %s, postcode = %s WHERE id = %s;"""
-    values = (newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newCountry, newPostcode, id)
+    query =  """UPDATE Users SET name = %s, email = %s, password = %s, phonenumber = %s, streetaddress = %s, city = %s, state = %s, country = %s, postcode = %s WHERE id = %s;"""
+    values = (newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode, id)
 
     cur.execute(query, values)
     conn.commit()
     cur.close()
     conn.close()
+    print("User succesfully updated")
     #TODO: error handling
 
 # updates password of user with given id
@@ -333,3 +335,10 @@ def deleteProduct(id):
     finally:
         conn.close()
         return deleted
+
+
+# addUser('anne', 'anne@email.com', 'passowrd', '3124124')
+# addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
+updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
+# print(deleteProduct(50))
+# print("user 1:", getUserInfo(1))
