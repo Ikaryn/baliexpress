@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="jlk1njk2"
+        password="password"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -323,7 +323,7 @@ def deleteProduct(id):
         	"DELETE FROM Products WHERE id = %s", [id]
         )
         deleted = cur.rowcount
-        
+
         conn.commit()
         cur.close()
 
