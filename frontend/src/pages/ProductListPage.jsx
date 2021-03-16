@@ -39,7 +39,6 @@ const ProductListPage = () => {
                                 pid={p.id}
                                 name={p.name}
                                 price={p.price}
-                                image={p.image}
                                 category={p.type}
                                 />
                         </Grid>
