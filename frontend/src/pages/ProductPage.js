@@ -5,7 +5,7 @@ import '../components/styles/product.css'
 import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
-import SpecificationList from '../components/SpecificationList'
+// import SpecificationList from '../components/SpecificationList'
 
 const api = new API();
 
@@ -58,7 +58,8 @@ const ProductPage = () => {
             setIsAdmin(userDetails.admin);
         })();
     }, [])
-    
+    console.log(productInfo.specs);
+    console.log(productInfo);
     
     return (
         <div className="root">
@@ -100,8 +101,20 @@ const ProductPage = () => {
                             {productDesc.map((v) => (<Tab label={v} />))}
                         </Tabs>
                         <TabPanel value={value} index={0}>
-                            Specifications placeholder
+                            {/* Specifications placeholder */}
                             {/* <SpecificationList specs={productInfo.specs} /> */}
+                            <Grid container direction="column" className="product-spec-list">
+                                {productInfo.specs && Object.keys(productInfo.specs).map((key) => (
+                                    <Grid item container direction="row" justify="space-between">
+                                        <Grid item>
+                                            <Typography variant="h6">{key}:</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h6">{productInfo.specs[key]}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                ))}
+                            </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             Description placeholder
