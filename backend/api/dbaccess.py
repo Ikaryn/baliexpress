@@ -333,8 +333,3 @@ def deleteProduct(id):
     finally:
         conn.close()
         return deleted
-
-
-# addUser('anne', 'anne@email.com', 'passowrd', '3124124')
-# addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-print(deleteProduct(50))
