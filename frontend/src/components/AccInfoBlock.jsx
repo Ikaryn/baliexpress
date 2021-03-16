@@ -191,7 +191,17 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
 
         if (error) return;
 
-        const body = {name: editName, email: editEmail, phone: editPhone};
+        const body = {
+            name: editName, 
+            email: editEmail, 
+            phone: editPhone, 
+            addr: editAddr,
+            city: editCity,
+            postcode: editPCode,
+            country: editCountry,
+            state: editState
+        };
+        
         const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
         console.log(response);
         setEditComponent(false);
