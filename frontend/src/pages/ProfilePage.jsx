@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -26,11 +26,16 @@ const ProfilePage = () => {
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
     });
-    const [admin, isAdmin] = React.useState(false);
+    const [isAdmin, setIsAdmin] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
     
     const handleLogout = () => {
         localStorage.removeItem('token');
         history.push('/');
+    }
+    
+    const handleOpen = () => {
+        open ? setOpen(false) : setOpen(true);
     }
     React.useEffect(() => {
         (async () => {
@@ -105,7 +110,7 @@ const ProfilePage = () => {
                                 <Tab label="My Orders" />
                                 <Tab label="My Builds" />
                                 <Tab label="Add Product" />
-                                <Tab label="Logout" />
+                                <Tab label="Logout" onClick={()=>handleOpen()} />
                             </Tabs>
                         </Grid>
                         <Grid item xs={9}>
@@ -123,13 +128,23 @@ const ProfilePage = () => {
                             </TabPanel>   
                             <TabPanel value={value} index={3}>
                                 <AddProduct/>
-                            </TabPanel>   
-                            <TabPanel value={value} index={4}>
-                                Logout
-                            </TabPanel>                       
+                            </TabPanel>                     
                         </Grid>
                     </Grid>
                 </Paper>
+                <Modal open={open} onClick={handleOpen}>
+                    <Grid className="logout-confirmation-container">
+                        <Typography>Are you sure you want to logout?</Typography>
+                        <Grid item container direction="row" justify="center">
+                            <Grid item>
+                                <Button variant="contained" onClick={() => handleOpen()}>Cancel</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="contained" onClick={() => handleLogout()}>Confirm</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Modal>
             </div>
     
     )

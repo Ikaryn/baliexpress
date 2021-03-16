@@ -30,7 +30,7 @@ const ProductPage = () => {
     
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
-    
+    const [isAdmin, setIsAdmin] = React.useState(0);
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
@@ -48,6 +48,16 @@ const ProductPage = () => {
         })();
     
     },[category, pid])
+    
+    React.useEffect(() => {
+        (async () => {
+            const userId = localStorage.getItem('userId');
+            const response = await api.get(`profile/${userId}?userId=${userId}`);
+            const userDetails = response.accountInfo.userInfo;
+            setIsAdmin(userDetails.admin);
+        })();
+    }, [])
+    
     
     return (
         <div className="root">
