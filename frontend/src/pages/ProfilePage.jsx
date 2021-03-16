@@ -32,6 +32,8 @@ const ProfilePage = () => {
     
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isAdmin');
         history.push('/');
     }
     
@@ -115,7 +117,9 @@ const ProfilePage = () => {
                             <Tab label="My Builds" />
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            <Tab label="Logout" />
+                            {/* <Tab label="Logout" />
+                            */}
+                            <Button onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
