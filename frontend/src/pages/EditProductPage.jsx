@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Input, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, TextField, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
@@ -25,6 +25,13 @@ const EditProductPage = ({}) => {
             console.log(products)
             const product = products.products.filter((p) => p.id === Number(pid));
             setProductInfo(product[0]);
+            setTitle(product[0].name);
+            setSubheading(product[0].brand);
+            setPrice(product[0].price);
+            setStock(product[0].stock);
+            setSpecs(product[0].specs);
+            setDesc(product[0].desc);
+            setWarranty(product[0].warranty);
             console.log(product[0]);
         })();
     },[category, pid])
@@ -38,13 +45,21 @@ const EditProductPage = ({}) => {
                     'Request-Type': 'edit product',
                 },
                 body: JSON.stringify({
-                    id: pid
+                    id: pid,
+                    name: title,
+                    type: category,
+                    subheading: subheading,
+                    price: price,
+                    stock: stock,
+                    specs: specs,
+                    desc: desc,
+                    warranty: warranty
                 })
             }
             const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`profile/${userId}`, options);
             console.log(res);
-            history.push(`product/${category}/${pid}`);  
+            history.push(`/product/${category}/${pid}`);  
         }
     }
     async function removeItem(){
@@ -60,21 +75,21 @@ const EditProductPage = ({}) => {
             }
             const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`profile/${userId}`, options);
-            history.push('/');
+            history.push(`/product/${category}`);
         }
     }
     return(
         <div className="root">
             <Grid container item direction="column" className="information-tab">
                 <Typography variant="h3">Edit Product Details:</Typography>
-                <Input onChange={(event) => {}} placeholder="Title" value={productInfo.name}/>
-                <Input onChange={(event) => {}} placeholder="Subheading" value={productInfo.brand} />
-                <Input onChange={(event) => {}} placeholder="Price" value={productInfo.price} />
-                <Input onChange={(event) => {}} placeholder="Stock" />
-                <Input onChange={(event) => {}} placeholder="Specs" />
-                <Input onChange={(event) => {}} placeholder="Description" />
-                <Input onChange={(event) => {}} placeholder="Warranty" />
-
+                <TextField onChange={(event) => {setTitle(event.target.value)}} placeholder="Title" value={title} />
+                <TextField onChange={(event) => {setSubheading(event.target.value)}} placeholder="Subheading" value={subheading} />
+                <TextField onChange={(event) => {setPrice(event.target.value)}} placeholder="Price" value={price} />
+                <TextField onChange={(event) => {setStock(event.target.value)}} placeholder="Stock" value={stock} />
+                {/*<TextField onChange={(event) => {setSpecs(event.target.value)}} placeholder="Specs" value={specs} />*/}
+                <TextField onChange={(event) => {setDesc(event.target.value)}} placeholder="Description" value={desc} />
+                <TextField onChange={(event) => {setWarranty(event.target.value)}} placeholder="Warranty" value={warranty} />
+                
                 <Button onClick={() => {updateItem()}}>Update Item</Button>
                 <Button onClick={() => {removeItem()}}>Remove Item</Button>
             </Grid>
