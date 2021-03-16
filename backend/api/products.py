@@ -297,7 +297,7 @@ products = {
 
 def getProduct(productId):
     for category in products:
-        for product in category:
+        for product in products[category]:
             if product['id'] == productId:
                 return product
 

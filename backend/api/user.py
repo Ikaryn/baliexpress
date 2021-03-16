@@ -53,7 +53,7 @@ accounts = [    {'userId': 1529870708,
 # Function to get the account of user through userId
 def getUser (userId):
     for account in accounts:
-        print("comparing", str(userId), 'to' str(account['userId']))
+        # print("comparing", str(userId), 'to', str(account['userId']))
         if (str(userId) == str(account['userId'])):
             return account
     
@@ -240,6 +240,8 @@ class Profile(Resource):
         # Edit product details
         elif requestType == 'edit product':
             print('Edit product attempt received')
+
+            print("product data", data)
 
             # Needs productId to get the right product for editing
             productId = data.get('id')
