@@ -16,11 +16,14 @@ const ProductCard = ({pid, name, price, image, category}) => {
     return (
         <Card>
             <CardActionArea onClick={() => handleClick()}>
-                <CardMedia 
+                {/* <CardMedia 
                     title="Product image"
-                    src={image === 1 ? amdryzen52600 : image}
+                    src={image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+image}
                     // src={amdryzen52600}
-                />
+                /> */}
+                <div className="product-card-image-container">
+                    <img src={"data:image/jpeg;base64,"+image} alt={name} className="product-card-image"/>
+                </div>
                 <CardContent>
                     <Typography variant="h6">
                         {name}

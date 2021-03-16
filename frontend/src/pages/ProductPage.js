@@ -65,7 +65,7 @@ const ProductPage = () => {
                 <Grid container item direction="row" className="product-info">
                         <Grid item xs={3}>
                             <div className="product-image-container">
-                                <img src={productInfo.image === 1 ? amdryzen52600 : productInfo.image} alt="product" className="product-image"/>
+                                <img src={productInfo.image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
                             </div>
                         </Grid>
                         <Grid container item direction="column" xs={7} alignItems="center" className="product-text-info">
