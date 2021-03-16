@@ -1,6 +1,8 @@
 import { Button, Grid, Input, Typography } from '@material-ui/core';
 import React from 'react';
+import API from '../util/API';
 
+const api = new API();
 const AddProduct = ({}) => {
     const [category, setCategory] = React.useState('');
     const [title, setTitle] = React.useState('');
@@ -11,7 +13,18 @@ const AddProduct = ({}) => {
     const [desc, setDesc] = React.useState('');
     const [warranty, setWarranty] = React.useState('');
     
-    function AddProduct(){
+    async function AddProduct(){
+        const response = await api.post('profile', {
+            type: category,
+            title: title,
+            subheading: subheading,
+            price, price,
+            stock, stock,
+            specs, specs,
+            desc, desc,
+            warranty, warranty
+        });
+        console.log(response);
         console.log("temp fetch backend with inputs, rerender with error or not.");
     }
 

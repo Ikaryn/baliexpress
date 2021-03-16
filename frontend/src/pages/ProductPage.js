@@ -5,15 +5,11 @@ import '../components/styles/product.css'
 import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
-<<<<<<< HEAD
-import SpecificationList from '../components/SpecificationList';
 import {
     useHistory,
   } from 'react-router-dom';
-=======
 // import SpecificationList from '../components/SpecificationList'
 
->>>>>>> 23fad95b7c65ff18e670f465cf2019ac032d501b
 const api = new API();
 
 const TabPanel = ({children, value, index, ...other}) => {
