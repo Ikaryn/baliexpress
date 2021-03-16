@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="asdf1234"
+        password="jlk1njk2"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -260,19 +260,61 @@ def getCategories():
     conn.close()
     return categories
 
-# get all products
+# get all information about all products
 def getAllProducts():
-    conn = connect()
-    cur = conn.cursor()
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        # get column names
+        cur.execute(
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+        )
+        productColumns = []
+        t = cur.fetchone()
+        while t != None:
+            productColumns.append(t[0])
+            t = cur.fetchone()
 
-    cur.execute(
-    	"SELECT id, name, price from Products;"
-    )
-    products = cur.fetchall()
-    print (products)
-    cur.close()
-    conn.close()
-    return products
+        #get Categories
+        categories = getCategories()
+        typeColumns = {}
+        for category in categories:
+            cur.execute(
+                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
+            )
+            columns = []
+            t = cur.fetchone()
+            while t != None:
+                columns.append(t[0])
+                t = cur.fetchone()
+            typeColumns[category] = columns
+
+        print(typeColumns)
+
+
+        cur.execute(
+        	"SELECT * from Products;"
+        )
+
+        products = []
+        tuple = cur.fetchone()
+        while tuple != None:
+            info = {}
+
+            for i in range(0, len(productColumns)):
+                info[productColumns[i]] = tuple[i]
+            products.append(info)
+            tuple = cur.fetchone()
+
+        conn.commit()
+        cur.close()
+        return products
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print (error)
+    finally:
+        conn.close()
 
 # get all products of a specific type
 def getProducts(type):
@@ -339,6 +381,7 @@ def deleteProduct(id):
 
 # addUser('anne', 'anne@email.com', 'passowrd', '3124124')
 # addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
+#updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
 # print(deleteProduct(50))
 # print("user 1:", getUserInfo(1))
+print(getAllProducts())
