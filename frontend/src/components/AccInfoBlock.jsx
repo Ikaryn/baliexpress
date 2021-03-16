@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, Grid, Input, Typography, FormControl, FormHelperText } from '@material-ui/core';
+import { Button, Divider, Grid, Input, Typography, FormControl, FormHelperText, Avatar } from '@material-ui/core';
 import API from '../util/API';
 import './styles/profilePage.css';
 
@@ -27,7 +27,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     const [countryError, setCountryError] = React.useState('')
     const [stateError, setStateError] = React.useState('')
     
-    console.log(shippingInfo);
+    // console.log(shippingInfo);
     React.useEffect(()=>{
         setUserInfo(accInfo);
         setEditName(accInfo.name);
@@ -191,14 +191,32 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
 
         if (error) return;
 
-        const body = {name: editName, email: editEmail, phone: editPhone};
+        const body = {
+            name: editName, 
+            email: editEmail, 
+            phone: editPhone, 
+            addr: editAddr,
+            city: editCity,
+            postcode: editPCode,
+            country: editCountry,
+            state: editState
+        };
         const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
-        console.log(response);
+        // console.log(response);
         setEditComponent(false);
     }
-    console.log(Object.keys(accInfo));
+    // console.log(Object.keys(accInfo));
+    const sliceName = () => (editName.slice(0,1));
+    const sliceLastName = () => {
+        let space = editName.indexOf(' ');
+        return editName.slice(space+1, space+2);
+    }
+    
     return (
             <Grid container item direction="column" spacing={2}>
+                <Grid container item justify="center"> 
+                    <Avatar className="user-avatar">{sliceName() + sliceLastName()}</Avatar>
+                </Grid>
                 <Grid item>
                     <Typography variant="h3">Account information</Typography>
                 </Grid>

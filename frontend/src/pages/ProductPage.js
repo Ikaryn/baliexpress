@@ -30,7 +30,7 @@ const ProductPage = () => {
     
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
-    
+    const [isAdmin, setIsAdmin] = React.useState(0);
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
@@ -40,6 +40,7 @@ const ProductPage = () => {
     
     React.useEffect(() => {
         (async () => {
+            console.log(category)
             const products = await api.get(`product/${category}`);
             console.log(products)
             const product = products.products.filter((p) => p.id === Number(pid));
@@ -49,13 +50,23 @@ const ProductPage = () => {
     
     },[category, pid])
     
+    React.useEffect(() => {
+        (async () => {
+            const userId = localStorage.getItem('userId');
+            const response = await api.get(`profile/${userId}?userId=${userId}`);
+            const userDetails = response.accountInfo.userInfo;
+            setIsAdmin(userDetails.admin);
+        })();
+    }, [])
+    
+    
     return (
         <div className="root">
             <Grid container direction="column">
                 <Grid container item direction="row" className="product-info">
                         <Grid item xs={3}>
                             <div className="product-image-container">
-                                <img src={amdryzen52600} alt="product" className="product-image"/>
+                                <img src={productInfo.image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
                             </div>
                         </Grid>
                         <Grid container item direction="column" xs={7} alignItems="center" className="product-text-info">

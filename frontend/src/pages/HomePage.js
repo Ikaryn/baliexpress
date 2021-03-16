@@ -29,7 +29,7 @@ const HomePage = () => {
     }
 
     return (
-        <div>
+        <div className="root">
             {/* <NavBar /> */}
             <button onClick={() => {navLogin();}}>Login Page</button>
             <button onClick={() => {navRegister();}}>Register Page</button>
