@@ -40,7 +40,7 @@ const AddProduct = ({}) => {
             <Input onChange={(event) => {setId(event.target.value)}} placeholder="ID"   />
             <Input onChange={(event) => {setCategory(event.target.value)}} placeholder="Category" />
             <Input onChange={(event) => {setTitle(event.target.value)}} placeholder="Title" />
-            <Input onChange={(event) => {setBrand(even.target.value)}} placeholder="Brand" />
+            <Input onChange={(event) => {setBrand(event.target.value)}} placeholder="Brand" />
             {/* <Input onChange={(event) => {setSubheading(event.target.value)}} placeholder="Subheading" /> */}
             <Input onChange={(event) => {setPrice(event.target.value)}} placeholder="Price" />
             {/* <Input onChange={(event) => {setStock(event.target.value)}} placeholder="Stock" /> */}
