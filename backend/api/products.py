@@ -317,3 +317,10 @@ class ProductPage(Resource):
         category = product['type']
 
         products[category].append(product)
+    
+    def remove(self, category, productID):
+        print("Product Remove request received")
+        
+        products[category] = [product for product in products[category] if product['id'] != productID]
+
+

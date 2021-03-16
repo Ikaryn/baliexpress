@@ -25,6 +25,11 @@ const EditProductPage = ({}) => {
         })();
     },[category, pid])
 
+    function RemoveProduct(){
+        console.log("Remove product");
+        const response = api.remove(`product/${category}/${pid}`);
+    }
+
     return(
         <div className="root">
             <Grid container item direction="column" className="information-tab">
@@ -38,10 +43,11 @@ const EditProductPage = ({}) => {
                 <Input onChange={(event) => {}} placeholder="Warranty" />
 
                 <Button onClick={() => {}}>Update Item</Button>
-                <Button onClick={() => {}}>Remove Item</Button>
+                <Button onClick={() => {RemoveProduct()}}>Remove Item</Button>
             </Grid>
         </div>
     )
 }
+
 
 export default EditProductPage;
