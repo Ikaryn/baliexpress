@@ -16,7 +16,7 @@ const ViewUsers = ({user}) => {
                     'Request-Type': 'admin status',
                 },
                 body: JSON.stringify({
-                    admin: true,
+                    admin: event.target.value,
                     userId: user.userId
                 })
             }
