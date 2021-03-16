@@ -54,33 +54,19 @@ def getUser (userId):
     
     return None
 
-# @app.route('/login',strict_slashes=False)
 class Login(Resource):
-    # @user.response(200, 'success', login_details)
     def post(self):
         print('Login Attempt Received')
-        print(request.json)
-        data = request.json
-        print(type(data))
 
+        data = request.json
+
+        # Get details from request
         email = data.get('email')
         attemptPass = data.get('password')
 
-        # unpack json object
-
-        # replace this with database query for validation
-        # for user in accounts:
-        #     if email == user['userInfo']['email']:
-        #         if attemptPass == user['userInfo']['password']:
-        #             print('Login successful')
-        #             t = secrets.token_hex()
-        #             return {'token': t, 'userId': user['userId']}
-        #         else:
-        #             return {'error':'Invalid Password'}
-
+        # Attempt to get the relevant userId from database
         userId = db.getUserIDFromEmail(email)
 
-        print('userId', userId)
         if userId is None:
             return {'error':'Invalid Login Details'}
         else:
@@ -94,53 +80,39 @@ class Login(Resource):
 
         return {'error':'Invalid Login Details'}
 
-        
-        # return {'asdf': 'asdf'}
-
-# api.add_resource(Login, '/login')
-# @user.route('/register')
 class Register(Resource):
     def post(self):
         print('Register attempt Recieved')
         data = request.json
 
+        # Get details from request
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
         phone_number = data.get('phone')
 
-        for account in accounts:
-            if email == account['userInfo']['email']:
-                return {'error':'Email already registered'}
+        # Check if the email has already been registered
+        existEmail = db.getUserIDFromEmail(email)
+        if existEmail is not None:
+            return {'error':'Email already registered'}
 
         # generating a new unique id
-        uniqueId = False
-        i = 0
-        newId = random.getrandbits(32)
-        while (not uniqueId):
-            if (newId == accounts[i]['userId']):
-                newId = random.getrandbits(32)
-                i = 0
-            else:
-                if (i == len(accounts) - 1):
-                    uniqueId = True
-                else:
-                    i += 1
+        # uniqueId = False
+        # i = 0
+        # newId = random.getrandbits(32)
+        # while (not uniqueId):
+        #     if (newId == accounts[i]['userId']):
+        #         newId = random.getrandbits(32)
+        #         i = 0
+        #     else:
+        #         if (i == len(accounts) - 1):
+        #             uniqueId = True
+        #         else:
+        #             i += 1
 
-        newUser = {'userId': newId,
-                   'userInfo': { 'name': name,
-                                'email': email,
-                                'password': password,
-                                'phone': phone_number,
-                                'admin':False,
-                                'streetAddress': '',
-                                'city': '',
-                                'country': '',
-                                'postcode': ''},
-                   'builds': [],
-                   'orders': []}
-        accounts.append(newUser)
-        print("Account registered", newUser)
+        db.addUser(name, email, password, phone_number)
+
+        print("New Account registered")
 
         t = secrets.token_hex()
         return {'token': t}
@@ -151,7 +123,8 @@ class Profile(Resource):
         data = request.args
 
         userId = data.get('userId')
-        user = getUser(userId)
+
+        user = db.getUserInfo(userId)
 
         if user is None:
             return {'error': 'User not found'}
@@ -165,11 +138,21 @@ class Profile(Resource):
         data = request.json
 
         userId = id
-        user = getUser(userId)
+        print(type(userId))
 
-        for field in user['userInfo']:
-            user['userInfo'][field] = data.get(field)
+        print("DATA\n", data)
 
+        db.updateUser(userId,
+                        data.get('name'),
+                        data.get('email'),
+                        db.getPassword(userId),
+                        data.get('phone'),
+                        data.get('address'),
+                        data.get('city'),
+                        data.get('country'),
+                        data.get('pCode'))
+
+        user = db.getUserInfo(userId)
         print (user)
         return {'accountInfo': user}
 

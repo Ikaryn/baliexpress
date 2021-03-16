@@ -36,7 +36,7 @@ const ProfilePage = () => {
         (async () => {
             const userId = localStorage.getItem('userId');
             const response = await api.get(`profile/${userId}?userId=${userId}`);
-            const userDetails = response.accountInfo.userInfo;
+            const userDetails = response.accountInfo;
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 

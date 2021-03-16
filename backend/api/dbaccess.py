@@ -19,22 +19,28 @@ def getUserInfo(id):
     conn = connect()
     cur = conn.cursor()
 
+    print('here')
+
     cur.execute(
     	"SELECT * FROM Users WHERE id = %s", [id]
     )
-    tuple = cur.fetchall()[0]
-    info = {
-        "id": tuple[0],
-        "name": tuple[1],
-        "email": tuple[2],
-        "password": tuple[3],
-        "phonenumber": tuple[4],
-        "streetaddress": tuple[5],
-        "city": tuple[6],
-        "country": tuple[7],
-        "postcode": tuple[8],
-        "admin": tuple[9]
-    }
+    
+    try:
+        tuple = cur.fetchall()[0]
+        info = {
+            "id": tuple[0],
+            "name": tuple[1],
+            "email": tuple[2],
+            "password": tuple[3],
+            "phonenumber": tuple[4],
+            "streetaddress": tuple[5],
+            "city": tuple[6],
+            "country": tuple[7],
+            "postcode": tuple[8],
+            "admin": tuple[9]
+        }
+    except IndexError:
+        info = None
 
     return info
 
@@ -67,9 +73,6 @@ def getUserIDFromEmail(email):
     conn = connect()
     cur = conn.cursor()
 
-    print("finding email:", email)
-    print(type(email))
-
     cur.execute(
     	"SELECT id FROM Users WHERE email = %s", [email]
     )
@@ -78,6 +81,7 @@ def getUserIDFromEmail(email):
         id = cur.fetchall()[0][0]
     except IndexError:
         id = None
+
     return id
 
 # returns the corresponding address for a given user id
@@ -108,7 +112,7 @@ def addUser(name, password, email, phonenumber):
     conn = connect()
     cur = conn.cursor()
 
-    query =  """INSERT INTO Users (id, name, password, email, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 'f');"""
+    query =  """INSERT INTO Users (id, name, email, password, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 'f');"""
     values = (name, password, email, phonenumber)
 
     cur.execute(query, values)
@@ -123,7 +127,7 @@ def addAdmin(name, password, email, phonenumber):
     conn = connect()
     cur = conn.cursor()
 
-    query =  """INSERT INTO Users (id, name,  password, email, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 't');"""
+    query =  """INSERT INTO Users (id, name,  email, password, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 't');"""
     values = (name, password, email, phonenumber)
 
     cur.execute(query, values)
@@ -236,7 +240,8 @@ def getProducts(type):
     conn.close()
     return products
 
+# addUser('anne', 'anne@email.com', 'passowrd', '3124124')
+# addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
+updateUser('1', 'billy', 'admin@email.com', 'adminpassword', '55555', '1 street rd', 'london', 'england', 444)
 print(getUserInfo(1))
-addUser('anne', 'anne@email', 'passowrd', '3124124')
-addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-updateUser('1', 'billy', 'new@email', 'radpassword', '55555', '1 street rd', 'london', 'england', 444)
+print(getUserInfo(2))
