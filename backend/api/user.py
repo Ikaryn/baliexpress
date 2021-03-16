@@ -4,6 +4,8 @@ from flask_restful import Resource
 import secrets, random
 from flask_cors import CORS
 from flask_restful import Api
+from . import dbaccess as db
+
 #dummy accounts
 accounts = [    {'userId': 1529870708,
                  'userInfo': {  'name': 'John Smith',
@@ -62,20 +64,33 @@ class Login(Resource):
         print(type(data))
 
         email = data.get('email')
-        password = data.get('password')
+        attemptPass = data.get('password')
 
         # unpack json object
 
         # replace this with database query for validation
-        for user in accounts:
-            if email == user['userInfo']['email']:
-                if password == user['userInfo']['password']:
-                    print('Login successful')
-                    t = secrets.token_hex()
-                    return {'token': t, 'userId': user['userId']}
-                else:
-                    return {'error':'Invalid Password'}
-        
+        # for user in accounts:
+        #     if email == user['userInfo']['email']:
+        #         if attemptPass == user['userInfo']['password']:
+        #             print('Login successful')
+        #             t = secrets.token_hex()
+        #             return {'token': t, 'userId': user['userId']}
+        #         else:
+        #             return {'error':'Invalid Password'}
+
+        userId = db.getUserIDFromEmail(email)
+
+        print('userId', userId)
+        if userId is None:
+            return {'error':'Invalid Login Details'}
+        else:
+            userPass = db.getPassword(userId)
+            if (attemptPass == userPass):
+                print('Login successful')
+                t = secrets.token_hex()
+                return {'token': t, 'userId': userId}
+            else:
+                return {'error':'Invalid Password'}
 
         return {'error':'Invalid Login Details'}
 

@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="jlk1njk2"
+        password="asdf1234"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -67,11 +67,18 @@ def getUserIDFromEmail(email):
     conn = connect()
     cur = conn.cursor()
 
+    print("finding email:", email)
+    print(type(email))
+
     cur.execute(
     	"SELECT id FROM Users WHERE email = %s", [email]
     )
-    id = cur.fetchall()[0][0]
-    return email
+
+    try:
+        id = cur.fetchall()[0][0]
+    except IndexError:
+        id = None
+    return id
 
 # returns the corresponding address for a given user id
 def getAddress(id):
@@ -123,6 +130,7 @@ def addAdmin(name, password, email, phonenumber):
     conn.commit()
     cur.close()
     conn.close()
+    print("Admin succesfully added")
     #TODO: error handling
 
 def updateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newCountry, newPostcode):
@@ -230,5 +238,5 @@ def getProducts(type):
 
 print(getUserInfo(1))
 addUser('anne', 'anne@email', 'passowrd', '3124124')
-addAdmin('Jo', 'Jo@email', 'newpw', '55555555')
+addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
 updateUser('1', 'billy', 'new@email', 'radpassword', '55555', '1 street rd', 'london', 'england', 444)
