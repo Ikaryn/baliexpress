@@ -295,6 +295,14 @@ products = {
 # print(motherboards)
 # print(storage)
 
+def getProduct(productId):
+    for category in products:
+        for product in products[category]:
+            if product['id'] == productId:
+                return product
+
+    return None
+
 class ProductList(Resource):
     def get(self,category):
         print("Get ProductList attempt received")

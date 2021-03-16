@@ -4,6 +4,9 @@ from flask_restful import Resource
 import secrets, random
 from flask_cors import CORS
 from flask_restful import Api
+from . import products as p
+
+
 #dummy accounts
 accounts = [    {'userId': 1529870708,
                  'userInfo': {  'name': 'John Smith',
@@ -50,6 +53,7 @@ accounts = [    {'userId': 1529870708,
 # Function to get the account of user through userId
 def getUser (userId):
     for account in accounts:
+        # print("comparing", str(userId), 'to', str(account['userId']))
         if (str(userId) == str(account['userId'])):
             return account
     
@@ -226,8 +230,7 @@ class Profile(Resource):
         # Change the admin status for a user
         elif requestType == 'admin status':
             print('Change admin status attempt received')
-            userId = str(data.get('userId'))
-            print(userId)
+            userId = id
             user = getUser(userId)
 
             # Change the data.get to what is needed to be received from frontend
@@ -238,9 +241,10 @@ class Profile(Resource):
         elif requestType == 'edit product':
             print('Edit product attempt received')
 
+            print("product data", data)
+
             # Needs productId to get the right product for editing
             productId = data.get('id')
-            print(productId)
             product = p.getProduct(productId)
             for field in product:
                 if field == 'image':
