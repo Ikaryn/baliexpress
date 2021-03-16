@@ -132,153 +132,31 @@ class Register(Resource):
 
 class Profile(Resource):
     def get(self, id):
+        print('Get profile attempt received')
         data = request.args
 
-        # Get request type from header
-        requestType = request.headers.get('request-type')
+        userId = data.get('userId')
+        user = getUser(userId)
 
-        # Get user profile
-        if requestType == 'profile':
-            print('Get profile attempt received')
-            userId = data.get('userId')
-            user = getUser(userId)
-
-            if user is None:
-                return {'error': 'User not found'}
-            else:
-                return {'accountInfo': user}
+        if user is None:
             return {'error': 'User not found'}
-
-        # Get all users
-        elif requestType == 'all users':
-            print('Get all users attempt received')
-            return {'user': accounts}
-
-        # Get product using received productId
-        elif requestType == 'product':
-            print('Get product attempt received')
-            productId = data.get('productId')
-            product = p.getProduct(productId)
-            return {'product': product}
         else:
-            print('Get profile attempt received')
-            data = request.args
-
-            userId = data.get('userId')
-            user = getUser(userId)
-
-            if user is None:
-                return {'error': 'User not found'}
-            else:
-                return {'accountInfo': user}
-        
-            return {'error': 'User not found'}
-
-    def post(self, id):
-
-        # Add product to product list
-        print('Add product attempt received')
-        data = request.json
-
-        category = data.get('type')
-        p.productCount += 1
-
-        newProduct = {
-                        'id': p.productCount,
-        }
-
-        for field in data:
-            newProduct[field] = data.get(field)
-        
-        # CHANGE THIS IF IMAGES DON'T WORK
-        newProduct['image'] = data.get('image')
-        # newProduct['image'] = 1
-
-
-        p.products[category].append(newProduct)
-
-        return {'product': newProduct}
+            return {'accountInfo': user}
+    
+        return {'error': 'User not found'}
 
     def put(self, id):
-
-        # print('Put profile attempt received')
+        print('Put profile attempt received')
         data = request.json
 
-        # Get request type from header
-        requestType = request.headers.get('request-type')
+        userId = id
+        user = getUser(userId)
 
-        # Edit user profile details
-        if requestType == 'edit profile':
-            print('Edit profile attempt received')
-            userId = id
-            user = getUser(userId)
+        for field in user['userInfo']:
+            user['userInfo'][field] = data.get(field)
 
-            for field in user['userInfo']:
-                user['userInfo'][field] = data.get(field)
-
-            print (user)
-            return {'accountInfo': user}
-        
-        # Change the admin status for a user
-        elif requestType == 'admin status':
-            print('Change admin status attempt received')
-            userId = id
-            user = getUser(userId)
-
-            # Change the data.get to what is needed to be received from frontend
-            user['userInfo']['admin'] = data.get('admin')
-            return {'accountInfo': user}
-        
-        # Edit product details
-        elif requestType == 'edit product':
-            print('Edit product attempt received')
-
-            # Needs productId to get the right product for editing
-            productId = data.get('id')
-            product = p.getProduct(productId)
-            for field in product:
-                if field == 'image':
-
-                    # CHANGE THIS IF IMAGES DON'T WORK
-                    product['image'] = data.get(field)
-                    pass
-                else:
-                    product[field] = data.get(field)
-            return {'product': product}
-
-        # Change password
-        elif requestType == 'change password':
-            print('Change password attempt received')
-
-            userId = id
-            user= getUser(userId)
-            user['userInfo']['password'] = data.get('password')
-            return {'accountInfo', user}
-            
-        else:
-            print('Put profile attempt received')
-            data = request.json
-
-            userId = id
-            user = getUser(userId)
-
-            for field in user['userInfo']:
-                user['userInfo'][field] = data.get(field)
-
-            print (user)
-            return {'accountInfo': user}
-
-    def delete(self, id):
-        
-        # Delete a product using its productId
-        print('Remove product attempt received')
-        data = request.json
-
-        productId = data.get('id')
-        product = p.getProduct(productId)
-
-        p.products = [x for x in p.products if not product]
-        return {'message': 'product successfully removed'}
+        print (user)
+        return {'accountInfo': user}
 
 
 # api.add_resource(Register, '/register')
