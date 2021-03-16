@@ -43,6 +43,19 @@ const ProductListPage = () => {
                         </Grid>
                     </div>
                 </Grid>
+<<<<<<< HEAD
+                <Grid container item direction="row" xs={9} spacing={3}>
+                    {products.map((p) => (
+                        <Grid item xs={3}>
+                            <ProductCard 
+                                pid={p.id}
+                                name={p.name}
+                                price={p.price}
+                                category={p.type}
+                                />
+                        </Grid>
+                    ))}
+=======
                 <Grid container item direction="column"  xs={9}>
                     <Grid container item>
                         <Paper className="product-list-sort-tab">
@@ -77,6 +90,7 @@ const ProductListPage = () => {
                             </Grid>
                         ))}
                     </Grid>
+>>>>>>> 23fad95b7c65ff18e670f465cf2019ac032d501b
                 </Grid>
             </Grid>
         </div>

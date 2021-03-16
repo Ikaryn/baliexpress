@@ -5,8 +5,15 @@ import '../components/styles/product.css'
 import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
+<<<<<<< HEAD
+import SpecificationList from '../components/SpecificationList';
+import {
+    useHistory,
+  } from 'react-router-dom';
+=======
 // import SpecificationList from '../components/SpecificationList'
 
+>>>>>>> 23fad95b7c65ff18e670f465cf2019ac032d501b
 const api = new API();
 
 const TabPanel = ({children, value, index, ...other}) => {
@@ -24,13 +31,13 @@ const TabPanel = ({children, value, index, ...other}) => {
 }
 
 const ProductPage = () => {
+    const history = useHistory();
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
-    
     const { category, pid } = useParams();
     
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
-    const [isAdmin, setIsAdmin] = React.useState(0);
+    const [isAdmin, setIsAdmin] = React.useState(false);
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
@@ -92,6 +99,12 @@ const ProductPage = () => {
                                 </Grid>
                                 <Grid item >
                                     <Button variant="contained" className="cart-button">Add to Cart</Button>
+                                    {isAdmin && <Button variant="contained" 
+                                        className="cart-button" 
+                                        onClick={() => {history.push(`/edit-product/${category}/${pid}`)}}
+                                    >
+                                        Edit Product
+                                    </Button>}
                                 </Grid>
                         </Grid>
                 </Grid>
