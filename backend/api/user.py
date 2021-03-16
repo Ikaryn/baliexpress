@@ -147,7 +147,7 @@ class Profile(Resource):
                         data.get('email'),
                         db.getPassword(userId),
                         data.get('phone'),
-                        data.get('address'),
+                        data.get('addr'),
                         data.get('city'),
                         data.get('country'),
                         data.get('pCode'))

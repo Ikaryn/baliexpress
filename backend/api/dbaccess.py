@@ -42,6 +42,8 @@ def getUserInfo(id):
     except IndexError:
         info = None
 
+    cur.close()
+    conn.close()
     return info
 
 
@@ -55,6 +57,8 @@ def getPassword(id):
     	"SELECT password FROM Users WHERE id = %s", [id]
     )
     password = cur.fetchall()[0][0]
+    cur.close()
+    conn.close()
     return password
 
 # returns the corresponding email for a given user id
@@ -66,6 +70,8 @@ def getEmail(id):
     	"SELECT email FROM Users WHERE id = %s", [id]
     )
     email = cur.fetchall()[0][0]
+    cur.close()
+    conn.close()
     return email
 
 # returns the corresponding user id for a given email
@@ -81,7 +87,8 @@ def getUserIDFromEmail(email):
         id = cur.fetchall()[0][0]
     except IndexError:
         id = None
-
+    cur.close() 
+    conn.close()
     return id
 
 # returns the corresponding address for a given user id
@@ -93,6 +100,8 @@ def getAddress(id):
     	"SELECT streetaddress, city, country, postcode FROM Users WHERE id = %s", [id]
     )
     address = cur.fetchall()[0]
+    cur.close()
+    conn.close()
     return address
 
 # returns whether or not a given user is an admin
@@ -104,6 +113,8 @@ def getAdminStatus(id):
     	"SELECT admin FROM Users WHERE id = %s", [id]
     )
     admin = cur.fetchall()[0][0]
+    cur.close()
+    conn.close()
     return admin
 
 # creates a new user from given paramters
@@ -213,7 +224,7 @@ def getCategories():
     return categories
 
 # get all products
-def getProducts():
+def getAllProducts():
     conn = connect()
     cur = conn.cursor()
 
@@ -240,8 +251,40 @@ def getProducts(type):
     conn.close()
     return products
 
+def getProduct(id):
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute(
+    	"SELECT * FROM Products WHERE id = %s", [id]
+    )
+
+    try:
+        tuple = cur.fetchall()[0]
+        info = {
+            "id": tuple[0],
+            "name": tuple[1],
+            "price": tuple[2],
+            "type": tuple[3],
+            "image": tuple[4],
+            "description": tuple[5],
+            "stock": tuple[6],
+        }
+    except IndexError:
+        info = None
+
+    cur.close()
+    conn.close()
+    return info
+    
+def getAllUsers():
+    return
+
+
 # addUser('anne', 'anne@email.com', 'passowrd', '3124124')
 # addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
 updateUser('1', 'billy', 'admin@email.com', 'adminpassword', '55555', '1 street rd', 'london', 'england', 444)
 print(getUserInfo(1))
 print(getUserInfo(2))
+
+getAllProducts()
