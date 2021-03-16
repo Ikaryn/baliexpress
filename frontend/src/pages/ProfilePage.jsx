@@ -1,9 +1,10 @@
-import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
 import ProfilePageAccountInfo from '../components/ProfilePageAccountInfo';
 import AddProduct from '../components/AddProduct';
+import ViewUsers from '../components/ViewUsers';
 import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
@@ -26,11 +27,16 @@ const ProfilePage = () => {
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
     });
-    const [admin, isAdmin] = React.useState(false);
+    const [isAdmin, setIsAdmin] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
     
     const handleLogout = () => {
         localStorage.removeItem('token');
         history.push('/');
+    }
+    
+    const handleOpen = () => {
+        open ? setOpen(false) : setOpen(true);
     }
     React.useEffect(() => {
         (async () => {
@@ -40,7 +46,8 @@ const ProfilePage = () => {
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
-                phone: userDetails.phone}
+                phone: userDetails.phone,
+                isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
@@ -90,6 +97,7 @@ const ProfilePage = () => {
         },
     }));
     const classes = useStyles();
+
     return(
             <div className="root">
                 <Paper className="profile-page-container">
@@ -104,7 +112,8 @@ const ProfilePage = () => {
                                 <Tab label="Profile" />
                                 <Tab label="My Orders" />
                                 <Tab label="My Builds" />
-                                <Tab label="Add Product" />
+                                {accInfo.isAdmin && <Tab label="Add Product" />}
+                                {accInfo.isAdmin && <Tab label="View Users" />}     
                                 <Tab label="Logout" />
                             </Tabs>
                         </Grid>
@@ -120,16 +129,36 @@ const ProfilePage = () => {
                             </TabPanel>
                             <TabPanel value={value} index={2}>
                                 My Builds
-                            </TabPanel>   
-                            <TabPanel value={value} index={3}>
-                                <AddProduct/>
-                            </TabPanel>   
-                            <TabPanel value={value} index={4}>
+                            </TabPanel>      
+                            {accInfo.isAdmin && 
+                                <TabPanel value={value} index={3}>
+                                    <AddProduct/>
+                                </TabPanel>   
+                            }
+                            {accInfo.isAdmin &&                     
+                                <TabPanel value={value} index={4}>
+                                    <ViewUsers/>
+                                </TabPanel>
+                            }
+                            <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
                                 Logout
-                            </TabPanel>                       
+                            </TabPanel>                        
                         </Grid>
                     </Grid>
                 </Paper>
+                <Modal open={open} onClick={handleOpen}>
+                    <Grid className="logout-confirmation-container">
+                        <Typography>Are you sure you want to logout?</Typography>
+                        <Grid item container direction="row" justify="center">
+                            <Grid item>
+                                <Button variant="contained" onClick={() => handleOpen()}>Cancel</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="contained" onClick={() => handleLogout()}>Confirm</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Modal>
             </div>
     
     )

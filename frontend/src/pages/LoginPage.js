@@ -51,6 +51,7 @@ const Login = () => {
         if(response.token){
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.userId);
+            // localStorage.setItem('isAdmin', response.)
             history.push('')
         } else {
             setLoginError(response.error);
