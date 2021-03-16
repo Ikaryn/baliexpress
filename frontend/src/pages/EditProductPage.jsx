@@ -32,10 +32,10 @@ const EditProductPage = ({}) => {
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
             const options = {
-                method: 'PUT',
+                method: 'put',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'Request-Type': 'edit product',
+                    'requestType': 'edit product',
                 },
                 body: JSON.stringify({
                     id: pid
