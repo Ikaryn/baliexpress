@@ -1,4 +1,4 @@
-import { Button, Grid, Input } from '@material-ui/core';
+import { Button, Grid, Input, Typography } from '@material-ui/core';
 import React from 'react';
 
 const AddProduct = ({}) => {
@@ -17,6 +17,7 @@ const AddProduct = ({}) => {
 
     return(
         <Grid container item direction="column" className="information-tab">
+            <Typography variant="h3">Add a product:</Typography>
             <Input onChange={(event) => {setCategory(event.target.value)}} placeholder="Category" />
             <Input onChange={(event) => {setTitle(event.target.value)}} placeholder="Title" />
             <Input onChange={(event) => {setSubheading(event.target.value)}} placeholder="Subheading" />

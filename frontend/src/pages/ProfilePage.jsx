@@ -4,6 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import ProfilePageAccountInfo from '../components/ProfilePageAccountInfo';
 import AddProduct from '../components/AddProduct';
+import ViewUsers from '../components/ViewUsers';
 import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
@@ -45,7 +46,8 @@ const ProfilePage = () => {
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
-                phone: userDetails.phone}
+                phone: userDetails.phone,
+                isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
@@ -95,6 +97,7 @@ const ProfilePage = () => {
         },
     }));
     const classes = useStyles();
+
     return(
             <div className="root">
                 <Paper className="profile-page-container">
@@ -109,8 +112,9 @@ const ProfilePage = () => {
                                 <Tab label="Profile" />
                                 <Tab label="My Orders" />
                                 <Tab label="My Builds" />
-                                <Tab label="Add Product" />
-                                <Tab label="Logout" onClick={()=>handleOpen()} />
+                                {accInfo.isAdmin && <Tab label="Add Product" />}
+                                {accInfo.isAdmin && <Tab label="View Users" />}     
+                                <Tab label="Logout" />
                             </Tabs>
                         </Grid>
                         <Grid item xs={9}>
@@ -125,10 +129,20 @@ const ProfilePage = () => {
                             </TabPanel>
                             <TabPanel value={value} index={2}>
                                 My Builds
-                            </TabPanel>   
-                            <TabPanel value={value} index={3}>
-                                <AddProduct/>
-                            </TabPanel>                     
+                            </TabPanel>      
+                            {accInfo.isAdmin && 
+                                <TabPanel value={value} index={3}>
+                                    <AddProduct/>
+                                </TabPanel>   
+                            }
+                            {accInfo.isAdmin &&                     
+                                <TabPanel value={value} index={4}>
+                                    <ViewUsers/>
+                                </TabPanel>
+                            }
+                            <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                                Logout
+                            </TabPanel>                        
                         </Grid>
                     </Grid>
                 </Paper>
