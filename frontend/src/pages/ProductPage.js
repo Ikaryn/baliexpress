@@ -5,9 +5,7 @@ import '../components/styles/product.css'
 import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
-import {
-    useHistory,
-  } from 'react-router-dom';
+import { useHistory } from 'react-router';
 // import SpecificationList from '../components/SpecificationList'
 
 const api = new API();

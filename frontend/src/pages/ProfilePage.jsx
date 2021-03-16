@@ -22,7 +22,7 @@ const ProfilePage = () => {
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
-        name: '', email: '', phone: ''
+        name: '', email: '', phone: '', password: ''
     });
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
@@ -32,6 +32,8 @@ const ProfilePage = () => {
     
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isAdmin');
         history.push('/');
     }
     
@@ -47,6 +49,7 @@ const ProfilePage = () => {
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
                 phone: userDetails.phone,
+                password: userDetails.password,
                 isAdmin: userDetails.admin}
             const userShippingInfo = {addr: userDetails.streetAddress, 
                 state: userDetails.state, 
@@ -114,7 +117,9 @@ const ProfilePage = () => {
                             <Tab label="My Builds" />
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            <Tab label="Logout" />
+                            {/* <Tab label="Logout" />
+                            */}
+                            <Button onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>

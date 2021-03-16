@@ -14,7 +14,8 @@ const AddProduct = ({}) => {
     const [warranty, setWarranty] = React.useState('');
     
     async function AddProduct(){
-        const response = await api.post('profile', {
+        const userId = localStorage.getItem('userId');
+        const response = await api.post(`profile/${userId}?userId=${userId}`, {
             type: category,
             title: title,
             subheading: subheading,

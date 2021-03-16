@@ -8,6 +8,7 @@ const ViewUsers = ({user}) => {
     console.log(role, user.userInfo.admin, user.userInfo.email);
     async function handleSelectChange(event) {
         if(window.confirm('Are you sure you want to change ' + user.userInfo.email + '\'s role?')){
+            console.log(user.userId);
             const options = {
                 method: 'PUT',
                 headers: { 
@@ -15,11 +16,13 @@ const ViewUsers = ({user}) => {
                     'Request-Type': 'admin status',
                 },
                 body: JSON.stringify({
-                    admin: true
+                    admin: true,
+                    userId: user.userId
                 })
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            console.log(res);
             setRole(event.target.value);
         }
     }
