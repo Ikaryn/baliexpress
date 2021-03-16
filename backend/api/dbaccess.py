@@ -22,7 +22,20 @@ def getUserInfo(id):
     cur.execute(
     	"SELECT * FROM Users WHERE id = %s", [id]
     )
-    info = cur.fetchall()[0]
+    tuple = cur.fetchall()[0]
+    info = {
+        "id": tuple[0],
+        "name": tuple[1],
+        "email": tuple[2],
+        "password": tuple[3],
+        "phonenumber": tuple[4],
+        "streetaddress": tuple[5],
+        "city": tuple[6],
+        "country": tuple[7],
+        "postcode": tuple[8],
+        "admin": tuple[9]
+    }
+
     return info
 
 

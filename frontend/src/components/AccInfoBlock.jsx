@@ -50,7 +50,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     }
 
     function checkInputAlpha (input) {
-        return /^[a-zA-Z]+$/.test(input);
+        return /^[a-zA-Z ]+$/.test(input);
     }
     
     const handleChange = (value, key) => {
@@ -171,7 +171,8 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             error = true;
         }
 
-        if (editPCode !== '' && !checkInputNumber(editPCode)) {
+        if (!(editPCode == null || editPCode === '' || checkInputNumber(editPCode))) {
+            console.log("editCode", editPCode);
             setPCodeError('Invalid post code');
             error = true;
         }
