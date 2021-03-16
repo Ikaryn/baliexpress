@@ -44,7 +44,7 @@ const ProductPage = () => {
             console.log(category)
             const products = await api.get(`product/${category}`);
             console.log(products)
-            const product = products.products.filter((p) => p.id === Number(pid));
+            const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
             console.log(product[0]);
         })();

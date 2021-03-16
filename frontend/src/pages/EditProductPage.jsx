@@ -18,12 +18,13 @@ const EditProductPage = ({}) => {
     const [specs, setSpecs] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [warranty, setWarranty] = React.useState('');
+    const [image, setImage] = React.useState('');
 
     React.useEffect(() => {
         (async () => {
             const products = await api.get(`product/${category}`);
             console.log(products)
-            const product = products.products.filter((p) => p.id === Number(pid));
+            const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
             setTitle(product[0].name);
             setSubheading(product[0].brand);
@@ -32,6 +33,7 @@ const EditProductPage = ({}) => {
             setSpecs(product[0].specs);
             setDesc(product[0].desc);
             setWarranty(product[0].warranty);
+            setImage(product[0].image);
             console.log(product[0]);
         })();
     },[category, pid])
@@ -53,9 +55,12 @@ const EditProductPage = ({}) => {
                     stock: stock,
                     specs: specs,
                     desc: desc,
-                    warranty: warranty
+                    warranty: warranty,
+                    image: image
                 })
             }
+
+            console.log("Options", options)
             const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`profile/${userId}`, options);
             console.log(res);
