@@ -123,6 +123,7 @@ const Register = () => {
                         <InputLabel>Password</InputLabel>
                         <OutlinedInput 
                             fullWidth
+                            type="password"
                             id="password" 
                             onChange={event => setPassword(event.target.value)} />
                         <FormHelperText>{pwdError}</FormHelperText>
