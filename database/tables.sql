@@ -29,6 +29,7 @@ CREATE TABLE Users(
     phonenumber int,
     streetaddress text,
     city        text,
+    state       text,
     country     text,
     postcode    varchar(4),
     admin       boolean,
@@ -68,7 +69,7 @@ CREATE TABLE CPU(
     manufacturer    text,
     corecount       int,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Cooling(
@@ -76,7 +77,7 @@ CREATE TABLE Cooling(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Motherboards(
@@ -84,7 +85,7 @@ CREATE TABLE Motherboards(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Memory(
@@ -92,7 +93,7 @@ CREATE TABLE Memory(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Storage(
@@ -100,7 +101,7 @@ CREATE TABLE Storage(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE GraphicsCards(
@@ -108,7 +109,7 @@ CREATE TABLE GraphicsCards(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Cases(
@@ -116,7 +117,7 @@ CREATE TABLE Cases(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE PSU(
@@ -124,7 +125,7 @@ CREATE TABLE PSU(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE OpticalDrives(
@@ -132,7 +133,7 @@ CREATE TABLE OpticalDrives(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Monitors(
@@ -140,7 +141,7 @@ CREATE TABLE Monitors(
     manufacturer    text,
     screensize      text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Mice(
@@ -148,7 +149,7 @@ CREATE TABLE Mice(
     manufacturer    text,
     colour          text,
     primary key (id),
-    foreign key (id) references Products(id)
+    foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Builds(

@@ -1,8 +1,8 @@
-INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, country, postcode, admin)
-VALUES ('Bob', 'admin@email.com', 'adminpassword', 99999999, '123 sesame street', 'Sydney', 'Australia', '2000', 't');
+INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, state, country, postcode, admin)
+VALUES ('Bob', 'admin@email.com', 'adminpassword', 99999999, '123 sesame street', 'Sydney', 'NSW', 'Australia', '2000', 't');
 
-INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, country, postcode, admin)
-VALUES ('Alice', 'customer@email.com', 'customerpassword', 33333333, '343 fake road', 'Toronto', 'Canada', '666', 'f');
+INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, state, country, postcode, admin)
+VALUES ('Alice', 'customer@email.com', 'customerpassword', 33333333, '343 fake road', 'Toronto', 'ONT', 'Canada', '666', 'f');
 
 INSERT INTO Products(name, price, type, description, stock)
 VALUES ('AMD RYZEN 5 3600', 199.99, 'CPU',  'Serious gaming, fully unlocked. Everyone deserves a powerful processor', 10);

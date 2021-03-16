@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="asdf1234"
+        password="jlk1njk2"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -19,12 +19,11 @@ def getUserInfo(id):
     conn = connect()
     cur = conn.cursor()
 
-    print('here')
 
     cur.execute(
     	"SELECT * FROM Users WHERE id = %s", [id]
     )
-    
+
     try:
         tuple = cur.fetchall()[0]
         info = {
@@ -35,9 +34,10 @@ def getUserInfo(id):
             "phonenumber": tuple[4],
             "streetaddress": tuple[5],
             "city": tuple[6],
-            "country": tuple[7],
-            "postcode": tuple[8],
-            "admin": tuple[9]
+            "state": tuple[7],
+            "country": tuple[8],
+            "postcode": tuple[9],
+            "admin": tuple[10]
         }
     except IndexError:
         info = None
@@ -45,6 +45,41 @@ def getUserInfo(id):
     cur.close()
     conn.close()
     return info
+
+def getAllUsers():
+    conn = connect()
+    cur = conn.cursor()
+
+    print('here')
+
+    cur.execute(
+        "SELECT * FROM Users"
+    )
+
+    users = []
+    while True:
+        tuple = cur.fetchone()
+        if tuple == None:
+            break
+        info = {
+            "id": tuple[0],
+            "name": tuple[1],
+            "email": tuple[2],
+            "password": tuple[3],
+            "phonenumber": tuple[4],
+            "streetaddress": tuple[5],
+            "city": tuple[6],
+            "state": tuple[7],
+            "country": tuple[8],
+            "postcode": tuple[9],
+            "admin": tuple[10]
+        }
+        users.append(info)
+
+    cur.close()
+    conn.close()
+    return users
+
 
 
 # returns the corresponding password for a given user ID
@@ -87,7 +122,7 @@ def getUserIDFromEmail(email):
         id = cur.fetchall()[0][0]
     except IndexError:
         id = None
-    cur.close() 
+    cur.close()
     conn.close()
     return id
 
@@ -276,15 +311,30 @@ def getProduct(id):
     cur.close()
     conn.close()
     return info
-    
-def getAllUsers():
-    return
+
+# returns 1 if successful, 0 if unsuccessful. If it returns something greater
+# than 1, something has gone seriously wrong
+def deleteProduct(id):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        cur.execute(
+        	"DELETE FROM Products WHERE id = %s", [id]
+        )
+        deleted = cur.rowcount
+        
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print (error)
+    finally:
+        conn.close()
+        return deleted
 
 
 # addUser('anne', 'anne@email.com', 'passowrd', '3124124')
 # addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-updateUser('1', 'billy', 'admin@email.com', 'adminpassword', '55555', '1 street rd', 'london', 'england', 444)
-print(getUserInfo(1))
-print(getUserInfo(2))
-
-getAllProducts()
+print(deleteProduct(50))
