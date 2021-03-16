@@ -252,9 +252,17 @@ class Profile(Resource):
                     # CHANGE THIS IF IMAGES DON'T WORK
                     product['image'] = data.get(field)
                     pass
+                if field == 'id':
+                    product['id'] = int(data.get(field))
+                if field == 'price':
+                    product['price'] = int(data.get(field))
                 else:
+                    print('field is', field)
                     product[field] = data.get(field)
-            return {'product': product}
+                    print('fielf after update:', product[field])
+            
+            print("response to send:", product)
+            return {'productInfo': product}
 
         # Change password
         elif requestType == 'change password':
@@ -286,8 +294,14 @@ class Profile(Resource):
 
         productId = data.get('id')
         product = p.getProduct(productId)
+        category = product['type']
 
-        p.products = [x for x in p.products if not product]
+        for partType in p.products:
+            for part in p.products[partType]:
+                if (str(part['id']) == str(productId)):
+                    toDelete = part
+
+        p.products[category].remove(toDelete)
         return {'message': 'product successfully removed'}
 
 
