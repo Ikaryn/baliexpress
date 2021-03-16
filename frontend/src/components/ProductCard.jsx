@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardMedia,
         Button} from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-
+import amdryzen52600 from '../assets/amdryzen52600.jpg'
 
 const ProductCard = ({pid, name, price, image, category}) => {
     
@@ -12,14 +12,15 @@ const ProductCard = ({pid, name, price, image, category}) => {
     const handleClick = () => {
         history.push(`/product/${category}/${pid}`)
     }
-    
+    console.log(image);
     return (
         <Card>
             <CardActionArea onClick={() => handleClick()}>
-                {/* <CardMedia 
+                <CardMedia 
                     title="Product image"
-                    image={image}
-                /> */}
+                    src={image === 1 ? amdryzen52600 : image}
+                    // src={amdryzen52600}
+                />
                 <CardContent>
                     <Typography variant="h6">
                         {name}
