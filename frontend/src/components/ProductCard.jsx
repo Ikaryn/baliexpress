@@ -21,9 +21,12 @@ const ProductCard = ({pid, name, price, image, category}) => {
                     src={image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+image}
                     // src={amdryzen52600}
                 /> */}
-                <div className="product-card-image-container">
+                {/* <div className="product-card-image-container">
                     <img src={"data:image/jpeg;base64,"+image} alt={name} className="product-card-image"/>
-                </div>
+                </div> */}
+                <CardMedia title="Product image">
+                    <img src={"data:image/jpeg;base64,"+image} alt="product-thumbnail" class="product-card-image"/>
+                </CardMedia>
                 <CardContent>
                     <Typography variant="h6">
                         {name}
