@@ -13,5 +13,6 @@
 }
 
 .account-info-field {
-    margin: 2% 0 2% 0;
+    margin: 2em 0;
+    text-align: right;
 }

@@ -21,10 +21,10 @@ const ProductCard = ({pid, name, price, image, category}) => {
                     image={image}
                 /> */}
                 <CardContent>
-                    <Typography variant="h3">
+                    <Typography variant="h6">
                         {name}
                     </Typography>
-                    <Typography variant="h4">
+                    <Typography variant="h5">
                         ${price}
                     </Typography>
                 </CardContent>

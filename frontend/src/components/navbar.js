@@ -8,28 +8,27 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useHistory } from 'react-router';
 import { StoreContext } from '../util/store';
 import ProductMenuButton from './ProductMenuButton';
+import BaliExpress from '../assets/BaliExpress.png';
 
 const NavBar = () => {
     
-    const context = React.useContext(StoreContext);
-    
-    const {userId : [userId]} = context;
     
     const history = useHistory();
     
     // handle click of the profile icon
     // if user isnt logged in redirect to login page, otherwise send them to profile page
     const handleProfileClick = () => {
-        console.log(userId);
-        if(userId === 0){
+        const userId = localStorage.getItem('userId');
+        if(!userId){
             history.push('/login');
         } else {
             console.log(`user id is ${userId}`);
             history.push(`/profile/${userId}`);
         }
     }
-    
-
+    const redirectHomepage = () => {
+        history.push('/');
+    }
 
     return (
         <header>
@@ -40,22 +39,34 @@ const NavBar = () => {
                     justify="space-between"
                     alignItems="center"
                 >
+                    <img 
+                        src={BaliExpress} 
+                        alt="logo" 
+                        className="navbar-logo"
+                        onClick={() => redirectHomepage()}
+                    />
                     <Grid item xs={1}>
                         <ProductMenuButton/>
                     </Grid>
                     <Grid item xs={1}>
                         <Button>Build-A-PC</Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <Paper>
-                            <InputBase placeholder="Search products..."/>
-                            <SearchIcon/>
+                            <Grid container item direction="row" justify="space-between" alignItems="center">
+                                    <Grid item>
+                                        <InputBase placeholder="Search products..."/>
+                                    </Grid>
+                                    <Grid item>
+                                        <SearchIcon/>
+                                    </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                     <Grid item xs={1}>
-                        {/* <IconButton> */}
-                            <AccountCircleIcon onClick={() => handleProfileClick} fontSize="large"/>
-                        {/* </IconButton> */}
+                        <IconButton>
+                            <AccountCircleIcon onClick={() => handleProfileClick()} fontSize="large"/>
+                        </IconButton>
                     </Grid>
                     <Grid item xs={1}>
                         <ShoppingCartIcon fontSize="large" />

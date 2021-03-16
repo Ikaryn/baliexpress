@@ -1,7 +1,8 @@
-import { Box, Button, Divider, Grid, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, ListItemSecondaryAction, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
+import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
 import SpecificationList from '../components/SpecificationList'
@@ -22,14 +23,13 @@ const TabPanel = ({children, value, index, ...other}) => {
 
 }
 
-
 const ProductPage = () => {
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     
     const { category, pid } = useParams();
     
     const [value, setValue] = React.useState(0);
-    // const [rating, setRating] = React.useState(0);
+    const [rating, setRating] = React.useState(0);
     
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
@@ -66,15 +66,20 @@ const ProductPage = () => {
                                     <Typography variant="h6">{productInfo.brand}</Typography>
                                 </Grid>
                                 <Grid item container direction="row" justify="space-between" className="product-price-review">
-                                    <Grid item>
+                                    <Grid item xs={2}>
                                         <Typography variant="h5">${productInfo.price}.00</Typography>
                                     </Grid>
-                                    <Grid item>
-                                        <Typography variant="h6">0 reviews</Typography>
+                                    <Grid container item direction="column" xs={2}>
+                                        <Grid item>
+                                            <Rating value={rating}/>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="h6">0 reviews</Typography>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Button variant="contained">Add to Cart</Button>
+                                <Grid item >
+                                    <Button variant="contained" className="cart-button">Add to Cart</Button>
                                 </Grid>
                         </Grid>
                 </Grid>

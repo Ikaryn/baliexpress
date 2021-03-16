@@ -19,3 +19,20 @@
 .product-price-review {
     padding-top: 2em;
 }
+
+.product-list-filter-container {
+    margin: 0 2em 0 6em;
+    padding: 1em 1em;
+    background-color: rgb(189, 189, 189);
+    border-radius: 0.2em;
+    height: 500px;
+    
+}
+
+.product-list-page-container {
+    padding-right: 10%;
+}
+
+.cart-button {
+    width: 20em;
+}

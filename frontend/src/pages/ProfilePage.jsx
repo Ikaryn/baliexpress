@@ -19,7 +19,6 @@ const pageStatus = {
 
 const ProfilePage = () => {
 
-    const [component, setComponent] = React.useState();
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
@@ -28,6 +27,7 @@ const ProfilePage = () => {
     const [shippingInfo, setShippingInfo] = React.useState({
         addr: '', city: '', state:'', pCode: '', country: ''
     });
+    const [admin, isAdmin] = React.useState(false);
     
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -94,50 +94,54 @@ const ProfilePage = () => {
     const classes = useStyles();
 
     return(
-        <div className="root profile-page-container">
-            <Paper>
-                <Grid container direction="column" className={classes.root}>
-                    <Tabs 
-                        value={value} onChange={handleChange} 
-                        aria-label="profile-tabs"
-                        orientation="horizontal"
-                        className={classes.tabs}
-                    >
-                        <Tab label="Profile" />
-                        <Tab label="My Orders" />
-                        <Tab label="My Builds" />
-                        {accInfo.isAdmin && <Tab label="Add Product" />}
-                        {accInfo.isAdmin && <Tab label="View Users" />}                        
-                        <Tab label="Logout" />
-                    </Tabs>
-                    <TabPanel value={value} index={0}>
-                        <ProfilePageAccountInfo
-                            accInfo={accInfo}
-                            shippingInfo={shippingInfo}
-                        />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        My Orders
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        My Builds
-                    </TabPanel>
-                    {accInfo.isAdmin && 
-                        <TabPanel value={value} index={3}>
-                            <AddProduct/>
-                        </TabPanel>   
-                    }
-                    {accInfo.isAdmin &&                     
-                        <TabPanel value={value} index={4}>
-                            <ViewUsers/>
-                        </TabPanel>
-                    }
-                    <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
-                        Logout
-                    </TabPanel>                       
-                </Grid>
-            </Paper>
-        </div>
+            <div className="root">
+                <Paper className="profile-page-container">
+                    <Grid container >
+                        <Grid item xs={3}>
+                            <Tabs 
+                                value={value} onChange={handleChange} 
+                                aria-label="profile-tabs"
+                                orientation="vertical"
+                                className={classes.tabs}
+                                >
+                                <Tab label="Profile" />
+                                <Tab label="My Orders" />
+                                <Tab label="My Builds" />
+                                {accInfo.isAdmin && <Tab label="Add Product" />}
+                                {accInfo.isAdmin && <Tab label="View Users" />}     
+                                <Tab label="Logout" />
+                            </Tabs>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <TabPanel value={value} index={0}>
+                                <ProfilePageAccountInfo
+                                    accInfo={accInfo}
+                                    shippingInfo={shippingInfo}
+                                    />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                My Orders
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
+                                My Builds
+                            </TabPanel>      
+                            {accInfo.isAdmin && 
+                                <TabPanel value={value} index={3}>
+                                    <AddProduct/>
+                                </TabPanel>   
+                            }
+                            {accInfo.isAdmin &&                     
+                                <TabPanel value={value} index={4}>
+                                    <ViewUsers/>
+                                </TabPanel>
+                            }
+                            <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                                Logout
+                            </TabPanel>                        
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </div>
     
     )
 
