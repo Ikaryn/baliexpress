@@ -1,6 +1,6 @@
 DROP TYPE IF EXISTS Categories CASCADE;
 
-CREATE TYPE Categories AS ENUM ('Cases', 'Cooling', 'CPU', 'Graphics Cards', 'Memory', 'Mice', 'Monitors', 'Motherboards', 'Optical Drives', 'PSU', 'Storage' );
+CREATE TYPE Categories AS ENUM ('Cases', 'Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mice', 'Monitors', 'Motherboards', 'Optical_Drives', 'PSU', 'Storage' );
 
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
@@ -11,10 +11,10 @@ DROP TABLE IF EXISTS Cooling;
 DROP TABLE IF EXISTS Motherboards;
 DROP TABLE IF EXISTS Memory;
 DROP TABLE IF EXISTS Storage;
-DROP TABLE IF EXISTS GraphicsCards;
+DROP TABLE IF EXISTS Graphics_Cards;
 DROP TABLE IF EXISTS Cases;
 DROP TABLE IF EXISTS PSU;
-DROP TABLE IF EXISTS OpticalDrives;
+DROP TABLE IF EXISTS Optical_Drives;
 DROP TABLE IF EXISTS Monitors;
 DROP TABLE IF EXISTS Mice;
 DROP TABLE IF EXISTS Builds CASCADE;
@@ -104,7 +104,7 @@ CREATE TABLE Storage(
     foreign key (id) references Products(id) on delete CASCADE
 );
 
-CREATE TABLE GraphicsCards(
+CREATE TABLE Graphics_Cards(
     id              int,
     manufacturer    text,
     colour          text,
@@ -128,7 +128,7 @@ CREATE TABLE PSU(
     foreign key (id) references Products(id) on delete CASCADE
 );
 
-CREATE TABLE OpticalDrives(
+CREATE TABLE Optical_Drives(
     id              int,
     manufacturer    text,
     colour          text,

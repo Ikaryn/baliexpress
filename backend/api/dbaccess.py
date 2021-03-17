@@ -255,12 +255,13 @@ def getCategories():
             break
         categories.append(t[0])
 
-    print (categories)
     cur.close()
     conn.close()
     return categories
 
 # get all information about all products
+# returns a dictionary that stores all product information as a dictionary
+# specs are stored in a dictionary within the dictionary with the key "specs"
 def getAllProducts():
     try:
         conn = connect()
@@ -279,6 +280,7 @@ def getAllProducts():
         categories = getCategories()
         typeColumns = {}
         for category in categories:
+            print("here " + category)
             cur.execute(
                 "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
             )
@@ -289,9 +291,8 @@ def getAllProducts():
                 t = cur.fetchone()
             typeColumns[category] = columns
 
-        print(typeColumns)
 
-
+        # get product details from Products table
         cur.execute(
         	"SELECT * from Products;"
         )
@@ -306,29 +307,107 @@ def getAllProducts():
             products.append(info)
             tuple = cur.fetchone()
 
+        # get product specs from individual category tables
+
+        for i in range(0, len(products)):
+            product = products[i]
+            id = product['id']
+            category = product['type']
+            print("Cateogry is " + category)
+            query = "SELECT * FROM " + category + " WHERE id = %s;"
+            cur.execute(query, [id])
+            tuple = cur.fetchone()
+            print(tuple)
+            # create dictionary of specs
+            specs = {}
+            for j in range(1, len(tuple)):
+                columns = typeColumns[category]
+                specs[columns[j]] = tuple[j]
+            product['specs'] = specs
+            products[i] = product
         conn.commit()
         cur.close()
-        return products
 
     except (Exception, psycopg2.DatabaseError) as error:
         deleted = 0
+        print ("An error has occured: ")
         print (error)
     finally:
         conn.close()
+        return products
+
 
 # get all products of a specific type
-def getProducts(type):
-    conn = connect()
-    cur = conn.cursor()
+# returns a dictionary that stores all product information as a dictionary
+# specs are stored in a dictionary within the dictionary with the key "specs"
+def getAllProducts(type):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+        # get column names
+        cur.execute(
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+        )
+        productColumns = []
+        t = cur.fetchone()
+        while t != None:
+            productColumns.append(t[0])
+            t = cur.fetchone()
 
-    cur.execute(
-    	"SELECT id, name, price from Products where type = %s;", [type]
-    )
-    products = cur.fetchall()
-    print (products)
-    cur.close()
-    conn.close()
-    return products
+
+
+        cur.execute(
+            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [type.lower()]
+        )
+        typeColumns = []
+        t = cur.fetchone()
+        while t != None:
+            typeColumns.append(t[0])
+            t = cur.fetchone()
+
+
+        # get product details from Products table
+        cur.execute(
+        	"SELECT * FROM Products WHERE type = %s;", [type]
+        )
+
+        products = []
+        tuple = cur.fetchone()
+        while tuple != None:
+            info = {}
+
+            for i in range(0, len(productColumns)):
+                info[productColumns[i]] = tuple[i]
+            products.append(info)
+            tuple = cur.fetchone()
+
+        # get product specs from individual category tables
+
+        for i in range(0, len(products)):
+            product = products[i]
+            id = product['id']
+            category = product['type']
+            print("Cateogry is " + category)
+            query = "SELECT * FROM " + category + " WHERE id = %s;"
+            cur.execute(query, [id])
+            tuple = cur.fetchone()
+            print(tuple)
+            # create dictionary of specs
+            specs = {}
+            for j in range(1, len(tuple)):
+                specs[typeColumns[j]] = tuple[j]
+            product['specs'] = specs
+            products[i] = product
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print ("An error has occured: ")
+        print (error)
+    finally:
+        conn.close()
+        return products
 
 def getProduct(id):
     conn = connect()
@@ -384,4 +463,4 @@ def deleteProduct(id):
 #updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
 # print(deleteProduct(50))
 # print("user 1:", getUserInfo(1))
-print(getAllProducts())
+print(getAllProducts('CPU'))
