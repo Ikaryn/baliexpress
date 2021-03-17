@@ -230,11 +230,24 @@ class Profile(Resource):
         # Change the admin status for a user
         elif requestType == 'admin status':
             print('Change admin status attempt received')
-            userId = id
+            userId = data.get('userId')
             user = getUser(userId)
 
             # Change the data.get to what is needed to be received from frontend
-            user['userInfo']['admin'] = data.get('admin')
+            # user['userInfo']['admin'] = data.get('admin')
+
+            booleanValue = data.get('admin')
+            print("booleanValue:", booleanValue)
+            # print("type", type(booleanValue))
+            if booleanValue:
+                print("here")
+                user['userInfo']['admin'] = True
+            else:
+                print("there")
+                user['userInfo']['admin'] = False
+
+            # print("user after change:", user)
+
             return {'accountInfo': user}
         
         # Edit product details
