@@ -5,7 +5,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="jlk1njk2"
+        password="password"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -354,8 +354,6 @@ def getAllProducts(type):
             productColumns.append(t[0])
             t = cur.fetchone()
 
-
-
         cur.execute(
             "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [type.lower()]
         )
@@ -410,30 +408,40 @@ def getAllProducts(type):
         return products
 
 def getProduct(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT * FROM Products WHERE id = %s", [id]
-    )
-
     try:
-        tuple = cur.fetchall()[0]
-        info = {
-            "id": tuple[0],
-            "name": tuple[1],
-            "price": tuple[2],
-            "type": tuple[3],
-            "image": tuple[4],
-            "description": tuple[5],
-            "stock": tuple[6],
-        }
-    except IndexError:
-        info = None
+        conn = connect()
+        cur = conn.cursor()
 
-    cur.close()
-    conn.close()
-    return info
+        productColumns = getProductColumns(cur)
+        cur.execute(
+        	"SELECT * FROM Products WHERE id = %s", [id]
+        )
+        product = {}
+
+        t = cur.fetchone()
+
+        for i in range(0, len(productColumns)):
+            product[productColumns[i]] = t[i]
+
+        # get category COLUMNS
+        categoryColumns = getCategoryColumns(cur, product['type'])
+        query = "SELECT * FROM " + product['type'] + " WHERE id = %s"
+        cur.execute(query, [id])
+        t = cur.fetchone()
+        specs = {}
+        for i in range(0, len(categoryColumns)):
+            specs[categoryColumns[i]] = t[i]
+        product['specs'] = specs
+    except (Exception, psycopg2.DatabaseError) as error:
+        print ("An error has occured: ")
+        print (error)
+        product = None
+    finally:
+        cur.close()
+        conn.close()
+        return product
+
+
 
 # returns 1 if successful, 0 if unsuccessful. If it returns something greater
 # than 1, something has gone seriously wrong
@@ -457,10 +465,32 @@ def deleteProduct(id):
         conn.close()
         return deleted
 
+#helper functions
+def getProductColumns(cur):
+    cur.execute(
+        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+    )
+    productColumns = []
+    t = cur.fetchone()
+    while t != None:
+        productColumns.append(t[0])
+        t = cur.fetchone()
+    return productColumns
+
+def getCategoryColumns(cur, category):
+    cur.execute(
+        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
+    )
+    columns = []
+    t = cur.fetchone()
+    while t != None:
+        columns.append(t[0])
+        t = cur.fetchone()
+    return columns
+
 
 # addUser('anne', 'anne@email.com', 'passowrd', '3124124')
 # addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
 #updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
 # print(deleteProduct(50))
 # print("user 1:", getUserInfo(1))
-print(getAllProducts('CPU'))
