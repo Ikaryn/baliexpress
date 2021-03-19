@@ -41,7 +41,7 @@ const EditProductPage = ({}) => {
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
             const options = {
-                method: 'put',
+                method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json',
                     'requestType': 'edit product',
@@ -62,7 +62,7 @@ const EditProductPage = ({}) => {
 
             console.log("Options", options)
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            const res = await api.makeAPIRequest(`/editProduct`, options);
             console.log(res);
             history.push(`/product/${category}/${pid}`);  
         }
@@ -79,7 +79,7 @@ const EditProductPage = ({}) => {
                 })
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            const res = await api.makeAPIRequest(`deleteProduct`, options);
             history.push(`/product/${category}`);
         }
     }
