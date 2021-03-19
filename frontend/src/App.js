@@ -13,10 +13,10 @@ function App() {
 
   return (
     <StoreProvider>
+        <NavBarSpacer />
       <BrowserRouter key="routes">
         <Switch>{routes}</Switch>
         <NavBar />
-        <NavBarSpacer />
       </BrowserRouter>
     </StoreProvider>
 );

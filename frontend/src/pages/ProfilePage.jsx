@@ -51,7 +51,8 @@ const ProfilePage = () => {
                 phone: userDetails.phone,
                 password: userDetails.password,
                 isAdmin: userDetails.admin}
-            const userShippingInfo = {addr: userDetails.streetAddress, 
+            const userShippingInfo = {
+                addr: userDetails.streetAddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
                 pCode: userDetails.postcode, 

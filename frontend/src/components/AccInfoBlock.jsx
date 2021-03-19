@@ -195,7 +195,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             name: editName, 
             email: editEmail, 
             phone: editPhone, 
-            addr: editAddr,
+            streetAddress: editAddr,
             city: editCity,
             postcode: editPCode,
             country: editCountry,
@@ -205,7 +205,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         // console.log(response);
         setEditComponent(false);
     }
-    // console.log(Object.keys(accInfo));
+    console.log(shippingInfo);
     const sliceName = () => (editName.slice(0,1));
     const sliceLastName = () => {
         let space = editName.indexOf(' ');
