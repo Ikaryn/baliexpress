@@ -212,6 +212,12 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         return editName.slice(space+1, space+2);
     }
     
+    const changeValue = (key, value) => {
+        const newUserInfo = JSON.parse(JSON.stringify(userInfo));
+        newUserInfo[key] = value;
+        setUserInfo(newUserInfo);
+    }
+    
     return (
             <Grid container item direction="column" spacing={2}>
                 <Grid container item justify="center"> 

@@ -117,6 +117,7 @@ const ProfilePage = () => {
                             <Tab label="My Orders" />
                             <Tab label="My Builds" />
                             {accInfo.isAdmin && <Tab label="Add Product" />}
+                            {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {/* <Tab label="Logout" />
                             */}
@@ -141,12 +142,17 @@ const ProfilePage = () => {
                                 <AddProduct/>
                             </TabPanel>   
                         }
-                        {accInfo.isAdmin &&                     
+                        {accInfo.isAdmin &&
                             <TabPanel value={value} index={4}>
+                                <Typography>Placeholder</Typography>
+                            </TabPanel>
+                        }
+                        {accInfo.isAdmin &&                     
+                            <TabPanel value={value} index={5}>
                                 <ViewUsers/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>
