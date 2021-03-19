@@ -1,11 +1,12 @@
 import psycopg2
+from psycopg2.extensions import AsIs
 
 def connect():
     conn = None
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="password"
+        password="jlk1njk2"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -262,35 +263,22 @@ def getCategories():
 # get all products of a specific category
 # returns a dictionary that stores all product information as a dictionary
 # specs are stored in a dictionary within the dictionary with the key "specs"
+# TODO: tidy
 def getAllProducts(*args):
-    if len(args) == 0:
+    # get all products of all categories
+    if not args:
         try:
             conn = connect()
             cur = conn.cursor()
-            # get column names
-            cur.execute(
-                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
-            )
-            productColumns = []
-            t = cur.fetchone()
-            while t != None:
-                productColumns.append(t[0])
-                t = cur.fetchone()
+            # get product table column names
+            productColumns = getColumns(cur, 'Products')
 
-            #get Categories
+            #get get category table column names
             categories = getCategories()
             categoryColumns = {}
             for category in categories:
-                cur.execute(
-                    "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
-                )
-                columns = []
-                t = cur.fetchone()
-                while t != None:
-                    columns.append(t[0])
-                    t = cur.fetchone()
+                columns = getColumns(cur, category)
                 categoryColumns[category] = columns
-
 
             # get product details from Products table
             cur.execute(
@@ -301,14 +289,14 @@ def getAllProducts(*args):
             tuple = cur.fetchone()
             while tuple != None:
                 info = {}
-
+                print("first")
                 for i in range(0, len(productColumns)):
                     info[productColumns[i]] = tuple[i]
                 products.append(info)
                 tuple = cur.fetchone()
 
             # get product specs from individual category tables
-
+            print("second")
             for i in range(0, len(products)):
                 product = products[i]
                 id = product['id']
@@ -318,6 +306,8 @@ def getAllProducts(*args):
                 tuple = cur.fetchone()
                 # create dictionary of specs
                 specs = {}
+                print("third")
+                print(tuple)
                 for j in range(1, len(tuple)):
                     columns = categoryColumns[category]
                     specs[columns[j]] = tuple[j]
@@ -327,7 +317,7 @@ def getAllProducts(*args):
             cur.close()
 
         except (Exception, psycopg2.DatabaseError) as error:
-            deleted = 0
+            products = None
             print ("An error has occured: ")
             print (error)
         finally:
@@ -402,6 +392,7 @@ def getAllProducts(*args):
         print('incorrect number of function arguments')
         return None
 
+#TODO: tidy
 def getProduct(id):
     try:
         conn = connect()
@@ -435,6 +426,52 @@ def getProduct(id):
         cur.close()
         conn.close()
         return product
+
+# adds a product to the Database
+# returns 1 if successful, 0 otherwise
+# item should be passed in as a dictionary
+# eg {name: "product name", price: "666.66",  type: "CPU", image: "whatever we're doing for images", description: "description text", stock: "500", specs: {manufacturer: "whoever", corecount:"6"}}
+# please do not pass in an id, it is generated automatically
+def addProduct(newProduct):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        # extract specs from dictionary
+        specs = newProduct['specs']
+        newProduct.pop('specs')
+
+        # insert into product table
+        columns = newProduct.keys()
+        values = [newProduct[column] for column in columns]
+        query = 'INSERT INTO Products (%s) values %s RETURNING id'
+        cur.execute(query, (AsIs(','.join(columns)), tuple(values)))
+
+        # get generated id of added item
+        id = cur.fetchone()[0]
+        specs['id'] = id
+
+        # insert into category table
+        category = newProduct['category']
+        columns = specs.keys()
+        values = [specs[column] for column in columns]
+        query = 'INSERT INTO %s (%s) values %s RETURNING id'
+        cur.execute(query, (AsIs(category), AsIs(','.join(columns)), tuple(values)))
+
+
+
+        conn.commit()
+        cur.close()
+        added = 1
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("An error has occured")
+        print (error)
+        added = 0
+
+    finally:
+        conn.close()
+        return added
 
 # returns 1 if successful, 0 if unsuccessful. If it returns something greater
 # than 1, something has gone seriously wrong
@@ -505,3 +542,10 @@ def getColumns(cur, table):
 # print( getUserInfo(2))
 # print("Get all users:")
 # print(getAllUsers())
+
+#spec = {'id':12, 'num_fans':9, 'power_use':2}
+#item = {'name': 'fully sick fan', 'category':'PC_Cooling', 'brand': 'real brand', 'price': 9999999.99, 'warranty': 'nah', 'description': 'a real product', 'stock': '5', 'specs': spec}
+#print(addProduct(item))
+#print(getAllProducts())
+
+print(deleteProduct(12))

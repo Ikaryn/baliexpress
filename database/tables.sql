@@ -1,5 +1,5 @@
 DROP TYPE IF EXISTS Categories CASCADE;
-]
+
 CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors' );
 
 DROP TABLE IF EXISTS Users CASCADE;
