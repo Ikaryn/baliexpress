@@ -1,22 +1,24 @@
 DROP TYPE IF EXISTS Categories CASCADE;
 
-CREATE TYPE Categories AS ENUM ('Cases', 'Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mice', 'Monitors', 'Motherboards', 'Optical_Drives', 'PSU', 'Storage' );
+CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors' );
 
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
 DROP TABLE IF EXISTS Purchased;
 DROP TABLE IF EXISTS CPU;
-DROP TABLE IF EXISTS Cooling;
+DROP TABLE IF EXISTS CPU_Cooling;
+DROP TABLE IF EXISTS PC_Cooling;
 DROP TABLE IF EXISTS Motherboards;
 DROP TABLE IF EXISTS Memory;
 DROP TABLE IF EXISTS Storage;
 DROP TABLE IF EXISTS Graphics_Cards;
 DROP TABLE IF EXISTS Cases;
 DROP TABLE IF EXISTS PSU;
-DROP TABLE IF EXISTS Optical_Drives;
 DROP TABLE IF EXISTS Monitors;
-DROP TABLE IF EXISTS Mice;
+DROP TABLE IF EXISTS Mouses;
+DROP TABLE IF EXISTS Keyboards;
+DROP TABLE IF EXISTS Wifi_Adaptors;
 DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews;
@@ -39,9 +41,11 @@ CREATE TABLE Users(
 CREATE TABLE Products(
     id          int GENERATED ALWAYS AS IDENTITY,
     name        text,
+    category    text,
+    brand       text,
     price       numeric(50, 2),
-    type        text,
     image       text,
+    warranty    text,
     description text,
     stock       int,
     primary key (id)
@@ -66,88 +70,136 @@ CREATE TABLE Purchased(
 
 CREATE TABLE CPU(
     id              int,
-    manufacturer    text,
-    corecount       int,
+    cores           int,
+    threads         int,
+    base_clock      numeric(5, 1),
+    max_clock       numeric(5, 1),
+    socket          text,
+    cooler_included boolean,
+    overclockable   boolean,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
-CREATE TABLE Cooling(
+CREATE TABLE CPU_Cooling(
     id              int,
-    manufacturer    text,
-    colour          text,
+    socket          text,
+    power_use       int,
+    primary key (id),
+    foreign key (id) references Products(id) on delete CASCADE
+);
+
+CREATE TABLE PC_Cooling(
+    id              int,
+    num_fans        int,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Motherboards(
-    id              int,
-    manufacturer    text,
-    colour          text,
+    id                      int,
+    cpu_socket              text,
+    max_memory_supported    text,
+    memory_slots            int,
+    wifi                    boolean,
+    form_factor_supported   text,
+    pcie                    text,
+    sata_slots              int,
+    power_use               int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Memory(
-    id              int,
-    manufacturer    text,
-    colour          text,
+    id                  int,
+    type                text,
+    frequency           int,
+    capacity            int,
+    number_of_sticks    int,
+    power_use           int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Storage(
     id              int,
-    manufacturer    text,
-    colour          text,
+    capacity        int,
+    format          text,
+    form_factor     text,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Graphics_Cards(
     id              int,
-    manufacturer    text,
-    colour          text,
+    memory_size     int,
+    interface       text,
+    memory_type     text,
+    cuda_cores      text,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Cases(
     id              int,
-    manufacturer    text,
     colour          text,
+    size            text,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE PSU(
-    id              int,
-    manufacturer    text,
-    colour          text,
-    primary key (id),
-    foreign key (id) references Products(id) on delete CASCADE
-);
-
-CREATE TABLE Optical_Drives(
-    id              int,
-    manufacturer    text,
-    colour          text,
+    id                  int,
+    wattage             int,
+    power_efficiency    text,
+    modularity          text,
+    power_use           int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Monitors(
     id              int,
-    manufacturer    text,
-    screensize      text,
+    size            int,
+    resolution      int,
+    refresh_rate    int,
+    aspect_ratio    text,
+    panel_type      text,
+    power_use       int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
-CREATE TABLE Mice(
+CREATE TABLE Mouses(
     id              int,
-    manufacturer    text,
-    colour          text,
+    connectivity    text,
+    ambidextrous    boolean,
+    power_use       int,
+    primary key (id),
+    foreign key (id) references Products(id) on delete CASCADE
+);
+
+CREATE TABLE Keyboards(
+    id              int,
+    mechanical      boolean,
+    connectivity    text,
+    RGB             boolean,
+    size            text,
+    power_use       int,
+    primary key (id),
+    foreign key (id) references Products(id) on delete CASCADE
+);
+
+
+CREATE TABLE Wifi_Adaptors(
+    id          int,
+    socket      text,
+    power_use   int,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );

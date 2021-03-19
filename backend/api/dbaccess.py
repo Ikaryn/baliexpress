@@ -15,6 +15,7 @@ def connect():
 
 # "Users" table functions
 # returns all db info for a given id
+# TODO: make less hard coded, tidy up
 def getUserInfo(id):
     conn = connect()
     cur = conn.cursor()
@@ -26,7 +27,6 @@ def getUserInfo(id):
 
     try:
         tuple = cur.fetchall()[0]
-        print("tuple", tuple)
         info = {
             "id": tuple[0],
             "name": tuple[1],
@@ -47,12 +47,10 @@ def getUserInfo(id):
     conn.close()
     return info
 
+#TODO: make less hard coded, tidy up
 def getAllUsers():
     conn = connect()
     cur = conn.cursor()
-
-    print('here')
-
     cur.execute(
         "SELECT * FROM Users"
     )
@@ -259,160 +257,157 @@ def getCategories():
     conn.close()
     return categories
 
-# get all information about all products
+
+
+# get all products of a specific category
 # returns a dictionary that stores all product information as a dictionary
 # specs are stored in a dictionary within the dictionary with the key "specs"
-def getAllProducts():
-    try:
-        conn = connect()
-        cur = conn.cursor()
-        # get column names
-        cur.execute(
-            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
-        )
-        productColumns = []
-        t = cur.fetchone()
-        while t != None:
-            productColumns.append(t[0])
+def getAllProducts(*args):
+    if len(args) == 0:
+        try:
+            conn = connect()
+            cur = conn.cursor()
+            # get column names
+            cur.execute(
+                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+            )
+            productColumns = []
             t = cur.fetchone()
+            while t != None:
+                productColumns.append(t[0])
+                t = cur.fetchone()
 
-        #get Categories
-        categories = getCategories()
-        typeColumns = {}
-        for category in categories:
-            print("here " + category)
+            #get Categories
+            categories = getCategories()
+            categoryColumns = {}
+            for category in categories:
+                cur.execute(
+                    "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
+                )
+                columns = []
+                t = cur.fetchone()
+                while t != None:
+                    columns.append(t[0])
+                    t = cur.fetchone()
+                categoryColumns[category] = columns
+
+
+            # get product details from Products table
+            cur.execute(
+            	"SELECT * from Products;"
+            )
+
+            products = []
+            tuple = cur.fetchone()
+            while tuple != None:
+                info = {}
+
+                for i in range(0, len(productColumns)):
+                    info[productColumns[i]] = tuple[i]
+                products.append(info)
+                tuple = cur.fetchone()
+
+            # get product specs from individual category tables
+
+            for i in range(0, len(products)):
+                product = products[i]
+                id = product['id']
+                category = product['category']
+                query = "SELECT * FROM " + category + " WHERE id = %s;"
+                cur.execute(query, [id])
+                tuple = cur.fetchone()
+                # create dictionary of specs
+                specs = {}
+                for j in range(1, len(tuple)):
+                    columns = categoryColumns[category]
+                    specs[columns[j]] = tuple[j]
+                product['specs'] = specs
+                products[i] = product
+            conn.commit()
+            cur.close()
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            deleted = 0
+            print ("An error has occured: ")
+            print (error)
+        finally:
+            conn.close()
+            return products
+    elif len(args) == 1:
+        try:
+            category = args[0]
+            conn = connect()
+            cur = conn.cursor()
+            # get column names
+            cur.execute(
+                "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+            )
+            productColumns = []
+            t = cur.fetchone()
+            while t != None:
+                productColumns.append(t[0])
+                t = cur.fetchone()
+
             cur.execute(
                 "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
             )
-            columns = []
+            categoryColumns = []
             t = cur.fetchone()
             while t != None:
-                columns.append(t[0])
+                categoryColumns.append(t[0])
                 t = cur.fetchone()
-            typeColumns[category] = columns
 
 
-        # get product details from Products table
-        cur.execute(
-        	"SELECT * from Products;"
-        )
+            # get product details from Products table
+            cur.execute(
+            	"SELECT * FROM Products WHERE category = %s;", [category]
+            )
 
-        products = []
-        tuple = cur.fetchone()
-        while tuple != None:
-            info = {}
-
-            for i in range(0, len(productColumns)):
-                info[productColumns[i]] = tuple[i]
-            products.append(info)
+            products = []
             tuple = cur.fetchone()
+            while tuple != None:
+                info = {}
 
-        # get product specs from individual category tables
+                for i in range(0, len(productColumns)):
+                    info[productColumns[i]] = tuple[i]
+                products.append(info)
+                tuple = cur.fetchone()
 
-        for i in range(0, len(products)):
-            product = products[i]
-            id = product['id']
-            category = product['type']
-            print("Cateogry is " + category)
-            query = "SELECT * FROM " + category + " WHERE id = %s;"
-            cur.execute(query, [id])
-            tuple = cur.fetchone()
-            print(tuple)
-            # create dictionary of specs
-            specs = {}
-            for j in range(1, len(tuple)):
-                columns = typeColumns[category]
-                specs[columns[j]] = tuple[j]
-            product['specs'] = specs
-            products[i] = product
-        conn.commit()
-        cur.close()
+            # get product specs from individual category tables
 
-    except (Exception, psycopg2.DatabaseError) as error:
-        deleted = 0
-        print ("An error has occured: ")
-        print (error)
-    finally:
-        conn.close()
-        return products
+            for i in range(0, len(products)):
+                product = products[i]
+                id = product['id']
+                category = product['category']
+                query = "SELECT * FROM " + category + " WHERE id = %s;"
+                cur.execute(query, [id])
+                tuple = cur.fetchone()
+                # create dictionary of specs
+                specs = {}
+                for j in range(1, len(tuple)):
+                    specs[categoryColumns[j]] = tuple[j]
+                product['specs'] = specs
+                products[i] = product
+            conn.commit()
+            cur.close()
 
-
-# get all products of a specific type
-# returns a dictionary that stores all product information as a dictionary
-# specs are stored in a dictionary within the dictionary with the key "specs"
-def getAllProducts(type):
-    try:
-        conn = connect()
-        cur = conn.cursor()
-        # get column names
-        cur.execute(
-            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
-        )
-        productColumns = []
-        t = cur.fetchone()
-        while t != None:
-            productColumns.append(t[0])
-            t = cur.fetchone()
-
-        cur.execute(
-            "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [type.lower()]
-        )
-        typeColumns = []
-        t = cur.fetchone()
-        while t != None:
-            typeColumns.append(t[0])
-            t = cur.fetchone()
-
-
-        # get product details from Products table
-        cur.execute(
-        	"SELECT * FROM Products WHERE type = %s;", [type]
-        )
-
-        products = []
-        tuple = cur.fetchone()
-        while tuple != None:
-            info = {}
-
-            for i in range(0, len(productColumns)):
-                info[productColumns[i]] = tuple[i]
-            products.append(info)
-            tuple = cur.fetchone()
-
-        # get product specs from individual category tables
-
-        for i in range(0, len(products)):
-            product = products[i]
-            id = product['id']
-            category = product['type']
-            print("Cateogry is " + category)
-            query = "SELECT * FROM " + category + " WHERE id = %s;"
-            cur.execute(query, [id])
-            tuple = cur.fetchone()
-            print(tuple)
-            # create dictionary of specs
-            specs = {}
-            for j in range(1, len(tuple)):
-                specs[typeColumns[j]] = tuple[j]
-            product['specs'] = specs
-            products[i] = product
-        conn.commit()
-        cur.close()
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        deleted = 0
-        print ("An error has occured: ")
-        print (error)
-    finally:
-        conn.close()
-        return products
+        except (Exception, psycopg2.DatabaseError) as error:
+            deleted = 0
+            print ("An error has occured: ")
+            print (error)
+        finally:
+            conn.close()
+            return products
+    else:
+        print('incorrect number of function arguments')
+        return None
 
 def getProduct(id):
     try:
         conn = connect()
         cur = conn.cursor()
 
-        productColumns = getProductColumns(cur)
+        productColumns = getColumns(cur, "products")
         cur.execute(
         	"SELECT * FROM Products WHERE id = %s", [id]
         )
@@ -424,8 +419,8 @@ def getProduct(id):
             product[productColumns[i]] = t[i]
 
         # get category COLUMNS
-        categoryColumns = getCategoryColumns(cur, product['type'])
-        query = "SELECT * FROM " + product['type'] + " WHERE id = %s"
+        categoryColumns = getColumns(cur, product['category'])
+        query = "SELECT * FROM " + product['category'] + " WHERE id = %s"
         cur.execute(query, [id])
         t = cur.fetchone()
         specs = {}
@@ -440,8 +435,6 @@ def getProduct(id):
         cur.close()
         conn.close()
         return product
-
-
 
 # returns 1 if successful, 0 if unsuccessful. If it returns something greater
 # than 1, something has gone seriously wrong
@@ -466,20 +459,9 @@ def deleteProduct(id):
         return deleted
 
 #helper functions
-def getProductColumns(cur):
+def getColumns(cur, table):
     cur.execute(
-        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
-    )
-    productColumns = []
-    t = cur.fetchone()
-    while t != None:
-        productColumns.append(t[0])
-        t = cur.fetchone()
-    return productColumns
-
-def getCategoryColumns(cur, category):
-    cur.execute(
-        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
+        "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [table.lower()]
     )
     columns = []
     t = cur.fetchone()
@@ -488,9 +470,38 @@ def getCategoryColumns(cur, category):
         t = cur.fetchone()
     return columns
 
+# def getProductColumns(cur):
+#     cur.execute(
+#         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
+#     )
+#     productColumns = []
+#     t = cur.fetchone()
+#     while t != None:
+#         productColumns.append(t[0])
+#         t = cur.fetchone()
+#     return productColumns
+#
+# def getCategoryColumns(cur, category):
+#     cur.execute(
+#         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
+#     )
+#     columns = []
+#     t = cur.fetchone()
+#     while t != None:
+#         columns.append(t[0])
+#         t = cur.fetchone()
+#     return columns
+
 
 # addUser('anne', 'anne@email.com', 'passowrd', '3124124')
 # addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-#updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
-# print(deleteProduct(50))
-# print("user 1:", getUserInfo(1))
+# updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
+# # print(deleteProduct(50))
+# # print("user 1:", getUserInfo(1))
+# print(getProduct(1))
+# print(getAllProducts('CPU'))
+# print(getAllProducts())
+# print("Get user info: ")
+# print( getUserInfo(2))
+# print("Get all users:")
+# print(getAllUsers())
