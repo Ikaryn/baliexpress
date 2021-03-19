@@ -1,5 +1,5 @@
 DROP TYPE IF EXISTS Categories CASCADE;
-
+]
 CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors' );
 
 DROP TABLE IF EXISTS Users CASCADE;
@@ -77,7 +77,7 @@ CREATE TABLE CPU(
     socket          text,
     cooler_included boolean,
     overclockable   boolean,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -85,7 +85,7 @@ CREATE TABLE CPU(
 CREATE TABLE CPU_Cooling(
     id              int,
     socket          text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -93,7 +93,7 @@ CREATE TABLE CPU_Cooling(
 CREATE TABLE PC_Cooling(
     id              int,
     num_fans        int,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -107,7 +107,7 @@ CREATE TABLE Motherboards(
     form_factor_supported   text,
     pcie                    text,
     sata_slots              int,
-    power_use               int,
+    power_use               numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -118,7 +118,7 @@ CREATE TABLE Memory(
     frequency           int,
     capacity            int,
     number_of_sticks    int,
-    power_use           int,
+    power_use           numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -128,18 +128,20 @@ CREATE TABLE Storage(
     capacity        int,
     format          text,
     form_factor     text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Graphics_Cards(
     id              int,
+    base_clock      numeric(5, 1),
+    max_clock       numeric(5, 1),
     memory_size     int,
     interface       text,
     memory_type     text,
     cuda_cores      text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -148,7 +150,7 @@ CREATE TABLE Cases(
     id              int,
     colour          text,
     size            text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -158,7 +160,7 @@ CREATE TABLE PSU(
     wattage             int,
     power_efficiency    text,
     modularity          text,
-    power_use           int,
+    power_use           numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -170,7 +172,7 @@ CREATE TABLE Monitors(
     refresh_rate    int,
     aspect_ratio    text,
     panel_type      text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -179,7 +181,7 @@ CREATE TABLE Mouses(
     id              int,
     connectivity    text,
     ambidextrous    boolean,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -188,9 +190,9 @@ CREATE TABLE Keyboards(
     id              int,
     mechanical      boolean,
     connectivity    text,
-    RGB             boolean,
+    backlight       text,
     size            text,
-    power_use       int,
+    power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -199,7 +201,7 @@ CREATE TABLE Keyboards(
 CREATE TABLE Wifi_Adaptors(
     id          int,
     socket      text,
-    power_use   int,
+    power_use   numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
