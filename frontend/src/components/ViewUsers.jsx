@@ -16,7 +16,8 @@ const ViewUsers = ({}) => {
             }
             const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
-            setUsers(res.user);
+            console.log(res)
+            setUsers(res.users);
         })();
     },[])
 

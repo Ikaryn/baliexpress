@@ -44,8 +44,15 @@ const ProfilePage = () => {
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
-            const response = await api.get(`profile/${userId}?userId=${userId}`);
-            const userDetails = response.accountInfo.userInfo;
+            const options = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'profile',
+                },
+            }
+            const response = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            const userDetails = response.accountInfo;
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 

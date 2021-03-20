@@ -201,7 +201,8 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             country: editCountry,
             state: editState
         };
-        const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
+    
+        const response = await api.put(`profile/${localStorage.getItem('userId')}`, body, {'request-type': 'edit profile'});
         // console.log(response);
         setEditComponent(false);
     }

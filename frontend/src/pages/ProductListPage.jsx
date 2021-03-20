@@ -72,7 +72,7 @@ const ProductListPage = () => {
                                     name={p.name}
                                     price={p.price}
                                     image={p.image}
-                                    category={p.type}
+                                    category={p.category}
                                     />
                             </Grid>
                         ))}

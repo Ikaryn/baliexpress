@@ -4,8 +4,7 @@ from flask_restful import Resource
 import secrets, random
 from flask_cors import CORS
 from flask_restful import Api
-from . import products as p
-
+from . import dbaccess as db
 
 #dummy accounts
 accounts = [    {'userId': 1529870708,
@@ -13,10 +12,9 @@ accounts = [    {'userId': 1529870708,
                                 'email': 'johnS@gmail.com',
                                 'password': 'asdfasdf',
                                 'phone':'12345678',
-                                'admin':True,
+                                'admin':False,
                                 'streetAddress': '35E Crapperdown Road',
                                 'city': 'Austin',
-                                'state': 'Texas',
                                 'country': 'USA',
                                 'postcode': '67553'},
                  'builds': [],
@@ -30,7 +28,6 @@ accounts = [    {'userId': 1529870708,
                               'admin':False,
                               'streetAddress': '24 Bellavista Road',
                               'city': 'Sydney',
-                              'state': 'New South Wales',
                               'country': 'Australia',
                               'postcode': '2327'},
                  'builds': [],
@@ -44,7 +41,6 @@ accounts = [    {'userId': 1529870708,
                               'admin':False,
                               'streetAddress': '1 Tong Street',
                               'city': 'Kyoto',
-                              'state': 'Kanto',
                               'country': 'Japan',
                               'postcode': '3456'},
                  'builds': [],
@@ -59,81 +55,65 @@ def getUser (userId):
     
     return None
 
-# @app.route('/login',strict_slashes=False)
 class Login(Resource):
-    # @user.response(200, 'success', login_details)
     def post(self):
         print('Login Attempt Received')
-        print(request.json)
+
         data = request.json
-        print(type(data))
 
+        # Get details from request
         email = data.get('email')
-        password = data.get('password')
+        attemptPass = data.get('password')
 
-        # unpack json object
+        # Attempt to get the relevant userId from database
+        userId = db.getUserIDFromEmail(email)
 
-        # replace this with database query for validation
-        for user in accounts:
-            if email == user['userInfo']['email']:
-                if password == user['userInfo']['password']:
-                    print('Login successful')
-                    t = secrets.token_hex()
-                    return {'token': t, 'userId': user['userId']}
-                else:
-                    return {'error':'Invalid Password'}
-        
+        if userId is None:
+            return {'error':'Invalid Login Details'}
+        else:
+            userPass = db.getPassword(userId)
+            if (attemptPass == userPass):
+                print('Login successful')
+                t = secrets.token_hex()
+                return {'token': t, 'userId': userId}
+            else:
+                return {'error':'Invalid Password'}
 
         return {'error':'Invalid Login Details'}
 
-        
-        # return {'asdf': 'asdf'}
-
-# api.add_resource(Login, '/login')
-# @user.route('/register')
 class Register(Resource):
     def post(self):
         print('Register attempt Recieved')
         data = request.json
 
+        # Get details from request
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
         phone_number = data.get('phone')
 
-        for account in accounts:
-            if email == account['userInfo']['email']:
-                return {'error':'Email already registered'}
+        # Check if the email has already been registered
+        existEmail = db.getUserIDFromEmail(email)
+        if existEmail is not None:
+            return {'error':'Email already registered'}
 
         # generating a new unique id
-        uniqueId = False
-        i = 0
-        newId = random.getrandbits(32)
-        while (not uniqueId):
-            if (newId == accounts[i]['userId']):
-                newId = random.getrandbits(32)
-                i = 0
-            else:
-                if (i == len(accounts) - 1):
-                    uniqueId = True
-                else:
-                    i += 1
+        # uniqueId = False
+        # i = 0
+        # newId = random.getrandbits(32)
+        # while (not uniqueId):
+        #     if (newId == accounts[i]['userId']):
+        #         newId = random.getrandbits(32)
+        #         i = 0
+        #     else:
+        #         if (i == len(accounts) - 1):
+        #             uniqueId = True
+        #         else:
+        #             i += 1
 
-        newUser = {'userId': newId,
-                   'userInfo': { 'name': name,
-                                'email': email,
-                                'password': password,
-                                'phone': phone_number,
-                                'admin':False,
-                                'streetAddress': '',
-                                'city': '',
-                                'state': '',
-                                'country': '',
-                                'postcode': ''},
-                   'builds': [],
-                   'orders': []}
-        accounts.append(newUser)
-        print("Account registered", newUser)
+        db.addUser(name, email, password, phone_number)
+
+        print("New Account registered")
 
         t = secrets.token_hex()
         return {'token': t}
@@ -148,9 +128,10 @@ class Profile(Resource):
         # Get user profile
         if requestType == 'profile':
             print('Get profile attempt received')
-            userId = data.get('userId')
-            user = getUser(userId)
-
+            print('id:', id)
+            
+            user = db.getUserInfo(id)
+            print("user:", user)
             if user is None:
                 return {'error': 'User not found'}
             else:
@@ -160,7 +141,7 @@ class Profile(Resource):
         # Get all users
         elif requestType == 'all users':
             print('Get all users attempt received')
-            return {'user': accounts}
+            return {'users': db.getAllUsers()}
 
         # Get product using received productId
         # elif requestType == 'product':
@@ -170,6 +151,7 @@ class Profile(Resource):
         #     return {'product': product}
         else:
             print('Get profile attempt received')
+            print('Nothing should be here, we screwed up')
             data = request.args
 
             userId = data.get('userId')
@@ -186,26 +168,19 @@ class Profile(Resource):
 
         # Add product to product list
         print('Add product attempt received')
+        print('redundant, shouldn not be used')
         data = request.json
 
-        category = data.get('type')
-        p.productCount += 1
+        newProduct = {}
 
-        newProduct = {
-                        'id': p.productCount,
-        }
-
+        print(data)
         for field in data:
             newProduct[field] = data.get(field)
+
+        status = db.addProduct(newProduct)
         
-        # CHANGE THIS IF IMAGES DON'T WORK
-        newProduct['image'] = data.get('image')
-        # newProduct['image'] = 1
 
-
-        p.products[category].append(newProduct)
-
-        return {'product': newProduct}
+        return
 
     def put(self, id):
 
@@ -217,16 +192,29 @@ class Profile(Resource):
 
         # Edit user profile details
         if requestType == 'edit profile':
-            print('Edit profile attempt received')
             userId = id
-            user = getUser(userId)
+            print(type(userId))
 
-            for field in user['userInfo']:
-                user['userInfo'][field] = data.get(field)
+            print("DATA\n", data)
 
+            user = db.getUserInfo(id)
+            for field in data:
+                user[field] = data.get(field)
+
+            db.updateUser(userId,
+                            user['name'],
+                            user['email'],
+                            user['password'],
+                            user['phone'],
+                            user['streetAddress'],
+                            user['city'],
+                            user['state'],
+                            user['country'],
+                            user['postcode'])
+
+            user = db.getUserInfo(userId)
             print (user)
             return {'accountInfo': user}
-        
         # Change the admin status for a user
         elif requestType == 'admin status':
             print('Change admin status attempt received')
@@ -281,9 +269,8 @@ class Profile(Resource):
         elif requestType == 'change password':
             print('Change password attempt received')
 
-            userId = id
-            user= getUser(userId)
-            user['userInfo']['password'] = data.get('password')
+            db.updatePassword(id, data.get('password'))
+            user = db.getUserInfo(id)
             return {'accountInfo', user}
             
         else:
