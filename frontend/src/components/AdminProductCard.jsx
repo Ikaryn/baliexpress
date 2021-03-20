@@ -2,7 +2,6 @@ import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@materia
 import React from 'react';
 
 const AdminProductCard = ({productInfo}) => {
-    // console.log(productInfo);
     return (
         <Card>
             <Grid container direction="row">
