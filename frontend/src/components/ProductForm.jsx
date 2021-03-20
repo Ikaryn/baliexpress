@@ -1,5 +1,7 @@
 import { Step, StepLabel, Stepper, Typography, Button } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router';
+import API from '../util/API';
 import { fileToDataUrl } from '../util/helpers';
 import { InputForm, SpecsForm, UploadZone } from './StepperComponents';
 
@@ -14,6 +16,8 @@ const productTemplate = {
     'warranty': '',
 
 }
+
+const api = new API();
 
 const ProductForm = ({type}) => {
     const [activeStep, setActiveStep] = React.useState(0);
@@ -59,11 +63,22 @@ const ProductForm = ({type}) => {
             changeValue('image', imageString);
         }
     }
-    
-    // const handleSubmit = () => {
+    const history = useHistory();
+    const handleSubmit = async () => {
+        const options = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'request-type': 'edit product',
+            },
+            body: JSON.stringify(product)
+        }
+
+        const newProduct = await api.makeAPIRequest(`addProduct`, options);
+        console.log(newProduct);
+        history.push(`/product/${newProduct.product.type}/${newProduct.product.id}`); 
+    }
         
-    // }
-    
     return (
         <div>
             <Stepper activeStep={activeStep}>
@@ -78,7 +93,7 @@ const ProductForm = ({type}) => {
                     <div>
                         <Typography>You're done! Click submit to finish the product!</Typography>
                         <Button disabled={activeStep === 0} onClick={handleBack}>Back</Button>
-                        <Button>Submit</Button>
+                        <Button onClick={handleSubmit}>Submit</Button>
                     </div>
                 ) : (
                     <div>
