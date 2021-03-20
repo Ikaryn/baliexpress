@@ -16,15 +16,9 @@ const productTemplate = {
     'warranty': '',
  
 }
-<<<<<<< HEAD
-
-const api = new API();
-
-=======
  
 const api = new API();
  
->>>>>>> main_dbconnection_merge
 const ProductForm = ({type}) => {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Input Product Information', 'Enter Product Specs', 'Upload an image'];
@@ -87,21 +81,12 @@ const ProductForm = ({type}) => {
             },
             body: JSON.stringify(product)
         }
-<<<<<<< HEAD
-
-        const newProduct = await api.makeAPIRequest(`addProduct`, options);
-        console.log(newProduct);
-        history.push(`/product/${newProduct.product.type}/${newProduct.product.id}`); 
-    }
-        
-=======
         console.log(product)
         const newProduct = await api.makeAPIRequest(`addProduct`, options);
         console.log(newProduct);
         history.push(`/product/${newProduct.product.category}/${newProduct.product.id}`); 
     }
  
->>>>>>> main_dbconnection_merge
     return (
         <div>
             <Stepper activeStep={activeStep}>
