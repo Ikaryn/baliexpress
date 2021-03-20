@@ -8,6 +8,7 @@ import ViewUsers from '../components/ViewUsers';
 import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
+import AllProductList from '../components/AllProductList';
 // import './App.css';
 const api = new API();
 
@@ -144,7 +145,7 @@ const ProfilePage = () => {
                         }
                         {accInfo.isAdmin &&
                             <TabPanel value={value} index={4}>
-                                <Typography>Placeholder</Typography>
+                                <AllProductList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
