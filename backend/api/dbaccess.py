@@ -6,7 +6,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="jlk1njk2"
+        password="asdf1234"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -21,6 +21,7 @@ def getUserInfo(id):
     conn = connect()
     cur = conn.cursor()
 
+    print('id:', id)
 
     cur.execute(
     	"SELECT * FROM Users WHERE id = %s", [id]
@@ -265,6 +266,14 @@ def getCategories():
 # specs are stored in a dictionary within the dictionary with the key "specs"
 # TODO: tidy
 def getAllProducts(*args):
+
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )  
+    psycopg2.extensions.register_type(decimalToFloat)
+
     # get all products of all categories
     if not args:
         try:
@@ -326,6 +335,7 @@ def getAllProducts(*args):
     elif len(args) == 1:
         try:
             category = args[0]
+            print('finding category:', category)
             conn = connect()
             cur = conn.cursor()
             # get column names
@@ -433,6 +443,7 @@ def getProduct(id):
 # eg {name: "product name", price: "666.66",  type: "CPU", image: "whatever we're doing for images", description: "description text", stock: "500", specs: {manufacturer: "whoever", corecount:"6"}}
 # please do not pass in an id, it is generated automatically
 def addProduct(newProduct):
+    print("product to add:", newProduct)
     try:
         conn = connect()
         cur = conn.cursor()
@@ -467,11 +478,13 @@ def addProduct(newProduct):
     except (Exception, psycopg2.DatabaseError) as error:
         print("An error has occured")
         print (error)
+        id = None
         added = 0
 
     finally:
+        print("Item successfully added")
         conn.close()
-        return added
+        return id
 
 # returns 1 if successful, 0 if unsuccessful. If it returns something greater
 # than 1, something has gone seriously wrong
@@ -544,8 +557,29 @@ def getColumns(cur, table):
 # print(getAllUsers())
 
 #spec = {'id':12, 'num_fans':9, 'power_use':2}
-#item = {'name': 'fully sick fan', 'category':'PC_Cooling', 'brand': 'real brand', 'price': 9999999.99, 'warranty': 'nah', 'description': 'a real product', 'stock': '5', 'specs': spec}
-#print(addProduct(item))
+# item = {'name': 'fully sick cpu', 'category':'CPU', 'brand': 'real brand', 'price': 9999999.99, 'warranty': 'nah', 'description': 'a real product', 'stock': '5', 'specs': spec}
+# print(addProduct(item))
 #print(getAllProducts())
 
-print(deleteProduct(12))
+# cpu = { 'name': 'fuly sick cpu',
+#         'category': 'CPU',
+#         'brand': 'supreme',
+#         'price': 199.99,
+#         'image': '',
+#         'warranty': '1 year',
+#         'description': 'lit',
+#         'stock': 525,
+#         'specs': {  'cores': 8,
+#                     'threads': 16,
+#                     'base_clock': 6.0,
+#                     'max_clock': 6.4,
+#                     'socket': 'your mum',
+#                     'cooler_included': True,
+#                     'overclockable': True,
+#                     'power_use': 100.2,
+#         }}
+
+# print(addProduct(cpu))
+# print(deleteProduct(12))
+# print(getUserInfo(1))
+# print(getAllProducts('CPU'))

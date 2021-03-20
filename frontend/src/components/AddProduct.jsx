@@ -27,7 +27,7 @@ const AddProduct = ({}) => {
         const product = { 
             id: Number(id),
             name: title,
-            type: category,
+            category: category,
             brand: brand,
             price: price,
             // stock: stock,

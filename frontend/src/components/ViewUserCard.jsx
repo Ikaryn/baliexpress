@@ -4,10 +4,10 @@ import API from '../util/API';
 const api = new API();
 const ViewUsers = ({user}) => {
     const [expand, setExpand] = React.useState(false);
-    const [role, setRole] = React.useState(user.userInfo.admin);
-    console.log(role, user.userInfo.admin, user.userInfo.email);
+    const [role, setRole] = React.useState(user.admin);
+    console.log(role, user.admin, user.email);
     async function handleSelectChange(event) {
-        if(window.confirm('Are you sure you want to change ' + user.userInfo.email + '\'s role?')){
+        if(window.confirm('Are you sure you want to change ' + user.email + '\'s role?')){
             console.log(user.userId);
             const options = {
                 method: 'PUT',
@@ -31,22 +31,22 @@ const ViewUsers = ({user}) => {
             {expand ? 
                 <CardContent>
                     <Typography>
-                        {"Email: " + user.userInfo.email}
+                        {"Email: " + user.email}
                     </Typography>
                     <Typography>
                         {"ID: " + user.userId}
                     </Typography>
                     <Typography>
-                        {"Name: " + user.userInfo.name}
+                        {"Name: " + user.name}
                     </Typography>
                     <Typography>
-                        {"Phone: " + user.userInfo.phone}
+                        {"Phone: " + user.phone}
                     </Typography>
                     <Typography>
-                        {"Address: " + user.userInfo.streetAddress + ", " + 
-                            user.userInfo.city + ", " + 
-                            user.userInfo.postcode + ", " + 
-                            user.userInfo.country
+                        {"Address: " + user.streetAddress + ", " + 
+                            user.city + ", " + 
+                            user.postcode + ", " + 
+                            user.country
                         }
                     </Typography>
                     <Typography>
@@ -62,7 +62,7 @@ const ViewUsers = ({user}) => {
                 </CardContent>:
                 <CardContent>
                     <Typography>
-                        {"Email: " + user.userInfo.email}
+                        {"Email: " + user.email}
                     </Typography>
                 </CardContent>                
             }

@@ -49,17 +49,17 @@ const InputForm = ({product, changeValue}) => {
         </Grid>
         <Grid item xs={9}>
             <Input 
-                onChange={(event) => {changeValue('desc', event.target.value)}} 
+                onChange={(event) => {changeValue('description', event.target.value)}} 
                 placeholder="Description" 
-                value={product.desc} 
+                value={product.description} 
                 fullWidth
                 />
         </Grid>
         <Grid item xs={3}>
         <FormControl>
             <InputLabel>Product type</InputLabel>
-            <Select native value={product.type} onChange={(event) => {changeValue('type', event.target.value)}}>
-                {product.type === '' ? <option value="" disabled></option> : product.type}
+            <Select native value={product.category} onChange={(event) => {changeValue('category', event.target.value)}}>
+                {product.category === '' ? <option value="" disabled></option> : product.category}
                 {productCategories.map((category) => (
                     <option value={category}>{category}</option>
                     ))}
@@ -89,7 +89,7 @@ const SpecsForm = ({product, changeValue}) => {
     
     React.useEffect(() => {
         (async () => {
-            const products = await api.get(`product/${product.type}`);
+            const products = await api.get(`product/${product.category}`);
             if (products) {
                 setSpecs(products.products[0].specs);
             }

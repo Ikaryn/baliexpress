@@ -7,44 +7,44 @@ from flask_restful import Api
 from . import dbaccess as db
 
 #dummy accounts
-# accounts = [    {'userId': 1529870708,
-#                  'userInfo': {  'name': 'John Smith',
-#                                 'email': 'johnS@gmail.com',
-#                                 'password': 'asdfasdf',
-#                                 'phone':'12345678',
-#                                 'admin':False,
-#                                 'streetAddress': '35E Crapperdown Road',
-#                                 'city': 'Austin',
-#                                 'country': 'USA',
-#                                 'postcode': '67553'},
-#                  'builds': [],
-#                  'orders': []},
+accounts = [    {'userId': 1529870708,
+                 'userInfo': {  'name': 'John Smith',
+                                'email': 'johnS@gmail.com',
+                                'password': 'asdfasdf',
+                                'phone':'12345678',
+                                'admin':False,
+                                'streetAddress': '35E Crapperdown Road',
+                                'city': 'Austin',
+                                'country': 'USA',
+                                'postcode': '67553'},
+                 'builds': [],
+                 'orders': []},
 
-#                 {'userId': 3533306566,
-#                  'userInfo': {'name': 'Kevin Eleven',
-#                               'email': 'K11@gmail.com',
-#                               'password': 'fdsafdsa',
-#                               'phone':'87654321',
-#                               'admin':False,
-#                               'streetAddress': '24 Bellavista Road',
-#                               'city': 'Sydney',
-#                               'country': 'Australia',
-#                               'postcode': '2327'},
-#                  'builds': [],
-#                  'orders': []},
+                {'userId': 3533306566,
+                 'userInfo': {'name': 'Kevin Eleven',
+                              'email': 'K11@gmail.com',
+                              'password': 'fdsafdsa',
+                              'phone':'87654321',
+                              'admin':False,
+                              'streetAddress': '24 Bellavista Road',
+                              'city': 'Sydney',
+                              'country': 'Australia',
+                              'postcode': '2327'},
+                 'builds': [],
+                 'orders': []},
                 
-#                 {'userId': 2624841935,
-#                  'userInfo': {'name': 'Jen',
-#                               'email': 'jen@gmail.com',
-#                               'password': 'aaabbbccc',
-#                               'phone':'10101010',
-#                               'admin':False,
-#                               'streetAddress': '1 Tong Street',
-#                               'city': 'Kyoto',
-#                               'country': 'Japan',
-#                               'postcode': '3456'},
-#                  'builds': [],
-#                  'orders': []},]
+                {'userId': 2624841935,
+                 'userInfo': {'name': 'Jen',
+                              'email': 'jen@gmail.com',
+                              'password': 'aaabbbccc',
+                              'phone':'10101010',
+                              'admin':False,
+                              'streetAddress': '1 Tong Street',
+                              'city': 'Kyoto',
+                              'country': 'Japan',
+                              'postcode': '3456'},
+                 'builds': [],
+                 'orders': []},]
 
 # Function to get the account of user through userId
 def getUser (userId):
@@ -128,8 +128,10 @@ class Profile(Resource):
         # Get user profile
         if requestType == 'profile':
             print('Get profile attempt received')
-            userId = data.get('userId')
-            user = db.getUserInfo(userId)
+            print('id:', id)
+            
+            user = db.getUserInfo(id)
+            print("user:", user)
             if user is None:
                 return {'error': 'User not found'}
             else:
@@ -139,7 +141,7 @@ class Profile(Resource):
         # Get all users
         elif requestType == 'all users':
             print('Get all users attempt received')
-            return {'user': accounts}
+            return {'users': db.getAllUsers()}
 
         # Get product using received productId
         # elif requestType == 'product':
@@ -149,6 +151,7 @@ class Profile(Resource):
         #     return {'product': product}
         else:
             print('Get profile attempt received')
+            print('Nothing should be here, we screwed up')
             data = request.args
 
             userId = data.get('userId')
@@ -165,26 +168,19 @@ class Profile(Resource):
 
         # Add product to product list
         print('Add product attempt received')
+        print('redundant, shouldn not be used')
         data = request.json
 
-        category = data.get('type')
-        p.productCount += 1
+        newProduct = {}
 
-        newProduct = {
-                        'id': p.productCount,
-        }
-
+        print(data)
         for field in data:
             newProduct[field] = data.get(field)
+
+        status = db.addProduct(newProduct)
         
-        # CHANGE THIS IF IMAGES DON'T WORK
-        newProduct['image'] = data.get('image')
-        # newProduct['image'] = 1
 
-
-        p.products[category].append(newProduct)
-
-        return {'product': newProduct}
+        return
 
     def put(self, id):
 
@@ -201,16 +197,20 @@ class Profile(Resource):
 
             print("DATA\n", data)
 
+            user = db.getUserInfo(id)
+            for field in data:
+                user[field] = data.get(field)
+
             db.updateUser(userId,
-                            data.get('name'),
-                            data.get('email'),
-                            db.getPassword(userId),
-                            data.get('phone'),
-                            data.get('addr'),
-                            data.get('city'),
-                            data.get('state'),
-                            data.get('country'),
-                            data.get('postcode'))
+                            user['name'],
+                            user['email'],
+                            user['password'],
+                            user['phone'],
+                            user['streetAddress'],
+                            user['city'],
+                            user['state'],
+                            user['country'],
+                            user['postcode'])
 
             user = db.getUserInfo(userId)
             print (user)
@@ -269,9 +269,8 @@ class Profile(Resource):
         elif requestType == 'change password':
             print('Change password attempt received')
 
-            userId = id
-            user= getUser(userId)
-            user['userInfo']['password'] = data.get('password')
+            db.updatePassword(id, data.get('password'))
+            user = db.getUserInfo(id)
             return {'accountInfo', user}
             
         else:

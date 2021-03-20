@@ -8,22 +8,23 @@ from base64 import b64encode
 from flask_cors import CORS
 from flask_restful import Api
 from PIL import Image
+from . import dbaccess as db
 
 # from dbaccess import *
 
-# AMD_Ryzen_5_5600X = {
-#     "id":0,
-#     "name":"AMD Ryzen 5 5600X",
-#     "type":"CPU",
-#     "brand":"AMD",
-#     "price":549,
-#     "no. of Cores":6,
-#     "no. of Threads":12,
-#     "base":3.7,
-#     "max":4.6,
-#     "socket":"AM4",
-#     "cooler included":True
-# }
+AMD_Ryzen_5_5600X = {
+    "id":0,
+    "name":"AMD Ryzen 5 5600X",
+    "type":"CPU",
+    "brand":"AMD",
+    "price":549,
+    "no. of Cores":6,
+    "no. of Threads":12,
+    "base":3.7,
+    "max":4.6,
+    "socket":"AM4",
+    "cooler included":True
+}
 
 def getEncodedImage (category, imgName):
 
@@ -307,7 +308,10 @@ class ProductList(Resource):
     def get(self,category):
         print("Get ProductList attempt received")
 
-        return ({'products':products[category]})
+        products = db.getAllProducts(str(category))
+        # print("products:", products)
+
+        return ({'products':products})
 
 
 class ProductPage(Resource):
@@ -320,8 +324,7 @@ class ProductPage(Resource):
         # Get product using received productId
         if requestType == 'product':
             print('Get product attempt received')
-            productId = data.get('productId')
-            product = getProduct(productId)
+            product = db.getProduct(id)
             return {'product': product}
 
     def post(self):
@@ -329,24 +332,15 @@ class ProductPage(Resource):
         print('Add product attempt received')
         data = request.json
 
-        category = data.get('type')
-        # productCount += 1
-
-        # newProduct = {
-        #     'id': productCount,
-        # }
         newProduct = {}
         for field in data:
             newProduct[field] = data.get(field)
         
-        # CHANGE THIS IF IMAGES DON'T WORK
-        newProduct['image'] = data.get('image')
-        # newProduct['image'] = 1
 
+        productId = db.addProduct(newProduct)
+        product = db.getProduct(productId)
 
-        products[category].append(newProduct)
-
-        return {'product': newProduct}
+        return {'product': product}
     
     def put(self,category,id):
         data = request.json
@@ -389,13 +383,31 @@ class ProductPage(Resource):
         data = request.json
 
         productId = data.get('id')
-        product = getProduct(productId)
-        category = product['type']
-
-        for partType in products:
-            for part in products[partType]:
-                if (str(part['id']) == str(productId)):
-                    toDelete = part
-
-        products[category].remove(toDelete)
+        db.deleteProduct(productId)
         return {'message': 'product successfully removed'}
+
+class AddProduct(Resource):
+    def post (self):
+        print('Add product attempt received')
+        data = request.json
+        # productCount += 1
+
+        # newProduct = {
+        #     'id': productCount,
+        # }
+
+        print ("DATA:", data)
+        newProduct = {}
+        for field in data:
+            newProduct[field] = data.get(field)
+        
+        # CHANGE THIS IF IMAGES DON'T WORK
+        # newProduct['image'] = data.get('image')
+        # newProduct['image'] = 1
+
+        productId = db.addProduct(newProduct)
+        product = db.getProduct(productId)
+
+        # products[category].append(newProduct)
+
+        return {'product': product}
