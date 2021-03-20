@@ -163,11 +163,11 @@ class Profile(Resource):
             return {'user': accounts}
 
         # Get product using received productId
-        elif requestType == 'product':
-            print('Get product attempt received')
-            productId = data.get('productId')
-            product = p.getProduct(productId)
-            return {'product': product}
+        # elif requestType == 'product':
+        #     print('Get product attempt received')
+        #     productId = data.get('productId')
+        #     product = p.getProduct(productId)
+        #     return {'product': product}
         else:
             print('Get profile attempt received')
             data = request.args
@@ -250,32 +250,32 @@ class Profile(Resource):
 
             return {'accountInfo': user}
         
-        # Edit product details
-        elif requestType == 'edit product':
-            print('Edit product attempt received')
+        # # Edit product details
+        # elif requestType == 'edit product':
+        #     print('Edit product attempt received')
 
-            print("product data", data)
+        #     print("product data", data)
 
-            # Needs productId to get the right product for editing
-            productId = data.get('id')
-            product = p.getProduct(productId)
-            for field in product:
-                if field == 'image':
+        #     # Needs productId to get the right product for editing
+        #     productId = data.get('id')
+        #     product = p.getProduct(productId)
+        #     for field in product:
+        #         if field == 'image':
 
-                    # CHANGE THIS IF IMAGES DON'T WORK
-                    product['image'] = data.get(field)
-                    pass
-                if field == 'id':
-                    product['id'] = int(data.get(field))
-                if field == 'price':
-                    product['price'] = int(data.get(field))
-                else:
-                    print('field is', field)
-                    product[field] = data.get(field)
-                    print('fielf after update:', product[field])
+        #             # CHANGE THIS IF IMAGES DON'T WORK
+        #             product['image'] = data.get(field)
+        #             pass
+        #         if field == 'id':
+        #             product['id'] = int(data.get(field))
+        #         if field == 'price':
+        #             product['price'] = int(data.get(field))
+        #         else:
+        #             print('field is', field)
+        #             product[field] = data.get(field)
+        #             print('fielf after update:', product[field])
             
-            print("response to send:", product)
-            return {'productInfo': product}
+        #     print("response to send:", product)
+        #     return {'productInfo': product}
 
         # Change password
         elif requestType == 'change password':
@@ -299,23 +299,23 @@ class Profile(Resource):
             print (user)
             return {'accountInfo': user}
 
-    def delete(self, id):
+    # def delete(self, id):
         
-        # Delete a product using its productId
-        print('Remove product attempt received')
-        data = request.json
+    #     # Delete a product using its productId
+    #     print('Remove product attempt received')
+    #     data = request.json
 
-        productId = data.get('id')
-        product = p.getProduct(productId)
-        category = product['type']
+    #     productId = data.get('id')
+    #     product = p.getProduct(productId)
+    #     category = product['type']
 
-        for partType in p.products:
-            for part in p.products[partType]:
-                if (str(part['id']) == str(productId)):
-                    toDelete = part
+    #     for partType in p.products:
+    #         for part in p.products[partType]:
+    #             if (str(part['id']) == str(productId)):
+    #                 toDelete = part
 
-        p.products[category].remove(toDelete)
-        return {'message': 'product successfully removed'}
+    #     p.products[category].remove(toDelete)
+    #     return {'message': 'product successfully removed'}
 
 
 # api.add_resource(Register, '/register')

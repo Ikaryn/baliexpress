@@ -291,6 +291,7 @@ products = {
     "Motherboards" : motherboards,
     "Storage" : storage
 }
+productCount = 13
 # print(cpus)
 # print(motherboards)
 # print(storage)
@@ -311,17 +312,90 @@ class ProductList(Resource):
 
 
 class ProductPage(Resource):
-    def get(self, category, productID):
-        print("Product Page request received")
+    def get(self, id):
+        data = request.args
 
-        for product in products[category]:
-            if productID == product['id']:
-                return ({'product':product})
-        return {'error':"Product not found"}
+        # Get request type from header
+        requestType = request.headers.get('request-type')
+
+        # Get product using received productId
+        if requestType == 'product':
+            print('Get product attempt received')
+            productId = data.get('productId')
+            product = getProduct(productId)
+            return {'product': product}
 
     def post(self):
-        print("Product Post received")
-        product = request.json
+        # Add product to product list
+        print('Add product attempt received')
+        data = request.json
+
+        category = data.get('type')
+        # productCount += 1
+
+        # newProduct = {
+        #     'id': productCount,
+        # }
+        newProduct = {}
+        for field in data:
+            newProduct[field] = data.get(field)
+        
+        # CHANGE THIS IF IMAGES DON'T WORK
+        newProduct['image'] = data.get('image')
+        # newProduct['image'] = 1
+
+
+        products[category].append(newProduct)
+
+        return {'product': newProduct}
+    
+    def put(self):
+        data = request.json
+        print("data is ",data)
+        # Get request type from header
+        requestType = request.headers.get('request-type')
+
+        # Edit product details
+        if requestType == 'edit product':
+            print('Edit product attempt received')
+
+            print("product data", data)
+
+            # Needs productId to get the right product for editing
+            productId = data.get('id')
+            product = getProduct(productId)
+            for field in product:
+                if field == 'image':
+
+                    # CHANGE THIS IF IMAGES DON'T WORK
+                    product['image'] = data.get(field)
+                    pass
+                if field == 'id':
+                    product['id'] = int(data.get(field))
+                if field == 'price':
+                    product['price'] = int(data.get(field))
+                else:
+                    print('field is', field)
+                    product[field] = data.get(field)
+                    print('fielf after update:', product[field])
+            
+            print("response to send:", product)
+            return {'productInfo': product}
+    
+    def delete(self):
+        
+        # Delete a product using its productId
+        print('Remove product attempt received')
+        data = request.json
+
+        productId = data.get('id')
+        product = getProduct(productId)
         category = product['type']
 
-        products[category].append(product)
+        for partType in products:
+            for part in products[partType]:
+                if (str(part['id']) == str(productId)):
+                    toDelete = part
+
+        products[category].remove(toDelete)
+        return {'message': 'product successfully removed'}
