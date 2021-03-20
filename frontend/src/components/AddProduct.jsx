@@ -59,26 +59,6 @@ const AddProduct = ({}) => {
 
     return(
         <Grid container item direction="column" className="information-tab">
-            {/* <Typography variant="h3">Add a product:</Typography> */}
-            {/* <Input onChange={(event) => {setId(event.target.value)}} placeholder="ID"   /> */}
-            {/* <Input onChange={(event) => {setCategory(event.target.value)}} placeholder="Category" /> */}
-            {/* <Input onChange={(event) => {setTitle(event.target.value)}} placeholder="Title" /> */}
-            {/* <Input onChange={(event) => {setBrand(event.target.value)}} placeholder="Brand" /> */}
-            {/* <Input onChange={(event) => {setSubheading(event.target.value)}} placeholder="Subheading" /> */}
-            {/* <Input onChange={(event) => {setPrice(event.target.value)}} placeholder="Price" /> */}
-            {/* <Input onChange={(event) => {setStock(event.target.value)}} placeholder="Stock" /> */}
-            {/* <Input onChange={(event) => {setSpecs(event.target.value)}} placeholder="Specs" /> */}
-            {/* <Input onChange={(event) => {setDesc(event.target.value)}} placeholder="Description" /> */}
-            {/* <Input onChange={(event) => {setWarranty(event.target.value)}} placeholder="Warranty" /> */}
-            
-            {/* <DropzoneArea
-                acceptedFiles={['image/*']}
-                dropzoneText="Set product image thumbnail"
-                onChange={(file) => {handleImageUpload(file); }}
-            />
-                
-
-            <Button onClick={() => {AddProduct()}}>Submit</Button> */}
             <ProductForm />
         </Grid>
     )

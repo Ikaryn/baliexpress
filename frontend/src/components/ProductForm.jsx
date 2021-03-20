@@ -15,7 +15,7 @@ const productTemplate = {
 
 }
 
-const ProductForm = () => {
+const ProductForm = ({type}) => {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ['Input Product Information', 'Enter Product Specs', 'Upload an image'];
     
@@ -60,6 +60,10 @@ const ProductForm = () => {
         }
     }
     
+    // const handleSubmit = () => {
+        
+    // }
+    
     return (
         <div>
             <Stepper activeStep={activeStep}>
@@ -74,7 +78,7 @@ const ProductForm = () => {
                     <div>
                         <Typography>You're done! Click submit to finish the product!</Typography>
                         <Button disabled={activeStep === 0} onClick={handleBack}>Back</Button>
-                        <Button >Submit</Button>
+                        <Button>Submit</Button>
                     </div>
                 ) : (
                     <div>

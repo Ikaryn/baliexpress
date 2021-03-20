@@ -349,12 +349,13 @@ class ProductPage(Resource):
 
         return {'product': newProduct}
     
-    def put(self):
+    def put(self,category,id):
         data = request.json
-        print("data is ",data)
+        print('edit product attempt')
+        # print("data is ",data)
         # Get request type from header
         requestType = request.headers.get('request-type')
-
+        print(requestType)
         # Edit product details
         if requestType == 'edit product':
             print('Edit product attempt received')

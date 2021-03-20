@@ -29,14 +29,14 @@ const EditProductPage = ({}) => {
                 method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'requestType': 'edit product',
+                    'request-type': 'edit product',
                 },
-                body: JSON.stringify()
+                body: JSON.stringify(productInfo)
             }
 
             console.log("Options", options)
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`/editProduct`, options);
+            const res = await api.makeAPIRequest(`product/${category}/${pid}`, options);
             console.log(res);
             history.push(`/product/${category}/${pid}`);  
         }
@@ -51,7 +51,7 @@ const EditProductPage = ({}) => {
                 body: JSON.stringify(productInfo)
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`deleteProduct`, options);
+            const res = await api.makeAPIRequest(`/product/${category}/${pid}`, options);
             history.push(`/product/${category}`);
         }
     }
