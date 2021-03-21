@@ -20,9 +20,11 @@ const AllProductList = () => {
                 return productList.products;
                 
             }));
+            
+            setProducts(productsInCategory);
         })();
+
     },[]);
-    
     return (
         <Grid container>
             {products.map((prods) => (
