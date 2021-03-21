@@ -6,7 +6,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="jlk1njk2"
+        password="password"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -265,7 +265,16 @@ def getCategories():
 # specs are stored in a dictionary within the dictionary with the key "specs"
 # TODO: tidy
 def getAllProducts(*args):
+    # get database to return floats instead of decimals
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )
+    psycopg2.extensions.register_type(decimalToFloat)
+
     # get all products of all categories
+
     if not args:
         try:
             conn = connect()
@@ -547,5 +556,3 @@ def getColumns(cur, table):
 #item = {'name': 'fully sick fan', 'category':'PC_Cooling', 'brand': 'real brand', 'price': 9999999.99, 'warranty': 'nah', 'description': 'a real product', 'stock': '5', 'specs': spec}
 #print(addProduct(item))
 #print(getAllProducts())
-
-print(deleteProduct(12))
