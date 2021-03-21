@@ -6,7 +6,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="asdf1234"
+        password="password"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -271,7 +271,7 @@ def getAllProducts(*args):
         psycopg2.extensions.DECIMAL.values,
         'decimalToFloat',
         lambda num, cur: float(num) if num is not None else None
-    )  
+    )
     psycopg2.extensions.register_type(decimalToFloat)
 
     # get all products of all categories
@@ -443,7 +443,6 @@ def getProduct(id):
 # eg {name: "product name", price: "666.66",  type: "CPU", image: "whatever we're doing for images", description: "description text", stock: "500", specs: {manufacturer: "whoever", corecount:"6"}}
 # please do not pass in an id, it is generated automatically
 def addProduct(newProduct):
-    print("product to add:", newProduct)
     try:
         conn = connect()
         cur = conn.cursor()
@@ -476,7 +475,7 @@ def addProduct(newProduct):
         added = 1
 
     except (Exception, psycopg2.DatabaseError) as error:
-        print("An error has occured")
+        print("An error has occured in addProduct")
         print (error)
         id = None
         added = 0
@@ -485,6 +484,41 @@ def addProduct(newProduct):
         print("Item successfully added")
         conn.close()
         return id
+
+# pass in the id and a dictionary of column:vallue pairs. Any columsn not
+# included will be unchanged. Cannot be used to update id or category
+# returns 1 on successful edit, 0 on failure
+#TODO: prevent from updating category and id, tidy
+def editProduct(id, editedProduct):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # extract product id and specs from dictionary
+        specs = None
+        if 'specs' in editedProduct:
+            specs = editedProduct.pop('specs')
+
+        # update Products table
+        query = "UPDATE Products SET %s WHERE id = %s" % (', '.join("%s = %%s" % col for col in editedProduct.keys()), id)
+        cur.execute(query, (tuple(editedProduct.values())))
+
+        # update category table
+        category = getCategoryFromID(cur, id)
+        if specs != None:
+            query = "UPDATE %s SET %s WHERE id = %s" % (category, ', '.join("%s = %%s" % col for col in specs.keys()), id)
+            cur.execute(query, (tuple(specs.values())))
+
+        status = 1
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("An error has occured in editProduct")
+        print(error)
+        status = 0
+    finally:
+        conn.commit()
+        conn.close()
+        return status
 
 # returns 1 if successful, 0 if unsuccessful. If it returns something greater
 # than 1, something has gone seriously wrong
@@ -520,46 +554,11 @@ def getColumns(cur, table):
         t = cur.fetchone()
     return columns
 
-# def getProductColumns(cur):
-#     cur.execute(
-#         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' ORDER BY ORDINAL_POSITION"
-#     )
-#     productColumns = []
-#     t = cur.fetchone()
-#     while t != None:
-#         productColumns.append(t[0])
-#         t = cur.fetchone()
-#     return productColumns
-#
-# def getCategoryColumns(cur, category):
-#     cur.execute(
-#         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [category.lower()]
-#     )
-#     columns = []
-#     t = cur.fetchone()
-#     while t != None:
-#         columns.append(t[0])
-#         t = cur.fetchone()
-#     return columns
+def getCategoryFromID(cur, id):
+    query = "SELECT Category FROM Products WHERE id = %s"
+    cur.execute(query, [id])
+    return cur.fetchone()[0]
 
-
-# addUser('anne', 'anne@email.com', 'passowrd', '3124124')
-# addAdmin('Jo', 'Jo@email.com', 'newpw', '55555555')
-# updateUser(1, 'Cry', 'hi@gmail.com', 'hello', 12344321, '10outoften street', 'new york', 'texas', 'earth', '2431')
-# # print(deleteProduct(50))
-# # print("user 1:", getUserInfo(1))
-# print(getProduct(1))
-# print(getAllProducts('CPU'))
-# print(getAllProducts())
-# print("Get user info: ")
-# print( getUserInfo(2))
-# print("Get all users:")
-# print(getAllUsers())
-
-#spec = {'id':12, 'num_fans':9, 'power_use':2}
-# item = {'name': 'fully sick cpu', 'category':'CPU', 'brand': 'real brand', 'price': 9999999.99, 'warranty': 'nah', 'description': 'a real product', 'stock': '5', 'specs': spec}
-# print(addProduct(item))
-#print(getAllProducts())
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
@@ -578,8 +577,3 @@ def getColumns(cur, table):
 #                     'overclockable': True,
 #                     'power_use': 100.2,
 #         }}
-
-# print(addProduct(cpu))
-# print(deleteProduct(12))
-# print(getUserInfo(1))
-# print(getAllProducts('CPU'))
