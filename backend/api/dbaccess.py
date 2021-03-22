@@ -6,7 +6,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="password"
+        password="asdf1234"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -438,7 +438,7 @@ def getProduct(id):
         return product
 
 # adds a product to the Database
-# returns 1 if successful, 0 otherwise
+# returns the productId if successful, 0 otherwise
 # item should be passed in as a dictionary
 # eg {name: "product name", price: "666.66",  type: "CPU", image: "whatever we're doing for images", description: "description text", stock: "500", specs: {manufacturer: "whoever", corecount:"6"}}
 # please do not pass in an id, it is generated automatically

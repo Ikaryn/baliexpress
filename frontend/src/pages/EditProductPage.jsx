@@ -46,12 +46,14 @@ const EditProductPage = ({}) => {
             const options = {
                 method: 'DELETE',
                 headers: { 
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(productInfo)
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`/product/${category}/${pid}`, options);
+            console.log("request:", options)
+            console.log('product-info:', productInfo)
+            const res = await api.makeAPIRequest(`product/${category}/${pid}`, options);
             history.push(`/product/${category}`);
         }
     }
