@@ -135,8 +135,7 @@ CREATE TABLE Storage(
 
 CREATE TABLE Graphics_Cards(
     id              int,
-    base_clock      numeric(5, 1),
-    max_clock       numeric(5, 1),
+    clock_speed     numeric(5, 1),
     memory_size     int,
     interface       text,
     memory_type     text,
@@ -207,8 +206,10 @@ CREATE TABLE Wifi_Adaptors(
 );
 
 CREATE TABLE Builds(
-    buildid int GENERATED ALWAYS AS IDENTITY,
-    userid  int,
+    buildid     int GENERATED ALWAYS AS IDENTITY,
+    userid      int,
+    buildname        text,
+    description text,
     primary key (buildid),
     foreign key (userid) references Users(id)
 );
