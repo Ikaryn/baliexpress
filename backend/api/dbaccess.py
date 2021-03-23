@@ -1,12 +1,13 @@
 import psycopg2
 from psycopg2.extensions import AsIs
+import psycopg2.extras
 
 def connect():
     conn = None
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="asdf1234"
+        password="password"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -542,6 +543,93 @@ def deleteProduct(id):
         conn.close()
         return deleted
 
+# ~~~ BULD A PC FUNCTIONS ~~~
+
+# create a new, empty build
+# returns id of new buiid if successful, None otherwise
+def addNewBuild(userid, buildName, buildDescription):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into builds tables
+        query = "INSERT INTO Builds (userid, buildname, description) VALUES (%s, %s, %s) RETURNING buildid"
+        cur.execute(query, (userid, buildName, buildDescription))
+
+        # get generated build id
+        buildID = cur.fetchone()[0]
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        buildID = None
+        print ("An error has occured in addBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return buildID
+
+# adds a part to an existing build
+# returns 1 if successful. 0 otherwise
+def addPartToBuild(buildID, productID, quantity):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into builds tables
+        query = "INSERT INTO BuildParts (buildid, productid, quantity) VALUES (%s, %s, %s) RETURNING buildid"
+        cur.execute(query, (buildID, productID, quantity))
+
+        # get generated build id
+        status = 1
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 1
+        print ("An error has occured in addCompomentToBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return status
+
+# gets all builds by a specific user
+# returns a list of dictionaries  {id, name, description, parts:({productID, quantity}, etc)}
+def getUsersBuilds(userID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get builds
+        builds = []
+        query = "SELECT * FROM Builds WHERE userid = %s"
+        cur.execute(query, [userID])
+
+        # convert rows to list of dictionaries
+        rows = cur.fetchall()
+        builds = [{column:data for column, data in record.items()} for record in rows]
+
+        # get parts for each build and add to build's dictionary
+        for build in builds:
+            query = "SELECT productid, quantity FROM BuildParts WHERE buildid = %s"
+            cur.execute(query, [build['buildid']])
+            rows = cur.fetchall()
+            build['parts'] = [{column:data for column, data in record.items()} for record in rows]
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        builds = None
+        print ("An error has occured in addCompomentToBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return builds
+
 #helper functions
 def getColumns(cur, table):
     cur.execute(
@@ -559,6 +647,11 @@ def getCategoryFromID(cur, id):
     cur.execute(query, [id])
     return cur.fetchone()[0]
 
+
+#print(addNewBuild(1, "My build", ""))
+#print(addPartToBuild(1, 1, 1))
+print(addPartToBuild(1, 5, 10))
+print(getUsersBuilds(1))
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
