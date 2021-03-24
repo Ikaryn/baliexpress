@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import { StoreContext } from '../util/store';
 import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
+import SearchBar from './searchBar';
 
 const NavBar = () => {
     
@@ -53,14 +54,7 @@ const NavBar = () => {
                     </Grid>
                     <Grid item xs={3}>
                         <Paper>
-                            <Grid container item direction="row" justify="space-between" alignItems="center">
-                                    <Grid item>
-                                        <InputBase placeholder="Search products..."/>
-                                    </Grid>
-                                    <Grid item>
-                                        <SearchIcon/>
-                                    </Grid>
-                            </Grid>
+                            <SearchBar/>
                         </Paper>
                     </Grid>
                     <Grid item xs={1}>
