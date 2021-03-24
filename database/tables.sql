@@ -224,6 +224,7 @@ CREATE TABLE BuildParts(
 );
 
 CREATE TABLE Reviews(
+    reviewid    int GENERATED ALWAYS AS IDENTITY,
     productid   int,
     userid      int,
     rating      int,
