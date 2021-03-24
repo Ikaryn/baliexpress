@@ -7,7 +7,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
         user="postgres",
-        password="password"
+        password="asdf1234"
     )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -650,8 +650,8 @@ def getCategoryFromID(cur, id):
 
 #print(addNewBuild(1, "My build", ""))
 #print(addPartToBuild(1, 1, 1))
-print(addPartToBuild(1, 5, 10))
-print(getUsersBuilds(1))
+# print(addPartToBuild(1, 5, 10))
+# print(getUsersBuilds(1))
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',

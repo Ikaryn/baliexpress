@@ -1,4 +1,4 @@
-from flask_restplus import Namespace, Resource, fields
+# from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
 # from app import api
@@ -284,6 +284,26 @@ from . import dbaccess as db
 
 #     return None
 
+# Returns a list of products that fit a certain query with a string
+# args is either just the query string, or the query string and desired
+# number of results to return
+def productSearch(*args):
+
+    query = args[0]
+    tokens = query.split('+')
+    products = db.getAllProducts()
+
+    results = []
+    while len(tokens) > 0:
+        for product in products:
+            if all(token in product['name'] for token in tokens) and not 'relevance' in product:
+                product['relevance'] = len(tokens)
+                results.append(product)
+        tokens.pop()
+
+        return results if len(args) == 1 else results[:args[1]]
+
+
 class ProductList(Resource):
     def get(self,category):
         print("Get ProductList attempt received")
@@ -303,6 +323,19 @@ class ProductPage(Resource):
             print('Get product attempt received')
             product = db.getProduct(id)
             return {'product': product}
+
+        elif requestType == 'quick search':
+            query = request.args.get('query')
+
+            results = productSearch(query, 5)
+            return {'results': results}
+        
+        elif requestType == 'search':
+            query = request.args.get('query')
+
+            results = productSearch(query)
+            return {'results': results}
+        
 
     def post(self):
         # Add product to product list
