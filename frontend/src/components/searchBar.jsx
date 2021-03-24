@@ -2,6 +2,7 @@ import { Button, Grid, InputBase, Typography } from '@material-ui/core';
 import React from 'react';
 import API from '../util/API';
 import SearchIcon from '@material-ui/icons/Search';
+import './styles/search.css'
 const api = new API();
 const SearchBar = ({}) => {
     const [search, setSearch] = React.useState("");
@@ -47,8 +48,11 @@ const SearchBar = ({}) => {
                     <SearchIcon/>
                 </Grid>
             </Grid>
-            {search}
-
+            <div className="searchFloat" style={{display: search != "" ? 'block' : 'none'}}>
+                {search}
+                {search}
+                {search}
+            </div>
         </div>
     )
 }
