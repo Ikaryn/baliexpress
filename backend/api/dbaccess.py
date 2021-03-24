@@ -596,6 +596,41 @@ def addPartToBuild(buildID, productID, quantity):
         conn.close()
         return status
 
+# gets a specific build
+# if successful, returns a dictionary
+# {id, name, description, parts:({productID, quantity}, etc)}
+# otherwise, returns None
+def getBuild(buildID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get build
+        query = "SELECT * FROM Builds WHERE buildid = %s"
+        cur.execute(query, [buildID])
+
+        # convert row to dictionary
+        record = cur.fetchone()
+        build = {column:data for column, data in record.items()}
+
+        # get build parts
+        query = "SELECT productid, quantity FROM BuildParts WHERE buildid = %s"
+        cur.execute(query, [buildID])
+        rows = cur.fetchall()
+        build['parts'] = [{column:data for column, data in record.items()} for record in rows]
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        build = None
+        print ("An error has occured in addCompomentToBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return build
+
 # gets all builds by a specific user
 # returns a list of dictionaries  {id, name, description, parts:({productID, quantity}, etc)}
 def getUsersBuilds(userID):
@@ -719,17 +754,7 @@ def getCategoryFromID(cur, id):
     cur.execute(query, [id])
     return cur.fetchone()[0]
 
-print(addPartToBuild(3, 1, 1))
-#print("Adding part")
-print(addPartToBuild(3, 5, 10))
-print(updatePartQuantity(3, 1, 5))
-print(getUsersBuilds(1))
-#print(addPartToBuild(2, 5, 10))
 
-#print(getUsersBuilds(1))
-#print("Deleting part")
-#print(removePartFromBuild(1, 5))
-#print(getUsersBuilds(1))
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
