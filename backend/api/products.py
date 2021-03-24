@@ -296,7 +296,7 @@ def productSearch(*args):
     results = []
     while len(tokens) > 0:
         for product in products:
-            if all(token in product['name'] for token in tokens) and not 'relevance' in product:
+            if all(token.lower() in product['name'].lower() for token in tokens) and not 'relevance' in product:
                 product['relevance'] = len(tokens)
                 results.append(product)
         tokens.pop()
@@ -313,7 +313,7 @@ class ProductList(Resource):
 
 
 class ProductPage(Resource):
-    def get(self, id, query):
+    def get(self, id):
 
         # Get request type from header
         requestType = request.headers.get('request-type')
@@ -325,10 +325,20 @@ class ProductPage(Resource):
             return {'product': product}
 
         elif requestType == 'quick search':
+
+            print('Quick search attempt received')
+            query = request.args.get('query')
+
+            print(query)
+
             results = productSearch(query, 5)
             return {'results': results}
         
         elif requestType == 'search':
+
+            print('Search attempt received')
+            query = request.args.get('query')
+
 
             results = productSearch(query)
             return {'results': results}
