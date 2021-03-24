@@ -313,7 +313,7 @@ class ProductList(Resource):
 
 
 class ProductPage(Resource):
-    def get(self, id):
+    def get(self, id, query):
 
         # Get request type from header
         requestType = request.headers.get('request-type')
@@ -325,13 +325,11 @@ class ProductPage(Resource):
             return {'product': product}
 
         elif requestType == 'quick search':
-            query = request.args.get('query')
 
             results = productSearch(query, 5)
             return {'results': results}
         
         elif requestType == 'search':
-            query = request.args.get('query')
 
             results = productSearch(query)
             return {'results': results}
