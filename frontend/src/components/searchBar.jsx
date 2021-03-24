@@ -16,7 +16,7 @@ const SearchBar = ({}) => {
                 },
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`product/${userId}?userId=${userId}`, options);
+            const res = await api.makeAPIRequest(`search/${userId}?query=${search}`, options);
             console.log(res)
         })();
     },[search])

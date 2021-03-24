@@ -650,8 +650,8 @@ def getCategoryFromID(cur, id):
 
 #print(addNewBuild(1, "My build", ""))
 #print(addPartToBuild(1, 1, 1))
-print(addPartToBuild(1, 5, 10))
-print(getUsersBuilds(1))
+# print(addPartToBuild(1, 5, 10))
+# print(getUsersBuilds(1))
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
