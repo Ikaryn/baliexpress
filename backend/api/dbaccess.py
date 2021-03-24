@@ -6,9 +6,9 @@ def connect():
     conn = None
     try:
         conn = psycopg2.connect(database="baliexpress",
-        user="postgres",
-        password="password"
-    )
+            user="postgres",
+            password="password"
+        )
         conn.set_client_encoding('UTF8')
     except Exception as e:
         print("Unable to connect to the database")
@@ -543,7 +543,7 @@ def deleteProduct(id):
         conn.close()
         return deleted
 
-# ~~~ BULD A PC FUNCTIONS ~~~
+# ~~~~~~~~~~ BULD A PC FUNCTIONS ~~~~~~~~~~
 
 # create a new, empty build
 # returns id of new buiid if successful, None otherwise
@@ -572,6 +572,7 @@ def addNewBuild(userid, buildName, buildDescription):
 
 # adds a part to an existing build
 # returns 1 if successful. 0 otherwise
+# TODO: check that quantity is greater than 0
 def addPartToBuild(buildID, productID, quantity):
     try:
         # connect to database
@@ -630,7 +631,78 @@ def getUsersBuilds(userID):
         conn.close()
         return builds
 
-#helper functions
+# deletes a part from a build
+# returns 1 if successful, 0 otherwise
+def removePartFromBuild(buildID, productID):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        query = "DELETE FROM BuildParts WHERE buildid = %s AND productid = %s"
+        cur.execute(query, (buildID, productID))
+        deleted = cur.rowcount
+
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in removePartFromBuild")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
+# deletes a build entirely
+# returns 1 if successful, 0 otherwise
+def deleteBuild(buildID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete build from database
+        query = "DELETE FROM Builds WHERE buildid = %s"
+        cur.execute(query, [buildID])
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteBuild()")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
+# updates the quantity of a part in a given build
+# returns 1 if successful, 0 otherwise
+# TODO: check that newQuantity is greater than 0
+def updatePartQuantity(buildID, productID, newQuantity):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        query = "UPDATE BuildParts SET quantity = %s WHERE buildid = %s AND productid = %s"
+        cur.execute(query, (newQuantity, buildID, productID))
+
+        status = 1
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 0
+        print("An error occured in deleteBuild()")
+        print (error)
+    finally:
+        conn.close()
+        return status
+
+# ~~~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~
+
 def getColumns(cur, table):
     cur.execute(
         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [table.lower()]
@@ -647,11 +719,17 @@ def getCategoryFromID(cur, id):
     cur.execute(query, [id])
     return cur.fetchone()[0]
 
-
-#print(addNewBuild(1, "My build", ""))
-#print(addPartToBuild(1, 1, 1))
-print(addPartToBuild(1, 5, 10))
+print(addPartToBuild(3, 1, 1))
+#print("Adding part")
+print(addPartToBuild(3, 5, 10))
+print(updatePartQuantity(3, 1, 5))
 print(getUsersBuilds(1))
+#print(addPartToBuild(2, 5, 10))
+
+#print(getUsersBuilds(1))
+#print("Deleting part")
+#print(removePartFromBuild(1, 5))
+#print(getUsersBuilds(1))
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',

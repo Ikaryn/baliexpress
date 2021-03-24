@@ -219,8 +219,8 @@ CREATE TABLE BuildParts(
     productid   int,
     quantity    int,
     primary key (buildid, productid),
-    foreign key (buildid) references Builds(buildid),
-    foreign key (productid) references Products(id)
+    foreign key (buildid) references Builds(buildid) on delete CASCADE,
+    foreign key (productid) references Products(id) on delete CASCADE
 );
 
 CREATE TABLE Reviews(
