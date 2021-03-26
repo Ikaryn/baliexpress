@@ -33,7 +33,7 @@ const SelectBuildProductModal = ({category}) => {
 
     return (
         <Grid container direction="column">
-            <Paper>
+            <Paper className='select-product-modal'>
                 <Grid item>
                     <Typography variant="h4">{category}</Typography>
                 </Grid>
