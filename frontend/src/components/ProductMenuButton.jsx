@@ -14,7 +14,6 @@ const ProductMenuButton = () => {
     const categories = ['CPU', 'Motherboards', 'Storage'];
 
     const handleMenuButtonclick = (category) => {
-        // history.push(`/product/${category}`);
         history.push(`/product/${category}`);
     }
 

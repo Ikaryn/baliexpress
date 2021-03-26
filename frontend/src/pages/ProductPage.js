@@ -53,9 +53,16 @@ const ProductPage = () => {
     
     React.useEffect(() => {
         (async () => {
+            const options = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'profile',
+                },
+            }
             const userId = localStorage.getItem('userId');
-            const response = await api.get(`profile/${userId}?userId=${userId}`);
-            const userDetails = response.accountInfo.userInfo;
+            const response = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            const userDetails = response.accountInfo;
             setIsAdmin(userDetails.admin);
         })();
     }, [])

@@ -195,21 +195,28 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             name: editName, 
             email: editEmail, 
             phone: editPhone, 
-            addr: editAddr,
+            streetAddress: editAddr,
             city: editCity,
             postcode: editPCode,
             country: editCountry,
             state: editState
         };
-        const response = await api.put(`profile/${localStorage.getItem('userId')}`, body);
+    
+        const response = await api.put(`profile/${localStorage.getItem('userId')}`, body, {'request-type': 'edit profile'});
         // console.log(response);
         setEditComponent(false);
     }
-    // console.log(Object.keys(accInfo));
+    console.log(shippingInfo);
     const sliceName = () => (editName.slice(0,1));
     const sliceLastName = () => {
         let space = editName.indexOf(' ');
         return editName.slice(space+1, space+2);
+    }
+    
+    const changeValue = (key, value) => {
+        const newUserInfo = JSON.parse(JSON.stringify(userInfo));
+        newUserInfo[key] = value;
+        setUserInfo(newUserInfo);
     }
     
     return (

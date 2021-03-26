@@ -13,6 +13,7 @@ Frontend
         - to install other packages like icons use:
             - "yarn add @material-ui/icons
         - "yarn add @material-ui/lab"
+        - "yarn add material-ui-dropzone"
  
 Backend
     - psycopg2

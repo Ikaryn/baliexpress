@@ -8,6 +8,7 @@ import ViewUsers from '../components/ViewUsers';
 import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
+import AllProductList from '../components/AllProductList';
 // import './App.css';
 const api = new API();
 
@@ -43,15 +44,23 @@ const ProfilePage = () => {
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
-            const response = await api.get(`profile/${userId}?userId=${userId}`);
-            const userDetails = response.accountInfo.userInfo;
+            const options = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Request-Type': 'profile',
+                },
+            }
+            const response = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            const userDetails = response.accountInfo;
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
                 phone: userDetails.phone,
                 password: userDetails.password,
                 isAdmin: userDetails.admin}
-            const userShippingInfo = {addr: userDetails.streetAddress, 
+            const userShippingInfo = {
+                addr: userDetails.streetAddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
                 pCode: userDetails.postcode, 
@@ -116,6 +125,7 @@ const ProfilePage = () => {
                             <Tab label="My Orders" />
                             <Tab label="My Builds" />
                             {accInfo.isAdmin && <Tab label="Add Product" />}
+                            {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {/* <Tab label="Logout" />
                             */}
@@ -140,12 +150,17 @@ const ProfilePage = () => {
                                 <AddProduct/>
                             </TabPanel>   
                         }
-                        {accInfo.isAdmin &&                     
+                        {accInfo.isAdmin &&
                             <TabPanel value={value} index={4}>
+                                <AllProductList />
+                            </TabPanel>
+                        }
+                        {accInfo.isAdmin &&                     
+                            <TabPanel value={value} index={5}>
                                 <ViewUsers/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

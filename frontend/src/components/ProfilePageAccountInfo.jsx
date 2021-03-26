@@ -77,7 +77,7 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
                 postcode: shippingInfo.postcode,
                 streetAddres: shippingInfo.streetAddres
             }
-            const response = await api.put(`profile/${localStorage.getItem('userId')}`, body, {'response-type': 'change password'});
+            const response = await api.put(`profile/${localStorage.getItem('userId')}`, body, {'request-type': 'change password'});
             console.log(response);
             handleToggle();
             setSuccess(true);
