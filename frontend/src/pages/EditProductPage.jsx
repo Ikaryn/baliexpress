@@ -50,7 +50,6 @@ const EditProductPage = ({}) => {
                 },
                 body: JSON.stringify(productInfo)
             }
-            const userId = localStorage.getItem('userId');
             const res = await api.makeAPIRequest(`/product/${category}/${pid}`, options);
             history.push(`/product/${category}`);
         }

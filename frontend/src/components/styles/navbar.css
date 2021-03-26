@@ -19,3 +19,9 @@
 .nav-bar-spacer {
     padding-top: 10%;
 }
+
+.modal-container {
+    margin: 30%;
+    padding: 1em;
+    max-width: 40%;
+}

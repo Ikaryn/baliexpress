@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/navbar.css';
 import '../App.css';
-import { AppBar, Button, Grid, IconButton, InputBase, Paper, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, IconButton, InputBase, Modal, Paper, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -9,9 +9,11 @@ import { useHistory } from 'react-router';
 import { StoreContext } from '../util/store';
 import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
+import BuildModalForm from './BuildModalForm';
 
 const NavBar = () => {
     
+    const [buildOpen, setBuildOpen] = React.useState(false);
     
     const history = useHistory();
     
@@ -49,7 +51,13 @@ const NavBar = () => {
                         <ProductMenuButton/>
                     </Grid>
                     <Grid item xs={1}>
-                        <Button>Build-A-PC</Button>
+                        <Button onClick={() => {setBuildOpen(true)}}>Build-A-PC</Button>
+                        <Modal 
+                            open={buildOpen}
+                            onClose={() => {setBuildOpen(false)}}
+                        >
+                            <BuildModalForm handleToggle={setBuildOpen}/>
+                        </Modal>
                     </Grid>
                     <Grid item xs={3}>
                         <Paper>
