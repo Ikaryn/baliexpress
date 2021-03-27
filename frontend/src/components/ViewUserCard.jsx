@@ -49,16 +49,6 @@ const ViewUsers = ({user}) => {
                             user.country
                         }
                     </Typography>
-                    <Typography>
-                        Role: 
-                        <Select
-                            value={role}
-                            onChange={(event) => handleSelectChange(event)}
-                        >
-                            <MenuItem value={false}>User</MenuItem>
-                            <MenuItem value={true}>Admin</MenuItem>
-                        </Select>
-                    </Typography>
                 </CardContent>:
                 <CardContent>
                     <Typography>

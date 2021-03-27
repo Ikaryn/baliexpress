@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../util/API';
 import SearchIcon from '@material-ui/icons/Search';
 import SmallProductView from './SmallProductView';
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Grid, InputBase } from '@material-ui/core';
+import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Grid, InputBase, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import './styles/search.css';
 const api = new API();
@@ -15,12 +15,21 @@ const SearchBar = ({}) => {
     const history = useHistory();
     
     const handleToggle = (str) => {
-        setOpen(search != "")
+        setOpen(str != "")
         setSearch(str);
+    }
+
+    function searchMore(){
+        var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
+        history.push(`/search/${searchStringTransform}`);
     }
 
     React.useEffect(() => {
         (async () => {
+            if(search == ""){
+                setProductOutput([]);
+                return;
+            }
             const options = {
                 method: 'GET',
                 headers: { 
@@ -29,7 +38,8 @@ const SearchBar = ({}) => {
                 },
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`search/${userId}?query=${search}`, options);
+            var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
+            const res = await api.makeAPIRequest(`search/${userId}?query=${searchStringTransform}`, options);
             setProductOutput(res.results);
             console.log(res.results);
         })();
@@ -66,11 +76,18 @@ const SearchBar = ({}) => {
                                                 category = {x.category}
                                             />
                                         ))}
-                                        <div className="search-button">
-                                            <Button>
-                                                View more products
-                                            </Button>
-                                        </div>
+                                        {productOutput.length == 0 &&
+                                            <Typography className="search-button">
+                                                {search == "" ? "Please enter your search query." : "Product not found."}
+                                            </Typography>
+                                        }
+                                        {productOutput.length >= 5 && 
+                                            <div className="search-button">
+                                                <Button onClick={() => {searchMore()}}>
+                                                    See more products...
+                                                </Button>
+                                            </div>
+                                        }
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
