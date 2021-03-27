@@ -101,7 +101,6 @@ CREATE TABLE PC_Cooling(
 CREATE TABLE Motherboards(
     id                      int,
     cpu_socket              text,
-    max_memory_supported    text,
     memory_slots            int,
     wifi                    boolean,
     form_factor_supported   text,
@@ -114,7 +113,6 @@ CREATE TABLE Motherboards(
 
 CREATE TABLE Memory(
     id                  int,
-    type                text,
     frequency           int,
     capacity            int,
     number_of_sticks    int,
@@ -146,10 +144,10 @@ CREATE TABLE Graphics_Cards(
 );
 
 CREATE TABLE Cases(
-    id              int,
-    colour          text,
-    size            text,
-    power_use       numeric(50, 1),
+    id                      int,
+    colour                  text,
+    size                    text,
+    motherboard_support     text,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -159,7 +157,6 @@ CREATE TABLE PSU(
     wattage             int,
     power_efficiency    text,
     modularity          text,
-    power_use           numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );

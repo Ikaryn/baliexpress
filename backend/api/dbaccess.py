@@ -7,7 +7,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
             user="postgres",
-            password="jlk1njk2"
+            password="password"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -299,14 +299,12 @@ def getAllProducts(*args):
             tuple = cur.fetchone()
             while tuple != None:
                 info = {}
-                print("first")
                 for i in range(0, len(productColumns)):
                     info[productColumns[i]] = tuple[i]
                 products.append(info)
                 tuple = cur.fetchone()
 
             # get product specs from individual category tables
-            print("second")
             for i in range(0, len(products)):
                 product = products[i]
                 id = product['id']
@@ -316,8 +314,6 @@ def getAllProducts(*args):
                 tuple = cur.fetchone()
                 # create dictionary of specs
                 specs = {}
-                print("third")
-                print(tuple)
                 for j in range(1, len(tuple)):
                     columns = categoryColumns[category]
                     specs[columns[j]] = tuple[j]
@@ -817,7 +813,8 @@ def getCategoryFromID(cur, id):
     return cur.fetchone()[0]
 
 
-
+print(getAllUsers())
+print(getAllProducts())
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
 #         'brand': 'supreme',
