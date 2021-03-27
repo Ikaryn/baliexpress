@@ -37,7 +37,7 @@ const SearchBar = ({}) => {
                     'Request-Type': 'quick search',
                 },
             }
-            const userId = localStorage.getItem('userId');
+            const userId = "publicAccess";
             var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
             const res = await api.makeAPIRequest(`search/${userId}?query=${searchStringTransform}`, options);
             setProductOutput(res.results);
