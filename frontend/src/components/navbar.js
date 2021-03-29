@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 import { StoreContext } from '../util/store';
 import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
-import BuildModalForm from './BuildModalForm';
+import BuildModalForm from './buildPageComponents/BuildModalForm';
 
 const NavBar = () => {
     
@@ -56,7 +56,7 @@ const NavBar = () => {
                             open={buildOpen}
                             onClose={() => {setBuildOpen(false)}}
                         >
-                            <BuildModalForm handleToggle={setBuildOpen}/>
+                            <BuildModalForm handleToggle={setBuildOpen} setOpen={setBuildOpen}/>
                         </Modal>
                     </Grid>
                     <Grid item xs={3}>

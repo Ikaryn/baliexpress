@@ -15,3 +15,28 @@ export function fileToDataUrl(file) {
     reader.readAsDataURL(file);
     return dataUrlPromise;
 }
+
+// function to convert category names in frontend to backend table names
+export function convertCategoryName(category) {
+    
+    switch(category) {
+        case "Case":
+            return "Cases"
+        case "Motherboard":
+            return "Motherboards"
+        case "Graphics Card":
+            return "Graphics_Cards"
+        case "Power Supply":
+            return "PSU"
+        case "CPU Cooler":
+            return "CPU_Cooling"
+        default:
+            return category;
+    
+    }
+
+}
+
+export function generateBuildString() {
+    return Math.random().toString(36).slice(2);
+}

@@ -1,4 +1,4 @@
-import { Button, Divider, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from '@material-ui/core';
+import { Button, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -13,10 +13,12 @@ const useStyles = makeStyles((theme) => ({
   }));
   
   
-const BuildModalForm = ({handleToggle}) => {
+const BuildModalForm = ({handleToggle, setOpen}) => {
     const classes = useStyles();
     const [usage, setUsage] = React.useState('');
     const [budget, setBudget] = React.useState('');
+    const [overclock, setOverClock] = React.useState(false);
+    const [storage, setStorage] = React.useState('');
     const history = useHistory();
 
     const handleUsageChange = (value) => {
@@ -34,8 +36,11 @@ const BuildModalForm = ({handleToggle}) => {
     return (
         <Grid container spacing={3}>
             <Paper  className="modal-container">
-                <Grid item>
-                    <Typography variant="h3">Build-A-PC</Typography>
+                <Grid container item direction="row" justify="space-between">
+                    <Grid item>
+                        <Typography variant="h3">Build-A-PC</Typography>
+                    </Grid>
+                    <Button onClick={() => {setOpen(false)}}>X</Button>
                 </Grid>
                 <Divider />
                 <Grid item>
@@ -62,6 +67,23 @@ const BuildModalForm = ({handleToggle}) => {
                         <InputLabel htmlFor="budget-input">Budget</InputLabel>
                         <OutlinedInput value={budget} onChange={event => setBudget(event.target.value)}></OutlinedInput>
                     </FormControl>
+                </Grid>
+                <Grid item>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Type of Storage</InputLabel>
+                        <Select fullWidth value={storage} onChange={event => {setStorage(event.target.value)}}>
+                            <MenuItem value="hdd">HDD</MenuItem>
+                            <MenuItem value="ssd">SSD</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item>
+                    <FormControlLabel 
+                        control={
+                            <Checkbox checked={overclock} onChange={() => {overclock ? setOverClock(false) : setOverClock(true)}} color="primary" />
+                        }
+                        label="Overclock"
+                    />
                 </Grid>
                 <Grid container item direction="row">
                     <Grid item xs={6}>

@@ -55,26 +55,6 @@ from . import dbaccess as db
 # WD10EZEX_img = getEncodedImage('Storage', 'WD WD10EZEX 1TB Blue 3.5 7200RPM SATA3 Hard Drive')
 # Samsung870Evo_img = getEncodedImage('Storage', 'Samsung 870 Evo 500GB 2.5 SATA III 6GBs V-NAND SSD MZ-77E500BW')
 
-
-# Placeholders to allow the product page to work
-# AMD_Ryzen_5_5600X_img = 1
-# AMD_Ryzen_5_3600_img = 1
-# AMD_Ryzen_5_2600_img = 1
-# Intel_Core_i5_10400_img = 1
-# Intel_Core_i5_9400F_img = 1
-# Intel_Core_i3_10100_img = 1
-# ASRockB550_img = 1
-# MSIB450M_img = 1
-# ASRockB460_img = 1
-# Gigabyte_B450M_D53H_img = 1
-# TeamMS30_img = 1
-# CrucialBX500_img = 1
-# WD10EZEX_img = 1
-# Samsung870Evo_img = 1
-
-
-
-
 # AMD_Ryzen_5_5600X = {
 #     "id":0,
 #     "name":"AMD Ryzen 5 5600X",
@@ -314,7 +294,6 @@ class ProductList(Resource):
 
 class ProductPage(Resource):
     def get(self, id):
-        data = request.args
 
         # Get request type from header
         requestType = request.headers.get('request-type')
@@ -347,26 +326,32 @@ class ProductPage(Resource):
         requestType = request.headers.get('request-type')
 
         # Edit product details
-        # DOES NOT WORK - SUBJECT TO CHANGE
         if requestType == 'edit product':
             print('Edit product attempt received')
 
-            print("product data", data)
+            
 
             # Needs productId to get the right product for editing
             productId = data.get('id')
-            product = getProduct(productId)
-            for field in product:
-                if field == 'id':
-                    product['id'] = int(data.get(field))
-                if field == 'price':
-                    product['price'] = int(data.get(field))
+            product = db.getProduct(productId)
+
+            print("Product before:", product)
+
+            for field in data:
+                if field == 'specs':
+                    specs = data.get('specs')
+                    for key in specs:
+                        product['specs'][key] = specs[key]
                 else:
                     product[field] = data.get(field)
             
-            return {'productInfo': product}
+            product.pop('id')
+            print("Edited product:", product)
+            db.editProduct(productId, product)
+            
+            return
     
-    def delete(self):
+    def delete(self, category, id):
         
         # Delete a product using its productId
         print('Remove product attempt received')
@@ -375,18 +360,3 @@ class ProductPage(Resource):
         productId = data.get('id')
         db.deleteProduct(productId)
         return {'message': 'product successfully removed'}
-
-class AddProduct(Resource):
-    def post (self):
-        print('Add product attempt received')
-        data = request.json
-
-        # Place the new product details into a new dict
-        newProduct = {}
-        for field in data:
-            newProduct[field] = data.get(field)
-
-        productId = db.addProduct(newProduct)
-        product = db.getProduct(productId)
-
-        return {'product': product}

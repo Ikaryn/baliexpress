@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2.extensions import AsIs
+import psycopg2.extras
 
 def connect():
     conn = None
@@ -298,14 +299,12 @@ def getAllProducts(*args):
             tuple = cur.fetchone()
             while tuple != None:
                 info = {}
-                print("first")
                 for i in range(0, len(productColumns)):
                     info[productColumns[i]] = tuple[i]
                 products.append(info)
                 tuple = cur.fetchone()
 
             # get product specs from individual category tables
-            print("second")
             for i in range(0, len(products)):
                 product = products[i]
                 id = product['id']
@@ -315,8 +314,6 @@ def getAllProducts(*args):
                 tuple = cur.fetchone()
                 # create dictionary of specs
                 specs = {}
-                print("third")
-                print(tuple)
                 for j in range(1, len(tuple)):
                     columns = categoryColumns[category]
                     specs[columns[j]] = tuple[j]
@@ -393,7 +390,7 @@ def getAllProducts(*args):
 
         except (Exception, psycopg2.DatabaseError) as error:
             deleted = 0
-            print ("An error has occured: ")
+            print ("An error has occured in getAllProducts")
             print (error)
         finally:
             conn.close()
@@ -429,7 +426,7 @@ def getProduct(id):
             specs[categoryColumns[i]] = t[i]
         product['specs'] = specs
     except (Exception, psycopg2.DatabaseError) as error:
-        print ("An error has occured: ")
+        print ("An error has occured in getProduct")
         print (error)
         product = None
     finally:
@@ -438,7 +435,7 @@ def getProduct(id):
         return product
 
 # adds a product to the Database
-# returns 1 if successful, 0 otherwise
+# returns the productId if successful, 0 otherwise
 # item should be passed in as a dictionary
 # eg {name: "product name", price: "666.66",  type: "CPU", image: "whatever we're doing for images", description: "description text", stock: "500", specs: {manufacturer: "whoever", corecount:"6"}}
 # please do not pass in an id, it is generated automatically
@@ -537,12 +534,268 @@ def deleteProduct(id):
 
     except (Exception, psycopg2.DatabaseError) as error:
         deleted = 0
+        print("An error has occured in deleteProduct")
         print (error)
     finally:
         conn.close()
         return deleted
 
-#helper functions
+# ~~~~~~~~~~ BULD A PC FUNCTIONS ~~~~~~~~~~
+
+# create a new, empty build
+# returns id of new buiid if successful, None otherwise
+def addNewBuild(userid, buildName, buildDescription):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into builds tables
+        query = "INSERT INTO Builds (userid, buildname, description) VALUES (%s, %s, %s) RETURNING buildid"
+        cur.execute(query, (userid, buildName, buildDescription))
+
+        # get generated build id
+        buildID = cur.fetchone()[0]
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        buildID = None
+        print ("An error has occured in addNewBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return buildID
+
+# adds a part to an existing build
+# returns 1 if successful. 0 otherwise
+# TODO: check that quantity is greater than 0
+def addPartToBuild(buildID, productID, quantity):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into builds tables
+        query = "INSERT INTO BuildParts (buildid, productid, quantity) VALUES (%s, %s, %s) RETURNING buildid"
+        cur.execute(query, (buildID, productID, quantity))
+
+        # get generated build id
+        status = 1
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 1
+        print ("An error has occured in addPartToBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return status
+
+# gets a specific build
+# if successful, returns a dictionary otherwise, returns None
+# {id, name, description, parts:({productID, quantity}, etc)}
+def getBuild(buildID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get build
+        query = "SELECT * FROM Builds WHERE buildid = %s"
+        cur.execute(query, [buildID])
+
+        # convert row to dictionary
+        record = cur.fetchone()
+        build = {column:data for column, data in record.items()}
+
+        # get build parts
+        query = "SELECT productid, quantity FROM BuildParts WHERE buildid = %s"
+        cur.execute(query, [buildID])
+        rows = cur.fetchall()
+        build['parts'] = [{column:data for column, data in record.items()} for record in rows]
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        build = None
+        print ("An error has occured in getBuild()")
+        print(error)
+    finally:
+        conn.close()
+        return build
+
+# gets all builds by a specific user
+# if successful, returns a list of dictionaries. If user has no builds, will
+# return an empty list. if an error has occured, returns None.
+# build dictionary: {id, name, description, parts:({productID, quantity}, etc)}
+def getUsersBuilds(userID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get builds
+        builds = []
+        query = "SELECT * FROM Builds WHERE userid = %s"
+        cur.execute(query, [userID])
+
+        # convert rows to list of dictionaries
+        rows = cur.fetchall()
+        builds = [{column:data for column, data in record.items()} for record in rows]
+
+        # get parts for each build and add to build's dictionary
+        for build in builds:
+            query = "SELECT productid, quantity FROM BuildParts WHERE buildid = %s"
+            cur.execute(query, [build['buildid']])
+            rows = cur.fetchall()
+            build['parts'] = [{column:data for column, data in record.items()} for record in rows]
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        builds = None
+        print ("An error has occured in getUsersBuilds()")
+        print(error)
+    finally:
+        conn.close()
+        return builds
+
+# deletes a part from a build
+# returns 1 if successful, 0 otherwise
+def removePartFromBuild(buildID, productID):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        query = "DELETE FROM BuildParts WHERE buildid = %s AND productid = %s"
+        cur.execute(query, (buildID, productID))
+        deleted = cur.rowcount
+
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in removePartFromBuild")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
+# deletes a build entirely
+# returns 1 if successful, 0 otherwise
+def deleteBuild(buildID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete build from database
+        query = "DELETE FROM Builds WHERE buildid = %s"
+        cur.execute(query, [buildID])
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteBuild()")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
+# updates the quantity of a part in a given build
+# returns 1 if successful, 0 otherwise
+# TODO: check that newQuantity is greater than 0
+def updatePartQuantity(buildID, productID, newQuantity):
+    try:
+        conn = connect()
+        cur = conn.cursor()
+
+        query = "UPDATE BuildParts SET quantity = %s WHERE buildid = %s AND productid = %s"
+        cur.execute(query, (newQuantity, buildID, productID))
+
+        status = 1
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 0
+        print("An error occured in updatePartQuantity()")
+        print (error)
+    finally:
+        conn.close()
+        return status
+
+# ~~~~~~~~~~ REVIEW FUNCTIONS ~~~~~~~~~~
+# adds a review to a product
+# returns generated id of review if successful, None otherwise
+# reviewDate must be in format yyyy-mm-dd
+# TODO: check that rating is between 0 and 5, check that reviewDate is in correct format
+def addReview(productID, userID, rating, reviewText, reviewDate):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into reviews table
+        query = "INSERT INTO Reviews (productid, userid, rating, reviewtext, reviewdate) VALUES (%s, %s, %s, %s, %s) RETURNING reviewid"
+        cur.execute(query, (productID, userID, rating, reviewText, reviewDate))
+
+        # get generated review id
+        reviewID = cur.fetchone()[0]
+        # commit and close database
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        reviewID = None
+        print ("An error has occured in addReview()")
+        print(error)
+
+    finally:
+        conn.close()
+        return reviewID
+
+# gets all reviews for a specific product
+# if successful, returns a list of dictionaries. If a product has no reviews,
+# returns an empty list. If an error has occured, returns none
+# review dictionary: {reviewid, productid, userid, rating, reviewtext, reviewdate}
+def getProductReviews(productID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get reviews
+        reviews = []
+        query = "SELECT * FROM Reviews WHERE productid = %s"
+        cur.execute(query, [productID])
+
+        # convert rows to list of dictionaries
+        rows = cur.fetchall()
+        reviews = [{column:data for column, data in record.items()} for record in rows]
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        reviews = None
+        print ("An error has occured in getProductReviews()")
+        print(error)
+    finally:
+        conn.close()
+        return reviews
+
+# ~~~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~
+
 def getColumns(cur, table):
     cur.execute(
         "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = %s ORDER BY ORDINAL_POSITION", [table.lower()]
@@ -560,6 +813,8 @@ def getCategoryFromID(cur, id):
     return cur.fetchone()[0]
 
 
+print(getAllUsers())
+print(getAllProducts())
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
 #         'brand': 'supreme',

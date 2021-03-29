@@ -1,10 +1,21 @@
-import { Divider, Grid, MenuItem, Paper, Select, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, List, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
 import React from 'react';
-import API from '../util/API';
+import API from '../../util/API';
+import { convertCategoryName } from '../../util/helpers';
+import SelectProductCard from './SelectProductCard';
 
 const api = new API();
 
-const SelectBuildProductModal = ({category}) => {
+const useStyles = makeStyles({
+    productListScrollable: {
+        height: 600,
+        overflow: 'auto'
+    }
+
+});
+
+
+const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
 
     const [products, setProducts] = React.useState([{'': ''}]);
     const [brand, setBrand] = React.useState('');
@@ -12,10 +23,14 @@ const SelectBuildProductModal = ({category}) => {
     const [price, setPrice] = React.useState(1000);
     const [sortCriteria, setSortCriteria] = React.useState('popularity');
 
+    const classes = useStyles();
+
     React.useEffect(() => {
         (async () => {
-            const response = await api.get(`product/${category}`);
+            console.log(category)
+            const response = await api.get(`product/${convertCategoryName(category)}`);
             setProducts(response.products);
+            console.log(response.products);
         })();
     },[category]);
 
@@ -34,14 +49,19 @@ const SelectBuildProductModal = ({category}) => {
     return (
         <Grid container direction="column">
             <Paper className='select-product-modal'>
-                <Grid item>
-                    <Typography variant="h4">{category}</Typography>
-                </Grid>
-                <Grid container item direction="row">
+                <Grid container item direction="row" justify="space-between">
                     <Grid item>
-                        <Typography>filter by:</Typography>
+                        <Typography variant="h4">{category}</Typography>
                     </Grid>
                     <Grid item>
+                        <Button onClick={()=>{setOpen(false)}}>X</Button>
+                    </Grid>
+                </Grid>
+                <Grid container item direction="row" justify="space-evenly">
+                    <Grid item>
+                        <Typography>filter by:</Typography>
+                    {/* </Grid>
+                    <Grid item> */}
                         <Select fullWidth value={brand} onChange={(event) => {setBrand(event.target.value);}}>
                             <MenuItem value=''>Brand</MenuItem>
                             {getBrands().map((b) => (
@@ -50,7 +70,7 @@ const SelectBuildProductModal = ({category}) => {
                         </Select>
                     </Grid>
                     <Grid item>
-                        <Typography>filter by:</Typography>
+                        <Typography>Filter by Price:</Typography>
                         <Typography>placeholder</Typography>
                     </Grid>
                     <Grid item>
@@ -63,6 +83,13 @@ const SelectBuildProductModal = ({category}) => {
                     </Grid>
                 </Grid>
                 <Divider />
+                <List className={classes.productListScrollable}>
+                    {products.map((product) => (
+                        <Grid item>
+                                <SelectProductCard setOpen={setOpen} productInfo={product} setProduct={setProduct}/>
+                        </Grid>
+                    ))}
+                </List>
             </Paper>
         </Grid>
     )
