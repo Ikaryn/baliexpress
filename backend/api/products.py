@@ -340,6 +340,7 @@ class ProductPage(Resource):
             product = db.getProduct(productId)
 
             print("Product before:", product)
+            print("Data received:", data)
 
             for field in data:
                 if field == 'specs':

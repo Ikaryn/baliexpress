@@ -64,6 +64,7 @@ const EditProductPage = ({}) => {
             console.log(file);
             const imageString = await fileToDataUrl(file[0]);
             setImage(imageString);
+            changeValue('image', imageString);
         }
     }
     
