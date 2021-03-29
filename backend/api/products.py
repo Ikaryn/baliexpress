@@ -311,7 +311,11 @@ class ProductPage(Resource):
 
         newProduct = {}
         for field in data:
-            newProduct[field] = data.get(field)
+            if field == 'image':
+                img = data.get(field).split(',')[1]
+                newProduct[field] = img
+            else:
+                newProduct[field] = data.get(field)
         
 
         productId = db.addProduct(newProduct)
