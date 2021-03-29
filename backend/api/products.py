@@ -346,6 +346,9 @@ class ProductPage(Resource):
                     specs = data.get('specs')
                     for key in specs:
                         product['specs'][key] = specs[key]
+                elif field == 'image':
+                    img = data.get(field).split(',')[1]
+                    product[field] = img
                 else:
                     product[field] = data.get(field)
             
