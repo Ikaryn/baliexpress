@@ -74,7 +74,7 @@ const Login = () => {
                 spacing={4}
             >
             <Grid item>
-                <Typography variant="h1">Login</Typography>
+                <Typography className="light-text" variant="h1">Login</Typography>
             </Grid>
             <form>
                 <Grid item>
@@ -91,7 +91,7 @@ const Login = () => {
                         <FormHelperText>{pwdError}</FormHelperText>
                     </FormControl>            
                 </Grid>
-                <Button fullWidth variant="contained" type="submit" onClick={(event) => {fetchLogin(event)}}>Submit</Button>
+                <Button color="primary" fullWidth variant="contained" type="submit" onClick={(event) => {fetchLogin(event)}}>Submit</Button>
             </form>
             <Button onClick={() => handleRegisterClick()}>Don't have an account? Create one here!</Button>
             <Typography variant="body1" color="secondary">{loginError}</Typography>

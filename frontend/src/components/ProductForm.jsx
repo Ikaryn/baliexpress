@@ -100,15 +100,15 @@ const ProductForm = ({type}) => {
                 {activeStep === steps.length ? (
                     <div>
                         <Typography>You're done! Click submit to finish the product!</Typography>
-                        <Button disabled={activeStep === 0} onClick={handleBack}>Back</Button>
-                        <Button onClick={handleSubmit}>Submit</Button>
+                        <Button color="primary" variant="contained" disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+                        <Button color="primary" variant="contained" onClick={handleSubmit}>Submit</Button>
                     </div>
                 ) : (
                     <div>
                         {getStepContent(activeStep)}
                         <div>
-                            <Button disabled={activeStep === 0} onClick={handleBack}>Back</Button>
-                            <Button onClick={handleNext} >{activeStep === steps.length -1 ? 'finish' : 'Next'}</Button>
+                            <Button color="primary" variant="contained" disabled={activeStep === 0} onClick={handleBack}>Back</Button>
+                            <Button color="primary" variant="contained" onClick={handleNext} >{activeStep === steps.length -1 ? 'finish' : 'Next'}</Button>
                         </div>
                     </div>
                 )

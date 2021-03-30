@@ -80,27 +80,27 @@ const ProductPage = () => {
                         </Grid>
                         <Grid container item direction="column" xs={7} alignItems="center" className="product-text-info">
                                 <Grid item>
-                                    <Typography variant="h4">{productInfo.name}</Typography>
+                                    <Typography className="light-text" variant="h4">{productInfo.name}</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="h6">{productInfo.brand}</Typography>
+                                    <Typography className="light-text" variant="h6">{productInfo.brand}</Typography>
                                 </Grid>
                                 <Grid item container direction="row" justify="space-between" className="product-price-review">
                                     <Grid item xs={2}>
-                                        <Typography variant="h5">${productInfo.price}.00</Typography>
+                                        <Typography className="light-text" variant="h5">${productInfo.price}.00</Typography>
                                     </Grid>
                                     <Grid container item direction="column" xs={2}>
                                         <Grid item>
                                             <Rating value={rating}/>
                                         </Grid>
                                         <Grid item>
-                                            <Typography variant="h6">0 reviews</Typography>
+                                            <Typography className="light-text" variant="h6">0 reviews</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item >
-                                    <Button variant="contained" className="cart-button">Add to Cart</Button>
-                                    {isAdmin && <Button variant="contained" 
+                                    <Button color="primary" variant="contained" className="cart-button">Add to Cart</Button>
+                                    {isAdmin && <Button color="primary" variant="contained" 
                                         className="cart-button" 
                                         onClick={() => {history.push(`/edit-product/${category}/${pid}`)}}
                                     >

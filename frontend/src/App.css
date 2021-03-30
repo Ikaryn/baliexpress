@@ -2,9 +2,13 @@
   text-align: center;
 }
 
+body {
+  background: rgb(46, 46, 46);
+}
+
 .root {
   display: flex;
-  padding-top: 5%;
+  /* padding-top: 5%; */
 }
 
 .App-logo {
@@ -45,4 +49,13 @@
 .profile-page-container {
   margin-left: 10%;
   width: 80%;
+}
+
+.light-text {
+  color: white;
+}
+
+.standout-button {
+  background-color: rgb(245, 245, 0);
+  margin: 50em;
 }

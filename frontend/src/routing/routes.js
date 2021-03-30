@@ -8,6 +8,8 @@ import ProfilePage from '../pages/ProfilePage';
 import ProductListPage from '../pages/ProductListPage';
 import ProductPage from '../pages/ProductPage';
 import EditProductPage from '../pages/EditProductPage';
+import BuildPage from '../pages/BuildPage';
+
 
 const routes = [
     <PublicRoute key="route-homepage" component={HomePage} restricted path="/" exact/>,
@@ -16,7 +18,8 @@ const routes = [
     <PrivateRoute key="route-profilepage" component={ProfilePage} path="/profile/:uid" exact/>,
     <PublicRoute key="route-product" component={ProductPage} path="/product/:category/:pid" exact/>,
     <PrivateRoute key="route-edit-product" component={EditProductPage} path="/edit-product/:category/:pid" exact/>,
-    <PublicRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>
+    <PublicRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>,
+    <PublicRoute key="route-build" component={BuildPage} path="/build" exact />
 ];
 
 export default routes;
