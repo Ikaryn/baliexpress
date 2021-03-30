@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/navbar.css';
 import '../App.css';
-import { AppBar, Button, Grid, IconButton, InputBase, Modal, Paper, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, IconButton, InputBase, makeStyles, Modal, Paper, Typography, useTheme } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -11,12 +11,21 @@ import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
 import BuildModalForm from './buildPageComponents/BuildModalForm';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        background: 'rgb(38,40,64)'
+    },
+    searchBar: {
+        padding: '0.2em',
+    },
+}))
 const NavBar = () => {
     
     const [buildOpen, setBuildOpen] = React.useState(false);
     
     const history = useHistory();
-    
+    const classes = useStyles();
+    const theme = useTheme();
     // handle click of the profile icon
     // if user isnt logged in redirect to login page, otherwise send them to profile page
     const handleProfileClick = () => {
@@ -34,7 +43,7 @@ const NavBar = () => {
 
     return (
         <header>
-            <AppBar color="secondary">
+            <AppBar className={classes.root}>
                 <Grid
                     container
                     direction="row"
@@ -60,7 +69,7 @@ const NavBar = () => {
                         </Modal>
                     </Grid>
                     <Grid item xs={3}>
-                        <Paper>
+                        <Paper className={classes.searchBar}>
                             <Grid container item direction="row" justify="space-between" alignItems="center">
                                     <Grid item>
                                         <InputBase placeholder="Search products..."/>
@@ -72,8 +81,8 @@ const NavBar = () => {
                         </Paper>
                     </Grid>
                     <Grid item xs={1}>
-                        <IconButton>
-                            <AccountCircleIcon onClick={() => handleProfileClick()} fontSize="large"/>
+                        <IconButton onClick={() => handleProfileClick()}>
+                            <AccountCircleIcon fontSize="large"/>
                         </IconButton>
                     </Grid>
                     <Grid item xs={1}>

@@ -1,7 +1,23 @@
 import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
+import { convertCategoryName } from '../util/helpers';
 
+const categories = [
+'CPU', 
+'Motherboards', 
+'Storage', 
+'Power Supplies', 
+'CPU Cooling',
+'PC Cooling',
+'Memory',
+'Graphics Cards',
+'Cases',
+'Monitors',
+'Mouses',
+'Keyboards',
+'Wifi Adaptors'
+];
 
 const ProductMenuButton = () => {
     const [open, setOpen] = React.useState(false);
@@ -11,10 +27,9 @@ const ProductMenuButton = () => {
     const handleToggle = () => {
         open ? setOpen(false) : setOpen(true);
     }
-    const categories = ['CPU', 'Motherboards', 'Storage'];
 
     const handleMenuButtonclick = (category) => {
-        history.push(`/product/${category}`);
+        history.push(`/product/${convertCategoryName(category)}`);
     }
 
     return (
@@ -30,7 +45,7 @@ const ProductMenuButton = () => {
                             <ClickAwayListener onClickAway={handleToggle}>
                                 <MenuList autoFocusItem={open}>
                                     {categories.map((c) => (
-                                        <MenuItem onClick={() => handleMenuButtonclick(c)}>{c}</MenuItem>
+                                        <MenuItem key={c} onClick={() => handleMenuButtonclick(c)}>{c}</MenuItem>
                                     ))}
                                 </MenuList>
                             </ClickAwayListener>

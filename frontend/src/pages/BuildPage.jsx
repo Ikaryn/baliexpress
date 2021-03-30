@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, makeStyles, Modal, Paper, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, makeStyles, Modal, Paper, rgbToHex, Typography, useTheme } from '@material-ui/core';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
 import { generateBuildString } from '../util/helpers';
@@ -15,17 +15,21 @@ const buildTemplate = {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: '5%'
+        marginBottom: '5%',
     },
     footerBar: {
         top: 'auto',
         bottom: 0,
-        padding: '1em'
-    }
+        padding: '1em',
+        background: 'rgb(25,25,25)',
+    },
+    standoutButton: {
+        background: 'rgb(245,245,0)',
+    },
 }))
 
 const BuildPage = () => {
-
+    
     const [build, setBuild] = React.useState(buildTemplate);
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
@@ -35,6 +39,7 @@ const BuildPage = () => {
     // generate a random unique identifer for a build
     // need to check if this is an existing build or not.
     React.useEffect(() => {
+        console.log('setting build string');
         setBuildNumber(generateBuildString());
     },[])
     
@@ -67,7 +72,7 @@ const BuildPage = () => {
     <div className={classes.root}>
         <Grid container alignItems="center" direction="column" spacing={3}>
             <Grid item>
-                <Typography variant="h2">Custom Pc Builder</Typography>
+                <Typography className="light-text" variant="h2" >Custom Pc Builder</Typography>
             </Grid>
             <Grid item>
                 <Paper>
@@ -87,7 +92,7 @@ const BuildPage = () => {
                 </Grid>
                 <Grid container item direction="column" xs={10} spacing={3}>
                     {Object.keys(buildTemplate).map((category) => (
-                        <Grid item>
+                        <Grid item key={`${category}-card`}>
                             <BuildProductCard type={category} product={buildTemplate[category]} setBuild={handleChangeProduct}/>
                         </Grid>
                     ))}
@@ -97,21 +102,21 @@ const BuildPage = () => {
         <AppBar position="fixed" color="primary" className={classes.footerBar}>
             <Grid container direction="row" alignItems="center" justify="space-around">
                 <Grid container item direction="row" xs={2}>
-                    <Typography>Build Number: {`${buildNumber}`}</Typography>
+                    <Typography className="light-text" >Build Number: {`${buildNumber}`}</Typography>
                 </Grid>
                 <Grid item xs={1}>
-                    <Typography variant="h3">${buildPrice}</Typography>
+                    <Typography className="light-text" variant="h3">${buildPrice}</Typography>
                 </Grid>
                 <Grid container item direction="row" xs={3}>
                     <Grid item xs={6}>
-                        <Button variant="contained" onClick={() => {handleSaveBuild()}}>Save build</Button>
+                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleSaveBuild()}}>Save build</Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
+                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
                     </Grid>
                 </Grid>
                 <Grid item xs={3}>
-                    <Typography variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
+                    <Typography className="light-text" variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
                 </Grid>
             </Grid>
         </AppBar>

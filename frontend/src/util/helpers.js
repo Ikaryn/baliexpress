@@ -24,12 +24,19 @@ export function convertCategoryName(category) {
             return "Cases"
         case "Motherboard":
             return "Motherboards"
+        case "Graphics Cards":
         case "Graphics Card":
             return "Graphics_Cards"
+        case "Power Supplies":
         case "Power Supply":
             return "PSU"
+        case "CPU Cooling":
         case "CPU Cooler":
             return "CPU_Cooling"
+        case "PC Cooling":
+            return "PC_Cooling"
+        case 'Wifi Adaptors':
+            return 'Wifi_Adaptors'
         default:
             return category;
     

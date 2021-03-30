@@ -35,7 +35,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
 
     return (
         <Grid container spacing={3}>
-            <Paper  className="modal-container">
+            <Paper className="modal-container">
                 <Grid container item direction="row" justify="space-between">
                     <Grid item>
                         <Typography variant="h3">Build-A-PC</Typography>
@@ -87,10 +87,10 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
                 </Grid>
                 <Grid container item direction="row">
                     <Grid item xs={6}>
-                        <Button variant="contained" onClick={() => {handleRedirect('empty')}}>I just want to use your Template!</Button>
+                        <Button color="primary" variant="contained" onClick={() => {handleRedirect('empty')}}>I just want to use your Template!</Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button variant="contained">Take me to my new PC!</Button>
+                        <Button color="primary" variant="contained">Take me to my new PC!</Button>
                     </Grid>
                 </Grid>
             </Paper>

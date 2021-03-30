@@ -10,7 +10,7 @@ const SelectProductCard = ({setOpen, productInfo, setProduct}) => {
     }
 
     const handleSelect = () => {
-        setProduct(productInfo);
+        setProduct(productInfo.category, productInfo);
         setOpen(false);
     }
 

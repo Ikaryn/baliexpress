@@ -16,21 +16,27 @@ const BuildProductCard = ({type, product, setBuild}) => {
     const [open, setOpen] = React.useState(false);
     const [productInfo, setProductInfo] = React.useState(product);
     
-    console.log(productInfo);
+    // console.log(productInfo, type);
     const classes = useStyles();
     
-    React.useEffect(() => {
-        if (productInfo !== '') {
-            setBuild(type, productInfo);
-        }
-    },[productInfo, setBuild, type]);
+    // React.useEffect(() => {
+    //     if (productInfo !== '') {
+    //         console.log(productInfo, setBuild, type);
+    //         setBuild(type, productInfo);
+    //     }
+    // },[productInfo, setBuild, type]);
+    
+    const handleCardUpdate = (type, product) => {
+        setBuild(type, product);
+        setProductInfo(product);
+    }
     
     return (
         <Card>
-            <Grid container item direction="row">
-                <Grid container item xs={2} direction="column" alignItems="center" alignContent="center">
+            <Grid container item direction="row" spacing={1}>
+                <Grid container item xs={2} direction="column" justify="center" alignItems="center">
                     <Grid item>
-                        <Typography variant="h5">{type}</Typography>
+                        <Typography align="center" variant="h5">{type}</Typography>
                     </Grid>
                     <Grid item>
                         <InfoIcon />
@@ -42,7 +48,7 @@ const BuildProductCard = ({type, product, setBuild}) => {
                 {productInfo === '' ? 
                 <Grid container item xs={9} alignItems="center" justify="center">
                     <Grid item>     
-                        <Button variant="contained" onClick={() => {setOpen(true)}}>Select a Part</Button>
+                        <Button color="primary" variant="contained" onClick={() => {setOpen(true)}}>Select a Part</Button>
                     </Grid>
                 </Grid>
                 :
@@ -58,7 +64,7 @@ const BuildProductCard = ({type, product, setBuild}) => {
                             <AccordionDetails>
                                 <Grid container item direction="column">
                                 {Object.keys(productInfo.specs).map((spec) => (
-                                    <Grid container item direction="row">
+                                    <Grid container item direction="row" key={`${productInfo.specs}-card`}>
                                         <Grid item>
                                             <Typography>{spec}:</Typography>
                                         </Grid>
@@ -87,16 +93,16 @@ const BuildProductCard = ({type, product, setBuild}) => {
                             <Typography variant="h5">${productInfo.price}.00</Typography>
                         </Grid>
                     </Grid>
-                    <Grid item container direction="column" xs={1}>
-                        <Button variant="contained" onClick={()=>{setOpen(true)}}>Compare</Button>
-                        <Button variant="contained" onClick={()=>{setOpen(true)}}>Change</Button>
-                        <Button variant="contained" onClick={()=>{setProductInfo('')}}>Delete</Button>
+                    <Grid item container direction="column" xs={1} justify="center">
+                        <Button color="primary" variant="contained" onClick={()=>{setOpen(true)}}>Compare</Button>
+                        <Button color="primary" variant="contained" onClick={()=>{setOpen(true)}}>Change</Button>
+                        <Button color="secondary" variant="contained" onClick={()=>{setProductInfo('')}}>Delete</Button>
                     </Grid>
                 </Grid>
                 }
             </Grid>
             <Modal open={open} onClose={() => {setOpen(false)}}>
-                <SelectBuildProductModal category={type} setOpen={setOpen} setProduct={setProductInfo}/>
+                <SelectBuildProductModal category={type} setOpen={setOpen} setProduct={handleCardUpdate}/>
             </Modal>
         </Card>
     

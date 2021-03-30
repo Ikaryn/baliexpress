@@ -276,7 +276,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                     </Grid>
                 ))}
                 {editComponent ? <Grid item>
-                    <Button variant="contained" onClick={() => handleSubmit()}>Confirm Changes</Button>
+                    <Button color="primary" variant="contained" onClick={() => handleSubmit()}>Confirm Changes</Button>
                 </Grid> : ''}
             </Grid>
     );
