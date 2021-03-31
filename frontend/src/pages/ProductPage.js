@@ -33,6 +33,8 @@ const ProductPage = () => {
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
     const [isAdmin, setIsAdmin] = React.useState(false);
+    
+    const [reviews, setReviews] = React.useState([{'':''}])
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
@@ -143,7 +145,7 @@ const ProductPage = () => {
                     </Paper>
                 </Grid>
                 <Grid item>
-                    <ReviewBlock rating={rating} />
+                    {productInfo.id && <ReviewBlock rating={rating} productId={productInfo.id} />}
                 </Grid>
             </Grid>
         </div>

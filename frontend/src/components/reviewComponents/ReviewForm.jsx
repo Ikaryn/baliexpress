@@ -1,6 +1,7 @@
 import { Button, CircularProgress, Fade, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
+import API from '../../util/API';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -8,7 +9,9 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const ReviewForm = () => {
+const api = new API()
+
+const ReviewForm = ({productId}) => {
     const [rating, setRating] = React.useState(0);
     const [comment, setComment] = React.useState('');
     const [submitted, setSubmitted] = React.useState(false);
@@ -43,8 +46,13 @@ const ReviewForm = () => {
                 setQuery('success');
             },2000)
             setSubmitted(true);
-            const review = {rating: rating, comment: comment};
+            const review = {    rating: rating, 
+                                comment: comment, 
+                                userId: localStorage.getItem('userId'), 
+                                productId: productId};
             console.log(review);
+            const response = await api.post('review', review);
+            console.log(response);
         }
     }
 

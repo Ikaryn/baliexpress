@@ -3,6 +3,9 @@ import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewForm from './ReviewForm';
+import API from '../../util/API';
+
+const api = new API()
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -18,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         margin: '1px 0',
     },
 }))
-
 
 const BarPercentages = ({ratings}) => {
     const classes = useStyles();
@@ -43,7 +45,7 @@ const BarPercentages = ({ratings}) => {
 
 } 
 
-const ReviewBlock = ({rating}) => {
+const ReviewBlock = ({rating, productId}) => {
     
     const [reviews, setReviews] = React.useState([{'':''}])
     const [sort, setSort] = React.useState('popularity');
@@ -54,7 +56,9 @@ const ReviewBlock = ({rating}) => {
     
     React.useEffect(() => {
         (async () => {
-            
+            console.log("PRODUCT ID", productId);
+            const response = await api.get(`review?productId=${productId}`);
+            console.log(response);
         })();
     },[])
     
@@ -123,7 +127,7 @@ const ReviewBlock = ({rating}) => {
             <div>
                 <Grow in={reviewOpen}>
                     <Paper>
-                        <ReviewForm />
+                        <ReviewForm productId={productId}/>
                     </Paper>
                 </Grow>
             </div>

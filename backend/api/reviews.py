@@ -9,13 +9,21 @@ from flask_restful import Api
 from PIL import Image
 from . import dbaccess as db
 from datetime import datetime
+import json
 
 class Reviews(Resource):
     def get(self):
         print('Get reviews attempt received')
 
-        productId = request.args.get('productId')
+        productId = request.args.get('productId')  
         reviews = db.getProductReviews(int(productId))
+
+        for review in reviews:
+            review['reviewdate'] = json.dumps(review['reviewdate'].__str__())
+
+        if reviews is None:
+            return {'error': 'Unable to fetch reviews'}
+
         return {'reviews': reviews}
 
     def post(self):
@@ -25,7 +33,7 @@ class Reviews(Resource):
         productId = int(data.get('productId'))
         userId = int(data.get('userId'))
         rating = data.get('rating')
-        reviewText = data.get('reviewText')
+        reviewText = data.get('comment')
 
         reviewDate = datetime.today().strftime('%Y-%m-%d')
 
