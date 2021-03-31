@@ -813,9 +813,12 @@ def getProductReviews(productID):
             query = "SELECT voterid, vote FROM Review_Votes WHERE reviewid = %s"
             cur.execute(query, [review['reviewid']])
 
-            # convert vote rows to a list of dictionaries
+            # convert vote rows to a dictionary
             rows = cur.fetchall()
-            review['votes'] = [{column:data for column, data in record.items()} for record in rows]
+            votes = {}
+            for record in rows:
+                votes[record['voterid']] = record['vote']
+            review['votes'] = votes
 
         # commit and close database
         conn.commit()
@@ -924,28 +927,3 @@ def getCategoryFromID(cur, id):
     query = "SELECT Category FROM Products WHERE id = %s"
     cur.execute(query, [id])
     return cur.fetchone()[0]
-
-
-#addReview(1, 1, 3, "Its alright i guess", "2021-04-29")
-addVote(1, 1, -1)
-
-print(getProductReviews(1))
-#addVote(1, 1, 5)
-
-# cpu = { 'name': 'fuly sick cpu',
-#         'category': 'CPU',
-#         'brand': 'supreme',
-#         'price': 199.99,
-#         'image': '',
-#         'warranty': '1 year',
-#         'description': 'lit',
-#         'stock': 525,
-#         'specs': {  'cores': 8,
-#                     'threads': 16,
-#                     'base_clock': 6.0,
-#                     'max_clock': 6.4,
-#                     'socket': 'your mum',
-#                     'cooler_included': True,
-#                     'overclockable': True,
-#                     'power_use': 100.2,
-#         }}
