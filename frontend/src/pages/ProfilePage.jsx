@@ -129,7 +129,7 @@ const ProfilePage = () => {
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {/* <Tab label="Logout" />
                             */}
-                            <Button onClick={handleOpen}>Logout</Button>
+                            <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
@@ -171,10 +171,10 @@ const ProfilePage = () => {
                     <Typography>Are you sure you want to logout?</Typography>
                     <Grid item container direction="row" justify="center">
                         <Grid item>
-                            <Button variant="contained" onClick={() => handleOpen()}>Cancel</Button>
+                            <Button color="primary" variant="contained" onClick={() => handleOpen()}>Cancel</Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="contained" onClick={() => handleLogout()}>Confirm</Button>
+                            <Button color="secondary" variant="contained" onClick={() => handleLogout()}>Confirm</Button>
                         </Grid>
                     </Grid>
                 </Grid>

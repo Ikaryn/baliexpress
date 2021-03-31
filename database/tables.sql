@@ -2,6 +2,7 @@ DROP TYPE IF EXISTS Categories CASCADE;
 
 CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors' );
 
+
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
@@ -21,7 +22,8 @@ DROP TABLE IF EXISTS Keyboards;
 DROP TABLE IF EXISTS Wifi_Adaptors;
 DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
-DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Reviews CASCADE;
+DROP TABLE IF EXISTS Review_Votes;
 
 CREATE TABLE Users(
     id          int GENERATED ALWAYS AS IDENTITY,
@@ -41,7 +43,7 @@ CREATE TABLE Users(
 CREATE TABLE Products(
     id          int GENERATED ALWAYS AS IDENTITY,
     name        text,
-    category    text,
+    category    text CHECK (category in ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors')),
     brand       text,
     price       numeric(50, 2),
     image       text,
@@ -101,7 +103,6 @@ CREATE TABLE PC_Cooling(
 CREATE TABLE Motherboards(
     id                      int,
     cpu_socket              text,
-    max_memory_supported    text,
     memory_slots            int,
     wifi                    boolean,
     form_factor_supported   text,
@@ -114,7 +115,6 @@ CREATE TABLE Motherboards(
 
 CREATE TABLE Memory(
     id                  int,
-    type                text,
     frequency           int,
     capacity            int,
     number_of_sticks    int,
@@ -146,10 +146,10 @@ CREATE TABLE Graphics_Cards(
 );
 
 CREATE TABLE Cases(
-    id              int,
-    colour          text,
-    size            text,
-    power_use       numeric(50, 1),
+    id                      int,
+    colour                  text,
+    size                    text,
+    motherboard_support     text,
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -159,7 +159,6 @@ CREATE TABLE PSU(
     wattage             int,
     power_efficiency    text,
     modularity          text,
-    power_use           numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );
@@ -224,13 +223,22 @@ CREATE TABLE BuildParts(
 );
 
 CREATE TABLE Reviews(
-    reviewid    int GENERATED ALWAYS AS IDENTITY,
+    reviewid    int GENERATED ALWAYS AS IDENTITY UNIQUE,
     productid   int,
     userid      int,
     rating      int,
     reviewtext  text,
     reviewdate  date,
     primary key (productid, userid),
-    foreign key (productid) references Products(id),
-    foreign key (userid) references Users(id)
+    foreign key (productid) references Products(id) on delete CASCADE,
+    foreign key (userid) references Users(id) on delete CASCADE
 );
+
+CREATE TABLE Review_Votes(
+    reviewid    int,
+    voterid     int,
+    vote        int CHECK (vote IN (-1, 1)),
+    primary key (reviewid, voterid),
+    foreign key (reviewid) references Reviews(reviewid) on delete CASCADE,
+    foreign key (voterid) references Users(id) on delete CASCADE
+)

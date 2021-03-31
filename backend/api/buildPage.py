@@ -69,7 +69,7 @@ class BuildPage(Resource):
         build['Motherboard'] = recommendMotherboard(MotherboardBudget, use, CPU, GPU)
         build['Memory'] = recommendMemory(MemoryBudget, Mb)
         build['Storage'] = recommendStorage(StorageBudget, Mb)
-        build['Cooling'] = recommendCooling(CoolingBudget)
+        # build['Cooling'] = recommendCooling(CoolingBudget)
         powerSum = 0
         for item in build:
             powerSum += build[item][power_use] 

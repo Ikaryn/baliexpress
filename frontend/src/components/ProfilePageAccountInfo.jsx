@@ -94,7 +94,7 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
             />
             <Grid container item direciton="row">
                 <Grid item>
-                    <Button variant="contained" onClick={handleToggle}>Change Password</Button>
+                    <Button color="primary" variant="contained" onClick={handleToggle}>Change Password</Button>
                     <Modal open={open}>
                         <Grid container direction="column" >
                             <Paper className="modal">
@@ -166,7 +166,7 @@ const ProfilePageAccountInfo = ({accInfo, shippingInfo}) => {
                 </Snackbar>
                 }
                 <Grid item>
-                    <Button variant="contained" onClick={()=> handleEditDetails()}>Edit Details</Button>
+                    <Button color="primary" variant="contained" onClick={()=> handleEditDetails()}>Edit Details</Button>
                 </Grid>
             </Grid>
         </Grid>

@@ -96,7 +96,7 @@ const Register = () => {
                 alignItems="center"
                 spacing={4}
             >
-                <Typography variant="h1">Register</Typography>
+                <Typography className="light-text" variant="h1">Register</Typography>
                 <form>  
                 <Grid item>
                     <FormControl error={nameError === '' ? false : true}>
@@ -140,8 +140,8 @@ const Register = () => {
                     </FormControl>     
                 </Grid>
 
-                <Button type="submit" onClick={(event) => {fetchRegister(event)}}>Register</Button>
-                <Button onClick={() => handleLoginClick()}>I already have an account!</Button>
+                <Button variant="contained" color="primary" type="submit" onClick={(event) => {fetchRegister(event)}}>Register</Button>
+                <Button variant="contained" color="primary" onClick={() => handleLoginClick()}>I already have an account!</Button>
                 </form>
                 <Typography variant="body1" color="secondary">{RegisterMessage}</Typography>
             </Grid>

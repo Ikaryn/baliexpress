@@ -7,7 +7,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
             user="postgres",
-            password="jlk1njk2"
+            password="password"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -299,14 +299,12 @@ def getAllProducts(*args):
             tuple = cur.fetchone()
             while tuple != None:
                 info = {}
-                print("first")
                 for i in range(0, len(productColumns)):
                     info[productColumns[i]] = tuple[i]
                 products.append(info)
                 tuple = cur.fetchone()
 
             # get product specs from individual category tables
-            print("second")
             for i in range(0, len(products)):
                 product = products[i]
                 id = product['id']
@@ -316,8 +314,6 @@ def getAllProducts(*args):
                 tuple = cur.fetchone()
                 # create dictionary of specs
                 specs = {}
-                print("third")
-                print(tuple)
                 for j in range(1, len(tuple)):
                     columns = categoryColumns[category]
                     specs[columns[j]] = tuple[j]
@@ -768,10 +764,35 @@ def addReview(productID, userID, rating, reviewText, reviewDate):
         conn.close()
         return reviewID
 
+# deletes a review
+# returns 1 if successful, 0 otherewise
+def deleteReview(reviewID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete review from database
+        query = "DELETE FROM Reviews WHERE reviewid = %s"
+        cur.execute(query, [reviewID])
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteReview()")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
 # gets all reviews for a specific product
 # if successful, returns a list of dictionaries. If a product has no reviews,
 # returns an empty list. If an error has occured, returns none
-# review dictionary: {reviewid, productid, userid, rating, reviewtext, reviewdate}
+# review dictionary: {reviewid, productid, userid, rating, reviewtext, reviewdate, votes:{voterid, vote}}
 def getProductReviews(productID):
     try:
         # connect to database
@@ -787,6 +808,15 @@ def getProductReviews(productID):
         rows = cur.fetchall()
         reviews = [{column:data for column, data in record.items()} for record in rows]
 
+        # for each review, get votes
+        for review in reviews:
+            query = "SELECT voterid, vote FROM Review_Votes WHERE reviewid = %s"
+            cur.execute(query, [review['reviewid']])
+
+            # convert vote rows to a list of dictionaries
+            rows = cur.fetchall()
+            review['votes'] = [{column:data for column, data in record.items()} for record in rows]
+
         # commit and close database
         conn.commit()
         cur.close()
@@ -797,6 +827,85 @@ def getProductReviews(productID):
     finally:
         conn.close()
         return reviews
+
+# adds a vote to a review
+# vote should be 1 for an upvote, -1 for a downvote
+# returns 1 if successful, 0 otherwise
+def addVote(reviewID, voterID, vote):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into Review_Votes table
+        query = "INSERT INTO Review_Votes (reviewid, voterid, vote) VALUES (%s, %s, %s)"
+        cur.execute(query, (reviewID, voterID, vote))
+
+        status = 1
+        # commit and close database
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 0
+        print ("An error has occured in addVote()")
+        print(error)
+
+    finally:
+        conn.close()
+        return status
+
+# changes an existing vote
+# returns 1 if vote was successfully upsated, 0 otherwise
+# Note: does not check if the newVote is different to the existing vote
+def editVote(reviewID, voterID, newVote):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # edit vote
+        query = "UPDATE Review_Votes SET vote = %s WHERE reviewid = %s AND voterid = %s"
+        cur.execute(query, (newVote, reviewID, voterID))
+
+        status = 1
+        # commit and close database
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        status = 0
+        print ("An error has occured in editVote()")
+        print(error)
+
+    finally:
+        conn.close()
+        return status
+
+# Deletes a vote
+# returns 1 if successful, 0 otherwise
+def deleteVote(reviewID, voterID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete vote from database
+        query = "DELETE FROM Review_Votes WHERE reviewid = %s AND voterid = %s"
+        cur.execute(query, (reviewID, voterID))
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteVote()")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
 
 # ~~~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~
 
@@ -817,6 +926,11 @@ def getCategoryFromID(cur, id):
     return cur.fetchone()[0]
 
 
+#addReview(1, 1, 3, "Its alright i guess", "2021-04-29")
+addVote(1, 1, -1)
+
+print(getProductReviews(1))
+#addVote(1, 1, 5)
 
 # cpu = { 'name': 'fuly sick cpu',
 #         'category': 'CPU',
