@@ -1,6 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, Grid, Grow, LinearProgress, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
+import ReviewCard from './ReviewCard';
 import ReviewForm from './ReviewForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -126,6 +127,7 @@ const ReviewBlock = ({rating}) => {
                     </Paper>
                 </Grow>
             </div>
+            <ReviewCard />
         </Grid>
     
     )
