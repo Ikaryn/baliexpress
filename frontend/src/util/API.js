@@ -50,4 +50,17 @@ export default class API {
         return response;
         
     }
+
+    delete(path, body) {
+        // console.log(options);
+        const options = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        }
+        
+        const response = this.makeAPIRequest(path, options);
+        return response;
+        
+    }
 }

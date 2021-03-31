@@ -47,7 +47,7 @@ const BarPercentages = ({ratings}) => {
 
 const ReviewBlock = ({rating, productId}) => {
     
-    const [reviews, setReviews] = React.useState([{'':''}])
+    const [reviews, setReviews] = React.useState([{}])
     const [sort, setSort] = React.useState('popularity');
     const [filter, setFilter] = React.useState(0);
     const [reviewOpen, setReviewOpen] = React.useState(false);
@@ -57,8 +57,24 @@ const ReviewBlock = ({rating, productId}) => {
     React.useEffect(() => {
         (async () => {
             console.log("PRODUCT ID", productId);
-            const response = await api.get(`review?productId=${productId}`);
+
+            const response = await api.get(`review?productId=${productId}&userId=${localStorage.getItem('userId')}`);
             console.log(response);
+            
+            const allReviews = response.reviews.forEach(async (review) => {
+                const options = {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Request-Type': 'profile',
+                    },
+                }
+                const response = await api.makeAPIRequest(`profile/${review.userid}?userId=${review.userid}`, options);
+                review['username']= response.accountInfo['name'];
+            })
+
+            setReviews(response.reviews);
+            console.log(response.reviews);
         })();
     },[])
     
@@ -131,7 +147,15 @@ const ReviewBlock = ({rating, productId}) => {
                     </Paper>
                 </Grow>
             </div>
-            <ReviewCard />
+            
+            <Grid container item direction="row">
+                {reviews && reviews.map((review) => (
+                    <Grid item>
+                        <ReviewCard review={review} userId={localStorage.getItem('userId')}/> 
+                    </Grid>)
+                )}
+            </Grid>
+
         </Grid>
     
     )

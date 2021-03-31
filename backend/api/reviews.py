@@ -15,15 +15,25 @@ class Reviews(Resource):
     def get(self):
         print('Get reviews attempt received')
 
-        productId = request.args.get('productId')  
+        productId = request.args.get('productId')
+        userId = request.args.get('userId')
         reviews = db.getProductReviews(int(productId))
 
         for review in reviews:
             review['reviewdate'] = json.dumps(review['reviewdate'].__str__())
+            score = 0
+            review['userVote'] = 0
+            for vote in review['votes']:
+                score += vote['vote']
+                if vote['voterid'] == int(userId):
+                    review['userVote'] = vote['vote']
+
+            review['score'] = score
 
         if reviews is None:
             return {'error': 'Unable to fetch reviews'}
 
+        
         return {'reviews': reviews}
 
     def post(self):
@@ -63,6 +73,7 @@ class Votes(Resource):
         print ('Add vote attempt received')
 
         data = request.json
+        print('data for add vote:', data)
         reviewId = int(data.get('reviewId'))
         userId = int(data.get('userId'))
         vote = int(data.get('vote'))
