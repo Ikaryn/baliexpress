@@ -6,6 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
 import { useHistory } from 'react-router';
+import ReviewBlock from '../components/reviewComponents/ReviewBlock';
 // import SpecificationList from '../components/SpecificationList'
 
 const api = new API();
@@ -140,6 +141,9 @@ const ProductPage = () => {
                             Review placeholder
                         </TabPanel>
                     </Paper>
+                </Grid>
+                <Grid item>
+                    <ReviewBlock rating={rating} />
                 </Grid>
             </Grid>
         </div>
