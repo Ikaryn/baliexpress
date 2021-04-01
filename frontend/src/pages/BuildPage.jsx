@@ -2,6 +2,7 @@ import { AppBar, Button, Grid, makeStyles, Modal, Paper, rgbToHex, Typography, u
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
 import { generateBuildString } from '../util/helpers';
+import { StoreContext } from '../util/store';
 
 const buildTemplate = {
     'Case': '', 
@@ -30,7 +31,10 @@ const useStyles = makeStyles((theme) => ({
 
 const BuildPage = () => {
     
-    const [build, setBuild] = React.useState(buildTemplate);
+    // const [build, setBuild] = React.useState(buildTemplate);
+    const context = React.useContext(StoreContext)
+    const { build: [build, setBuild]} = context;
+    console.log(build);
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
     const classes = useStyles();
@@ -60,6 +64,7 @@ const BuildPage = () => {
         setBuildPrice(newPrice.price);
     }
     
+    
     const handleAddToCart = () => {
     
     }
@@ -67,6 +72,7 @@ const BuildPage = () => {
     const handleSaveBuild = () => {
         console.log(build);
     }
+    
     
     return (
     <div className={classes.root}>
@@ -91,9 +97,9 @@ const BuildPage = () => {
                     </Paper>
                 </Grid>
                 <Grid container item direction="column" xs={10} spacing={3}>
-                    {Object.keys(buildTemplate).map((category) => (
+                    {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
-                            <BuildProductCard type={category} product={buildTemplate[category]} setBuild={handleChangeProduct}/>
+                            <BuildProductCard type={category}/>
                         </Grid>
                     ))}
                 </Grid>

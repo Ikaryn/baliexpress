@@ -44,6 +44,23 @@ export function convertCategoryName(category) {
 
 }
 
+export function reverseCategoryName(category) {
+    switch(category) {
+        case "Cases":
+            return "Case";
+        case "Motherboards":
+            return "Motherboard";
+        case 'Graphics_Cards':
+            return "Graphics Card";
+        case 'PSU':
+            return "Power Supply";
+        case "CPU_Cooling":
+            return "CPU Cooling";
+        default: 
+            return category;
+    }
+}
+
 export function generateBuildString() {
     return Math.random().toString(36).slice(2);
 }

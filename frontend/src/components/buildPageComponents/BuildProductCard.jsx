@@ -1,8 +1,9 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardMedia, Divider, Grid, makeStyles, Modal, ThemeProvider, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardMedia, CssBaseline, Divider, Grid, makeStyles, Modal, ThemeProvider, Typography } from '@material-ui/core';
 import React from 'react';
 import InfoIcon from '@material-ui/icons/Info';
 import SelectBuildProductModal from './SelectBuildProductModal';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { StoreContext } from '../../util/store';
 
 const useStyles = makeStyles((theme) => ({
     productInfoContainer: {
@@ -11,12 +12,13 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const BuildProductCard = ({type, product, setBuild}) => {
-    
+const BuildProductCard = ({type}) => {
+    const context = React.useContext(StoreContext)
     const [open, setOpen] = React.useState(false);
-    const [productInfo, setProductInfo] = React.useState(product);
-    
-    // console.log(productInfo, type);
+    const {build: [build, setBuild]} = context;
+    const [productInfo, setProductInfo] = React.useState(build[type]);
+    const [redirect, setRedirect] = React.useState('')
+    console.log(build);
     const classes = useStyles();
     
     // React.useEffect(() => {
@@ -26,9 +28,21 @@ const BuildProductCard = ({type, product, setBuild}) => {
     //     }
     // },[productInfo, setBuild, type]);
     
+    // when user selects a product for the build, build state and productInfo state
     const handleCardUpdate = (type, product) => {
-        setBuild(type, product);
+        console.log(type,product);
+        
+        // make a deep copy of build
+        const updatedBuild = JSON.parse(JSON.stringify(build));
+        updatedBuild[type] = product;
+        setBuild(updatedBuild);
+        
         setProductInfo(product);
+    }
+    
+    const handleOpenModal = (location) => {
+        setRedirect(location);
+        setOpen(true);
     }
     
     return (
@@ -94,15 +108,20 @@ const BuildProductCard = ({type, product, setBuild}) => {
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" xs={1} justify="center">
-                        <Button color="primary" variant="contained" onClick={()=>{setOpen(true)}}>Compare</Button>
-                        <Button color="primary" variant="contained" onClick={()=>{setOpen(true)}}>Change</Button>
+                        <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('compare')}}>Compare</Button>
+                        <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('change')}}>Change</Button>
                         <Button color="secondary" variant="contained" onClick={()=>{setProductInfo('')}}>Delete</Button>
                     </Grid>
                 </Grid>
                 }
             </Grid>
             <Modal open={open} onClose={() => {setOpen(false)}}>
-                <SelectBuildProductModal category={type} setOpen={setOpen} setProduct={handleCardUpdate}/>
+                <SelectBuildProductModal 
+                    category={type} 
+                    setOpen={setOpen} 
+                    setProduct={handleCardUpdate}
+                    redirect={redirect}
+                />
             </Modal>
         </Card>
     
