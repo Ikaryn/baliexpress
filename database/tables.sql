@@ -61,13 +61,13 @@ CREATE TABLE Orders(
     foreign key (userid) references Users(id)
 );
 
-CREATE TABLE Purchased(
+CREATE TABLE Order_Items(
     orderid     integer,
     productid   integer,
     quantity    integer,
     primary key (orderid, productid),
-    foreign key (orderid) references Orders(id),
-    foreign key (productid) references Users(id)
+    foreign key (orderid) references Orders(id) on delete CASCADE, 
+    foreign key (productid) references Products(id)
 );
 
 CREATE TABLE CPU(
