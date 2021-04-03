@@ -349,7 +349,11 @@ class ProductPage(Resource):
 
         newProduct = {}
         for field in data:
-            newProduct[field] = data.get(field)
+            if field == 'image':
+                img = data.get(field).split(',')[1]
+                newProduct[field] = img
+            else:
+                newProduct[field] = data.get(field)
         
 
         productId = db.addProduct(newProduct)
@@ -374,12 +378,16 @@ class ProductPage(Resource):
             product = db.getProduct(productId)
 
             print("Product before:", product)
+            print("Data received:", data)
 
             for field in data:
                 if field == 'specs':
                     specs = data.get('specs')
                     for key in specs:
                         product['specs'][key] = specs[key]
+                elif field == 'image':
+                    img = data.get(field).split(',')[1]
+                    product[field] = img
                 else:
                     product[field] = data.get(field)
             
