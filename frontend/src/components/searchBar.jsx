@@ -39,6 +39,7 @@ const SearchBar = ({}) => {
             }
             const userId = "publicAccess";
             var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
+            console.log(searchStringTransform);
             const res = await api.makeAPIRequest(`search/${userId}?query=${searchStringTransform}`, options);
             setProductOutput(res.results);
             console.log(res.results);

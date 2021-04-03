@@ -290,7 +290,7 @@ from . import dbaccess as db
 def productSearch(*args):
 
     query = args[0]
-    tokens = query.split('+')
+    tokens = query.split(' ')
     products = db.getAllProducts()
 
     results = []
@@ -328,8 +328,6 @@ class ProductPage(Resource):
 
             print('Quick search attempt received')
             query = request.args.get('query')
-
-            print(query)
 
             results = productSearch(query, 5)
             return {'results': results}
