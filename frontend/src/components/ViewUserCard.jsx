@@ -21,7 +21,7 @@ const ViewUsers = ({user}) => {
                 })
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            const res = await api.makeAPIRequest(`profile?userId=${userId}`, options);
             console.log(res);
             setRole(event.target.value);
         }

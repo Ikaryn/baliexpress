@@ -19,8 +19,7 @@ const SearchPage = () => {
                     'Request-Type': 'search',
                 },
             }
-            const userId = "publicAccess";
-            const res = await api.makeAPIRequest(`search/${userId}?query=${search}`, options);
+            const res = await api.makeAPIRequest(`search?query=${search}`, options);
             setProductOutput(res.results);
             console.log(res.results);
         })();

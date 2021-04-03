@@ -18,7 +18,7 @@ const ProductListPage = () => {
     let {category} = useParams();
     React.useEffect(() => {
         (async () => {
-            const p = await api.get(`product/${category}`);
+            const p = await api.get(`product?category=${category}`);
             if (p.products) {
                 setProducts(p.products);
                 setFilteredProducts(p.products);
