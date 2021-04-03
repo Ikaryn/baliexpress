@@ -18,27 +18,37 @@ def connect():
     return conn
 
 
-def getEncodedImage (id):
+def getEncodedImage (name):
 
     ENCODING = 'utf-8'
+    translation_table = dict.fromkeys(map(ord, '/\:*?"<>|'), None)
+    image_name = name.translate(translation_table)
+
 
     dirname = os.path.dirname(__file__)
-    path = os.path.join(dirname, 'product_images/' + str(id) + '.jpg')
-    with open(path, 'rb') as image:
-        im_b64 = b64encode(image.read())
-        im_b64_string = im_b64.decode(ENCODING)
-        # print("Image successfully encoded:", str(id) + '.jpg')
+    path = os.path.join(dirname, 'product_images/' + image_name + '.jpg')
+    try:
+        with open(path, 'rb') as image:
+            im_b64 = b64encode(image.read())
+            im_b64_string = im_b64.decode(ENCODING)
+            print("Image successfully encoded:", image_name + '.jpg')
+    except FileNotFoundError:
+        raise
 
     return im_b64_string
 
 
-# Number of items that are pre-loaded in the database
-# Need to change this when more items are added through raw data.sql
-preloaded_db_items = 107
+# TODO: Get list of all products in database; only needs id and product name
 
-for id in range(1, preloaded_db_items + 1):
-    encodedImage = getEncodedImage(id)
-    if id == 100:
-        print(encodedImage)
+products = "List of products from database"
 
-    #TODO Query to add encoded image to database using id and encodedImage
+for product in products:
+    try:
+        encodedImage = getEncodedImage(product['name'])
+        
+        # TODO Query to add encoded image to database using id and encodedImage
+
+    except FileNotFoundError:
+        print('Error: Could not find', product['name'], 'in images folder, ID =', product['id'])
+
+    
