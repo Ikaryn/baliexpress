@@ -17,20 +17,17 @@ const BuildProductCard = ({type}) => {
     const [open, setOpen] = React.useState(false);
     const {build: [build, setBuild]} = context;
     const [productInfo, setProductInfo] = React.useState(build[type]);
+    const [spec, setSpec] = React.useState(build[type].specs)
+    
     const [redirect, setRedirect] = React.useState('')
-    console.log(build);
     const classes = useStyles();
     
-    // React.useEffect(() => {
-    //     if (productInfo !== '') {
-    //         console.log(productInfo, setBuild, type);
-    //         setBuild(type, productInfo);
-    //     }
-    // },[productInfo, setBuild, type]);
+    
+    
+    console.log(productInfo);
     
     // when user selects a product for the build, build state and productInfo state
     const handleCardUpdate = (type, product) => {
-        console.log(type,product);
         
         // make a deep copy of build
         const updatedBuild = JSON.parse(JSON.stringify(build));
@@ -78,7 +75,7 @@ const BuildProductCard = ({type}) => {
                             <AccordionDetails>
                                 <Grid container item direction="column">
                                 {Object.keys(productInfo.specs).map((spec) => (
-                                    <Grid container item direction="row" key={`${productInfo.specs}-card`}>
+                                    <Grid container item direction="row" key={`${productInfo.name}-card`}>
                                         <Grid item>
                                             <Typography>{spec}:</Typography>
                                         </Grid>

@@ -47,22 +47,17 @@ const BuildPage = () => {
         setBuildNumber(generateBuildString());
     },[])
     
-    const handleChangeProduct = (type, product) => {
-        const newBuild = JSON.parse(JSON.stringify(build));
-        newBuild[type] = product;
-        setBuild(newBuild);
-        console.log(newBuild);
-        
-        // loop through the build and sum all the prices
-        const newPrice = Object.keys(newBuild).reduce((previous, key) => {
-            if(newBuild[key].price){
-                previous.price += newBuild[key].price;
+    React.useEffect(() => {
+        const newPrice = Object.keys(build).reduce((previous, key) => {
+            if(build[key].price){
+                previous.price += build[key].price;
             }
             return previous;
         }, { price: 0 });
         console.log(newPrice);
         setBuildPrice(newPrice.price);
-    }
+    },[build])
+    
     
     
     const handleAddToCart = () => {
@@ -99,7 +94,7 @@ const BuildPage = () => {
                 <Grid container item direction="column" xs={10} spacing={3}>
                     {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
-                            <BuildProductCard type={category}/>
+                            <BuildProductCard type={category} />
                         </Grid>
                     ))}
                 </Grid>

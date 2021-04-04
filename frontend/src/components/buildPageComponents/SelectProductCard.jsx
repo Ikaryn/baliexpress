@@ -32,7 +32,7 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, category, redirect
                     </Grid>
                     <Grid container item direction="column" xs={6}>
                         <Grid item>
-                            <Typography variant="body">{productInfo.name}</Typography>
+                            <Typography variant="body1">{productInfo.name}</Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1">{productInfo.description}</Typography>

@@ -20,7 +20,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
     const [products, setProducts] = React.useState([{'': ''}]);
     const [brand, setBrand] = React.useState('');
     const [price, setPrice] = React.useState(1000);
-    const [sortCriteria, setSortCriteria] = React.useState('popularity');
+    const [sortCriteria, setSortCriteria] = React.useState('Popularity');
     const classes = useStyles();
 
     // get all of the products in the category
@@ -79,7 +79,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
                 <Divider />
                 <List className={classes.productListScrollable}>
                     {products.map((product) => (
-                        <Grid item>
+                        <Grid item key={product.id}>
                                 <SelectProductCard 
                                     setOpen={setOpen} 
                                     productInfo={product} 
