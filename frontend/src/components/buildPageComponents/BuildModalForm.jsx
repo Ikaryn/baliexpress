@@ -29,6 +29,17 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
         handleToggle(false);
         if (flag === 'empty'){ 
             history.push('/build');
+        // } else if (flag == 'build'){
+        //     history.push('/build');
+        //     const options = {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'build/json',
+        //             'request-type': 'get build',
+        //         },
+        //         body: JSON.stringify(buildForm)
+        //     }
+        //     const res = await.makeAPIRequest('/bu')
         }
     }
     
@@ -90,7 +101,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
                         <Button color="primary" variant="contained" onClick={() => {handleRedirect('empty')}}>I just want to use your Template!</Button>
                     </Grid>
                     <Grid item xs={6}>
-                        <Button color="primary" variant="contained">Take me to my new PC!</Button>
+                        <Button color="primary" variant="contained" onClick = {() => {handleRedirect('build')}}>Take me to my new PC!</Button>
                     </Grid>
                 </Grid>
             </Paper>

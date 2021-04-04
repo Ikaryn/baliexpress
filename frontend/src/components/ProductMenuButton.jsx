@@ -29,6 +29,7 @@ const ProductMenuButton = () => {
     }
 
     const handleMenuButtonclick = (category) => {
+        handleToggle()
         history.push(`/product/${convertCategoryName(category)}`);
     }
 
