@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import { StoreContext } from '../util/store';
 import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
+import SearchBar from './searchBar';
 import BuildModalForm from './buildPageComponents/BuildModalForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -69,15 +70,8 @@ const NavBar = () => {
                         </Modal>
                     </Grid>
                     <Grid item xs={3}>
-                        <Paper className={classes.searchBar}>
-                            <Grid container item direction="row" justify="space-between" alignItems="center">
-                                    <Grid item>
-                                        <InputBase placeholder="Search products..."/>
-                                    </Grid>
-                                    <Grid item>
-                                        <SearchIcon/>
-                                    </Grid>
-                            </Grid>
+                        <Paper>
+                            <SearchBar/>
                         </Paper>
                     </Grid>
                     <Grid item xs={1}>

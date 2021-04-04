@@ -15,7 +15,7 @@ const AllProductList = () => {
         (async () => {
 
             const productsInCategory = await Promise.all(productCategories.map(async (category) => {
-                const productList = await api.get(`product/${category}`);
+                const productList = await api.get(`product?category=${category}`);
                 console.log("productList:", productList)
                 return productList.products;
                 
