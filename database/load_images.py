@@ -8,7 +8,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
             user="postgres",
-            password="password"
+            password="jlk1njk2"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -37,18 +37,33 @@ def getEncodedImage (name):
 
     return im_b64_string
 
+try:
+    # Get list of all products in database
+    conn = connect()
+    cur = conn.cursor()
 
-# TODO: Get list of all products in database; only needs id and product name
+    query = "SELECT id, name FROM Products"
+    cur.execute(query)
+    products = cur.fetchall()
 
-products = "List of products from database"
+    for product in products:
+        try:
+            id, name = product
+            encodedImage = getEncodedImage(name)
 
-for product in products:
-    try:
-        encodedImage = getEncodedImage(product['name'])
-        
-        # TODO Query to add encoded image to database using id and encodedImage
+            query = "UPDATE Products SET image = %s WHERE id = %s"
+            cur.execute(query, (encodedImage, id))
 
-    except FileNotFoundError:
-        print('Error: Could not find', product['name'], 'in images folder, ID =', product['id'])
+        except FileNotFoundError:
+            print('Error: Could not find', name, 'in images folder, ID =', id)
 
-    
+    # commit changes to database
+    conn.commit()
+except (Exception, psycopg2.DatabaseError) as error:
+    print("An error occured connecting to the database")
+    print(error)
+finally:
+    # close connecction to database
+    if (conn):
+        cur.close()
+        conn.close()
