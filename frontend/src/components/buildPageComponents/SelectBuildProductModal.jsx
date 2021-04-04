@@ -15,22 +15,19 @@ const useStyles = makeStyles({
 });
 
 
-const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
+const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
 
     const [products, setProducts] = React.useState([{'': ''}]);
     const [brand, setBrand] = React.useState('');
-    const [brands, setBrands] = React.useState(['']);
     const [price, setPrice] = React.useState(1000);
-    const [sortCriteria, setSortCriteria] = React.useState('popularity');
-
+    const [sortCriteria, setSortCriteria] = React.useState('Popularity');
     const classes = useStyles();
 
+    // get all of the products in the category
     React.useEffect(() => {
         (async () => {
-            console.log(category)
-            const response = await api.get(`product/${convertCategoryName(category)}`);
+            const response = await api.get(`product/${category}`);
             setProducts(response.products);
-            console.log(response.products);
         })();
     },[category]);
 
@@ -42,7 +39,6 @@ const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
                 productBrands.push(products[p].brand);
              }
         });
-        console.log(productBrands);
         return productBrands;
     }
 
@@ -60,8 +56,6 @@ const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
                 <Grid container item direction="row" justify="space-evenly">
                     <Grid item>
                         <Typography>filter by:</Typography>
-                    {/* </Grid>
-                    <Grid item> */}
                         <Select fullWidth value={brand} onChange={(event) => {setBrand(event.target.value);}}>
                             <MenuItem value=''>Brand</MenuItem>
                             {getBrands().map((b) => (
@@ -85,8 +79,14 @@ const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
                 <Divider />
                 <List className={classes.productListScrollable}>
                     {products.map((product) => (
-                        <Grid item>
-                                <SelectProductCard setOpen={setOpen} productInfo={product} setProduct={setProduct}/>
+                        <Grid item key={product.id}>
+                                <SelectProductCard 
+                                    setOpen={setOpen} 
+                                    productInfo={product} 
+                                    setProduct={setProduct}
+                                    category={category}
+                                    redirect={redirect}
+                                />
                         </Grid>
                     ))}
                 </List>
