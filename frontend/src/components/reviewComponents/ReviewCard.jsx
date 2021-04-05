@@ -29,7 +29,7 @@ const ReviewCard = ({review, userId}) => {
     const [username, setUsername] = React.useState('');
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
-
+    console.log(review);
     
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -106,7 +106,7 @@ const ReviewCard = ({review, userId}) => {
             <Grid container item direction="row" justify="space-between">
                 <Grid container item direction="row" xs={2}>
                     <Grid item xs={6}>
-                        <Avatar>placeholder</Avatar>
+                        <Avatar>{review.username.slice(0,1)}</Avatar>
                     </Grid>
                     <Grid container item direction="column" xs={6}>
                         <Grid item>
