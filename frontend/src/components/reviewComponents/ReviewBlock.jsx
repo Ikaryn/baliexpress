@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     progressBarContainer: {
         margin: '1px 0',
     },
+    closedReviewFormCardBlock: {
+        position: 'relative',
+        top: '-250px',
+        marginTop: '10px'
+    }
 }))
 
 const BarPercentages = ({ratings}) => {
@@ -54,14 +59,30 @@ const ReviewBlock = ({rating, productId}) => {
     
     const classes = useStyles();
     
+    const handleReviewFormOpen = () => {
+        reviewOpen ? setReviewOpen(false) : setReviewOpen(true);
+    }
+    
+    // depending on whether the form is open/closed or if user is logged in generate text for the review form button
+    const generateReviewButtonText = () => {
+        if (localStorage.getItem('userId')) {
+            return reviewOpen ? 'Close' : 'Write a review';
+        }
+        
+        return 'Sign in to Write a review';
+    }
+    
+    // get reviews and users who made the reviews for the product page we're on.
     React.useEffect(() => {
         (async () => {
             console.log("PRODUCT ID", productId);
-
+            
+            // get all the reviews for the product
             const response = await api.get(`review?productId=${productId}&userId=${localStorage.getItem('userId')}`);
             console.log(response);
             
-            const allReviews = response.reviews.forEach(async (review) => {
+            // loop through each review and get the username for the review
+            response.reviews.forEach(async (review) => {
                 const options = {
                     method: 'GET',
                     headers: { 
@@ -76,7 +97,7 @@ const ReviewBlock = ({rating, productId}) => {
             setReviews(response.reviews);
             console.log(response.reviews);
         })();
-    },[])
+    },[productId])
     
     return (
         <Grid container direction="column" className={classes.container} spacing={1}>
@@ -109,7 +130,14 @@ const ReviewBlock = ({rating, productId}) => {
             </Grid>
             <Grid container item direction="row" justify="center">
                 <Grid item xs={3}>
-                    <Button variant="contained" className={classes.standoutButton} onClick={()=>{setReviewOpen(true)}}>Write Review placeholder</Button>
+                    <Button 
+                        variant="contained" 
+                        className={classes.standoutButton} 
+                        onClick={()=>{handleReviewFormOpen()}}
+                        disabled={localStorage.getItem('userId' ? false : true)}
+                    >
+                        {generateReviewButtonText()}
+                    </Button>
                 </Grid>
                 <Grid container item direction="row" xs={3} alignItems="center" alignContent="center">
                     <Grid item xs={2}>
@@ -147,15 +175,11 @@ const ReviewBlock = ({rating, productId}) => {
                     </Paper>
                 </Grow>
             </div>
-            
-            <Grid container item direction="row">
+            <Grid container item direction="column" alignContent="center" className={reviewOpen ? '' : classes.closedReviewFormCardBlock} >
                 {reviews && reviews.map((review) => (
-                    <Grid item>
-                        <ReviewCard review={review} userId={localStorage.getItem('userId')}/> 
-                    </Grid>)
-                )}
+                    <ReviewCard review={review} userId={localStorage.getItem('userId')}/>
+                ))}
             </Grid>
-
         </Grid>
     
     )

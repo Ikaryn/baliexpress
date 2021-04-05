@@ -102,7 +102,7 @@ const ReviewCard = ({review, userId}) => {
 
     
     return (
-        <Grid container item direction="column" className={classes.root} alignContent="center" spacing={3}>
+        <Grid container item direction="column" className={classes.root} spacing={3} xs={9}>
             <Grid container item direction="row" justify="space-between">
                 <Grid container item direction="row" xs={2}>
                     <Grid item xs={6}>
@@ -126,15 +126,15 @@ const ReviewCard = ({review, userId}) => {
                     <Typography className={'light-text'}>"{review.reviewtext}"</Typography>
                 </Grid>
             </Grid>
-            <Grid container item direction="row" justify="space-between">
-                <Grid item xs={6}>
+            <Grid container item direction="row" alignItems="center">
+                <Grid item xs={4}>
                     <Typography className={'light-text'}>{review.score} other people found this helpful</Typography>
                 </Grid>
-                <Grid container item direction="row" xs={6}>
-                    <Grid item xs={9}>
+                <Grid container item direction="row" xs={8} alignItems="center" justify="flex-end">
+                    <Grid item xs={6}>
                         <Typography className={'light-text'}>Found this review helpful? Give it a rating!</Typography>
                     </Grid>
-                    <Grid container item direction="row" xs={4}>
+                    <Grid container item direction="row" xs={3}>
                         <Grid item>
                             <IconButton onClick={() => {handleVotes('up');}}>
                                 <ThumbUpIcon className={voteStatus.up ? classes.upVote : classes.noVote}/>
