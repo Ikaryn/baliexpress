@@ -1,8 +1,3 @@
-DROP TYPE IF EXISTS Categories CASCADE;
-
-CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors' );
-
-
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
@@ -26,30 +21,31 @@ DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Review_Votes;
 
 CREATE TABLE Users(
-    id          int GENERATED ALWAYS AS IDENTITY,
-    name        text,
-    email       varchar(40),
-    password    varchar(35),
-    phonenumber int,
-    streetaddress text,
-    city        text,
-    state       text,
-    country     text,
-    postcode    varchar(4),
-    admin       boolean,
+    id              int GENERATED ALWAYS AS IDENTITY,
+    name            text,
+    email           varchar(40) UNIQUE,
+    password        varchar(35),
+    phonenumber     int UNIQUE,
+    streetaddress   text,
+    city            text,
+    state           text,
+    country         text,
+    postcode        varchar(4),
+    admin           boolean,
     primary key (id)
 );
 
 CREATE TABLE Products(
-    id          int GENERATED ALWAYS AS IDENTITY,
-    name        text,
-    category    text CHECK (category in ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors')),
-    brand       text,
-    price       numeric(50, 2),
-    image       text,
-    warranty    text,
-    description text,
-    stock       int,
+    id              int GENERATED ALWAYS AS IDENTITY,
+    name            text,
+    category        text CHECK (category in ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors')),
+    brand           text,
+    price           numeric(50, 2),
+    image           text,
+    warranty        text,
+    description     text,
+    stock           int,
+    release_date    date,
     primary key (id)
 );
 
@@ -106,7 +102,8 @@ CREATE TABLE Motherboards(
     memory_slots            int,
     wifi                    boolean,
     form_factor_supported   text,
-    pcie                    text,
+    pcie_slots              int,
+    pcie_type               int,
     sata_slots              int,
     power_use               numeric(50, 1),
     primary key (id),
@@ -140,6 +137,7 @@ CREATE TABLE Graphics_Cards(
     interface       text,
     memory_type     text,
     cuda_cores      text,
+    pcie_type       int,
     power_use       numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
