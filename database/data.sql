@@ -53,7 +53,7 @@ INSERT INTO Products(name, category, brand, price, warranty, description, stock,
     ('Asus Prime B450M-K mATX Motherboard',							'Motherboards',	'Asus',		75,		'1 year',	'Solid foundation for your first build',											200, '2017-04-23'),
     ('Asus X299 Rampage VI Extreme Encore LGA 2066 Motherboard',	'Motherboards',	'Asus',		1299,	'5 years',	'Finest power delivery and maximum connectivity',									150, '2018-04-27');
 
-INSERT INTO Motherboards(id, cpu_socket, memory_slots, wifi, form_factor_supported, pcie_slots, pcie_type sata_slots, power_use)
+INSERT INTO Motherboards(id, cpu_socket, memory_slots, wifi, form_factor_supported, pcie_slots, pcie_type, sata_slots, power_use)
 VALUES
     (13,	'AM4',	    4,	TRUE,	'mATX',		2,	3,	6,	60),
     (14,	'LGA 1200',	2,	TRUE,	'ITX',		1,	2, 	4,	65),
