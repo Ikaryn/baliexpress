@@ -90,7 +90,7 @@ const ReviewBlock = ({rating, productId}) => {
                         'Request-Type': 'profile',
                     },
                 }
-                const response = await api.makeAPIRequest(`profile/${review.userid}?userId=${review.userid}`, options);
+                const response = await api.makeAPIRequest(`profile?userId=${review.userid}`, options);
                 review['username']= response.accountInfo['name'];
             })
 

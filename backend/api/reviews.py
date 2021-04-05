@@ -19,21 +19,27 @@ class Reviews(Resource):
         userId = request.args.get('userId')
         reviews = db.getProductReviews(int(productId))
 
+        print("REVIEW", reviews)
+
         for review in reviews:
             review['reviewdate'] = json.dumps(review['reviewdate'].__str__())
             score = 0
             review['userVote'] = 0
-            for vote in review['votes']:
-                score += vote['vote']
-                if vote['voterid'] == int(userId):
-                    review['userVote'] = vote['vote']
+            for id in review['votes']:
+                score += review['votes'][id]
+                if userId != 'null' and id == int(userId):
+                    print('here')
+                    review['userVote'] = review['votes'][id]
+
+            if score < 0:
+                score = 0
 
             review['score'] = score
 
         if reviews is None:
             return {'error': 'Unable to fetch reviews'}
 
-        
+        print(reviews)
         return {'reviews': reviews}
 
     def post(self):
