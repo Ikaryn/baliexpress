@@ -16,7 +16,7 @@ const EditProductPage = ({}) => {
     
     React.useEffect(() => {
         (async () => {
-            const products = await api.get(`product/${category}`);
+            const products = await api.get(`product?category=${category}`);
             console.log(products)
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
@@ -25,35 +25,29 @@ const EditProductPage = ({}) => {
 
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
-            const options = {
-                method: 'PUT',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'request-type': 'edit product',
-                },
-                body: JSON.stringify(productInfo)
-            }
 
-            console.log("Options", options)
-            const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`product/${category}/${pid}`, options);
+            // const body = JSON.stringify(productInfo);
+            // console.log("Options", options)
+            // const userId = localStorage.getItem('userId');
+            const res = await api.put(`product`, productInfo);
             console.log(res);
             history.push(`/product/${category}/${pid}`);  
         }
     }
     async function removeItem(){
         if(window.confirm('Are you sure you want to remove this product?')){
-            const options = {
-                method: 'DELETE',
-                headers: { 
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(productInfo)
-            }
-            const userId = localStorage.getItem('userId');
-            console.log("request:", options)
+            // const options = {
+            //     method: 'DELETE',
+            //     headers: { 
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(productInfo)
+            // }
+            // const userId = localStorage.getItem('userId');
+            // console.log("request:", options)
             console.log('product-info:', productInfo)
-            const res = await api.makeAPIRequest(`product/${category}/${pid}`, options);
+            // const body = JSON.stringify(productInfo)
+            const res = await api.delete(`product`, productInfo);
             history.push(`/product/${category}`);
         }
     }

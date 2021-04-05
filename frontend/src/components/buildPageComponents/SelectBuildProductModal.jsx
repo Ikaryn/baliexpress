@@ -28,7 +28,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct}) => {
     React.useEffect(() => {
         (async () => {
             console.log(category)
-            const response = await api.get(`product/${convertCategoryName(category)}`);
+            const response = await api.get(`product?category=${convertCategoryName(category)}`);
             setProducts(response.products);
             console.log(response.products);
         })();

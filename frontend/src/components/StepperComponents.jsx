@@ -89,7 +89,7 @@ const SpecsForm = ({product, changeValue}) => {
     
     React.useEffect(() => {
         (async () => {
-            const products = await api.get(`product/${product.category}`);
+            const products = await api.get(`product?category=${product.category}`);
             if (products) {
                 setSpecs(products.products[0].specs);
             }

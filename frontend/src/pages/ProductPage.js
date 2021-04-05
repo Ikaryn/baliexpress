@@ -45,7 +45,7 @@ const ProductPage = () => {
     React.useEffect(() => {
         (async () => {
             console.log(category)
-            const products = await api.get(`product/${category}`);
+            const products = await api.get(`product?category=${category}`);
             console.log(products)
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
@@ -64,9 +64,11 @@ const ProductPage = () => {
                 },
             }
             const userId = localStorage.getItem('userId');
-            const response = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
-            const userDetails = response.accountInfo;
-            setIsAdmin(userDetails.admin);
+            if (userId) {
+                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const userDetails = response.accountInfo;
+                setIsAdmin(userDetails.admin);
+            }
         })();
     }, [])
     console.log(productInfo.specs);

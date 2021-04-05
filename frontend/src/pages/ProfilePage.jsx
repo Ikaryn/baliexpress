@@ -51,7 +51,7 @@ const ProfilePage = () => {
                     'Request-Type': 'profile',
                 },
             }
-            const response = await api.makeAPIRequest(`profile/${userId}?userId=${userId}`, options);
+            const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
             const userDetails = response.accountInfo;
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 

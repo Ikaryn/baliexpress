@@ -1,4 +1,4 @@
-from flask_restplus import Namespace, Resource, fields
+# from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
 import secrets, random
@@ -56,7 +56,7 @@ class Register(Resource):
         return {'token': t}
 
 class Profile(Resource):
-    def get(self, id):
+    def get(self):
         data = request.args
         print("DATA FROM GET PROFILE", data)
 
@@ -68,7 +68,7 @@ class Profile(Resource):
         if requestType == 'profile':
             print('Get profile attempt received')
 
-            user = db.getUserInfo(id)
+            user = db.getUserInfo(data.get('userId'))
 
             if user is None:
                 return {'error': 'User not found'}
@@ -86,8 +86,9 @@ class Profile(Resource):
             print('Nothing should be here, we screwed up')
             return {'error': 'incorrect api call'}
 
-    def put(self, id):
+    def put(self):
         data = request.json
+        id = request.args.get('userId')
 
         # Get request type from header
         requestType = request.headers.get('request-type')
@@ -140,7 +141,7 @@ class Profile(Resource):
 
             db.updatePassword(id, data.get('password'))
             user = db.getUserInfo(id)
-            return {'accountInfo', user}
+            return {'accountInfo': user}
             
         else:
             return {'error': 'incorrect api call'}

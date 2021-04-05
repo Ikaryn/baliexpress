@@ -6,7 +6,7 @@ CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Gr
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
-DROP TABLE IF EXISTS Purchased;
+DROP TABLE IF EXISTS Order_Items;
 DROP TABLE IF EXISTS CPU;
 DROP TABLE IF EXISTS CPU_Cooling;
 DROP TABLE IF EXISTS PC_Cooling;
@@ -61,13 +61,13 @@ CREATE TABLE Orders(
     foreign key (userid) references Users(id)
 );
 
-CREATE TABLE Purchased(
+CREATE TABLE Order_Items(
     orderid     integer,
     productid   integer,
     quantity    integer,
     primary key (orderid, productid),
-    foreign key (orderid) references Orders(id),
-    foreign key (productid) references Users(id)
+    foreign key (orderid) references Orders(id) on delete CASCADE,
+    foreign key (productid) references Products(id)
 );
 
 CREATE TABLE CPU(

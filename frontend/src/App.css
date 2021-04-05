@@ -51,6 +51,13 @@ body {
   width: 80%;
 }
 
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+.universal-padding{
+  padding: 5%;
+}
 .light-text {
   color: white;
 }

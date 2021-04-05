@@ -21,7 +21,7 @@ const ViewUsers = ({user}) => {
                 })
             }
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            const res = await api.makeAPIRequest(`profile?userId=${userId}`, options);
             console.log(res);
             setRole(event.target.value);
         }
@@ -48,16 +48,6 @@ const ViewUsers = ({user}) => {
                             user.postcode + ", " + 
                             user.country
                         }
-                    </Typography>
-                    <Typography>
-                        Role: 
-                        <Select
-                            value={role}
-                            onChange={(event) => handleSelectChange(event)}
-                        >
-                            <MenuItem value={false}>User</MenuItem>
-                            <MenuItem value={true}>Admin</MenuItem>
-                        </Select>
                     </Typography>
                 </CardContent>:
                 <CardContent>
