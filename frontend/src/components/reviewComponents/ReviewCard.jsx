@@ -9,7 +9,16 @@ const api = new API()
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        
+        width: '100%'
+    },
+    noVote: {
+        fill: 'white'
+    },
+    upVote: {
+        fill: 'green'
+    },
+    downVote: {
+        fill: 'blue'
     }
 }))
 
@@ -21,43 +30,6 @@ const ReviewCard = ({review, userId}) => {
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
 
-    // sdfas
-    // <s><s></s
-    
-    
-    // asdf
-    
-    // asdf
-    
-    // >
-    // <datagrid><a href="aasdf
-    // a"
-    // aa>
-    //     <a href="a"
-    //     aa>
-    //         <a href="a"></a></a></a></datagrid></s>
-    //         <a href="a
-    //         asdf
-    //         asdf
-    //         asdf
-    //         asdf
-    //         asdf
-    //         asdf
-    //         asdf
-    //         asd
-    //         fas
-    //         dfa
-    //         sdf
-    //         asdf
-    //         as
-    //         f
-    //         asdf
-    //         asdf
-
-    //         "
-    //         aria-activedescendanta
-    //         aria-activedescendanta
-    //         a></a>
     
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -128,70 +100,49 @@ const ReviewCard = ({review, userId}) => {
 
     },[review.userVote])
 
-
-    console.log("HELLO THERE");
-    console.log("REVIEW RATING:", review.rating);
-
-    // React.useEffect(() => {
-    //     (async () => {
-    //         const options = {
-    //             method: 'GET',
-    //             headers: { 
-    //                 'Content-Type': 'application/json',
-    //                 'Request-Type': 'profile',
-    //             },
-    //         }
-            
-    //         console.log("REVIEW:", review)
-    //         console.log ("THIS IS THE REVIEWER USER ID", review.userid)
-
-    //         if (review.id) {
-    //             const response = await api.makeAPIRequest(`profile/${review.userid}?userId=${review.userid}`, options);
-    //             console.log(response);
-    //             const userDetails = response.accountInfo;
-    //             setUsername(userDetails.name);
-    //         }
-    //     })();
-    // },[])
     
     return (
-        <Grid container item direction="column" className={classes.root}>
-            <Grid container item direction="row">
-                <Grid container direction="row">
-                    <Grid item>
+        <Grid container item direction="column" className={classes.root} alignContent="center" spacing={3}>
+            <Grid container item direction="row" justify="space-between">
+                <Grid container item direction="row" xs={2}>
+                    <Grid item xs={6}>
                         <Avatar>placeholder</Avatar>
                     </Grid>
-                    <Grid container item direction="column">
+                    <Grid container item direction="column" xs={6}>
                         <Grid item>
-                            <Typography>{review.username}</Typography>
+                            <Typography className={'light-text'}>{review.username}</Typography>
                         </Grid>
                         <Grid item>
                             <Rating defaultValue={review.rating} readOnly />
                         </Grid>
                     </Grid>
                 </Grid>
-                <Typography>{review.reviewdate}</Typography>
-            </Grid>
-            <Grid item>
-                <Typography>{review.reviewtext}</Typography>
-            </Grid>
-            <Grid container item direction="row">
-                <Grid item>
-                    <Typography>{review.score} other people found this helpful</Typography>
+                <Grid item xs={2}>
+                    <Typography className={'light-text'}>{review.reviewdate}</Typography>
                 </Grid>
-                <Grid container item direction="row">
-                    <Grid item>
-                        <Typography>Found this review helpful? Give it a rating!</Typography>
+            </Grid>
+            <Grid container item justify="center">
+                <Grid item>
+                    <Typography className={'light-text'}>"{review.reviewtext}"</Typography>
+                </Grid>
+            </Grid>
+            <Grid container item direction="row" justify="space-between">
+                <Grid item xs={6}>
+                    <Typography className={'light-text'}>{review.score} other people found this helpful</Typography>
+                </Grid>
+                <Grid container item direction="row" xs={6}>
+                    <Grid item xs={9}>
+                        <Typography className={'light-text'}>Found this review helpful? Give it a rating!</Typography>
                     </Grid>
-                    <Grid container item direction="row">
+                    <Grid container item direction="row" xs={4}>
                         <Grid item>
                             <IconButton onClick={() => {handleVotes('up');}}>
-                                <ThumbUpIcon />
+                                <ThumbUpIcon className={voteStatus.up ? classes.upVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
                         <Grid item>
                             <IconButton onClick={() => {handleVotes('down');}}>
-                                <ThumbDownIcon />
+                                <ThumbDownIcon className={voteStatus.down ? classes.downVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
                     </Grid>
