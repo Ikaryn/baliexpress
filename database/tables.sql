@@ -25,12 +25,12 @@ CREATE TABLE Users(
     name            text,
     email           varchar(40) UNIQUE,
     password        varchar(35),
-    phonenumber     int UNIQUE,
+    phonenumber     text UNIQUE,
     streetaddress   text,
     city            text,
     state           text,
     country         text,
-    postcode        varchar(4),
+    postcode        text,
     admin           boolean,
     primary key (id)
 );
