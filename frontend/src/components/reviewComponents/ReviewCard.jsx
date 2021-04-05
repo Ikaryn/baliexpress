@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
         fill: 'white'
     },
     upVote: {
-        fill: 'green'
+        fill: 'rgb(106, 255, 87)'
     },
     downVote: {
-        fill: 'blue'
+        fill: 'rgb(117, 152, 255)'
     }
 }))
 
