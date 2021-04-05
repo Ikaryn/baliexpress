@@ -39,6 +39,9 @@ class Products(Resource):
             print("Get ProductList attempt received")
 
             products = db.getAllProducts(str(category))
+            for product in products:
+                releaseDate = product['release_date'].strftime('%Y-%m-%d')
+                product['release_date'] = releaseDate
             return ({'products':products})
 
         elif requestType == 'quick search':
