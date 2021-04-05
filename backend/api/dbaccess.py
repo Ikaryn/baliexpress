@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-import credentials
+from . import credentials
 
 def connect():
     conn = None

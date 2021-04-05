@@ -58,9 +58,11 @@ class Register(Resource):
 class Profile(Resource):
     def get(self):
         data = request.args
+        print("DATA FROM GET PROFILE", data)
 
         # Get request type from header
         requestType = request.headers.get('request-type')
+
 
         # Get user profile
         if requestType == 'profile':

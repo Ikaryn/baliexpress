@@ -6,6 +6,7 @@ import Rating from '@material-ui/lab/Rating';
 import { useParams } from "react-router-dom";
 import API from '../util/API';
 import { useHistory } from 'react-router';
+import ReviewBlock from '../components/reviewComponents/ReviewBlock';
 // import SpecificationList from '../components/SpecificationList'
 
 const api = new API();
@@ -32,6 +33,8 @@ const ProductPage = () => {
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
     const [isAdmin, setIsAdmin] = React.useState(false);
+    
+    const [reviews, setReviews] = React.useState([{'':''}])
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
@@ -142,6 +145,9 @@ const ProductPage = () => {
                             Review placeholder
                         </TabPanel>
                     </Paper>
+                </Grid>
+                <Grid item>
+                    {productInfo.id && <ReviewBlock rating={rating} productId={productInfo.id} />}
                 </Grid>
             </Grid>
         </div>
