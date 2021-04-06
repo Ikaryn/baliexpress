@@ -44,14 +44,14 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
             errorObject['usage'] = 'Please select a usage.';
             isError = true;
         }
-        if (budget === '') {
-            errorObject['budget'] = "Please enter a budget";
-            isError = true;
-        }
-        if (typeof budget !== 'number') {
-            errorObject['budget'] = "Budget must be a number";
-            isError = true;
-        }
+        // if (budget === '') {
+        //     errorObject['budget'] = "Please enter a budget";
+        //     isError = true;
+        // }
+        // if (typeof budget !== 'number') {
+        //     errorObject['budget'] = "Budget must be a number";
+        //     isError = true;
+        // }
         if (storage === '') {
             error['storage'] = "Please specify which storage";
             isError = true;

@@ -126,6 +126,7 @@ def recommendCPU(budget, usage, overclock):
         clockWeight = 0.5
     
     highscore = 0.0
+    recommendation = None
     for CPU in CPUs:
         if CPU['price'] <= budget:
             if overclock == True:
@@ -147,6 +148,7 @@ def recommendGPU(budget, usage, overclock):
     coreWeight = 0.2
     highscore = 0.0
     
+    recommendation = None
     for GPU in GPUs:
         # print("GPU specs = ", GPU['specs'])
         if GPU['price'] <= budget:
@@ -166,6 +168,7 @@ def recommendMotherboard(budget, usage, CPU, GPU):
     Motherboards = db.getAllProducts('Motherboards')
     currentPrice = 10000
     GPUpcie = GPU['specs']['pcie_type']
+    recommendation = None
     for motherboard in Motherboards:
         if motherboard['specs']['cpu_socket'] == CPU['specs']['socket']:
             if motherboard['specs']['pcie_type'] >= GPUpcie:
@@ -180,6 +183,7 @@ def recommendMotherboard(budget, usage, CPU, GPU):
 def recommendCPUCooler(budget, CPU, overclock):
     CPUcoolers = db.getAllProducts('CPU_Coolers')
     lowestPrice = 100000.0
+    recommendation = None
     if (overclock or not CPU['specs']['cooler_included']):
         for cooler in CPUcoolers:
             if (cooler['price'] <= budget and cooler['price'] < lowestPrice):
@@ -198,6 +202,7 @@ def recommendStorage(budget, Motherboard, format):
     for storage in Storages:
         if storage['price'] <= budget:
             if storage['specs']['format'] == format:
+                print("Storage capacity = ", storage['specs']['capacity'])
                 if storage['specs']['capacity'] > highestCapacity:
                     highestCapacity = storage['specs']['capacity']
                     currentPrice = storage['price']
@@ -237,6 +242,7 @@ def recommendPSU(budget, sumPower_usage):
     currentPrice = 10000.0
     ratings = ['Certified', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Titanium']
     currentRating = -1
+    recommendation = None
     for PSU in PSUs:
         if PSU['price'] <= budget and PSU['specs']['wattage'] >= sumPower_usage:
             if ratings.index(PSU['specs']['power_efficiency']) > currentRating:
