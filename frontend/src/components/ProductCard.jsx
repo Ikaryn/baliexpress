@@ -19,6 +19,7 @@ const ProductCard = ({pid, name, price, image, category}) => {
     const handleClick = () => {
         history.push(`/product/${category}/${pid}`)
     }
+    
     return (
         <Grid container direction="column" justify="space-between" className={classes.productCardContainer}>
             <Card>
