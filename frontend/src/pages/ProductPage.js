@@ -35,7 +35,7 @@ const ProductPage = () => {
     const [isAdmin, setIsAdmin] = React.useState(false);
 
     // will be temporary to read in. (replace with values inside the product dict)
-    const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
+    const productDesc = ['Specs', 'Description', 'Warranty'];
     
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -134,13 +134,10 @@ const ProductPage = () => {
                             </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            Description placeholder
+                            {productInfo.description}
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            Warranty placeholder
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
-                            Review placeholder
+                            {productInfo.warranty}
                         </TabPanel>
                     </Paper>
                 </Grid>
