@@ -178,6 +178,103 @@ VALUES
     (25,	'AM4',	    2,	FALSE,	'mATX',		1,	4, 	4,	60),
     (26,	'LGA 2066',	8,	FALSE,	'E-ATX',	3,	2, 	8,	100);
 
+-- product 13 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (13, 17, 5, 'This motherboard works certainly well. It excitedly improves my football by a lot.', '2018-11-27'),
+    (13, 13, 2, 'This motherboard works very well. It harmonically improves my tennis by a lot.', '2018-12-02'),
+    (13, 22, 2, 'My neighbor Albertina has one of these. She works as a gardener and she says it looks humongous.', '2019-02-20'),
+    (13, 20, 4, 'talk about contentment!!!', '2019-02-20'),
+    (13, 4, 5, 'I tried to attack it but got meatball all over it.', '2019-02-20');
+
+-- product 14 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (14, 19, 4, 'My co-worker Knute has one of these. He says it looks smoky.', '2019-05-31');
+
+-- product 15 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (15, 16, 1, 'This motherboard works certainly well. It energetically improves my golf by a lot.', '2021-01-04'),
+    (15, 22, 2, 'talk about pleasure!', '2015-05-16'),
+    (15, 21, 3, 'My co-worker Houston has one of these. He says it looks invisible.', '2018-03-19');
+
+-- product 16 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (16, 17, 4, 'My co-worker Archer has one of these. He says it looks crooked.', '2019-10-31'),
+    (16, 8, 2, 'i use it barely when i''m in my store.', '2020-03-10');
+
+-- product 17 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (17, 5, 2, 'this motherboard is revolting.', '2016-02-18'),
+    (17, 15, 2, 'one of my hobbies is skateboarding. and when i''m skateboarding this works great.', '2016-07-22'),
+    (17, 20, 4, 'I saw one of these in Tanzania and I bought one.', '2017-11-19'),
+    (17, 22, 3, 'talk about interest!!', '2018-11-07');
+
+-- product 18 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (18, 9, 1, 'talk about anticipation!', '2016-01-14'),
+    (18, 13, 5, 'My peacock loves to play with it.', '2016-01-30'),
+    (18, 10, 4, 'My neighbor Lonnie has one of these. She works as a hobbit and she says it looks microscopic.', '2016-12-03'),
+    (18, 17, 1, 'heard about this on powerviolence radio, decided to give it a try.', '2017-06-29'),
+    (18, 21, 5, 'I saw one of these in Saint Pierre and Miquelon and I bought one.', '2019-04-08');
+
+-- product 19 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (19, 7, 3, 'My neighbor Betha has one of these. She works as a teacher and she says it looks wide.', '2016-10-20'),
+    (19, 22, 4, 'The box this comes in is 4 mile by 5 inch and weights 19 megaton!', '2016-10-20');
+
+-- product 20 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (20, 3, 5, 'i use it until further notice when i''m in my nightclub.', '2017-11-27');
+
+-- product 21 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (21, 7, 1, 'one of my hobbies is antique-shopping. and when i''m antique-shopping this works great.', '2016-10-20'),
+    (21, 3, 5, 'one of my hobbies is spearfishing. and when i''m spearfishing this works great.', '2017-11-27'),
+    (21, 12, 3, 'This motherboard works too well. It buoyantly improves my football by a lot.', '2018-04-18'),
+    (21, 2, 3, 'talk about hatred!!!', '2018-11-16'),
+    (21, 16, 4, 'My co-worker Archer has one of these. He says it looks crooked.', '2018-11-21');
+
+-- product 22 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (22, 15, 2, 'talk about contempt!', '2018-02-19'),
+    (22, 7, 2, 'talk about optimism!!!', '2020-02-29'),
+    (22, 17, 3, 'This motherboard works excessively well. It mortally improves my golf by a lot.', '2020-03-19');
+-- product 23 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (23, 4, 1, 'I tried to electrocute it but got sweetmeat all over it.', '2020-11-07'),
+    (23, 12, 1, 'I saw one of these in Comoros and I bought one.', '2021-07-04' );
+-- product 24 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (24, 5,1, 'i use it occasionally when i''m in my outhouse.', '2015-04-14'),
+    (24, 16, 5, 'My co-worker Cato has one of these. He says it looks sopping.', '2016-12-12'),
+    (24, 2, 5, 'My co-worker Erick has one of these. He says it looks fluffy.', '2017-03-04'),
+    (24, 22, 5, 'The box this comes in is 4 yard by 5 inch and weights 12 pound!', '2017-11-16'),
+    (24, 9, 2, 'My co-worker Linnie has one of these. He says it looks wide.', '2020-03-09');
+-- product 25 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (25, 17, 5, 'This motherboard works certainly well. It excitedly improves my football by a lot.', '2018-11-27'),
+    (25, 13, 2, 'This motherboard works very well. It harmonically improves my tennis by a lot.', '2018-12-02'),
+    (25, 22, 2, 'My neighbor Albertina has one of these. She works as a gardener and she says it looks humongous.', '2019-02-20'),
+    (25, 20, 4, 'talk about contentment!!!', '2019-02-20'),
+    (25, 4, 5, 'I tried to attack it but got meatball all over it.', '2019-02-20');
+
+-- product 26 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (26, 19, 4, 'My co-worker Knute has one of these. He says it looks smoky.', '2019-05-31');
+
 -- Memory
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
@@ -214,6 +311,111 @@ VALUES
     (39,	2400,	64,	4,	7),
     (40,	3400,	64,	8,	8),
     (41,	3200,	64,	2,	7);
+
+-- product 27 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (27, 17, 5, 'My neighbor Zoa has one of these. She works as a scribe and she says it looks wide.', '2018-11-27'),
+    (27, 13, 2, 'The box this comes in is 3 yard by 6 light-year and weights 11 megaton!!', '2018-12-02'),
+    (27, 22, 2, 'I saw one of these in Macau and I bought one.', '2019-02-20'),
+    (27, 20, 4, 'i use it occasionally when i''m in my outhouse.', '2019-02-20'),
+    (27, 4, 5, 'i use it every Tuesday when i''m in my pub.', '2019-02-20');
+
+-- product 28 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (28, 19, 4, 'The box this comes in is 4 mile by 5 inch and weights 19 megaton!', '2019-05-31');
+
+-- product 29 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (29, 16, 1, 'My tyrannosaurus rex loves to play with it.', '2021-01-04'),
+    (29, 22, 2, 'My neighbor Elisha has one of these. She works as a fortune teller and she says it looks floppy.', '2015-05-16'),
+    (29, 21, 3, 'talk about interest!!', '2018-03-19');
+
+-- product 30 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (30, 17, 4, 'This memory works too well. It nonchalantly improves my baseball by a lot.', '2019-10-31'),
+    (30, 8, 2, 'The box this comes in is 4 yard by 5 inch and weights 12 pound!', '2020-03-10');
+
+-- product 31 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (31, 5, 2, 'This memory works really well. It wildly improves my baseball by a lot.', '2016-02-18'),
+    (31, 15, 2, 'My co-worker Erick has one of these. He says it looks fluffy.', '2016-07-22'),
+    (31, 20, 4, 'I saw one of these in Bhutan and I bought one.', '2017-11-19'),
+    (31, 22, 3, 'My neighbor Fannie has one of these. She works as a teacher and she says it looks spiky.', '2018-11-07');
+
+-- product 32 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (32, 9, 1, 'My co-worker Skylar has one of these. He says it looks sweaty.', '2016-01-14'),
+    (32, 13, 5, 'My neighbor Victoria has one of these. She works as a professor and she says it looks menthol.', '2016-01-30'),
+    (32, 10, 4, 'talk about contempt!', '2016-12-03'),
+    (32, 17, 1, 'I saw one of these in Nauru and I bought one.', '2017-06-29'),
+    (32, 21, 5, 'i use it never when i''m in my nightclub.', '2019-04-08');
+
+-- product 33 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (33, 7, 3, 'I tried to nab it but got salad all over it.', '2016-10-20'),
+    (33, 22, 4, 'I saw one of these in Kazakhstan and I bought one.', '2016-10-20');
+
+-- product 34 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (34, 3, 5, 'My neighbor Aldona has one of these. She works as a butler and she says it looks humongous.', '2017-11-27');
+
+-- product 35 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (35, 7, 1, 'My scarab beetle loves to play with it.', '2016-10-20'),
+    (35, 3, 5, 'The box this comes in is 3 centimeter by 5 kilometer and weights 13 ounce!!', '2017-11-27'),
+    (35, 12, 3, 'My neighbor Isabela has one of these. She works as a taxidermist and she says it looks monochromatic.', '2018-04-18'),
+    (35, 2, 3, 'I saw one of these in Bhutan and I bought one.', '2018-11-16'),
+    (35, 16, 4, 'heard about this on alternative dance radio, decided to give it a try.', '2018-11-21');
+
+-- product 36 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (36, 15, 2, 'heard about this on dance-rock radio, decided to give it a try.', '2018-02-19'),
+    (36, 7, 2, 'My porcupine loves to play with it.', '2020-02-29'),
+    (36, 17, 3, 'My neighbor Julisa has one of these. She works as a bartender and she says it looks crooked.', '2020-03-19');
+-- product 37 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (37, 4, 1, 'My neighbor Allean has one of these. She works as a sky diver and she says it looks weedy.', '2020-11-07'),
+    (37, 12, 1, 'heard about this on smooth jazz radio, decided to give it a try.', '2021-07-04' );
+-- product 38 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (38, 5,1, 'i use it this time when i''m in my port-a-potty.', '2015-04-14'),
+    (38, 16, 5, 'this memory is honest.', '2016-12-12'),
+    (38, 2, 5, 'This memory works extremely well. It wetly improves my tennis by a lot.', '2017-03-04'),
+    (38, 22, 5, 'one of my hobbies is programming. and when i''m programming this works great.', '2017-11-16'),
+    (38, 9, 2, 'i use it hardly when i''m in my prison.', '2020-03-09');
+
+-- product 39 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (39, 17, 5, 'My neighbor Zoa has one of these. She works as a scribe and she says it looks wide.', '2018-11-27'),
+    (39, 13, 2, 'The box this comes in is 3 yard by 6 light-year and weights 11 megaton!!', '2018-12-02'),
+    (39, 22, 2, 'I saw one of these in Macau and I bought one.', '2019-02-20'),
+    (39, 20, 4, 'i use it occasionally when i''m in my outhouse.', '2019-02-20'),
+    (39, 4, 5, 'i use it every Tuesday when i''m in my pub.', '2019-02-20');
+
+-- product 40 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (40, 19, 4, 'The box this comes in is 4 mile by 5 inch and weights 19 megaton!', '2019-05-31');
+
+-- product 41 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (41, 16, 1, 'My tyrannosaurus rex loves to play with it.', '2021-01-04'),
+    (41, 22, 2, 'My neighbor Elisha has one of these. She works as a fortune teller and she says it looks floppy.', '2015-05-16'),
+    (41, 21, 3, 'talk about interest!!', '2018-03-19');
 
 --Storage
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
@@ -253,6 +455,119 @@ VALUES
     (55,	1000,	'SSD',	'M.2 SATA',	5),
     (56,	1000,	'SSD',	'M.2 NVMe',	6),
     (57,	2000,	'SSD',	'M.2 NVMe',	6);
+
+-- product 42 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (42, 17, 5, 'The box this comes in is 5 foot by 6 inch and weights 17 pound!!!', '2018-11-27'),
+    (42, 13, 2, 'The box this comes in is 4 mile by 5 inch and weights 19 megaton!', '2018-12-02'),
+    (42, 22, 2, 'My porcupine loves to play with it.', '2019-02-20'),
+    (42, 20, 4, 'This storage works certainly well. It accidentally improves my baseball by a lot.', '2019-02-20'),
+    (42, 4, 5, 'This storage works really well. It sympathetically improves my baseball by a lot.', '2019-02-20');
+
+-- product 43 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (43, 19, 4, 'The box this comes in is 4 mile by 5 yard and weights 18 pound!!', '2019-05-31');
+
+-- product 44 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (44, 16, 1, 'My neighbor Krista has one of these. She works as a salesman and she says it looks soapy.', '2021-01-04'),
+    (44, 22, 2, 'My demon loves to play with it.', '2015-05-16'),
+    (44, 21, 3, 'I saw one of these in Bhutan and I bought one.', '2018-03-19');
+
+-- product 45 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (45, 17, 4, 'I saw one of these in Saint Pierre and Miquelon and I bought one.', '2019-10-31'),
+    (45, 8, 2, 'My neighbor Lular has one of these. She works as a cake decorator and she says it looks ragged.', '2020-03-10');
+
+-- product 46 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (46, 5, 2, 'My neighbor Isabela has one of these. She works as a taxidermist and she says it looks monochromatic.', '2016-02-18'),
+    (46, 15, 2, 'one of my hobbies is skydiving. and when i''m skydiving this works great.', '2016-07-22'),
+    (46, 20, 4, 'i use it on Mondays when i''m in my fort.', '2017-11-19'),
+    (46, 22, 3, 'This storage works very well. It persistently improves my soccer by a lot.', '2018-11-07');
+
+-- product 47 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (47, 9, 1, 'I saw one of these in Nauru and I bought one.', '2016-01-14'),
+    (47, 13, 5, 'i use it daily when i''m in my courthouse.', '2016-01-30'),
+    (47, 10, 4, 'this storage is nifty.', '2016-12-03'),
+    (47, 17, 1, 'talk about fury.', '2017-06-29'),
+    (47, 21, 5, 'i use it on Mondays when i''m in my fort.', '2019-04-08');
+
+-- product 48 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (48, 7, 3, 'This storage, does exactly what it''s suppose to do.', '2016-10-20'),
+    (48, 22, 4, 'My co-worker Mitchell has one of these. He says it looks dry.', '2016-10-20');
+
+-- product 49 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (49, 3, 5, 'My co-worker Mitchell has one of these. He says it looks dry.', '2017-11-27');
+
+-- product 50 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (50, 7, 1, 'i use it hardly when i''m in my prison.', '2016-10-20'),
+    (50, 3, 5, 'I saw one of these in Cote d''Ivoire and I bought one.', '2017-11-27'),
+    (50, 12, 3, 'This storage works considerably well. It secretly improves my basketball by a lot.', '2018-04-18'),
+    (50, 2, 3, 'talk about shame.', '2018-11-16'),
+    (50, 16, 4, 'I saw one of these in Haiti and I bought one.', '2018-11-21');
+
+-- product 51 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (51, 15, 2, 'This storage works really well. It wildly improves my baseball by a lot.', '2018-02-19'),
+    (51, 7, 2, 'My co-worker Matthew has one of these. He says it looks gigantic.', '2020-02-29'),
+    (51, 17, 3, 'My co-worker Alek has one of these. He says it looks white.', '2020-03-19');
+
+-- product 52 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (52, 4, 1, 'this storage is amiable.', '2020-11-07'),
+    (52, 12, 1, 'talk about fury.', '2021-07-04' );
+
+-- product 53 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (53, 5,1, 'i use it until further notice when i''m in my station.', '2015-04-14'),
+    (53, 16, 5, 'My neighbor Honora has one of these. She works as a reporter and she says it looks enormous.', '2016-12-12'),
+    (53, 2, 5, 'The box this comes in is 5 light-year by 6 foot and weights 17 megaton!!!', '2017-03-04'),
+    (53, 22, 5, 'My macaroni penguin loves to play with it.', '2017-11-16'),
+    (53, 9, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2020-03-09');
+
+-- product 54 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (54, 17, 5, 'The box this comes in is 5 foot by 6 inch and weights 17 pound!!!', '2018-11-27'),
+    (54, 13, 2, 'The box this comes in is 4 mile by 5 inch and weights 19 megaton!', '2018-12-02'),
+    (54, 22, 2, 'My porcupine loves to play with it.', '2019-02-20'),
+    (54, 20, 4, 'This storage works certainly well. It accidentally improves my baseball by a lot.', '2019-02-20'),
+    (54, 4, 5, 'This storage works really well. It sympathetically improves my baseball by a lot.', '2019-02-20');
+
+-- product 55 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (55, 19, 4, 'The box this comes in is 4 mile by 5 yard and weights 18 pound!!', '2019-05-31');
+
+-- product 56 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (56, 16, 1, 'My neighbor Krista has one of these. She works as a salesman and she says it looks soapy.', '2021-01-04'),
+    (56, 22, 2, 'My demon loves to play with it.', '2015-05-16'),
+    (56, 21, 3, 'I saw one of these in Bhutan and I bought one.', '2018-03-19');
+
+-- product 57 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (57, 17, 4, 'I saw one of these in Saint Pierre and Miquelon and I bought one.', '2019-10-31'),
+    (57, 8, 2, 'My neighbor Lular has one of these. She works as a cake decorator and she says it looks ragged.', '2020-03-10');
 
 -- Graphics cards
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
@@ -295,6 +610,119 @@ VALUES
     (73,	1455,	4,	'1x HDMI 2.0, 1x DisplayPort 1.4, 1x DVI-D',	'GDDR5',	768,	4,	75),
     (74,	1518,	2,	'1x HDMI 2.0, 1x DisplayPort 1.4',				'GDDR5',	384,	4,	30);
 
+-- product 58 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (58, 17, 5, 'I saw one of these in Finland and I bought one.', '2018-11-27'),
+    (58, 13, 2, 'i use it never when i''m in my hotel.', '2018-12-02'),
+    (58, 22, 2, 'i use it once in a while when i''m in my ring.', '2019-02-20'),
+    (58, 20, 4, 'i use it for 10 weeks when i''m in my sauna.', '2019-02-20'),
+    (58, 4, 5, 'My penguin loves to play with it.', '2019-02-20');
+
+-- product 59 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (59, 19, 4, 'My neighbor Eller has one of these. She works as a butler and she says it looks smoky.', '2019-05-31');
+
+-- product 60 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (60, 16, 1, 'one of my hobbies is guitar. and when i''m playing guitar this works great.', '2021-01-04'),
+    (60, 22, 2, 'i use it centenially when i''m in my greenhouse.', '2015-05-16'),
+    (60, 21, 3, 'I saw one of these in Vanuatu and I bought one.', '2018-03-19');
+
+-- product 61 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (61, 17, 4, 'I saw one of these in Saint Pierre and Miquelon and I bought one.', '2019-10-31'),
+    (61, 8, 2, 'My neighbor Lular has one of these. She works as a cake decorator and she says it looks ragged.', '2020-03-10');
+
+-- product 63 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (63, 5, 2, 'My velociraptor loves to play with it.', '2016-02-18'),
+    (63, 15, 2, 'My co-worker Mitchell has one of these. He says it looks dry.', '2016-07-22'),
+    (63, 20, 4, 'My velociraptor loves to play with it.', '2017-11-19'),
+    (63, 22, 3, 'one of my hobbies is poetry. and when i''m writing poems this works great.', '2018-11-07');
+
+-- product 64 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (64, 9, 1, 'My gentoo penguin loves to play with it.', '2016-01-14'),
+    (64, 13, 5, 'This graphics card works so well. It imperfectly improves my baseball by a lot.', '2016-01-30'),
+    (64, 10, 4, 'talk about contempt!!!', '2016-12-03'),
+    (64, 17, 1, 'This graphics card works really well. It wildly improves my baseball by a lot.', '2017-06-29'),
+    (64, 21, 5, 'one of my hobbies is antique-shopping. and when i''m antique-shopping this works great.', '2019-04-08');
+
+-- product 65 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (65, 7, 3, 'this graphics card is complimentary.', '2016-10-20'),
+    (65, 22, 4, 'I saw one of these in Barbados and I bought one.', '2016-10-20');
+
+-- product 66 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (66, 3, 5, 'this graphics card is brown.', '2017-11-27');
+
+-- product 67 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (67, 7, 1, 'I tried to attack it but got meatball all over it.', '2016-10-20'),
+    (67, 3, 5, 'i use it biweekly when i''m in my greenhouse.', '2017-11-27'),
+    (67, 12, 3, 'this graphics card is vertical.', '2018-04-18'),
+    (67, 2, 3, 'I tried to shred it but got watermelon all over it.', '2018-11-16'),
+    (67, 16, 4, 'this graphics card is mellow.', '2018-11-21');
+
+-- product 68 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (68, 15, 2, 'i use it once a week when i''m in my firetruck.', '2018-02-19'),
+    (68, 7, 2, 'i use it once in a while when i''m in my ring.', '2020-02-29'),
+    (68, 17, 3, 'I saw one of these in New Zealand and I bought one.', '2020-03-19');
+
+-- product 69 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (69, 4, 1, 'i use it biweekly when i''m in my greenhouse.', '2020-11-07'),
+    (69, 12, 1, 'My co-worker Luka has one of these. He says it looks purple.', '2021-07-04' );
+
+-- product 70 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (70, 5,1, 'The box this comes in is 3 kilometer by 5 inch and weights 13 ton.', '2015-04-14'),
+    (70, 16, 5, 'I saw one of these in South Korea and I bought one.', '2016-12-12'),
+    (70, 2, 5, 'The box this comes in is 5 light-year by 6 foot and weights 17 megaton!!!', '2017-03-04'),
+    (70, 22, 5, 'My neighbor Alida has one of these. She works as a gambler and she says it looks spotless.', '2017-11-16'),
+    (70, 9, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2020-03-09');
+
+-- product 71 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (71, 17, 5, 'I saw one of these in Finland and I bought one.', '2018-11-27'),
+    (71, 13, 2, 'i use it never when i''m in my hotel.', '2018-12-02'),
+    (71, 22, 2, 'i use it once in a while when i''m in my ring.', '2019-02-20'),
+    (71, 20, 4, 'i use it for 10 weeks when i''m in my sauna.', '2019-02-20'),
+    (71, 4, 5, 'My penguin loves to play with it.', '2019-02-20');
+
+-- product 72 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (72, 19, 4, 'My neighbor Eller has one of these. She works as a butler and she says it looks smoky.', '2019-05-31');
+
+-- product 73 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (73, 16, 1, 'one of my hobbies is guitar. and when i''m playing guitar this works great.', '2021-01-04'),
+    (73, 22, 2, 'i use it centenially when i''m in my greenhouse.', '2015-05-16'),
+    (73, 21, 3, 'I saw one of these in Vanuatu and I bought one.', '2018-03-19');
+
+-- product 74 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (74, 17, 4, 'I saw one of these in Saint Pierre and Miquelon and I bought one.', '2019-10-31'),
+    (74, 8, 2, 'My neighbor Lular has one of these. She works as a cake decorator and she says it looks ragged.', '2020-03-10');
+
 -- Cases
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
@@ -323,6 +751,83 @@ VALUES
     (83,	'White',	'Mini Tower',	'mATX/ITX'),
     (84,	'Black',	'Mini Tower',	'ITX'),
     (85,	'Black',	'Cube',			'ITX');
+
+-- product 75 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (75, 17, 5, 'This case works considerably well. It recklessly improves my basketball by a lot.', '2018-11-27'),
+    (75, 13, 2, 'heard about this on new jersey hip hop radio, decided to give it a try.', '2018-12-02'),
+    (75, 22, 2, 'this case is smooth.', '2019-02-20'),
+    (75, 20, 4, 'This case, does exactly what it''s suppose to do.', '2019-02-20'),
+    (75, 4, 5, 'I tried to maim it but got nectarine all over it.', '2019-02-20');
+
+-- product 76 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (76, 19, 4, 'i use it centenially when i''m in my greenhouse.', '2019-05-31');
+
+-- product 77 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (77, 16, 1, 'My co-worker Mohamed has one of these. He says it looks brown.', '2021-01-04'),
+    (77, 22, 2, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2015-05-16'),
+    (77, 21, 3, 'My co-worker Mitchell has one of these. He says it looks dry.', '2018-03-19');
+
+-- product 78 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (78, 17, 4, 'My scarab beetle loves to play with it.', '2019-10-31'),
+    (78, 8, 2, 'My co-worker Houston has one of these. He says it looks invisible.', '2020-03-10');
+
+-- product 79 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (79, 5, 2, 'My neighbor Albertina has one of these. She works as a gardener and she says it looks humongous.', '2016-02-18'),
+    (79, 15, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2016-07-22'),
+    (79, 20, 4, 'I saw one of these in Barbados and I bought one.', '2017-11-19'),
+    (79, 22, 3, 'this case is light-hearted.', '2018-11-07');
+
+-- product 80 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (80, 9, 1, 'The box this comes in is 4 kilometer by 5 mile and weights 17 gram.', '2016-01-14'),
+    (80, 13, 5, 'My porcupine loves to play with it.', '2016-01-30'),
+    (80, 10, 4, 'i use it for 10 weeks when i''m in my jail.', '2016-12-03'),
+    (80, 17, 1, 'one of my hobbies is skydiving. and when i''m skydiving this works great.', '2017-06-29'),
+    (80, 21, 5, 'My neighbor Lular has one of these. She works as a cake decorator and she says it looks ragged.', '2019-04-08');
+
+-- product 81 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (81, 7, 3, 'My neighbor Georgine has one of these. She works as a fireman and she says it looks colorful.', '2016-10-20'),
+    (81, 22, 4, 'i use it on Mondays when i''m in my fort.', '2016-10-20');
+
+-- product 82 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (82, 3, 5, 'This case works really well. It sympathetically improves my baseball by a lot.', '2017-11-27');
+
+-- product 83 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (83, 7, 1, 'this case is brown.', '2016-10-20'),
+    (83, 3, 5, 'My co-worker Delton has one of these. He says it looks slender.', '2017-11-27'),
+    (83, 12, 3, 'This case works really well. It wildly improves my baseball by a lot.', '2018-04-18'),
+    (83, 2, 3, 'this case is whole-grain.', '2018-11-16'),
+    (83, 16, 4, 'i use it centenially when i''m in my greenhouse.', '2018-11-21');
+
+-- product 84 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (84, 15, 2, 'this case is vertical.', '2018-02-19'),
+    (84, 7, 2, 'My neighbor Elisha has one of these. She works as a fortune teller and she says it looks floppy.', '2020-02-29'),
+    (84, 17, 3, 'this case is light-hearted.', '2020-03-19');
+
+-- product 85 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (85, 4, 1, 'My beagle loves to play with it.', '2020-11-07'),
+    (85, 12, 1, 'My neighbor Allean has one of these. She works as a sky diver and she says it looks weedy.', '2021-07-04' );
 
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
@@ -374,123 +879,476 @@ VALUES
 (106,	550,	'Gold',			'Semi'),
 (107,	600,	'Gold',			'Not');
 
+-- product 86 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (86, 17, 5, 'talk about interest!!', '2018-11-27'),
+    (86, 13, 2, 'My gentoo penguin loves to play with it.', '2018-12-02'),
+    (86, 22, 2, 'I saw one of these in Kazakhstan and I bought one.', '2019-02-20'),
+    (86, 20, 4, 'i use it never again when i''m in my station.', '2019-02-20'),
+    (86, 4, 5, 'one of my hobbies is skateboarding. and when i''m skateboarding this works great.', '2019-02-20');
+
+-- product 87 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (87, 19, 4, 'this PSU is slurpee.', '2019-05-31');
+
+-- product 88 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (88, 16, 1, 'this PSU is standard.', '2021-01-04'),
+    (88, 22, 2, 'This PSU works outstandingly well. It beautifully improves my basketball by a lot.', '2015-05-16'),
+    (88, 21, 3, 'This PSU works very well. It harmonically improves my tennis by a lot.', '2018-03-19');
+
+-- product 89 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (89, 17, 4, 'My co-worker Archer has one of these. He says it looks crooked.', '2019-10-31'),
+    (89, 8, 2, 'My neighbor Germaine has one of these. She works as a salesman and she says it looks red.', '2020-03-10');
+
+-- product 90 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (90, 5, 2, 'The box this comes in is 3 kilometer by 5 inch and weights 13 ton.', '2016-02-18'),
+    (90, 15, 2, 'My co-worker Linnie has one of these. He says it looks wide.', '2016-07-22'),
+    (90, 20, 4, 'SoCal cockroaches are unwelcome, crafty, and tenacious. This PSU keeps them away.', '2017-11-19'),
+    (90, 22, 3, 'one of my hobbies is drawing. and when i''m drawing this works great.', '2018-11-07');
+
+-- product 91 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (91, 9, 1, 'I saw one of these in Bhutan and I bought one.', '2016-01-14'),
+    (91, 13, 5, 'one of my hobbies is web-browsing. and when i''m browsing the web this works great.', '2016-01-30'),
+    (91, 10, 4, 'i use it daily when i''m in my outhouse.', '2016-12-03'),
+    (91, 17, 1, 'The box this comes in is 5 inch by 6 mile and weights 15 ton!!', '2017-06-29'),
+    (91, 21, 5, 'This PSU works extremely well. It wetly improves my tennis by a lot.', '2019-04-08');
+
+-- product 92 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (92, 7, 3, 'I saw one of these in Algeria and I bought one.', '2016-10-20'),
+    (92, 22, 4, 'heard about this on alternative dance radio, decided to give it a try.', '2016-10-20');
+
+-- product 93 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (93, 3, 5, 'i use it for 10 weeks when i''m in my sauna.', '2017-11-27');
+
+-- product 94 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (94, 7, 1, 'heard about this on melodic death metal radio, decided to give it a try.', '2016-10-20'),
+    (94, 3, 5, 'This PSU works very well. It romantically improves my football by a lot.', '2017-11-27'),
+    (94, 12, 3, 'My terrier loves to play with it.', '2018-04-18'),
+    (94, 2, 3, 'one of my hobbies is gaming. and when i''m gaming this works great.', '2018-11-16'),
+    (94, 16, 4, 'one of my hobbies is cooking. and when i''m cooking this works great.', '2018-11-21');
+
+-- product 96 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (96, 15, 2, 'My neighbor Victoria has one of these. She works as a professor and she says it looks menthol.', '2018-02-19'),
+    (96, 7, 2, 'I tried to attack it but got meatball all over it.', '2020-02-29'),
+    (96, 17, 3, 'My co-worker Fate has one of these. He says it looks tall.', '2020-03-19');
+-- product 97 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (97, 4, 1, 'The box this comes in is 3 kilometer by 5 inch and weights 13 ton.', '2020-11-07'),
+    (97, 12, 1, 'talk about shame.', '2021-07-04' );
+-- product 98 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (98, 5,1, 'I saw one of these in Nauru and I bought one.', '2015-04-14'),
+    (98, 16, 5, 'i use it every Tuesday when i''m in my homeless shelter.', '2016-12-12'),
+    (98, 2, 5, 'this PSU is awesome.', '2017-03-04'),
+    (98, 22, 5, 'one of my hobbies is sailing. and when i''m sailing this works great.', '2017-11-16'),
+    (98, 9, 2, 'talk about contempt!!!', '2020-03-09');
+-- product 99 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (99, 17, 5, 'The box this comes in is 5 light-year by 6 foot and weights 17 megaton!!!', '2018-11-27'),
+    (99, 13, 2, 'i use it until further notice when i''m in my station.', '2018-12-02'),
+    (99, 22, 2, 'this PSU is ratty.', '2019-02-20'),
+    (99, 20, 4, 'My hummingbird loves to play with it.', '2019-02-20'),
+    (99, 4, 5, 'My co-worker Delton has one of these. He says it looks slender.', '2019-02-20');
+
+-- product 100 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (100, 19, 4, 'My neighbor Germaine has one of these. She works as a salesman and she says it looks red.', '2019-05-31');
+
+-- product 101 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (101, 17, 5, 'talk about interest!!', '2018-11-27'),
+    (101, 13, 2, 'My gentoo penguin loves to play with it.', '2018-12-02'),
+    (101, 22, 2, 'I saw one of these in Kazakhstan and I bought one.', '2019-02-20'),
+    (101, 20, 4, 'i use it never again when i''m in my station.', '2019-02-20'),
+    (101, 4, 5, 'one of my hobbies is skateboarding. and when i''m skateboarding this works great.', '2019-02-20');
+
+-- product 102 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (102, 19, 4, 'this PSU is slurpee.', '2019-05-31');
+
+-- product 103 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (103, 16, 1, 'this PSU is standard.', '2021-01-04'),
+    (103, 22, 2, 'This PSU works outstandingly well. It beautifully improves my basketball by a lot.', '2015-05-16'),
+    (103, 21, 3, 'This PSU works very well. It harmonically improves my tennis by a lot.', '2018-03-19');
+
+-- product 104 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (104, 17, 4, 'My co-worker Archer has one of these. He says it looks crooked.', '2019-10-31'),
+    (104, 8, 2, 'My neighbor Germaine has one of these. She works as a salesman and she says it looks red.', '2020-03-10');
+
+-- product 105 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (105, 5, 2, 'The box this comes in is 3 kilometer by 5 inch and weights 13 ton.', '2016-02-18'),
+    (105, 15, 2, 'My co-worker Linnie has one of these. He says it looks wide.', '2016-07-22'),
+    (105, 20, 4, 'SoCal cockroaches are unwelcome, crafty, and tenacious. This PSU keeps them away.', '2017-11-19'),
+    (105, 22, 3, 'one of my hobbies is drawing. and when i''m drawing this works great.', '2018-11-07');
+
+-- product 106 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (106, 9, 1, 'I saw one of these in Bhutan and I bought one.', '2016-01-14'),
+    (106, 13, 5, 'one of my hobbies is web-browsing. and when i''m browsing the web this works great.', '2016-01-30'),
+    (106, 10, 4, 'i use it daily when i''m in my outhouse.', '2016-12-03'),
+    (106, 17, 1, 'The box this comes in is 5 inch by 6 mile and weights 15 ton!!', '2017-06-29'),
+    (106, 21, 5, 'This PSU works extremely well. It wetly improves my tennis by a lot.', '2019-04-08');
+
+-- product 107 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (107, 7, 3, 'I saw one of these in Algeria and I bought one.', '2016-10-20'),
+    (107, 22, 4, 'heard about this on alternative dance radio, decided to give it a try.', '2016-10-20');
+
+
 -- review votes
 INSERT INTO Review_Votes(reviewid, voterid, vote)
 VALUES
-    (1, 14, -1),
-    (1, 15, -1),
+    (1, 14, -1),	(1, 15, -1),
     (2, 7, 1),
-    (3, 13, 1),
-    (3, 11, -1),
-    (3, 3, 1),
-    (3, 4, 1),
-    (4, 5, 1),
-    (4, 17, -1),
+    (3, 13, 1),		(3, 11, -1),	(3, 3, 1),		(3, 4, 1),
+    (4, 5, 1), 		(4, 17, -1),
     (5, 16, 1),
-    (6, 20, 1),
-    (6, 10, -1),
-    (6, 8, -1),
-    (6, 2, -1),
-    (6, 9, 1),
-    (6, 19, 1),
-    (6, 21, 1),
-    (6, 6, 1),
-    (7, 22, 1),
-    (7, 18, -1),
-    (7, 12, 1),
-    (7, 21, -1),
-    (7, 9, 1),
-    (7, 20, -1),
-    (7, 19, 1),
-    (8, 3, 1),
-    (8, 2, 1),
-    (8, 15, -1),
-    (8, 8, -1),
-    (8, 16, -1),
-    (8, 7, 1),
-    (8, 11, 1),
-    (8, 22, 1),
-    (8, 13, 1),
+    (6, 20, 1), 	(6, 10, -1), 	(6, 8, -1),		(6, 2, -1), 	(6, 9, 1), 		(6, 19, 1), 	(6, 21, 1), 	(6, 6, 1),
+    (7, 22, 1), 	(7, 18, -1), 	(7, 12, 1), 	(7, 21, -1), 	(7, 9, 1), 		(7, 20, -1), 	(7, 19, 1),
+    (8, 3, 1), 		(8, 2, 1), 		(8, 15, -1),	(8, 8, -1), 	(8, 16, -1), 	(8, 7, 1), 		(8, 11, 1), 	(8, 22, 1), 	(8, 13, 1),
     (9, 10, -1),
-    (10, 17, 1),
-    (10, 14, 1),
-    (10, 18, 1),
-    (10, 4, 1),
-    (10, 6, 1),
-    (10, 12, -1),
-    (10, 19, -1),
-    (11, 16, 1),
-    (11, 13, -1),
-    (11, 7, 1),
-    (12, 5, -1),
-    (12, 6, -1),
-    (12, 20, -1),
-    (13, 14, -1),
-    (13, 8, 1),
-    (14, 9, -1),
-    (14, 21, -1),
-    (14, 10, -1),
-    (14, 22, -1),
-    (14, 11, -1),
-    (14, 2, -1),
-    (15, 3, 1),
-    (15, 17, 1),
-    (15, 15, 1),
-    (15, 9, -1),
-    (16, 19, 1),
-    (16, 4, 1),
-    (16, 7, 1),
-    (16, 10, -1),
-    (16, 6, 1),
-    (16, 22, 1),
-    (16, 15, 1),
-    (16, 2, -1),
-    (17, 8, 1),
-    (17, 16, 1),
-    (17, 12, 1),
-    (17, 11, -1),
-    (18, 18, -1),
-    (18, 20, -1),
-    (18, 5, -1),
-    (18, 14, 1),
-    (18, 13, 1),
-    (19, 21, 1),
-    (19, 6, 1),
-    (19, 15, 1),
-    (19, 9, -1),
-    (20, 2, -1),
-    (20, 7, 1),
-    (21, 22, -1),
-    (21, 17, 1),
-    (21, 19, 1),
-    (23, 8, 1),
-    (23, 12, 1),
-    (23, 5, 1),
-    (24, 3, 1),
-    (24, 18, -1),
-    (24, 16, 1),
-    (24, 21, 1),
-    (25, 13, -1),
-    (25, 20, -1),
-    (25, 14, -1),
-    (25, 4, 1),
-    (25, 11, -1),
+    (10, 17, 1), 	(10, 14, 1), 	(10, 18, 1), 	(10, 4, 1), 	(10, 6, 1), 	(10, 12, -1), 	(10, 19, -1),
+    (11, 16, 1), 	(11, 13, -1), 	(11, 7, 1),
+    (12, 5, -1), 	(12, 6, -1), 	(12, 20, -1),
+    (13, 14, -1),	(13, 8, 1),
+    (14, 9, -1), 	(14, 21, -1), 	(14, 10, -1), 	(14, 22, -1), 	(14, 11, -1), 	(14, 2, -1),
+    (15, 3, 1), 	(15, 17, 1), 	(15, 15, 1), 	(15, 9, -1),
+    (16, 19, 1), 	(16, 4, 1), 	(16, 7, 1), 	(16, 10, -1), 	(16, 6, 1), 	(16, 22, 1), 	(16, 15, 1),	(16, 2, -1),
+    (17, 8, 1), 	(17, 16, 1), 	(17, 12, 1), 	(17, 11, -1),
+    (18, 18, -1), 	(18, 20, -1), 	(18, 5, -1), 	(18, 14, 1), 	(18, 13, 1),
+    (19, 21, 1), 	(19, 6, 1), 	(19, 15, 1), 	(19, 9, -1),
+    (20, 2, -1), 	(20, 7, 1),
+    (21, 22, -1), 	(21, 17, 1), 	(21, 19, 1),
+    (23, 8, 1), 	(23, 12, 1), 	(23, 5, 1),
+    (24, 3, 1), 	(24, 18, -1), 	(24, 16, 1), 	(24, 21, 1),
+    (25, 13, -1), 	(25, 20, -1), 	(25, 14, -1), 	(25, 4, 1), 	(25, 11, -1),
     (26, 10, -1),
-    (27, 9, 1),
-    (27, 11, 1),
-    (27, 3, -1),
-    (27, 20, 1),
-    (28, 17, -1),
-    (28, 2, -1),
+    (27, 9, 1), 	(27, 11, 1), 	(27, 3, -1), 	(27, 20, 1),
+    (28, 17, -1), 	(28, 2, -1),
     (29, 22, 1),
-    (30, 10, 1),
-    (30, 16, 1),
-    (30, 6, -1),
-    (31, 4, 1),
-    (31, 14, 1),
-    (31, 21, -1),
-    (31, 18, 1),
-    (32, 15, -1),
-    (32, 8, 1),
-    (32, 5, 1),
-    (32, 12, -1);
+    (30, 10, 1), 	(30, 16, 1), 	(30, 6, -1),
+    (31, 4, 1),		(31, 14, 1), 	(31, 21, -1), 	(31, 18, 1),
+    (32, 15, -1), 	(32, 8, 1), 	(32, 5, 1),		(32, 12, -1),
+    (33, 14, -1), 	(33, 15, -1),
+    (34, 7, 1),
+    (35, 13, 1), 	(35, 11, -1), 	(35, 3, 1), 	(35, 4, 1),
+    (36, 5, 1), 	(36, 17, -1),
+    (37, 16, 1),
+    (38, 20, 1), 	(38, 10, -1), 	(38, 8, -1), 	(38, 2, -1), 	(38, 9, 1),		(38, 19, 1), 	(38, 21, 1),	(38, 6, 1),
+    (39, 22, 1), 	(39, 18, -1), 	(39, 12, 1), 	(39, 21, -1), 	(39, 9, 1), 	(39, 20, -1),	(39, 19, 1),
+    (40, 3, 1), 	(40, 2, 1), 	(40, 15, -1), 	(40, 8, -1), 	(40, 16, -1), 	(40, 7, 1), 	(40, 11, 1),	(40, 22, 1),	(40, 13, 1),
+    (41, 10, -1),
+    (42, 17, 1), 	(42, 14, 1), 	(42, 18, 1), 	(42, 4, 1), 	(42, 6, 1), 	(42, 12, -1), 	(42, 19, -1),
+    (43, 16, 1), 	(43, 13, -1), 	(43, 7, 1),
+    (44, 5, -1), 	(44, 6, -1), 	(44, 20, -1),
+    (45, 14, -1), 	(45, 8, 1),
+    (46, 9, -1), 	(46, 21, -1), 	(46, 10, -1), 	(46, 22, -1), 	(46, 11, -1),	(46, 2, -1),
+    (47, 3, 1), 	(47, 17, 1), 	(47, 15, 1), 	(47, 9, -1),
+    (48, 19, 1), 	(48, 4, 1), 	(48, 7, 1), 	(48, 10, -1),	(48, 6, 1), 	(48, 22, 1), 	(48, 15, 1), 	(48, 2, -1),
+    (49, 8, 1), 	(49, 16, 1), 	(49, 12, 1), 	(49, 11, -1),
+    (50, 18, -1), 	(50, 20, -1), 	(50, 5, -1), 	(50, 14, 1), 	(50, 13, 1),
+    (51, 21, 1), 	(51, 6, 1), (	51, 15, 1), 	(51, 9, -1),
+    (52, 2, -1), 	(52, 7, 1),
+    (53, 22, -1), 	(53, 17, 1), 	(53, 19, 1),
+    (54, 8, 1), 	(54, 12, 1), 	(54, 5, 1),
+    (55, 3, 1), 	(55, 18, -1), 	(55, 16, 1), 	(55, 21, 1),
+    (56, 13, -1), 	(56, 20, -1), 	(56, 14, -1), 	(56, 4, 1),		(56, 11, -1),
+    (57, 10, -1),
+    (58, 9, 1), 	(58, 11, 1), 	(58, 3, -1), 	(58, 20, 1),
+    (59, 17, -1), 	(59, 2, -1),
+    (60, 22, 1),
+    (61, 10, 1), 	(61, 16, 1), 	(61, 6, -1),
+    (62, 4, 1), 	(62, 14, 1), 	(62, 21, -1), 	(62, 18, 1),
+    (63, 15, -1), 	(63, 8, 1), 	(63, 5, 1), 	(63, 12, -1),
+    (64, 14, -1),	(64, 15, -1),
+    (65, 7, 1),
+    (66, 13, 1),		(66, 11, -1),	(66, 3, 1),		(66, 4, 1),
+    (67, 5, 1), 		(67, 17, -1),
+    (68, 16, 1),
+    (68, 20, 1), 	(68, 10, -1), 	(68, 8, -1),		(68, 2, -1), 	(68, 9, 1), 		(68, 19, 1), 	(68, 21, 1), 	(68, 6, 1),
+    (69, 22, 1), 	(69, 18, -1), 	(69, 12, 1), 	(69, 21, -1), 	(69, 9, 1), 		(69, 20, -1), 	(69, 19, 1),
+    (70, 3, 1), 		(70, 2, 1), 		(70, 15, -1),	(70, 8, -1), 	(70, 16, -1), 	(70, 7, 1), 		(70, 11, 1), 	(70, 22, 1), 	(70, 13, 1),
+    (71, 10, -1),
+    (72, 17, 1), 	(72, 14, 1), 	(72, 18, 1), 	(72, 4, 1), 	(72, 6, 1), 	(72, 12, -1), 	(72, 19, -1),
+    (73, 16, 1), 	(73, 13, -1), 	(73, 7, 1),
+    (74, 5, -1), 	(74, 6, -1), 	(74, 20, -1),
+    (75, 14, -1),	(75, 8, 1),
+    (76, 9, -1), 	(76, 21, -1), 	(76, 10, -1), 	(76, 22, -1), 	(76, 11, -1), 	(76, 2, -1),
+    (77, 3, 1), 	(77, 17, 1), 	(77, 15, 1), 	(77, 9, -1),
+    (78, 19, 1), 	(78, 4, 1), 	(78, 7, 1), 	(78, 10, -1), 	(78, 6, 1), 	(78, 22, 1), 	(78, 15, 1),	(78, 2, -1),
+    (79, 8, 1), 	(79, 16, 1), 	(79, 12, 1), 	(79, 11, -1),
+    (80, 18, -1), 	(80, 20, -1), 	(80, 5, -1), 	(80, 14, 1), 	(80, 13, 1),
+    (81, 21, 1), 	(81, 6, 1), 	(81, 15, 1), 	(81, 9, -1),
+    (83, 2, -1), 	(83, 7, 1),
+    (84, 22, -1), 	(84, 17, 1), 	(84, 19, 1),
+    (85, 8, 1), 	(85, 12, 1), 	(85, 5, 1),
+    (86, 3, 1), 	(86, 18, -1), 	(86, 16, 1), 	(86, 21, 1),
+    (87, 13, -1), 	(87, 20, -1), 	(87, 14, -1), 	(87, 4, 1), 	(87, 11, -1),
+    (88, 10, -1),
+    (89, 9, 1), 	(89, 11, 1), 	(89, 3, -1), 	(89, 20, 1),
+    (90, 17, -1), 	(90, 2, -1),
+    (91, 22, 1),
+    (92, 10, 1), 	(92, 16, 1), 	(92, 6, -1),
+    (93, 4, 1),		(93, 14, 1), 	(93, 21, -1), 	(93, 18, 1),
+    (94, 15, -1), 	(94, 8, 1), 	(94, 5, 1),		(94, 12, -1),
+    (95, 14, -1), 	(95, 15, -1),
+    (96, 7, 1),
+    (97, 13, 1), 	(97, 11, -1), 	(97, 3, 1), 	(97, 4, 1),
+    (98, 5, 1), 	(98, 17, -1),
+    (99, 16, 1),
+    (100, 20, 1), 	(100, 10, -1), 	(100, 8, -1), 	(100, 2, -1), 	(100, 9, 1),		(100, 19, 1), 	(100, 21, 1),	(100, 6, 1),
+    (101, 22, 1), 	(101, 18, -1), 	(101, 12, 1), 	(101, 21, -1), 	(101, 9, 1), 	(101, 20, -1),	(101, 19, 1),
+    (102, 3, 1), 	(102, 2, 1), 	(102, 15, -1), 	(102, 8, -1), 	(102, 16, -1), 	(102, 7, 1), 	(102, 11, 1),	(102, 22, 1),	(102, 13, 1),
+    (103, 10, -1),
+    (104, 17, 1), 	(104, 14, 1), 	(104, 18, 1), 	(104, 4, 1), 	(104, 6, 1), 	(104, 12, -1), 	(104, 19, -1),
+    (105, 16, 1), 	(105, 13, -1), 	(105, 7, 1),
+    (106, 5, -1), 	(106, 6, -1), 	(106, 20, -1),
+    (107, 14, -1), 	(107, 8, 1),
+    (108, 9, -1), 	(108, 21, -1), 	(108, 10, -1), 	(108, 22, -1), 	(108, 11, -1),	(108, 2, -1),
+    (109, 3, 1), 	(109, 17, 1), 	(109, 15, 1), 	(109, 9, -1),
+    (111, 5, -1), (111, 17, 1),
+    (112, 22, 1),
+
+    (114, 13, 1), (114, 12, -1),
+    (115, 17, -1), (115, 14, 1), (115, 22, -1),
+    (116, 3, 1), (116, 12, -1), (116, 17, -1), (116, 8, -1), (116, 14, -1), (116, 22, -1), (116, 16, 1), (116, 7, 1), (116, 15, 1),
+    (117, 17, 1), (117, 2, 1), (117, 3, 1),
+    (118, 16, 1), (118, 5, 1), (118, 6, -1), (118, 18, -1), (118, 13, 1), (118, 4, 1), (118, 11, -1),
+    (119, 3, 1),
+    (120, 16, -1), (120, 6, 1), (120, 3, 1), (120, 9, -1), (120, 15, 1), (120, 8, 1),
+    (121, 7, -1), (121, 16, -1), (121, 8, -1), (121, 22, -1),
+    (122, 10, -1),
+
+    (124, 8, 1), (124, 2, 1), (124, 7, -1), (124, 20, 1),
+    (125, 22, 1),
+    (126, 17, 1), (126, 7, -1),(126, 6, -1), (126, 15, -1),
+    (127, 22, 1), (127, 21, 1), (127, 6, 1), (127, 19, -1), (127, 2, 1),
+
+    (129, 2, -1),
+    (132, 3, 1), (132, 12, -1), (132, 5, -1), (132, 20, 1), (132, 15, 1), (132, 2, -1), (132, 18, 1), (132, 6, -1), (132, 17, 1),
+    (133, 2, -1), (133, 7, 1), (133, 10, -1), (133, 17, -1), (133, 8, -1), (133, 21, 1), (133, 19, -1),
+    (134, 4, 1), (134, 19, -1), (134, 2, 1), (134, 10, 1), (134, 21, 1), (134, 6, 1), (134, 11, -1), (134, 17, -1),
+    (135, 5, 1), (135, 13, -1), (135, 2, -1), (135, 6, 1), (135, 15, -1), (135, 7, 1), (135, 20, 1), (135, 18, -1),
+    (136, 13, -1), (136, 17, -1), (136, 2, -1), (136, 4, -1), (136, 21, -1), (136, 5, 1), (136, 12, -1),
+    (137, 9, -1), (137, 12, -1), (137, 3, -1), (137, 10, 1), (137, 13, -1), (137, 7, -1), (137, 20, 1), (137, 19, 1),
+    (138, 17, 1), (138, 18, 1), (138, 4, 1), (138, 12, -1), (138, 21, 1), (138, 8, -1),
+    (139, 3, 1), (139, 2, -1), (139, 11, 1), (139, 19, 1), (139, 8, 1),
+    (140, 14, -1), (140, 6, 1), (140, 3, 1),
+    (141, 17, 1), (141, 5, -1), (141, 6, 1), (141, 4, -1), (141, 19, -1), (141, 16, -1),
+    (142, 5, 1), (142, 20, -1), (142, 14, 1), (142, 2, 1), (142, 15, 1), (142, 8, 1), (142, 21, -1), (142, 19, -1), (142, 12, 1),
+    (143, 6, 1), (143, 4, 1), (143, 12, 1),
+
+    (145, 7, 1), (145, 16, -1), (145, 6, 1), (145, 17, 1), (145, 12, 1), (145, 8, 1), (145, 19, 1), (145, 20, -1), (145, 10, 1),
+    (146, 10, -1), (146, 7, 1), (146, 18, 1), (146, 5, 1), (146, 8, -1), (146, 3, 1), (146, 13, 1), (146, 6, 1),
+    (147, 10, -1), (147, 3, 1), (147, 4, -1),
+    (148, 2, -1), (148, 16, 1), (148, 5, 1), (148, 13, 1), (148, 4, -1), (148, 17, -1),
+
+    (150, 12, -1), (150, 9, 1), (150, 17, 1), (150, 5, -1), (150, 15, 1), (150, 4, -1), (150, 6, -1),
+    (151, 14, -1), (151, 8, 1), (151, 5, -1), (151, 7, 1),
+    (152, 6, -1), (152, 13, -1), (152, 19, 1), (152, 21, -1),
+    (153, 3, -1), (153, 10, -1),
+    (154, 4, -1), (154, 17, -1), (154, 15, 1), (154, 18, 1), (154, 13, 1), (154, 2, -1), (154, 5, 1), (154, 12, 1),
+    (155, 21, -1), (155, 14, -1), (155, 10, -1), (155, 17, 1), (155, 3, 1), (155, 9, -1), (155, 11, 1),
+    (156, 16, -1),
+
+    (158, 3, 1), (158, 9, 1), (158, 4, 1), (158, 19, -1), (158, 21, -1), (158, 5, -1), (158, 7, -1), (158, 2, 1), (158, 16, -1),
+    (159, 20, 1), (159, 7, -1), (159, 15, -1), (159, 2, 1), (159, 9, -1), (159, 11, -1), (159, 13, 1), (159, 18, -1), (159, 21, -1),
+
+    (161, 8, -1), (161, 17, -1), (161, 20, -1), (161, 10, -1), (161, 11, -1),
+    (162, 4, 1), (162, 17, -1),
+    (163, 17, 1),
+    (164, 21, 1), (164, 20, 1), (164, 16, -1), (164, 7, 1),
+    (165, 21, 1),
+    (166, 3, 1), (166, 20, 1), (166, 2, -1), (166, 7, -1), (166, 6, -1),
+    (167, 18, 1),
+    (168, 5, 1), (168, 10, 1), (168, 15, -1), (168, 11, -1), (168, 16, -1),
+    (169, 6, -1), (169, 3, -1), (169, 5, -1), (169, 8, -1),
+    (170, 14, -1), (170, 4, 1), (170, 10, 1), (170, 8, -1), (170, 13, -1), (170, 20, -1), (170, 19, -1), (170, 18, 1), (170, 2, 1),
+    (171, 20, -1), (171, 7, 1), (171, 21, 1), (171, 16, -1), (171, 4, -1), (171, 3, 1), (171, 17, -1), (171, 9, -1),
+    (172, 21, -1),
+    (173, 5, -1), (173, 2, -1), (173, 14, -1), (173, 8, -1),
+    (174, 17, 1), (174, 14, -1), (174, 4, -1), (174, 3, -1), (174, 7, -1), (174, 12, 1), (174, 5, -1), (174, 20, 1), (174, 8, -1),
+    (175, 8, -1),
+    (176, 16, -1), (176, 3, 1),
+    (177, 19, -1), (177, 7, -1),
+    (178, 18, 1), (178, 2, -1),
+    (179, 17, 1), (179, 13, -1), (179, 4, -1),
+    (180, 2, 1), (180, 9, 1), (180, 13, 1), (180, 20, 1), (180, 4, -1), (180, 12, -1), (180, 19, -1), (180, 21, 1),
+    (181, 5, -1), (181, 17, -1), (181, 13, -1), (181, 12, -1), (181, 6, -1),
+    (182, 15, -1), (182, 12, 1), (182, 17, -1), (182, 9, 1), (182, 8, 1), (182, 20, 1),
+    (183, 7, -1), (183, 8, 1), (183, 12, -1),
+    (184, 19, -1), (184, 9, 1), (184, 4, -1), (184, 10, 1), (184, 18, -1), (184, 16, -1),
+    (185, 19, 1), (185, 14, 1), (185, 6, -1), (185, 7, -1), (185, 8, -1), (185, 5, 1), (185, 18, 1), (185, 9, 1),
+    (186, 9, -1), (186, 3, 1), (186, 17, 1), (186, 18, -1), (186, 14, -1), (186, 15, 1), (186, 10, 1),
+
+    (188, 14, -1), (188, 2, 1), (188, 20, -1), (188, 16, -1), (188, 5, -1), (188, 3, 1), (188, 11, 1),
+    (189, 2, -1), (189, 16, -1),
+    (190, 13, -1), (190, 16, -1), (190, 4, 1), (190, 11, -1),
+    (191, 12, -1), (191, 18, 1), (191, 4, -1), (191, 21, 1), (191, 16, -1), (191, 2, 1), (191, 13, -1),
+    (192, 5, -1),
+    (193, 7, -1), (193, 9, 1), (193, 6, 1), (193, 13, -1), (193, 20, 1), (193, 16, -1), (193, 19, -1), (193, 10, -1), (193, 14, -1),
+    (194, 10, 1), (194, 13, 1), (194, 21, 1), (194, 6, -1), (194, 7, -1), (194, 4, 1), (194, 16, 1), (194, 12, -1), (194, 11, 1),
+    (195, 2, 1),
+    (196, 7, 1), (196, 9, 1), (196, 15, 1), (196, 8, -1), (196, 12, 1),
+    (197, 21, 1), (197, 16, -1), (197, 13, -1), (197, 20, 1),
+    (198, 10, 1), (198, 19, 1), (198, 21, 1), (198, 17, 1),
+
+
+    (201, 20, -1), (201, 16, -1), (201, 19, -1), (201, 17, 1), (201, 14, 1), (201, 12, 1),
+    (202, 10, 1),
+
+    (204, 12, -1), (204, 20, -1), (204, 13, 1), (204, 4, -1),
+    (205, 17, 1), (205, 6, -1), (205, 8, -1), (205, 5, 1), (205, 3, -1),
+    (206, 8, -1), (206, 16, 1), (206, 6, -1), (206, 10, -1), (206, 11, -1), (206, 19, -1), (206, 3, -1), (206, 21, 1),
+    (207, 6, -1), (207, 9, -1), (207, 15, 1), (207, 5, 1),
+    (208, 10, -1), (208, 15, 1), (208, 13, 1), (208, 17, 1), (208, 2, -1),
+    (209, 8, -1), (209, 5, 1), (209, 6, -1), (209, 17, -1), (209, 14, 1),
+    (210, 10, -1), (210, 5, 1), (210, 8, 1), (210, 18, 1), (210, 12, -1), (210, 3, -1),
+    (211, 2, 1), (211, 4, -1), (211, 14, -1), (211, 16, 1), (211, 5, 1),
+    (212, 19, -1),
+    (213, 7, 1), (213, 20, -1), (213, 12, 1), (213, 9, -1), (213, 6, -1), (213, 2, -1), (213, 4, 1),
+    (214, 15, 1), (214, 2, -1), (214, 12, 1), (214, 10, 1), (214, 11, -1),
+
+    (216, 7, 1), (216, 2, -1), (216, 15, -1), (216, 3, -1), (216, 10, 1), (216, 11, -1), (216, 4, 1), (216, 9, 1),
+
+    (218, 15, -1), (218, 5, 1), (218, 21, -1), (218, 11, -1), (218, 3, -1), (218, 19, 1), (218, 9, 1), (218, 10, -1), (218, 2, 1),
+    (219, 18, -1), (219, 9, -1), (219, 3, 1),
+    (220, 10, -1), (220, 4, 1), (220, 18, -1), (220, 20, 1), (220, 15, -1),
+    (221, 18, 1), (221, 6, 1), (221, 9, -1), (221, 14, 1), (221, 8, -1),
+    (222, 18, -1), (222, 5, 1), (222, 12, 1), (222, 9, 1), (222, 19, -1),
+    (223, 2, -1), (223, 21, -1), (223, 10, 1), (223, 7, 1), (223, 19, 1), (223, 18, 1), (223, 14, 1), (223, 3, -1), (223, 17, -1),
+    (224, 11, -1),
+    (225, 6, -1), (225, 16, 1), (225, 18, -1), (225, 11, -1), (225, 4, -1), (225, 9, -1), (225, 8, 1),
+    (226, 14, -1), (226, 20, 1), (226, 21, 1), (226, 19, -1), (226, 17, 1), (226, 5, 1), (226, 18, 1), (226, 6, 1), (226, 11, 1),
+    (227, 7, -1),
+    (228, 9, 1), (228, 14, -1), (228, 6, -1), (228, 13, -1), (228, 2, -1), (228, 11, -1), (228, 5, 1),
+    (229, 11, -1), (229, 10, 1), (229, 21, -1),
+    (230, 15, -1), (230, 17, -1), (230, 18, -1), (230, 21, -1), (230, 5, 1),
+    (231, 12, 1),
+
+    (233, 21, -1), (233, 12, 1), (233, 13, -1),
+    (234, 2, -1), (234, 11, -1), (234, 20, 1), (234, 14, -1), (234, 17, -1), (234, 19, 1), (234, 5, 1),
+    (235, 10, -1), (235, 16, -1), (235, 9, 1), (235, 12, 1), (235, 14, -1), (235, 21, -1),
+    (236, 6, -1),
+    (237, 11, -1), (237, 3, -1), (237, 16, -1), (237, 8, 1),
+    (238, 8, -1), (238, 2, 1), (238, 10, 1), (238, 18, 1), (238, 16, 1), (238, 21, -1), (238, 15, -1), (238, 11, 1), (238, 4, -1),
+    (239, 4, -1), (239, 3, -1), (239, 7, 1),
+    (240, 3, 1), (240, 14, 1), (240, 11, 1), (240, 16, 1), (240, 12, -1),
+
+    (242, 6, 1), (242, 18, -1), (242, 2, 1), (242, 8, 1), (242, 15, -1), (242, 20, -1), (242, 13, -1), (242, 3, -1),
+
+    (244, 6, -1), (244, 7, 1), (244, 9, 1), (244, 4, 1), (244, 8, 1), (244, 16, -1), (244, 14, 1),
+    (245, 17, 1), (245, 12, -1), (245, 16, -1), (245, 7, 1),
+
+    (247, 11, 1), (247, 13, 1),
+    (248, 18, 1), (248, 4, -1), (248, 15, -1), (248, 13, -1), (248, 6, 1),
+
+    (250, 13, -1), (250, 9, 1), (250, 6, 1), (250, 18, -1), (250, 21, -1), (250, 17, 1), (250, 14, 1), (250, 3, -1),
+
+    (252, 18, -1), (252, 5, 1), (252, 8, -1), (252, 13, -1),
+    (253, 21, 1), (253, 3, 1),
+    (254, 13, 1),
+    (255, 13, 1), (255, 4, 1), (255, 5, 1), (255, 8, 1), (255, 19, 1), (255, 20, -1), (255, 15, -1),
+    (256, 8, 1), (256, 6, -1), (256, 13, 1), (256, 14, 1), (256, 10, 1), (256, 21, 1), (256, 5, 1), (256, 11, 1), (256, 19, -1),
+
+    (258, 10, -1), (258, 11, 1), (258, 4, -1), (258, 5, -1), (258, 21, -1), (258, 6, 1), (258, 12, 1), (258, 8, 1),
+    (259, 16, -1), (259, 20, -1),
+    (260, 6, -1), (260, 13, 1), (260, 3, 1),
+    (261, 21, -1), (261, 14, 1), (261, 6, -1), (261, 13, 1),
+    (262, 12, -1), (262, 11, -1),
+    (263, 2, -1), (263, 13, 1), (263, 10, -1), (263, 8, -1), (263, 17, 1), (263, 9, -1), (263, 6, 1), (263, 15, -1),
+    (264, 16, -1), (264, 13, 1), (264, 4, 1), (264, 17, -1), (264, 21, 1),
+
+    (266, 14, 1), (266, 10, 1), (266, 4, -1), (266, 18, -1), (266, 19, 1), (266, 20, 1), (266, 12, 1), (266, 11, 1), (266, 15, 1),
+    (267, 4, 1), (267, 18, -1), (267, 6, 1),
+    (268, 9, -1),
+    (269, 21, -1), (269, 4, -1),
+    (270, 3, -1), (270, 8, 1), (270, 16, -1), (270, 2, -1), (270, 7, 1), (270, 13, -1), (270, 15, -1), (270, 9, 1), (270, 17, 1),
+    (271, 6, -1), (271, 13, -1), (271, 11, 1), (271, 5, -1),
+    (272, 21, 1), (272, 15, -1), (272, 3, -1), (272, 20, 1), (272, 10, 1), (272, 16, 1), (272, 14, -1), (272, 17, 1), (272, 4, -1),
+    (273, 13, 1), (273, 6, 1),
+    (274, 17, 1), (274, 13, -1), (274, 2, 1), (274, 6, 1), (274, 4, -1), (274, 8, -1), (274, 18, 1),
+    (275, 16, 1), (275, 14, 1), (275, 3, 1), (275, 11, 1), (275, 18, -1), (275, 5, -1),
+    (276, 6, -1), (276, 10, 1), (276, 16, 1), (276, 4, 1), (276, 19, -1), (276, 8, 1), (276, 20, -1), (276, 21, -1), (276, 9, -1),
+
+    (278, 12, -1), (278, 9, -1), (278, 21, 1), (278, 19, 1), (278, 7, -1),
+    (279, 17, -1), (279, 20, 1), (279, 8, 1), (279, 10, 1),
+    (280, 9, -1), (280, 8, -1),
+    (281, 21, 1), (281, 7, 1), (281, 11, -1), (281, 13, 1), (281, 3, 1), (281, 17, 1),
+    (282, 6, -1), (282, 9, 1), (282, 13, 1), (282, 15, 1), (282, 19, -1), (282, 10, -1),
+
+    (284, 16, -1), (284, 15, 1), (284, 14, -1), (284, 17, -1),
+    (285, 11, 1), (285, 8, -1), (285, 14, -1), (285, 5, 1), (285, 9, 1), (285, 10, 1),
+    (286, 13, 1), (286, 18, 1), (286, 17, -1), (286, 21, -1), (286, 9, 1), (286, 11, -1), (286, 16, -1), (286, 8, -1), (286, 2, -1),
+    (287, 20, -1), (287, 18, 1), (287, 10, 1), (287, 7, 1),
+    (288, 20, 1), (288, 13, -1),
+    (289, 17, -1), (289, 8, 1), (289, 7, -1), (289, 4, -1), (289, 12, -1), (289, 10, -1), (289, 15, 1), (289, 20, -1),
+    (290, 8, -1), (290, 3, 1), (290, 2, -1), (290, 15, 1), (290, 5, 1), (290, 7, 1), (290, 20, 1), (290, 9, -1), (290, 18, 1),
+    (291, 12, 1), (291, 21, 1), (291, 15, 1), (291, 20, -1),
+    (292, 5, 1),
+    (293, 16, -1), (293, 13, -1), (293, 14, -1), (293, 2, 1), (293, 5, -1), (293, 19, 1),
+    (294, 11, 1), (294, 15, 1), (294, 14, -1), (294, 4, 1),
+    (295, 12, 1), (295, 8, -1), (295, 5, -1),
+    (296, 20, -1), (296, 13, 1), (296, 11, -1), (296, 6, -1), (296, 10, 1), (296, 21, -1), (296, 2, -1), (296, 3, -1), (296, 18, -1),
+    (297, 11, -1), (297, 10, 1), (297, 5, -1), (297, 12, 1), (297, 8, 1),
+    (298, 2, 1), (298, 20, 1), (298, 12, -1), (298, 14, -1), (298, 8, 1), (298, 7, -1),
+    (299, 13, -1), (299, 16, 1), (299, 2, 1), (299, 6, 1), (299, 17, 1),
+    (300, 17, -1), (300, 21, 1), (300, 14, 1), (300, 2, 1), (300, 5, 1), (300, 16, -1), (300, 4, 1),
+
+    (302, 9, -1), (302, 14, -1), (302, 17, 1), (302, 2, -1), (302, 16, 1), (302, 18, -1), (302, 13, 1), (302, 11, -1), (302, 7, -1),
+    (303, 20, 1), (303, 9, -1),
+    (304, 20, 1), (304, 18, 1), (304, 15, -1),
+    (305, 9, 1), (305, 10, 1), (305, 6, 1), (305, 14, -1), (305, 2, -1),
+    (306, 16, 1), (306, 18, -1), (306, 13, 1), (306, 21, -1), (306, 4, -1),
+    (307, 14, 1), (307, 18, 1), (307, 9, -1), (307, 12, 1), (307, 16, -1), (307, 19, 1), (307, 20, 1), (307, 3, -1), (307, 11, 1),
+    (308, 7, -1), (308, 15, -1), (308, 19, -1), (308, 13, 1), (308, 16, 1), (308, 2, 1), (308, 4, -1), (308, 12, 1),
+    (309, 17, 1), (309, 14, 1), (309, 19, 1),
+    (310, 20, -1), (310, 18, 1), (310, 14, 1), (310, 13, 1), (310, 11, -1), (310, 17, 1), (310, 15, -1), (310, 2, 1),
+    (311, 9, -1), (311, 16, 1), (311, 17, 1),
+    (312, 8, -1), (312, 11, -1), (312, 10, -1), (312, 3, 1), (312, 13, 1), (312, 20, 1),
+    (313, 8, -1), (313, 3, 1), (313, 17, 1), (313, 19, 1), (313, 13, -1), (313, 16, -1), (313, 15, 1),
+    (314, 5, -1), (314, 12, -1), (314, 9, -1), (314, 21, -1),
+    (315, 13, -1), (315, 14, 1), (315, 6, 1), (315, 18, 1),
+    (316, 21, 1), (316, 8, 1), (316, 5, 1), (316, 10, -1),
+    (317, 4, -1),
+    (318, 5, 1), (318, 14, 1), (318, 12, 1), (318, 4, -1),
+
+
+    (321, 18, 1), (321, 12, -1), (321, 4, 1),
+    (322, 18, -1), (322, 6, 1), (322, 8, 1), (322, 4, -1), (322, 19, 1), (322, 12, -1), (322, 7, -1), (322, 15, -1), (322, 2, -1),
+
+    (324, 18, -1), (324, 5, 1), (324, 10, -1), (324, 20, -1),
+    (325, 17, -1), (325, 12, -1), (325, 16, 1), (325, 13, 1),
+    (326, 8, -1), (326, 7, 1), (326, 5, 1), (326, 21, 1), (326, 18, -1), (326, 16, 1), (326, 15, -1);
