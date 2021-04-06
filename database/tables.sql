@@ -1,3 +1,7 @@
+DROP TYPE IF EXISTS Categories CASCADE;
+
+CREATE TYPE categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors');
+
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
@@ -25,12 +29,12 @@ CREATE TABLE Users(
     name            text,
     email           varchar(40) UNIQUE,
     password        varchar(35),
-    phonenumber     int UNIQUE,
+    phonenumber     text UNIQUE,
     streetaddress   text,
     city            text,
     state           text,
     country         text,
-    postcode        varchar(4),
+    postcode        text,
     admin           boolean,
     primary key (id)
 );
@@ -38,7 +42,7 @@ CREATE TABLE Users(
 CREATE TABLE Products(
     id              int GENERATED ALWAYS AS IDENTITY,
     name            text,
-    category        text CHECK (category in ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors')),
+    category        categories,
     brand           text,
     price           numeric(50, 2),
     image           text,

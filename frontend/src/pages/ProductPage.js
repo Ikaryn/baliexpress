@@ -33,15 +33,14 @@ const ProductPage = () => {
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
     const [isAdmin, setIsAdmin] = React.useState(false);
-    
-    const [reviews, setReviews] = React.useState([{'':''}])
+
     // will be temporary to read in. (replace with values inside the product dict)
-    const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
+    const productDesc = ['Specs', 'Description', 'Warranty'];
     
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
-    
+    // find the specific product to display its information
     React.useEffect(() => {
         (async () => {
             console.log(category)
@@ -54,25 +53,24 @@ const ProductPage = () => {
     
     },[category, pid])
     
+    // check if the current user is admin and set the relevant state
     React.useEffect(() => {
         (async () => {
-            const options = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Request-Type': 'profile',
-                },
-            }
+            // const options = {
+            //     method: 'GET',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Request-Type': 'profile',
+            //     },
+            // }
             const userId = localStorage.getItem('userId');
             if (userId) {
-                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
                 setIsAdmin(userDetails.admin);
             }
         })();
     }, [])
-    console.log(productInfo.specs);
-    console.log(productInfo);
     
     return (
         <div className="root">
@@ -136,13 +134,10 @@ const ProductPage = () => {
                             </Grid>
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            Description placeholder
+                            {productInfo.description}
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            Warranty placeholder
-                        </TabPanel>
-                        <TabPanel value={value} index={3}>
-                            Review placeholder
+                            {productInfo.warranty}
                         </TabPanel>
                     </Paper>
                 </Grid>

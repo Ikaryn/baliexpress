@@ -30,14 +30,14 @@ const AddProduct = ({}) => {
             category: category,
             brand: brand,
             price: price,
-            // stock: stock,
+            stock: stock,
             specs: specs,
-            // desc: desc,
-            // warranty: warranty
+            desc: desc,
+            warranty: warranty,
             image: image
             };
         console.log(product)
-        const response = await api.post('addProduct', product);
+        const response = await api.post('product', product);
     }
     
     const handleChange = (key, value) => {

@@ -1,8 +1,32 @@
+-- Admin account
 INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, state, country, postcode, admin)
-VALUES ('Bob', 'admin@email.com', 'adminpassword', 99999999, '123 sesame street', 'Sydney', 'NSW', 'Australia', '2000', 't');
+VALUES
+    ('Bob', 'admin@email.com', 'adminpassword', '99999999', '123 sesame street', 'Sydney', 'NSW', 'Australia', '2000', 't');
 
+-- Regular users
 INSERT INTO Users (name, email, password, phonenumber, streetaddress, city, state, country, postcode, admin)
-VALUES ('Alice', 'customer@email.com', 'customerpassword', 33333333, '343 fake road', 'Toronto', 'ONT', 'Canada', '666', 'f');
+VALUES
+    ('Alice',		'customer@email.com',	'customerpassword',	'33333333', 	'343 fake road',					'Toronto', 			'ONT', 	'Canada',	'666', 	 'f'),
+    ('Terrence', 	'terrence@email.com', 	'12345', 			'004 839 9111', '4462 Rivendell Drive', 			'LIBBY',			'MT', 	'USA', 		'59923', 'f'),
+    ('Bilal', 		'bilal@email.com', 		'123456', 			'004 371 3082', '2926 Pennsylvania Avenue',			'New Brunswick', 	'NJ', 	'USA', 		'08901', 'f'),
+    ('Holli', 		'holli@email.com', 		'123456789', 		'004 163 8955', '4860 Paul Wayne Haggerty Road',	'Kenner', 			'LA', 	'USA',		'70065', 'f'),
+    ('Rita', 		'rita@email.com', 		'test1', 			'004 732 9695', '2784 Hardman Road', 				'South Burlington', 'VT', 	'USA',		'05403', 'f'),
+    ('Aislinn', 	'aislinn@email.com', 	'password', 		'004 615 4655', '57 John Avenue', 					'SYCAMORE', 		'OH', 	'USA', 		'44882', 'f'),
+    ('Stephan', 	'stephen@email.com', 	'12345678', 		'004 067 4134', '1945 Sun Valley Road', 			'BOISE', 			'ID', 	'USA', 		'83728', 'f'),
+    ('Lily-May',	'lily-may@email.com', 	'zinch', 			'004 328 2791', '1424 Goldie Lane', 				'Cincinnati', 		'OH', 	'USA', 		'45202', 'f'),
+    ('Rudra',		 'rudra@email.com', 	'g_czechout', 		'004 051 0936', '4273 Peck Court', 					'Anaheim', 			'CA', 	'USA', 		'92801', 'f'),
+    ('India', 		'india@email.com', 		'asdf', 			'004 719 8602', '1595 Worley Avenue', 				'Charlottesville',	'VA', 	'USA', 		'22903', 'f'),
+    ('Nyla', 		'nyla@email.com', 		'qwerty', 			'004 815 3886', '1257 Hummingbird Way', 			'Topeka', 			'KS', 	'USA', 		'66612', 'f'),
+    ('Jorgie', 		'jorgie@email.com', 	'1234567890', 		'004 173 6935', '4620 Richland Avenue', 			'Sugar Land', 		'TX', 	'USA', 		'77487', 'f'),
+    ('Sean', 		'sean@email.com', 		'1234567', 			'004 279 4894', '2545 Hill Croft Farm Road', 		'Sacramento', 		'CA', 	'USA',		'95814', 'f'),
+    ('Koa', 		'koa@email.com', 		'Aa123456.', 		'004 345 3418', '3828 Harron Drive', 				'Baltimore', 		'MD', 	'USA', 		'21202', 'f'),
+    ('Aarav', 		'aarav@email.com', 		'iloveyou', 		'004 122 9731', '561 Veltri Drive', 				'Iron Mountain', 	'MI', 	'USA', 		'49601', 'f'),
+    ('Trystan', 	'trystan@email.com', 	'1234', 			'004 742 8022', '4054 Echo Lane', 					'Dowagiac', 		'MI', 	'USA', 		'49047', 'f'),
+    ('Emyr', 		'emyr@email.com', 		'abc123', 			'004 511 0088', '4269 Gambler Lane', 				'Houston',			'TX', 	'USA', 		'77088', 'f'),
+    ('Shanon', 		'shanon@email.com', 	'111111', 			'004 175 1252', '2339 Junkins Avenue', 				'Attapulgus', 		'GA', 	'USA', 		'31715', 'f'),
+    ('Angus', 		'angus@email.com', 		'123123', 			'004 557 8544', '2452 Walnut Street', 				'Jackson', 			'MS', 	'USA', 		'39201', 'f'),
+    ('Genivieve', 	'genivieve@email.com', 	'dubsmash', 		'004 612 3273', '637 Lawman Avenue', 				'CONCORD', 			'CA', 	'USA', 		'94524', 'f'),
+    ('Stacie', 		'stacie@email.com', 	'test', 			'004 258 4152', '508  McVaney Road', 				'Asheville', 		'NC', 	'USA', 		'28801', 'f');
 
 -- CPUs
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
@@ -34,6 +58,90 @@ VALUES
     (10,	6,	12,	3.3,	4.8,	'LGA 1200',	TRUE,	FALSE,	65),
     (11,	18,	36,	2.6,	4.2,	'LGA 2066',	FALSE,	TRUE,	165),
     (12,	32,	64,	3.7,	4.5,	'TRX40',	FALSE,	TRUE,	280);
+
+-- product 1 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (1, 17, 5, 'heard about this on bouyon radio, decided to give it a try.', '2018-11-27'),
+    (1, 13, 2, 'I saw one of these in New Zealand and I bought one.', '2018-12-02'),
+    (1, 22, 2, 'this CPU is gracious.', '2019-02-20'),
+    (1, 20, 4, 'My neighbor Ardeth has one of these. She works as a gasman and she says it looks fuzzy.', '2019-02-20'),
+    (1, 4, 5, 'The box this comes in is 5 light-year by 6 foot and weights 17 megaton!!!', '2019-02-20');
+
+-- product 2 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (2, 19, 4, 'one of my hobbies is programming. and when i''m programming this works great.', '2019-05-31');
+
+-- product 3 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (3, 16, 1, 'I tried to cremate it but got Turkish Delight all over it.', '2021-01-04'),
+    (3, 22, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2015-05-16'),
+    (3, 21, 3, 'My co-worker Erick has one of these. He says it looks fluffy.', '2018-03-19');
+
+-- product 4 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (4, 17, 4, 'My co-worker Archer has one of these. He says it looks crooked.', '2019-10-31'),
+    (4, 8, 2, 'i use it barely when i''m in my store.', '2020-03-10');
+
+-- product 5 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (5, 5, 2, 'This CPU works really well. It sympathetically improves my baseball by a lot.', '2016-02-18'),
+    (5, 15, 2, 'i use it hardly when i''m in my prison.', '2016-07-22'),
+    (5, 20, 4, 'i use it centenially when i''m in my greenhouse.', '2017-11-19'),
+    (5, 22, 3, 'i use it on Mondays when i''m in my fort.', '2018-11-07');
+
+-- product 6 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (6, 9, 1, 'talk about sadness!', '2016-01-14'),
+    (6, 13, 5, 'This CPU works quite well. It romantically improves my golf by a lot.', '2016-01-30'),
+    (6, 10, 4, 'It only works when I''m in Juan de Nova Island.', '2016-12-03'),
+    (6, 17, 1, 'this CPU is awesome.', '2017-06-29'),
+    (6, 21, 5, 'i use it every Tuesday when i''m in my store.', '2019-04-08');
+
+-- product 7 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (7, 7, 3, 'one of my hobbies is spearfishing. and when i''m spearfishing this works great.', '2016-10-20'),
+    (7, 22, 4, 'It only works when I''m in Heard Island and McDonald Islands.', '2016-10-20');
+
+-- product 8 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (8, 3, 5, 'My neighbor Montserrat has one of these. She works as a circus performer and she says it looks shriveled.', ' 2017-11-27');
+
+-- product 9 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (9, 7, 1, 'heard about this on bouyon radio, decided to give it a try.', '2016-10-20'),
+    (9, 3, 5, 'The box this comes in is 5 kilometer by 5 inch and weights 13 kilogram!!!', '2017-11-27'),
+    (9, 12, 3, 'It only works when I''m in South Korea.', '2018-04-18'),
+    (9, 2, 3, 'It only works when I''m in Rwanda.', '2018-11-16'),
+    (9, 16, 4, 'My co-worker Kazuo has one of these. He says it looks transparent.', '2018-11-21');
+
+-- product 10 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (10, 15, 2, 'one of my hobbies is guitar. and when i''m playing guitar this works great.', '2018-02-19'),
+    (10, 7, 2, 'The box this comes in is 3 centimeter by 5 kilometer and weights 13 ounce!!', '2020-02-29'),
+    (10, 17, 3, 'I tried to maul it but got onion all over it.', '2020-03-19');
+-- product 11 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (11, 4, 1, 'this CPU is brown.', '2020-11-07'),
+    (11, 12, 1, 'My tyrannosaurus rex loves to play with it.', '2021-07-04' );
+-- product 12 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (12, 5,1, 'My co-worker Erick has one of these. He says it looks fluffy.', '2015-04-14'),
+    (12, 16, 5, 'one of my hobbies is mushroom cultivation. and when i''m cultivating mushrooms this works great.', '2016-12-12'),
+    (12, 2, 5, 'My co-worker Cato has one of these. He says it looks sopping.', '2017-03-04'),
+    (12, 22, 5, 'My dog loves to play with it.', '2017-11-16'),
+    (12, 9, 2, 'My co-worker Erick has one of these. He says it looks fluffy.', '2020-03-09');
 
 -- Motherboards
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
@@ -265,3 +373,124 @@ VALUES
 (105,	1200,	'Titanium',		'Fully'),
 (106,	550,	'Gold',			'Semi'),
 (107,	600,	'Gold',			'Not');
+
+-- review votes
+INSERT INTO Review_Votes(reviewid, voterid, vote)
+VALUES
+    (1, 14, -1),
+    (1, 15, -1),
+    (2, 7, 1),
+    (3, 13, 1),
+    (3, 11, -1),
+    (3, 3, 1),
+    (3, 4, 1),
+    (4, 5, 1),
+    (4, 17, -1),
+    (5, 16, 1),
+    (6, 20, 1),
+    (6, 10, -1),
+    (6, 8, -1),
+    (6, 2, -1),
+    (6, 9, 1),
+    (6, 19, 1),
+    (6, 21, 1),
+    (6, 6, 1),
+    (7, 22, 1),
+    (7, 18, -1),
+    (7, 12, 1),
+    (7, 21, -1),
+    (7, 9, 1),
+    (7, 20, -1),
+    (7, 19, 1),
+    (8, 3, 1),
+    (8, 2, 1),
+    (8, 15, -1),
+    (8, 8, -1),
+    (8, 16, -1),
+    (8, 7, 1),
+    (8, 11, 1),
+    (8, 22, 1),
+    (8, 13, 1),
+    (9, 10, -1),
+    (10, 17, 1),
+    (10, 14, 1),
+    (10, 18, 1),
+    (10, 4, 1),
+    (10, 6, 1),
+    (10, 12, -1),
+    (10, 19, -1),
+    (11, 16, 1),
+    (11, 13, -1),
+    (11, 7, 1),
+    (12, 5, -1),
+    (12, 6, -1),
+    (12, 20, -1),
+    (13, 14, -1),
+    (13, 8, 1),
+    (14, 9, -1),
+    (14, 21, -1),
+    (14, 10, -1),
+    (14, 22, -1),
+    (14, 11, -1),
+    (14, 2, -1),
+    (15, 3, 1),
+    (15, 17, 1),
+    (15, 15, 1),
+    (15, 9, -1),
+    (16, 19, 1),
+    (16, 4, 1),
+    (16, 7, 1),
+    (16, 10, -1),
+    (16, 6, 1),
+    (16, 22, 1),
+    (16, 15, 1),
+    (16, 2, -1),
+    (17, 8, 1),
+    (17, 16, 1),
+    (17, 12, 1),
+    (17, 11, -1),
+    (18, 18, -1),
+    (18, 20, -1),
+    (18, 5, -1),
+    (18, 14, 1),
+    (18, 13, 1),
+    (19, 21, 1),
+    (19, 6, 1),
+    (19, 15, 1),
+    (19, 9, -1),
+    (20, 2, -1),
+    (20, 7, 1),
+    (21, 22, -1),
+    (21, 17, 1),
+    (21, 19, 1),
+    (23, 8, 1),
+    (23, 12, 1),
+    (23, 5, 1),
+    (24, 3, 1),
+    (24, 18, -1),
+    (24, 16, 1),
+    (24, 21, 1),
+    (25, 13, -1),
+    (25, 20, -1),
+    (25, 14, -1),
+    (25, 4, 1),
+    (25, 11, -1),
+    (26, 10, -1),
+    (27, 9, 1),
+    (27, 11, 1),
+    (27, 3, -1),
+    (27, 20, 1),
+    (28, 17, -1),
+    (28, 2, -1),
+    (29, 22, 1),
+    (30, 10, 1),
+    (30, 16, 1),
+    (30, 6, -1),
+    (31, 4, 1),
+    (31, 14, 1),
+    (31, 21, -1),
+    (31, 18, 1),
+    (32, 15, -1),
+    (32, 8, 1),
+    (32, 5, 1),
+    (32, 12, -1);

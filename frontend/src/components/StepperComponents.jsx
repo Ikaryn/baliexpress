@@ -11,7 +11,7 @@ const productCategories = ['CPU',
 'Memory (RAM)',
 'Cases',
 'PSU',
-'GPU',
+'Graphics_Cards',
 'Monitor',
 'Mouses',
 'Keyboards'
