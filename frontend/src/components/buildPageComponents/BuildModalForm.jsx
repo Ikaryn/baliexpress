@@ -35,6 +35,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
             history.push('/build');
             
             const res = api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
+            console.log(res)
             console.log(usage, budget, overclock, storage)
         }
     }

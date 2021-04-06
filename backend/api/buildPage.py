@@ -236,7 +236,7 @@ def recommendPSU(budget, sumPower_usage):
                     recommendation = PSU
                     currentPrice = PSU['price']
                     currentRating = ratings.index(PSU['specs']['power_efficiency'])
-    return(PSU)
+    return(recommendation)
     
 # def recommendCase(budget, GPU):
 #     db.getAllProducts('Case')
