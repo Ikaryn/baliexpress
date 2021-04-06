@@ -7,25 +7,31 @@ const useStyles = makeStyles({
         width: '100%',
         height: '90%',
     },
+    image: {
+        width: '100%',
+    }
 })
 
-const CompareProductCard = ({productInfo}) => {
+const CompareProductCard = ({productInfo, type}) => {
     console.log('hello');
     const productComparison = new dataVis();
     const classes = useStyles();
-    const [product, setProduct] = React.useState(productInfo);
+    // const [product, setProduct] = React.useState(productInfo);
     const [performance, setPerformanace] = React.useState(
-        productComparison.generateProductPerformance(product));
+        productComparison.generateProductPerformance(productInfo));
     
     
     console.log(performance, productInfo);
     return (
-    <Grid container item direction="column">
-        <Grid container item direction="row">
-            <Grid item>
-                {/* <img src={build[comparedProduct.type].image} alt={build[comparedProduct.type].name} /> */}
+    <Grid container item direction="column" justify="space-between">
+        <Grid item>
+            <Typography className="light-text" variant='h6'>{productInfo.name}</Typography>
+        </Grid>
+        <Grid container item direction="column" spacing={2}>
+            <Grid item >
+                <img className={classes.image} src={"data:image/jpeg;base64,"+ productInfo.image} alt={productInfo.name} />
             </Grid>
-            {performance && <Grid container item direction="column">
+            {performance && <Grid container item direction="column" >
                 <Grid item>
                     <Typography variant="h5" className="light-text">Performance</Typography>
                 </Grid>
@@ -48,7 +54,7 @@ const CompareProductCard = ({productInfo}) => {
         </Grid>
         <Grid container direction="column" item alignItems="center">
             <Grid item>
-                <Typography className="light-text" variant="h4">${product.price}</Typography>
+                <Typography className="light-text" variant="h4">${productInfo.price}</Typography>
             </Grid>
         </Grid>
         <Grid container direction="column" item alignItems="center">
@@ -56,16 +62,18 @@ const CompareProductCard = ({productInfo}) => {
                 <Typography className="light-text">Specifications</Typography>
             </Grid>
         </Grid>
-        {Object.keys(product.specs).map((key) => (
-            <Grid item container direction="row" justify="space-between">
-                <Grid item>
-                    <Typography className="light-text" variant="h6">{key}:</Typography>
+        <Grid item>
+            {Object.keys(productInfo.specs).map((key) => (
+                <Grid item container direction="row" justify="space-between">
+                    <Grid item>
+                        <Typography className="light-text" variant="h6">{key}:</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography className="light-text" variant="h6">{productInfo.specs[key]}</Typography>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Typography className="light-text" variant="h6">{product.specs[key]}</Typography>
-                </Grid>
-            </Grid>
-        ))}
+            ))}
+        </Grid>
     </Grid>
     )
 

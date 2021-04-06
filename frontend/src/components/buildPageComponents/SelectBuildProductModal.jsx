@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 
-const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
+const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProduct, redirect}) => {
 
     const [products, setProducts] = React.useState([{'': ''}]);
     const [brand, setBrand] = React.useState('');
@@ -26,7 +26,8 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
     // get all of the products in the category
     React.useEffect(() => {
         (async () => {
-            const response = await api.get(`product/${category}`);
+            // console.log(category);
+            const response = await api.get(`product?category=${category}`);
             setProducts(response.products);
         })();
     },[category]);
@@ -84,7 +85,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
                                     setOpen={setOpen} 
                                     productInfo={product} 
                                     setProduct={setProduct}
-                                    category={category}
+                                    setComparedProduct={setComparedProduct}
                                     redirect={redirect}
                                 />
                         </Grid>

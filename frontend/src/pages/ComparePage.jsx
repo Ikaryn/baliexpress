@@ -22,7 +22,7 @@ const ComparePage = () => {
     const category = comparedProduct.category
     const {build: [build, setBuild]} = context;
     const [open, setOpen] = React.useState(false);
-    
+    console.log(comparedProduct);
     console.log(build[category], comparedProduct);
     
     const redirectHandler = () => {
@@ -95,6 +95,7 @@ const ComparePage = () => {
                     category={category}
                     setOpen={setOpen}
                     setProduct={setComparedProduct}
+                    setComparedProduct={setComparedProduct}
                     redirect={'compare'}
                     />
             </Modal>
