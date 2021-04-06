@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_restful import Api
 from api.user import *
 from api.products import *
+from api.buildPage import *
 # import api.user
 # import api.products
 
@@ -14,3 +15,4 @@ api.add_resource(Register, '/register')
 api.add_resource(Profile,'/profile', '/profile/<string:id>')
 api.add_resource(ProductList,'/product/<string:category>')
 api.add_resource(ProductPage, '/product/<string:category>/<int:id>', '/addProduct', '/editProduct', '/deleteProduct')
+api.add_resource(BuildPage, '/build')

@@ -12,13 +12,28 @@ from io import BytesIO
 from . import dbaccess as db
 
 class BuildPage(Resource):
-    def get(self):
-        data = request.args
-        budget = data.get('budget')
-        use = data.get('use')
-        overclock = data.get('overclock')
+    def post(self):
+        print("Build post received")
+        data = request.json
+        buildID = db.addNewBuild(data.get('userID'), data.get('buildName'), data.get('buildDesc'))
+        build = data.get('build')
+        print("build = ",build)
+        for part in build:
+            # print("part = ", build[part]['id'])
+            if part is not None:
+                db.addPartToBuild(buildID, build[part]['id'], 1)
+        
 
-        if use == "Gaming":
+    def get(self):
+        print("Get recommended build")
+        data = request.args
+        budget = float(data.get('budget'))
+        usage = data.get('usage')
+        overclock = data.get('overclock')
+        storage = data.get('storage')
+        db.addNewBuild()
+
+        if usage == "Gaming":
             GPUBudget = 0.6 * budget
             CPUBudget = 0.12 * budget
             MotherboardBudget = 0.06 * budget
@@ -27,7 +42,7 @@ class BuildPage(Resource):
             PSUBudget = 0.04 * budget
             CaseBudget = 0.03 * budget
             CoolingBudget = 0.03 * budget
-        elif use == "Animation":
+        elif usage == "Animation":
             GPUBudget = 0.55 * budget
             CPUBudget = 0.19 * budget
             MotherboardBudget = 0.06 * budget
@@ -36,7 +51,7 @@ class BuildPage(Resource):
             PSUBudget = 0.05 * budget
             CaseBudget = 0.04 * budget
             CoolingBudget = 0.03 * budget
-        elif use == "Editing":
+        elif usage == "Video":
             GPUBudget = 0.32 * budget
             CPUBudget = 0.32 * budget
             MotherboardBudget = 0.08 * budget
@@ -45,7 +60,7 @@ class BuildPage(Resource):
             PSUBudget = 0.06 * budget
             CaseBudget = 0.05 * budget
             CoolingBudget = 0.03 * budget
-        elif use == "Business":
+        elif usage == "Business":
             GPUBudget = 0 * budget
             CPUBudget = 0.45 * budget
             MotherboardBudget = 0.12 * budget
@@ -63,36 +78,38 @@ class BuildPage(Resource):
             PSUBudget = 0.05 * budget
             CaseBudget = 0.04 * budget
             CoolingBudget = 0.03 * budget
-
-        build['CPU'] = recommendCPU(CPUBudget, use, overclock)
-        build['GPU'] = recommendGPU(GPUBudget, use, overclock)
-        build['Motherboard'] = recommendMotherboard(MotherboardBudget, use, CPU, GPU)
-        build['Memory'] = recommendMemory(MemoryBudget, Mb)
-        build['Storage'] = recommendStorage(StorageBudget, Mb)
+        
+        build = {}
+        build['CPU'] = recommendCPU(CPUBudget, usage, overclock)
+        build['GPU'] = recommendGPU(GPUBudget, usage, overclock)
+        build['Motherboard'] = recommendMotherboard(MotherboardBudget, usage, build['CPU'], build['GPU'])
+        build['Memory'] = recommendMemory(MemoryBudget, build['Motherboard'])
+        build['Storage'] = recommendStorage(StorageBudget, build['Motherboard'], storage)
         # build['Cooling'] = recommendCooling(CoolingBudget)
         powerSum = 0
         for item in build:
-            powerSum += build[item][power_use] 
+            powerSum += build[item]['power_usage'] 
         build['PSU'] = recommendPSU(PSUBudget, powerSum)
         # build['Case'] = recommendCase(CaseBudget, GPU)
+        print(build)
         
         
 
 
     
     
-def recommendCPU(budget, use, overclock):
+def recommendCPU(budget, usage, overclock):
     CPUs = db.getAllProducts('CPU')
-    if use == "Gaming":
+    if usage == "Gaming":
         coreWeight = 0.4
         clockWeight = 0.6
-    elif use == "Animation":
+    elif usage == "Animation":
         coreWeight = 0.1
         clockWeight = 0.9
-    elif use == "Editing":
+    elif usage == "Editing":
         coreWeight = 0.6
         clockWeight = 0.4
-    elif use == "Business":
+    elif usage == "Business":
         coreWeight = 0.5
         clockWeight = 0.5
     else:
@@ -113,7 +130,7 @@ def recommendCPU(budget, use, overclock):
     
 
 
-def recommendGPU(budget, use, overclock):
+def recommendGPU(budget, usage, overclock):
     GPUs = db.getAllProducts('Graphics_Cards')
     memoryWeight = 0.3
     clockWeight = 0.5
@@ -122,7 +139,7 @@ def recommendGPU(budget, use, overclock):
 
     for GPU in GPUs:
         if GPU['price'] <= budget:
-            score = memoryWeight * GPU['specs']['memory'] + clockWeight * GPU['specs']['clock'] + coreWeight * GPU['specs']['cuda_cores']
+            score = memoryWeight * float(GPU['specs']['memory_size']) + clockWeight * float(GPU['specs']['clock_speed']) + coreWeight * float(GPU['specs']['cuda_cores'])
             if score > highscore:
                 highscore = score
                 recommendation = GPU
@@ -133,12 +150,12 @@ def recommendGPU(budget, use, overclock):
     return(recommendation)
 
 
-def recommendMotherboard(budget, CPU, GPU):
+def recommendMotherboard(budget, usage, CPU, GPU):
     Motherboards = db.getAllProducts('Motherboards')
     currentPrice = 10000
     for motherboard in Motherboards:
         if motherboard['specs']['cpu_socket'] == CPU['specs']['socket']:
-            if motherboard['specs']['pcie'] >= GPU['specs']['pcie']:
+            if motherboard['specs']['pcie_type'] >= GPU['specs']['pcie_type']:
                 if motherboard['price'] < currentPrice:
                     recommendation = motherboard
                     currentPrice = motherboard['price']
@@ -149,16 +166,16 @@ def recommendMotherboard(budget, CPU, GPU):
 def recommendCPUCooler(budget, CPU, overclock):
     CPUcoolers = db.getAllProducts('CPU_Coolers')
     lowestPrice = 100000.0
-    if (overclock or not CPU['specs']['cooler_included']:
+    if (overclock or not CPU['specs']['cooler_included']):
         for cooler in CPUcoolers:
-            if cooler['price'] <= budget and cooler['price'] < lowestPrice
+            if (cooler['price'] <= budget and cooler['price'] < lowestPrice):
                 recommendation = cooler 
     else:    
         return(None)
     return (recommendation)
 
 
-def recommendStorage(budget, Motherboard):
+def recommendStorage(budget, Motherboard, format):
     Storages = db.getAllProducts('Storage')
     highestCapacity = 0
     currentPrice = 0
@@ -166,15 +183,16 @@ def recommendStorage(budget, Motherboard):
 
     for storage in Storages:
         if storage['price'] <= budget:
-            if storage['specs']['capacity'] > highestCapacity:
-                highestCapacity = storage['specs']['capacity']
-                currentPrice = storage['price']
-                recommendation = storage
-            elif storage['specs']['capacity'] == highestCapacity:
-                if currentPrice > storage['price']:
+            if storage['format'] == format:
+                if storage['specs']['capacity'] > highestCapacity:
                     highestCapacity = storage['specs']['capacity']
                     currentPrice = storage['price']
                     recommendation = storage
+                elif storage['specs']['capacity'] == highestCapacity:
+                    if currentPrice > storage['price']:
+                        highestCapacity = storage['specs']['capacity']
+                        currentPrice = storage['price']
+                        recommendation = storage
             
     return(recommendation)
 
@@ -200,13 +218,13 @@ def recommendMemory(budget, Motherboard):
 
     return(recommendation)
 
-def recommendPSU(budget, sumPower_use):
+def recommendPSU(budget, sumPower_usage):
     PSUs = db.getAllProducts('PSU')
     currentPrice = 10000.0
     ratings = ['Certified', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Titanium']
     currentRating = -1
     for PSU in PSUs:
-        if PSU['price'] <= budget and PSU['specs']['wattage'] >= sumPower_use:
+        if PSU['price'] <= budget and PSU['specs']['wattage'] >= sumPower_usage:
             if ratings.index(PSU['specs']['power_efficiency']) > currentRating:
                 recommendation = PSU
                 currentPrice = PSU['price']

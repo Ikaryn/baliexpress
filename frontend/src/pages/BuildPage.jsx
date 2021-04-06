@@ -1,8 +1,11 @@
 import { AppBar, Button, Grid, makeStyles, Modal, Paper, rgbToHex, Typography, useTheme } from '@material-ui/core';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
+import API from '../util/API';
 import { generateBuildString } from '../util/helpers';
 import { StoreContext } from '../util/store';
+
+const api = new API();
 
 const buildTemplate = {
     'Case': '', 
@@ -66,6 +69,13 @@ const BuildPage = () => {
     
     const handleSaveBuild = () => {
         console.log(build);
+        console.log('Send post request')
+        api.post(`build`, {
+            userID: localStorage.getItem('userId'),
+            buildName: 'buildName',
+            buildDesc: 'buildDesc',
+            build: build,
+        })
     }
     
     

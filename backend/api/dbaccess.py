@@ -540,7 +540,7 @@ def deleteProduct(id):
         conn.close()
         return deleted
 
-# ~~~~~~~~~~ BULD A PC FUNCTIONS ~~~~~~~~~~
+# ~~~~~~~~~~ BUILD A PC FUNCTIONS ~~~~~~~~~~
 
 # create a new, empty build
 # returns id of new buiid if successful, None otherwise

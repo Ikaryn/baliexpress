@@ -2,6 +2,7 @@ import { Button, Checkbox, Divider, FormControl, FormControlLabel, Grid, InputLa
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router';
+import API from '../../util/API';
 
 
 
@@ -12,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-  
+const api = new API();
+
 const BuildModalForm = ({handleToggle, setOpen}) => {
     const classes = useStyles();
     const [usage, setUsage] = React.useState('');
@@ -29,17 +31,18 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
         handleToggle(false);
         if (flag === 'empty'){ 
             history.push('/build');
-        // } else if (flag == 'build'){
-        //     history.push('/build');
-        //     const options = {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'build/json',
-        //             'request-type': 'get build',
-        //         },
-        //         body: JSON.stringify(buildForm)
-        //     }
-        //     const res = await.makeAPIRequest('/bu')
+        } else if (flag == 'build'){
+            history.push('/build');
+            // const options = {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'build/json',
+            //         'request-type': 'get build',
+            //     },
+                
+            // }
+            const res = api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
+            console.log(usage, budget, overclock, storage)
         }
     }
     
