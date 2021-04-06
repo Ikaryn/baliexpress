@@ -37,3 +37,24 @@ class Featured(Resource):
 
         return {'major features': major_features,
                 'minor features': minor_features}
+
+# absa
+# absa
+# absa
+# absa
+# absa
+# absa
+# absa
+# a
+
+# absa
+
+# absa
+
+# a
+
+# absa
+
+# absa
+# a
+
