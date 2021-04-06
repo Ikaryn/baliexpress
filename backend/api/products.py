@@ -39,6 +39,10 @@ class Products(Resource):
 
         # Converting all date objects to strings for serialization
         for product in products:
+            for field in product['specs']:
+                if (isinstance(product['specs'][field], bool)):
+                    product['specs'][field] = 'Yes' if product['specs'][field] else 'No'
+
             releaseDate = product['release_date'].strftime('%Y-%m-%d')
             product['release_date'] = releaseDate
         return ({'products':products})
@@ -58,6 +62,12 @@ class Products(Resource):
                 if img is not None:
                     img = img.split(',')[1]
                     newProduct[field] = img
+            elif field == 'cooler_included' or field == 'overclockable':
+                value = data.get(field)
+                if value.lower() == 'yes':
+                    newProduct[field] = True
+                else:
+                    newProduct[field] = False
             else:
                 newProduct[field] = data.get(field)
         

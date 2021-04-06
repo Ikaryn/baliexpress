@@ -54,11 +54,6 @@
     object-fit: scale-down;
 }
 
-.product-card-container {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-}
 
 .product-list-sort-tab {
     width: 100%;
