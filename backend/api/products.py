@@ -25,6 +25,15 @@ def productSearch(*args):
 
         return results if len(args) == 1 else results[:args[1]]
 
+# Converting release date in products from a date object to string for JSON serialization
+def dateToString(products):
+
+    for product in products:
+        releaseDate = product['release_date'].strftime('%Y-%m-%d')
+        product['release_date'] = releaseDate
+    
+    return products
+
 class Products(Resource):
     
     # Getting all products of a certain category
@@ -147,10 +156,12 @@ class Search (Resource):
             resultSize = 5 # Max number of products to be returned
 
             results = productSearch(query, resultSize)
+            results = dateToString(results)
             return {'results': results}
 
         else:
             print('Search attempt received')
 
             results = productSearch(query)
+            results = dateToString(results)
             return {'results': results}
