@@ -178,10 +178,10 @@ const ReviewBlock = ({rating, productId}) => {
                     </Button>
                 </Grid>
                 <Grid container item direction="row" xs={3} alignItems="center" alignContent="center">
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                         <Typography variant="h5" className="light-text">Filter: </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <Select fullWidth name="Filter-dropdown" value={filter}>
                             <MenuItem value=""/>
                             {[1,2,3,4,5].map((num) => (
@@ -191,10 +191,10 @@ const ReviewBlock = ({rating, productId}) => {
                     </Grid>
                 </Grid>
                 <Grid container item direction="row" xs={3} alignItems="center" alignContent="center">
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <Typography variant="h5" className="light-text">Sort: </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={8}>
                         <Select fullWidth name="sort-dropdown" value={sort}>
                             <MenuItem value='popularity'>Popularity</MenuItem>
                             <MenuItem value='stars-high'>Stars High</MenuItem>

@@ -26,8 +26,6 @@ const ReviewCard = ({review, userId}) => {
     
     const classes = useStyles();
 
-    const [username, setUsername] = React.useState('');
-
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
     console.log(review);
     
@@ -111,7 +109,7 @@ const ReviewCard = ({review, userId}) => {
                             <Typography className={'light-text'}>{review.username}</Typography>
                         </Grid>
                         <Grid item>
-                            <Rating value={review.rating} defaultValue={review.rating} readOnly />
+                            <Rating defaultValue={Number(review.rating)} readOnly />
                         </Grid>
                     </Grid>
                 </Grid>
