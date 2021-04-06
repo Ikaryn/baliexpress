@@ -1,13 +1,14 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
+from . import credentials
 
 def connect():
     conn = None
     try:
         conn = psycopg2.connect(database="baliexpress",
-            user="postgres",
-            password="kien-min"
+            user=credentials.user,
+            password=credentials.password
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -15,159 +16,139 @@ def connect():
 
     return conn
 
-# "Users" table functions
-# returns all db info for a given id
-# TODO: make less hard coded, tidy up
-def getUserInfo(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    print('id:', id)
-
-    cur.execute(
-    	"SELECT * FROM Users WHERE id = %s", [id]
-    )
-
+# ~~~~~~~~~~ USERS FUNCTIONS ~~~~~~~~~~
+# returns all information about a single user
+# returns a dictionary containing information if successful, None otherwise
+def getUserInfo(userID):
     try:
-        tuple = cur.fetchall()[0]
-        info = {
-            "id": tuple[0],
-            "name": tuple[1],
-            "email": tuple[2],
-            "password": tuple[3],
-            "phone": tuple[4],
-            "streetAddress": tuple[5],
-            "city": tuple[6],
-            "state": tuple[7],
-            "country": tuple[8],
-            "postcode": tuple[9],
-            "admin": tuple[10]
-        }
-    except IndexError:
-        info = None
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-    cur.close()
-    conn.close()
-    return info
+        # get user information from Users table
+        query = "SELECT * FROM Users WHERE id = %s"
+        cur.execute(query, [userID])
 
-#TODO: make less hard coded, tidy up
+        # convert to dictinoary
+        record = cur.fetchone()
+        user = {column:data for column, data in record.items()}
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        user = None
+        print("An error has occured in getUserInfo")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return user
+
+# get information on all users
+# returns a list of dictionaries if successful, None otherwise
 def getAllUsers():
-    conn = connect()
-    cur = conn.cursor()
-    cur.execute(
-        "SELECT * FROM Users"
-    )
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-    users = []
-    while True:
-        tuple = cur.fetchone()
-        if tuple == None:
-            break
-        info = {
-            "id": tuple[0],
-            "name": tuple[1],
-            "email": tuple[2],
-            "password": tuple[3],
-            "phone": tuple[4],
-            "streetAddress": tuple[5],
-            "city": tuple[6],
-            "state": tuple[7],
-            "country": tuple[8],
-            "pCode": tuple[9],
-            "admin": tuple[10]
-        }
-        users.append(info)
+        # get all users from Users
+        query = "SELECT * FROM Users"
+        cur.execute(query)
 
-    cur.close()
-    conn.close()
-    return users
+        # convert into list of dictionaries
+        rows = cur.fetchall()
+        users = [{column:data for column, data in record.items()} for record in rows]
 
+    except (Exception, psycopg2.DatabaseError) as error:
+        users = None
+        print("An error occured in getAllUsers()")
+        print(error)
 
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return users
 
-# returns the corresponding password for a given user ID
-# NOTE: likely a very insecure way of doing this
+# returns the corresponding password for a given user ID if successful
+# None otherwise
 def getPassword(id):
-    conn = connect()
-    cur = conn.cursor()
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
 
-    cur.execute(
-    	"SELECT password FROM Users WHERE id = %s", [id]
-    )
-    password = cur.fetchall()[0][0]
-    cur.close()
-    conn.close()
-    return password
+        # get password from Users table
+        query = "SELECT password FROM Users WHERE id = %s"
+        cur.execute(query, [id])
+        password = cur.fetchone()[0]
 
-# returns the corresponding email for a given user id
-def getEmail(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT email FROM Users WHERE id = %s", [id]
-    )
-    email = cur.fetchall()[0][0]
-    cur.close()
-    conn.close()
-    return email
+    except (Exception, psycopg2.DatabaseError) as error:
+        password = None
+        print("An error has occured in getPassword")
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return password
 
 # returns the corresponding user id for a given email
+# returns ID if successful, None otherwise
 def getUserIDFromEmail(email):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT id FROM Users WHERE email = %s", [email]
-    )
-
     try:
-        id = cur.fetchall()[0][0]
-    except IndexError:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # query Users table for ID
+        query = "SELECT id FROM Users WHERE email = %s"
+        cur.execute(query, [email])
+        id = cur.fetchone()[0]
+    except (Exception, psycopg2.DatabaseError) as error:
         id = None
-    cur.close()
-    conn.close()
-    return id
-
-# returns the corresponding address for a given user id
-def getAddress(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT streetaddress, city, country, postcode FROM Users WHERE id = %s", [id]
-    )
-    address = cur.fetchall()[0]
-    cur.close()
-    conn.close()
-    return address
-
-# returns whether or not a given user is an admin
-def getAdminStatus(id):
-    conn = connect()
-    cur = conn.cursor()
-
-    cur.execute(
-    	"SELECT admin FROM Users WHERE id = %s", [id]
-    )
-    admin = cur.fetchall()[0][0]
-    cur.close()
-    conn.close()
-    return admin
+        print("An error has occured in getUserIDFromEmail")
+        print(error)
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return id
 
 # creates a new user from given paramters
 # Note: id does not need to be specified, database generates it automatically
+# returns users ID if successful, None otherwise
+#TODO: get generated ID
 def addUser(name, password, email, phonenumber):
-    conn = connect()
-    cur = conn.cursor()
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
 
-    query =  """INSERT INTO Users (id, name, email, password, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 'f');"""
-    values = (name, password, email, phonenumber)
+        # insert new user into Users database
+        query =  "INSERT INTO Users (id, name, password, email, phonenumber, admin) VALUES (DEFAULT, %s, %s, %s, %s, 'f') RETURNING id"""
+        values = (name, password, email, phonenumber)
+        cur.execute(query, values)
 
-    cur.execute(query, values)
-    conn.commit()
-    cur.close()
-    conn.close()
-    #TODO: error handling
+        # get generated id of added user
+        id = cur.fetchone()[0]
+
+        # commit changes to database
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        id = None
+        print("An error has occured in addUser")
+        print(error)
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return id
 
 # creates a new user with admin permissions from given parameters
 # NOTE: id does not need to be specified, database generates it automatically
@@ -813,9 +794,12 @@ def getProductReviews(productID):
             query = "SELECT voterid, vote FROM Review_Votes WHERE reviewid = %s"
             cur.execute(query, [review['reviewid']])
 
-            # convert vote rows to a list of dictionaries
+            # convert vote rows to a dictionary
             rows = cur.fetchall()
-            review['votes'] = [{column:data for column, data in record.items()} for record in rows]
+            votes = {}
+            for record in rows:
+                votes[record['voterid']] = record['vote']
+            review['votes'] = votes
 
         # commit and close database
         conn.commit()
@@ -907,6 +891,71 @@ def deleteVote(reviewID, voterID):
         conn.close()
         return deleted
 
+# ~~~~~~~~~~ ORDER FUNCTIONS ~~~~~~~~~~
+
+# creates a new order
+# please pass products as a dictionary, with productid as the key and quantity as the value
+# date should be in the format yyyy-mm-dd
+# returns order id if successful, None otherwise
+def addOrder(userID, date, products):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into Review_Votes table
+        query = "INSERT INTO Orders (userid, date) VALUES (%s, %s)  RETURNING id"
+        cur.execute(query, (userID, date))
+
+        # get order id generated by database
+        orderID = cur.fetchone()[0]
+
+        # insert products into Order_Items table
+        for productID, quantity in products.items():
+            query = "INSERT INTO Order_Items (orderid, productid, quantity) VALUES (%s, %s, %s)"
+            cur.execute(query, (orderID, productID, quantity))
+
+        # commit and close database
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        orderID = None
+        print ("An error has occured in addOrder()")
+        print(error)
+
+    finally:
+        conn.close()
+        return orderID
+# deletes an order
+# returns 1 if successful, 0 otherwise
+def deleteOrder(orderID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete order from Orders table
+        query = "DELETE FROM Orders WHERE id = %s"
+        cur.execute(query, [orderID])
+        deleted = cur.rowcount
+
+        # delete order items from Order_Items
+        query = "DELETE FROM Order_Items WHERE orderid = %s"
+        cur.execute(query, [orderID])
+
+        # commit changes and close connection
+        conn.commit()
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteOrder()")
+        print (error)
+    finally:
+        conn.close()
+        return deleted
+
 # ~~~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~
 
 def getColumns(cur, table):
@@ -926,26 +975,43 @@ def getCategoryFromID(cur, id):
     return cur.fetchone()[0]
 
 
-#addReview(1, 1, 3, "Its alright i guess", "2021-04-29")
-addVote(1, 1, -1)
+# ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 
-print(getProductReviews(1))
-#addVote(1, 1, 5)
+# # returns the corresponding email for a given user id
+# def getEmail(id):
+#     conn = connect()
+#     cur = conn.cursor()
+#
+#     cur.execute(
+#     	"SELECT email FROM Users WHERE id = %s", [id]
+#     )
+#     email = cur.fetchall()[0][0]
+#     cur.close()
+#     conn.close()
+#     return email
 
-# cpu = { 'name': 'fuly sick cpu',
-#         'category': 'CPU',
-#         'brand': 'supreme',
-#         'price': 199.99,
-#         'image': '',
-#         'warranty': '1 year',
-#         'description': 'lit',
-#         'stock': 525,
-#         'specs': {  'cores': 8,
-#                     'threads': 16,
-#                     'base_clock': 6.0,
-#                     'max_clock': 6.4,
-#                     'socket': 'your mum',
-#                     'cooler_included': True,
-#                     'overclockable': True,
-#                     'power_use': 100.2,
-#         }}
+# # returns the corresponding address for a given user id
+# def getAddress(id):
+#     conn = connect()
+#     cur = conn.cursor()
+#
+#     cur.execute(
+#     	"SELECT streetaddress, city, country, postcode FROM Users WHERE id = %s", [id]
+#     )
+#     address = cur.fetchall()[0]
+#     cur.close()
+#     conn.close()
+#     return address
+
+# # returns whether or not a given user is an admin
+# def getAdminStatus(id):
+#     conn = connect()
+#     cur = conn.cursor()
+#
+#     cur.execute(
+#     	"SELECT admin FROM Users WHERE id = %s", [id]
+#     )
+#     admin = cur.fetchall()[0][0]
+#     cur.close()
+#     conn.close()
+#     return admin

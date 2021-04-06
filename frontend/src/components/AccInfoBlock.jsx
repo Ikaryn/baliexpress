@@ -32,14 +32,14 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         setUserInfo(accInfo);
         setEditName(accInfo.name);
         setEditEmail(accInfo.email);
-        setEditPhone(accInfo.phone);
-        setEditAddr(shippingInfo.addr);
+        setEditPhone(accInfo.phonenumber);
+        setEditAddr(shippingInfo.streetaddress);
         setEditCity(shippingInfo.city);
-        setEditPCode(shippingInfo.pCode);
+        setEditPCode(shippingInfo.postcode);
         setEditCountry(shippingInfo.country);
         setEditState(shippingInfo.state);
         
-    },[accInfo, shippingInfo.addr, shippingInfo.city, shippingInfo.country, shippingInfo.pCode, shippingInfo.state])
+    },[accInfo, shippingInfo.streetaddress, shippingInfo.city, shippingInfo.country, shippingInfo.postcode, shippingInfo.state])
 
     function checkValidEmail (input) {
         return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input);
@@ -59,13 +59,13 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return setEditName(value);
             case 'email':
                 return setEditEmail(value);
-            case 'phone':  
+            case 'phonenumber':  
                 return setEditPhone(value);
-            case 'addr':
+            case 'streetaddress':
                 return setEditAddr(value);
             case 'city':
                 return setEditCity(value);
-            case 'pCode':
+            case 'postcode':
                 return setEditPCode(value);
             case 'country':
                 return setEditCountry(value);
@@ -80,13 +80,13 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return 'Name';
             case 'email':
                 return 'Email';
-            case 'phone':
+            case 'phonenumber':
                 return 'Phone Number';
-            case 'addr':
+            case 'streetaddress':
                 return 'Address';
             case 'city':
                 return 'City';
-            case 'pCode':
+            case 'postcode':
                 return 'Postal Code';
             case 'country':
                 return 'Country';
@@ -101,13 +101,13 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return editName;
             case 'email':
                 return editEmail;
-            case 'phone':
+            case 'phonenumber':
                 return editPhone;
-            case 'addr':
+            case 'streetaddress':
                 return editAddr;
             case 'city':
                 return editCity;
-            case 'pCode':
+            case 'postcode':
                 return editPCode;
             case 'country':
                 return editCountry;
@@ -122,11 +122,11 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return nameError;
             case 'email':
                 return emailError;
-            case 'phone':
+            case 'phonenumber':
                 return phoneError;
             case 'city':
                 return cityError;
-            case 'pCode':
+            case 'postcode':
                 return pCodeError;
             case 'country':
                 return countryError;
@@ -194,16 +194,15 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         const body = {
             name: editName, 
             email: editEmail, 
-            phone: editPhone, 
-            streetAddress: editAddr,
+            phonenumber: editPhone, 
+            streetaddress: editAddr,
             city: editCity,
             postcode: editPCode,
             country: editCountry,
             state: editState
         };
     
-        const response = await api.put(`profile/${localStorage.getItem('userId')}`, body, {'request-type': 'edit profile'});
-        // console.log(response);
+        const response = await api.put(`profile?userId=${localStorage.getItem('userId')}`, body);
         setEditComponent(false);
     }
     console.log(shippingInfo);
