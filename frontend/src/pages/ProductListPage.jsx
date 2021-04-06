@@ -29,15 +29,15 @@ const ProductListPage = () => {
     React.useEffect(() => {
         (async () => {
             var newProducts = [...products];
-            if(nameFilter != ""){
+            if(nameFilter !== ""){
                 newProducts = [...newProducts].filter(product => product.name.toLowerCase().includes(nameFilter.toLowerCase()));
             }
 
-            if(sortType == "Popularity"){
+            if(sortType === "Popularity"){
                 newProducts.sort((a, b) => a.stock - b.stock);
-            }else if(sortType == "Price-High"){
+            }else if(sortType === "Price-High"){
                 newProducts.sort((a, b) => b.price - a.price);
-            }else if(sortType == "Price-Low"){
+            }else if(sortType === "Price-Low"){
                 newProducts.sort((a, b) => a.price - b.price);
             }
 

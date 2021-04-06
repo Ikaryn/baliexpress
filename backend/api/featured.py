@@ -45,6 +45,6 @@ class Featured(Resource):
             releaseDate = product['release_date'].strftime('%Y-%m-%d')
             product['release_date'] = releaseDate
 
-        return {'major features': major_features,
-                'minor features': minor_features}
+        return {'major_features': major_features,
+                'minor_features': minor_features}
 

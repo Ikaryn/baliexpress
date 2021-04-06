@@ -12,6 +12,7 @@ const ProductCard = ({pid, name, price, image, category}) => {
     const handleClick = () => {
         history.push(`/product/${category}/${pid}`)
     }
+    
     return (
         <Card className="product-card-container">
                 <CardActionArea onClick={() => handleClick()}>
