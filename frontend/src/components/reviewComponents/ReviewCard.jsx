@@ -78,8 +78,6 @@ const ReviewCard = ({review, userId}) => {
         // console.log(response);
     }
 
-    console.log(review.rating)
-
     React.useEffect(() => {
 
         let up = false;
@@ -108,7 +106,7 @@ const ReviewCard = ({review, userId}) => {
                             <Typography className={'light-text'}>{review.username}</Typography>
                         </Grid>
                         <Grid item>
-                            <Rating defaultValue={Number(review.rating)} readOnly />
+                            <Rating value={Number(review.rating)} readOnly />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, Grid, Grow, LinearProgress, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Divider, Grid, Grow, LinearProgress, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import ReviewCard from './ReviewCard';
@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         top: '-250px',
         marginTop: '10px'
+    },
+    featuredProductContainer: {
+        backgroundColor: 'rgb(66,66,66)',
+        padding: '2em',
     }
 }))
 
@@ -37,21 +41,23 @@ const BarPercentages = ({ratings}) => {
     React.useEffect(() => {
         
         const initStars = [0,0,0,0,0];   
+        // count how many stars are in each
         ratings.forEach((review) => {
             initStars[review.rating - 1] += 1;
         });
-        console.log(initStars);
+        //calculate the total amount of rating given
         let totalRating = 0;
         for(let i = 0; i < 5; i++) {
             if(initStars[i] !== 0) {
                 totalRating += initStars[i] * (i+1);
             }
         }
-        console.log(totalRating, ratings.length);
-        console.log(totalRating/ratings.length);
+        
         setOverallRating(Math.round(totalRating/ratings.length));
         setStars(initStars);
     }, [ratings])
+    
+
     
     const classes = useStyles();
     
@@ -88,12 +94,42 @@ const BarPercentages = ({ratings}) => {
 
 } 
 
+const FeaturedReview = ({review}) => (
+    <Grid container item direction="column" spacing={8} xs={12}>
+            <Grid container item direction="row" justify="space-between">
+                <Grid container item direction="row" xs={3}>
+                    <Grid item xs={6}>
+                        <Avatar>{review.username ? review.username.slice(0,1) : ''}</Avatar>
+                    </Grid>
+                    <Grid container item direction="column" xs={6}>
+                        <Grid item>
+                            <Typography className={'light-text'}>{review.username}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Rating value={Number(review.rating)} readOnly />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography className={'light-text'}>{review.reviewdate}</Typography>
+                </Grid>
+            </Grid>
+            <Grid container item justify="center">
+                <Grid item>
+                    <Typography className={'light-text'}>"{review.reviewtext}"</Typography>
+                </Grid>
+            </Grid>
+    </Grid>
+)
+
 const ReviewBlock = ({rating, productId}) => {
     
     const [reviews, setReviews] = React.useState([{}])
     const [sort, setSort] = React.useState('popularity');
-    const [filter, setFilter] = React.useState(0);
+    const [filter, setFilter] = React.useState('all');
     const [reviewOpen, setReviewOpen] = React.useState(false);
+    const [featuredReview, setFeaturedReview] = React.useState(null);
+    const [allReviews, setAllReviews] = React.useState([{}]);
     
     const classes = useStyles();
     
@@ -108,6 +144,52 @@ const ReviewBlock = ({rating, productId}) => {
         }
         
         return 'Sign in to Write a review';
+    }
+    
+    const handleFilter = (value) => {
+        setFilter(value);
+        let filteredReviews = JSON.parse(JSON.stringify(allReviews));
+        if(value !== 'all') {
+            filteredReviews = filteredReviews.filter((review) => (
+                review.rating === Number(value.slice(0,1))
+            ));
+        }
+        setReviews(filteredReviews);
+    }
+    
+    const handleSort = async (value) => {
+        setSort(value);
+        const sortedReviews = JSON.parse(JSON.stringify(reviews));
+        
+        switch (value) {
+            case "date-recent":
+                sortedReviews.sort((a,b) => (
+                    new Date(b.reviewdate) - new Date(a.reviewdate)
+                ));
+                break;
+            case "date-oldest":
+                sortedReviews.sort((a,b) => (
+                    new Date(a.reviewdate) - new Date(b.reviewdate)
+                ));
+                break;
+            case "stars-high":
+                sortedReviews.sort((a,b) => (
+                    b.rating - a.rating
+                ));
+                break;
+            case "stars-low":
+                sortedReviews.sort((a,b) => (
+                    a.rating - b.rating
+                ));
+                break;
+            default:
+                sortedReviews.sort((a,b) => (
+                    b.score - a.score
+                ));
+                break;
+        }
+        setReviews(sortedReviews);
+    
     }
     
     // get reviews and users who made the reviews for the product page we're on.
@@ -130,7 +212,20 @@ const ReviewBlock = ({rating, productId}) => {
                 const response = await api.makeAPIRequest(`profile?userId=${review.userid}`, options);
                 review['username']= response.accountInfo['name'];
             }));
+            
+            let mostVotedReview = response.reviews[0];
+            console.log(mostVotedReview);
+            
+            response.reviews.forEach((review) => {
+                if (review.score > mostVotedReview.score) {
+                    mostVotedReview = review;
+                }
+            });
+            
+            console.log(response.reviews);
             setReviews(response.reviews);
+            setAllReviews(response.reviews);
+            setFeaturedReview(mostVotedReview);
         })();
     },[productId])
     
@@ -141,26 +236,17 @@ const ReviewBlock = ({rating, productId}) => {
             </Grid>
             <Grid item container direction="row">
                 <Grid item container direction="column" xs={6}>
-                    {/* <Grid item container direction="row" spacing={1}>
-                        <Grid item>
-                            <Typography className="light-text">Rating: </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Rating value={rating} readOnly />
-                        </Grid>
-                        <Grid item>
-                            <Typography className="light-text">{`${rating} out of 5 stars`}</Typography>
-                        </Grid>
-                    </Grid>
                     <Grid item>
-                        {reviews && <BarPercentages ratings={reviews} />}
-                    </Grid> */}
-                    <Grid item>
-                        {reviews && <BarPercentages ratings={reviews} />}
+                        {reviews && <BarPercentages ratings={allReviews} />}
                     </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <Typography variant="h6" className="light-text">Featured Review</Typography>
+                <Grid container item xs={6} direction="column">
+                    <Grid item>
+                        <Typography variant="h6" className="light-text">Featured Review</Typography>
+                    </Grid>
+                    <Grid item className={classes.featuredProductContainer}>
+                        {featuredReview &&<FeaturedReview review={featuredReview} />}
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid item>
@@ -182,10 +268,10 @@ const ReviewBlock = ({rating, productId}) => {
                         <Typography variant="h5" className="light-text">Filter: </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                        <Select fullWidth name="Filter-dropdown" value={filter}>
-                            <MenuItem value=""/>
+                        <Select fullWidth name="Filter-dropdown" value={filter} onChange={(event) => {handleFilter(event.target.value)}}>
+                            <MenuItem value="all">All</MenuItem>
                             {[1,2,3,4,5].map((num) => (
-                                <MenuItem value={num}>{`${num} Stars`}</MenuItem>
+                                <MenuItem value={String(num + ' stars')}>{`${num} Stars`}</MenuItem>
                             ))}
                         </Select>
                     </Grid>
@@ -195,10 +281,12 @@ const ReviewBlock = ({rating, productId}) => {
                         <Typography variant="h5" className="light-text">Sort: </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <Select fullWidth name="sort-dropdown" value={sort}>
+                        <Select fullWidth name="sort-dropdown" value={sort} onChange={(event) => {handleSort(event.target.value)}}>
                             <MenuItem value='popularity'>Popularity</MenuItem>
-                            <MenuItem value='stars-high'>Stars High</MenuItem>
-                            <MenuItem value='stars-low'>Stars low</MenuItem>
+                            <MenuItem value='stars-high'>Rating High</MenuItem>
+                            <MenuItem value='stars-low'>Rating Low</MenuItem>
+                            <MenuItem value='date-recent'>Date Recent</MenuItem>
+                            <MenuItem value='date-oldest'>Date Oldest</MenuItem>
                         </Select>
                     </Grid>
                 </Grid>
@@ -213,7 +301,13 @@ const ReviewBlock = ({rating, productId}) => {
                     </Paper>
                 </Grow>
             </div>
-            <Grid container item direction="column" alignContent="center" className={reviewOpen ? '' : classes.closedReviewFormCardBlock} >
+            <Grid 
+                container 
+                item 
+                direction="column" 
+                alignContent="center" 
+                className={reviewOpen ? '' : classes.closedReviewFormCardBlock}
+            >
                 {reviews && reviews.map((review) => (
                     <ReviewCard review={review} userId={localStorage.getItem('userId')}/>
                 ))}
