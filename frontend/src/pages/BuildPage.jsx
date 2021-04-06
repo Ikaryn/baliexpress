@@ -21,7 +21,7 @@ const buildTemplate = {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: '5%',
+        marginBottom: '10%',
     },
     footerBar: {
         top: 'auto',
@@ -91,15 +91,15 @@ const BuildPage = () => {
     <div className={classes.root}>
         <Grid container alignItems="center" direction="column" spacing={3}>
             <Grid item>
-                <Typography className="light-text" variant="h2" >Custom Pc Builder</Typography>
+                <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
                 <Paper>
                     <Typography>Sort placeholder</Typography>
                 </Paper>
-            </Grid>
+            </Grid> */}
             <Grid container item direction="row">
-                <Grid container item xs={2}>
+                {/* <Grid container item xs={2}>
                     <Paper>
                         <Grid item>
                             <Typography variant="h4">Overview</Typography>
@@ -108,8 +108,8 @@ const BuildPage = () => {
                             <Typography>specs placeholder</Typography>
                         </Grid>
                     </Paper>
-                </Grid>
-                <Grid container item direction="column" xs={10} spacing={3}>
+                </Grid> */}
+                <Grid container item direction="column" xs={12} spacing={3}>
                     {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
                             <BuildProductCard type={category} />

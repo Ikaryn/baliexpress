@@ -22,7 +22,10 @@ class UserBuilds(Resource):
         
     def delete(self):
         print("delete userBuilds recieved")
-    
+        data = request.args
+        buildId = data.get('buildId')
+        db.deleteBuild(buildId)
+        return 'success'
 class BuildPage(Resource):
     def post(self):
         print("Build post received")
