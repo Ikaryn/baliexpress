@@ -7,6 +7,9 @@ const useStyles = makeStyles({
         width: '100%',
         height: '90%',
     },
+    image: {
+        width: '100%',
+    }
 })
 
 const CompareProductCard = ({productInfo}) => {
@@ -21,11 +24,14 @@ const CompareProductCard = ({productInfo}) => {
     console.log(performance, productInfo);
     return (
     <Grid container item direction="column">
-        <Grid container item direction="row">
-            <Grid item>
-                {/* <img src={build[comparedProduct.type].image} alt={build[comparedProduct.type].name} /> */}
+        <Grid item>
+            <Typography className="light-text" variant='h6'>{productInfo.name}</Typography>
+        </Grid>
+        <Grid container item direction="column" spacing={2}>
+            <Grid item >
+                <img className={classes.image} src={"data:image/jpeg;base64,"+ productInfo.image} alt={productInfo.name} />
             </Grid>
-            {performance && <Grid container item direction="column">
+            {performance && <Grid container item direction="column" >
                 <Grid item>
                     <Typography variant="h5" className="light-text">Performance</Typography>
                 </Grid>
