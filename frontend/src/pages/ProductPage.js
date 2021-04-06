@@ -56,16 +56,16 @@ const ProductPage = () => {
     // check if the current user is admin and set the relevant state
     React.useEffect(() => {
         (async () => {
-            const options = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Request-Type': 'profile',
-                },
-            }
+            // const options = {
+            //     method: 'GET',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Request-Type': 'profile',
+            //     },
+            // }
             const userId = localStorage.getItem('userId');
             if (userId) {
-                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
                 setIsAdmin(userDetails.admin);
             }

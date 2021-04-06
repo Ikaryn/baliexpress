@@ -7,15 +7,15 @@ const ViewUsers = ({}) => {
     const [users, setUsers] = React.useState([]);
     React.useEffect(() => {
         (async () => {
-            const options = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Request-Type': 'all users',
-                },
-            }
-            const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+            // const options = {
+            //     method: 'GET',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Request-Type': 'all users',
+            //     },
+            // }
+            // const userId = localStorage.getItem('userId');
+            const res = await api.get(`profile`);
             console.log(res)
             setUsers(res.users);
         })();

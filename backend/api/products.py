@@ -4,6 +4,7 @@ from flask_restful import Resource
 from flask_cors import CORS
 from flask_restful import Api
 from . import dbaccess as db
+from datetime import datetime
 
 # Returns a list of products that fit a certain query with a string
 # args is either just the query string, or the query string and desired
@@ -26,44 +27,25 @@ def productSearch(*args):
 
 class Products(Resource):
     
+    # Getting all products of a certain category
+    # Url format: `product?category=${category}`
     def get(self):
+        print("Get ProductList attempt received")
 
-        # Get request type from header
-        requestType = request.headers.get('request-type')
-        print(requestType)
         data = request.args
         category= data.get('category')
 
-        # Getting products from category
-        if category is not None:
-            print("Get ProductList attempt received")
+        products = db.getAllProducts(str(category))
 
-            products = db.getAllProducts(str(category))
-            for product in products:
-                releaseDate = product['release_date'].strftime('%Y-%m-%d')
-                product['release_date'] = releaseDate
-            return ({'products':products})
+        # Converting all date objects to strings for serialization
+        for product in products:
+            releaseDate = product['release_date'].strftime('%Y-%m-%d')
+            product['release_date'] = releaseDate
+        return ({'products':products})
 
-        elif requestType == 'quick search':
-
-            print('Quick search attempt received')
-            query = request.args.get('query')
-
-            results = productSearch(query, 5)
-            return {'results': results}
-        
-        elif requestType == 'search':
-
-            print('Search attempt received')
-            query = request.args.get('query')
-
-
-            results = productSearch(query)
-            return {'results': results}
-        
-
+    # Adding a new product to database
+    # Url format: `product`
     def post(self):
-        # Add product to product list
         print('Add product attempt received')
         data = request.json
 
@@ -71,18 +53,27 @@ class Products(Resource):
         for field in data:
             if field == 'image':
                 img = data.get(field)
+
+                # Removing the image tag from string
                 if img is not None:
                     img = img.split(',')[1]
                     newProduct[field] = img
             else:
                 newProduct[field] = data.get(field)
         
+        newReleaseDate = datetime.today().date()
+        newProduct['release_date'] = newReleaseDate
 
         productId = db.addProduct(newProduct)
         product = db.getProduct(productId)
 
+        releaseDate = product['release_date'].strftime('%Y-%m-%d')
+        product['release_date'] = releaseDate
+
         return {'product': product}
-    
+
+    # Editing an existing product
+    # Url format: `product`
     def put(self):
 
         data = request.json
@@ -116,6 +107,8 @@ class Products(Resource):
         
         return
     
+    # Remove an existing product
+    # Url format: `product`
     def delete(self):
         
         # Delete a product using its productId
@@ -125,3 +118,29 @@ class Products(Resource):
         productId = data.get('id')
         db.deleteProduct(productId)
         return {'message': 'product successfully removed'}
+
+class Search (Resource):
+
+    # Search for products
+    # Url formats:
+    # Quick search: `search?query=${query}&quickSearch=${true}`
+    # Full search: `search?query=${query}`
+    def get(self):
+        
+        data = request.args
+        query = data.get('query')
+        quickSearch = data.get('quickSearch')
+
+        if quickSearch:
+            print('Quick search attempt received')
+
+            resultSize = 5 # Max number of products to be returned
+
+            results = productSearch(query, resultSize)
+            return {'results': results}
+
+        else:
+            print('Search attempt received')
+
+            results = productSearch(query)
+            return {'results': results}
