@@ -130,3 +130,6 @@ dmypy.json
 
 # credentials
 /backend/api/credentials.py
+
+#pycache
+/backend/api/__pycache__/
