@@ -22,7 +22,7 @@ const UserBuildList = () => {
     
     const handleRedirect = (userid, buildid, build) => {
         console.log(build);
-        setBuild(build);
+        setBuild(build.parts);
         history.push(`/build/${userid}/${buildid}`);
     }
     
