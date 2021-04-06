@@ -94,8 +94,8 @@ class BuildPage(Resource):
         
         build = {}
         build['CPU'] = recommendCPU(CPUBudget, usage, overclock)
-        build['GPU'] = recommendGPU(GPUBudget, usage, overclock)
-        build['Motherboard'] = recommendMotherboard(MotherboardBudget, usage, build['CPU'], build['GPU'])
+        build['Graphic_Cards'] = recommendGPU(GPUBudget, usage, overclock)
+        build['Motherboards'] = recommendMotherboard(MotherboardBudget, usage, build['CPU'], build['GPU'])
         build['Memory'] = recommendMemory(MemoryBudget, build['Motherboard'])
         build['Storage'] = recommendStorage(StorageBudget, build['Motherboard'], storage)
         build['Cooling'] = ""
