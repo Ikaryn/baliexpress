@@ -11,6 +11,18 @@ from flask_restful import Api
 from io import BytesIO
 from . import dbaccess as db
 
+
+class UserBuilds(Resource):
+    def get(self):
+        print("get userBuilds recieved")
+        data = request.args
+        userId = data.get('userId')
+        builds = db.getUsersBuilds(userId)
+        return {'builds': builds}
+        
+    def delete(self):
+        print("delete userBuilds recieved")
+    
 class BuildPage(Resource):
     def post(self):
         print("Build post received")

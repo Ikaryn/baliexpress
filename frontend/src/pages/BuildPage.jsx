@@ -1,6 +1,8 @@
-import { AppBar, Button, Grid, makeStyles, Modal, Paper, rgbToHex, Typography, useTheme } from '@material-ui/core';
+import { AppBar, Button, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
+import SaveBuildModal from '../components/buildPageComponents/SaveBuildModal';
 import API from '../util/API';
 import { generateBuildString } from '../util/helpers';
 import { StoreContext } from '../util/store';
@@ -40,6 +42,9 @@ const BuildPage = () => {
     console.log(build);
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
+    // modal states
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const classes = useStyles();
     
     // will change later.
@@ -67,15 +72,18 @@ const BuildPage = () => {
     
     }
     
-    const handleSaveBuild = () => {
-        console.log(build);
-        console.log('Send post request')
-        api.post(`build`, {
-            userID: localStorage.getItem('userId'),
-            buildName: 'buildName',
-            buildDesc: 'buildDesc',
-            build: build,
-        })
+    const handleSaveBuild = (event) => {
+        setOpen(true);
+        // setAnchorEl(event.currentTarget);
+        // setOpen(open ? false : true);
+        // console.log(build);
+        // console.log('Send post request')
+        // api.post(`build`, {
+        //     userID: localStorage.getItem('userId'),
+        //     buildName: 'buildName',
+        //     buildDesc: 'buildDesc',
+        //     build: build,
+        // })
     }
     
     
@@ -120,7 +128,7 @@ const BuildPage = () => {
                 </Grid>
                 <Grid container item direction="row" xs={3}>
                     <Grid item xs={6}>
-                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleSaveBuild()}}>Save build</Button>
+                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild}>Save build</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
@@ -130,7 +138,13 @@ const BuildPage = () => {
                     <Typography className="light-text" variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
                 </Grid>
             </Grid>
+            <Modal open={open} onClose={() => {setOpen(false)}}>
+                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} />
+            </Modal>
         </AppBar>
+        <Snackbar open={success} autoHideDuration={5} onClose={() => {setSuccess(false)}}>
+            <Alert severity="success">Build successfully saved!</Alert>
+        </Snackbar>
     </div>
     )
 }
