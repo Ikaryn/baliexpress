@@ -9,19 +9,25 @@ const ViewUsers = ({user}) => {
     async function handleSelectChange(event) {
         if(window.confirm('Are you sure you want to change ' + user.email + '\'s role?')){
             console.log(user.userId);
-            const options = {
-                method: 'PUT',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Request-Type': 'admin status',
-                },
-                body: JSON.stringify({
-                    admin: event.target.value,
-                    userId: user.userId
-                })
-            }
+            // const options = {
+            //     method: 'PUT',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Request-Type': 'admin status',
+            //     },
+            //     body: JSON.stringify({
+            //         admin: event.target.value,
+            //         userId: user.userId
+            //     })
+            // }
+
+            const body = {
+                            admin: event.target.value,
+                            userId: user.userId
+                        }
+
             const userId = localStorage.getItem('userId');
-            const res = await api.makeAPIRequest(`profile/${userId}`, options);
+            const res = await api.put(`profile?changeAdmin=${true}&userId=${userId}`, body);
             console.log(res);
             setRole(event.target.value);
         }
@@ -48,16 +54,6 @@ const ViewUsers = ({user}) => {
                             user.postcode + ", " + 
                             user.country
                         }
-                    </Typography>
-                    <Typography>
-                        Role: 
-                        <Select
-                            value={role}
-                            onChange={(event) => handleSelectChange(event)}
-                        >
-                            <MenuItem value={false}>User</MenuItem>
-                            <MenuItem value={true}>Admin</MenuItem>
-                        </Select>
                     </Typography>
                 </CardContent>:
                 <CardContent>
