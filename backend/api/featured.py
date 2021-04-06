@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask_cors import CORS
 from flask_restful import Api
 from . import dbaccess as db
+from operator import itemgetter
 
 
 class Featured(Resource):
@@ -15,13 +16,14 @@ class Featured(Resource):
 
         products = db.getAllProducts()
 
-        dateSorted = products.sort(key=lambda item:item['release_date'], reverse=True)
-        major_features = {dateSorted[:major]}
+        dateSorted = sorted(products, key=lambda item:item['release_date'], reverse=True)
+
+        major_features = dateSorted[:major]
 
         for product in products:
             overallRating = 0
             ratingSum = 0
-            reviews = db.getProductReviews(product['productId'])
+            reviews = db.getProductReviews(product['id'])
 
             for review in reviews:
                 ratingSum += review['rating']
@@ -31,30 +33,18 @@ class Featured(Resource):
 
             product['rating'] = overallRating 
 
-        ratingSorted = products.sort(key=lambda item:item['rating'], reverse=True)
+        ratingSorted = sorted(products, key=lambda item:item['rating'], reverse=True)
 
-        minor_features = {ratingSorted[:minor]}
+        minor_features = ratingSorted[:minor]
+
+        for product in major_features:
+            releaseDate = product['release_date'].strftime('%Y-%m-%d')
+            product['release_date'] = releaseDate
+
+        for product in minor_features:
+            releaseDate = product['release_date'].strftime('%Y-%m-%d')
+            product['release_date'] = releaseDate
 
         return {'major features': major_features,
                 'minor features': minor_features}
-
-# absa
-# absa
-# absa
-# absa
-# absa
-# absa
-# absa
-# a
-
-# absa
-
-# absa
-
-# a
-
-# absa
-
-# absa
-# a
 
