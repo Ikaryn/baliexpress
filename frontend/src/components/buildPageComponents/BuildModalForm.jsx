@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../../util/API';
+import { StoreContext } from '../../util/store';
 
 
 
@@ -30,6 +31,9 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
         'storage': ''
     });
     
+    const context = React.useContext(StoreContext);
+    const { build: [, setBuild]} = context;
+    
     
     const history = useHistory();
 
@@ -48,7 +52,8 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
             errorObject['budget'] = "Please enter a budget";
             isError = true;
         }
-        if (typeof budget !== 'number') {
+
+        if (isNaN(budget)) {
             errorObject['budget'] = "Budget must be a number";
             isError = true;
         }
@@ -62,18 +67,19 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
         return isError;
     }
     
-    const handleRedirect = (flag) => {
+    const handleRedirect = async (flag) => {
         if (flag === 'empty'){ 
             handleToggle(false);
             history.push('/build');
         } else if (flag === 'build'){
             console.log(errorHandler());
             if (!errorHandler()) {
-                history.push('/build');
-                const res = api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
+                const res = await api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
                 console.log(usage, budget, overclock, storage)
                 console.log(res);
+                setBuild(res);
                 handleToggle(false);
+                history.push('/build/custom');
             }
         }
     }
