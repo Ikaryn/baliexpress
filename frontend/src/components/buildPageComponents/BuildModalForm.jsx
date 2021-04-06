@@ -33,14 +33,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
             history.push('/build');
         } else if (flag == 'build'){
             history.push('/build');
-            // const options = {
-            //     method: 'GET',
-            //     headers: {
-            //         'Content-Type': 'build/json',
-            //         'request-type': 'get build',
-            //     },
-                
-            // }
+            
             const res = api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
             console.log(usage, budget, overclock, storage)
         }

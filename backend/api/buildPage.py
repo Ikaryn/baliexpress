@@ -19,9 +19,11 @@ class BuildPage(Resource):
         build = data.get('build')
         print("build = ",build)
         for part in build:
-            # print("part = ", build[part]['id'])
-            if part is not None:
+            if type(build[part]) is dict:
                 db.addPartToBuild(buildID, build[part]['id'], 1)
+        saved = db.getBuild(buildID)
+        print("saved = ",saved)
+            
         
 
     def get(self):
@@ -31,7 +33,6 @@ class BuildPage(Resource):
         usage = data.get('usage')
         overclock = data.get('overclock')
         storage = data.get('storage')
-        db.addNewBuild()
 
         if usage == "Gaming":
             GPUBudget = 0.6 * budget
@@ -92,6 +93,7 @@ class BuildPage(Resource):
         build['PSU'] = recommendPSU(PSUBudget, powerSum)
         # build['Case'] = recommendCase(CaseBudget, GPU)
         print(build)
+        return build
         
         
 
