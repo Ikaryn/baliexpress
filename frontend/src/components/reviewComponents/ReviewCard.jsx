@@ -29,7 +29,6 @@ const ReviewCard = ({review, userId}) => {
     const [username, setUsername] = React.useState('');
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
-    console.log(review);
     
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
