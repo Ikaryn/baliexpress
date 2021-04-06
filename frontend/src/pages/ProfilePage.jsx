@@ -9,6 +9,7 @@ import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
+import UserBuildList from '../components/profilePage/UserBuildList';
 // import './App.css';
 const api = new API();
 
@@ -143,7 +144,7 @@ const ProfilePage = () => {
                             My Orders
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            My Builds
+                            <UserBuildList />
                         </TabPanel>      
                         {accInfo.isAdmin && 
                             <TabPanel value={value} index={3}>
