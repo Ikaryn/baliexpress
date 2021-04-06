@@ -33,7 +33,8 @@ const NewProductFeature = ({feature}) => {
     
     
     const handleClick = () => {
-        history.push(`/product/${hightlightedProduct.category}/${hightlightedProduct.id}`)
+
+        history.push(`/product/${hightlightedProduct.product.category}/${hightlightedProduct.product.id}`)
     
     }
     
