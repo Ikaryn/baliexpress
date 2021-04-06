@@ -72,7 +72,7 @@ const Register = () => {
                 name: name,
                 email: email,
                 password: password,
-                phone: phone,      
+                phonenumber: phone,  
         })
         .then((res) =>{
             console.log(res);

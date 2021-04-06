@@ -30,16 +30,16 @@ const SearchBar = ({}) => {
                 setProductOutput([]);
                 return;
             }
-            const options = {
-                method: 'GET',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Request-Type': 'quick search',
-                },
-            }
+            // const options = {
+            //     method: 'GET',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Request-Type': 'quick search',
+            //     },
+            // }
             var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
             console.log(searchStringTransform);
-            const res = await api.makeAPIRequest(`search?query=${searchStringTransform}`, options);
+            const res = await api.get(`search?query=${searchStringTransform}&quickSearch=${true}`);
             setProductOutput(res.results);
             console.log(res.results);
         })();

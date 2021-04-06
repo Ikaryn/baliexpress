@@ -26,9 +26,6 @@ const EditProductPage = ({}) => {
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
 
-            // const body = JSON.stringify(productInfo);
-            // console.log("Options", options)
-            // const userId = localStorage.getItem('userId');
             const res = await api.put(`product`, productInfo);
             console.log(res);
             history.push(`/product/${category}/${pid}`);  
@@ -36,17 +33,8 @@ const EditProductPage = ({}) => {
     }
     async function removeItem(){
         if(window.confirm('Are you sure you want to remove this product?')){
-            // const options = {
-            //     method: 'DELETE',
-            //     headers: { 
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(productInfo)
-            // }
-            // const userId = localStorage.getItem('userId');
-            // console.log("request:", options)
+
             console.log('product-info:', productInfo)
-            // const body = JSON.stringify(productInfo)
             const res = await api.delete(`product`, productInfo);
             history.push(`/product/${category}`);
         }
