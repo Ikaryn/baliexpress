@@ -22,8 +22,6 @@ class Reviews(Resource):
         userId = request.args.get('userId')
         reviews = db.getProductReviews(int(productId))
 
-        print("REVIEW", reviews)
-
         for review in reviews:
             review['reviewdate'] = json.dumps(review['reviewdate'].__str__())
             score = 0
@@ -42,7 +40,6 @@ class Reviews(Resource):
         if reviews is None:
             return {'error': 'Unable to fetch reviews'}
 
-        print(reviews)
         return {'reviews': reviews}
 
     # Adding a new review
