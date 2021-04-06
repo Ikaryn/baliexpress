@@ -33,15 +33,14 @@ const ProductPage = () => {
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
     const [isAdmin, setIsAdmin] = React.useState(false);
-    
-    const [reviews, setReviews] = React.useState([{'':''}])
+
     // will be temporary to read in. (replace with values inside the product dict)
     const productDesc = ['Specs', 'Description', 'Warranty', 'Reviews'];
     
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
-    
+    // find the specific product to display its information
     React.useEffect(() => {
         (async () => {
             console.log(category)
@@ -54,6 +53,7 @@ const ProductPage = () => {
     
     },[category, pid])
     
+    // check if the current user is admin and set the relevant state
     React.useEffect(() => {
         (async () => {
             const options = {
@@ -71,8 +71,6 @@ const ProductPage = () => {
             }
         })();
     }, [])
-    console.log(productInfo.specs);
-    console.log(productInfo);
     
     return (
         <div className="root">

@@ -27,25 +27,63 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+// this component will display the data surrounding the ratings reviewers give.
 const BarPercentages = ({ratings}) => {
+
+    const [stars, setStars] = React.useState([]);
+    const [overallRating, setOverallRating] = React.useState(0);
+    
+    // initialise how many given stars in each rating, and the average rating
+    React.useEffect(() => {
+        
+        const initStars = [0,0,0,0,0];   
+        ratings.forEach((review) => {
+            initStars[review.rating - 1] += 1;
+        });
+        console.log(initStars);
+        let totalRating = 0;
+        for(let i = 0; i < 5; i++) {
+            if(initStars[i] !== 0) {
+                totalRating += initStars[i] * (i+1);
+            }
+        }
+        console.log(totalRating, ratings.length);
+        console.log(totalRating/ratings.length);
+        setOverallRating(Math.round(totalRating/ratings.length));
+        setStars(initStars);
+    }, [ratings])
+    
     const classes = useStyles();
     
     return (
-        <Grid container item direction ="column">
-            {[5,4,3,2,1].map((num) => (
-                <Grid container item direction="row" spacing={2} className={classes.progressBarContainer}>
-                    <Grid item xs={2}>
-                        <Typography variant="h6" className="light-text">{num} star</Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <LinearProgress className={classes.progressBar} variant="determinate" value={num * 10} />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <Typography variant="h6" className="light-text">0%</Typography>
-                    </Grid>
+        <Grid item container direction="column">
+            <Grid item container direction="row" spacing={1}>
+                <Grid item>
+                    <Typography className="light-text">Rating: </Typography>
                 </Grid>
-            ))}       
-        </Grid>
+                <Grid item>
+                    <Rating value={overallRating} readOnly />
+                </Grid>
+                <Grid item>
+                    <Typography className="light-text">{`${isNaN(overallRating) ? 0 : overallRating} out of 5 stars`}</Typography>
+                </Grid>
+                </Grid> 
+                <Grid container item direction ="column">
+                    {[5,4,3,2,1].map((num) => (
+                        <Grid container item direction="row" spacing={2} className={classes.progressBarContainer}>
+                            <Grid item xs={2}>
+                                <Typography variant="h6" className="light-text">{num} star</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <LinearProgress className={classes.progressBar} variant="determinate" value={isNaN((stars[num-1]/ratings.length)*100) ? 0 : Math.round((stars[num-1]/ratings.length)*100)} />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Typography variant="h6" className="light-text">{isNaN((stars[num-1]/ratings.length)*100) ? 0 : Math.round((stars[num-1]/ratings.length)*100)}%</Typography>
+                            </Grid>
+                        </Grid>
+                    ))}       
+                </Grid>
+            </Grid>
     )
 
 } 
@@ -81,8 +119,7 @@ const ReviewBlock = ({rating, productId}) => {
             const response = await api.get(`review?productId=${productId}&userId=${localStorage.getItem('userId')}`);
             console.log(response);
             
-            // loop through each review and get the username for the review
-            response.reviews.forEach(async (review) => {
+            await Promise.all(response.reviews.map(async (review) => {
                 const options = {
                     method: 'GET',
                     headers: { 
@@ -92,10 +129,8 @@ const ReviewBlock = ({rating, productId}) => {
                 }
                 const response = await api.makeAPIRequest(`profile?userId=${review.userid}`, options);
                 review['username']= response.accountInfo['name'];
-            })
-
+            }));
             setReviews(response.reviews);
-            console.log(response.reviews);
         })();
     },[productId])
     
@@ -106,7 +141,7 @@ const ReviewBlock = ({rating, productId}) => {
             </Grid>
             <Grid item container direction="row">
                 <Grid item container direction="column" xs={6}>
-                    <Grid item container direction="row" spacing={1}>
+                    {/* <Grid item container direction="row" spacing={1}>
                         <Grid item>
                             <Typography className="light-text">Rating: </Typography>
                         </Grid>
@@ -118,7 +153,10 @@ const ReviewBlock = ({rating, productId}) => {
                         </Grid>
                     </Grid>
                     <Grid item>
-                        <BarPercentages ratings={"dsa"} />
+                        {reviews && <BarPercentages ratings={reviews} />}
+                    </Grid> */}
+                    <Grid item>
+                        {reviews && <BarPercentages ratings={reviews} />}
                     </Grid>
                 </Grid>
                 <Grid item xs={6}>
