@@ -21,8 +21,9 @@ const routes = [
     <PublicRoute key="route-product" component={ProductPage} path="/product/:category/:pid" exact/>,
     <PrivateRoute key="route-edit-product" component={EditProductPage} path="/edit-product/:category/:pid" exact/>,
     <PublicRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>,
+    <PublicRoute key="route-build" component={BuildPage} path="/build" exact />,
+    <PublicRoute key="route-compare" component={ComparePage} path="/build/compare" exact />,
     <PublicRoute key="route-search" component={SearchPage} path="/search/:search" exact/>,
-    <PublicRoute key="route-build" component={BuildPage} path="/build" exact />
 ];
 
 export default routes;

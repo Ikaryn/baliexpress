@@ -1,7 +1,11 @@
 import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router';
 
 const AdminProductCard = ({productInfo}) => {
+    
+    const history = useHistory();
+
     return (
         <Card>
             <Grid container direction="row">
@@ -19,8 +23,8 @@ const AdminProductCard = ({productInfo}) => {
                 </Grid>
                 <Grid item xs={3}>
                     <Button fullWidth variant="contained">Create Sale</Button>
-                    <Button fullWidth variant="contained">Edit Product</Button>
-                    <Button fullWidth variant="contained">View Product</Button>
+                    <Button fullWidth variant="contained" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
+                    <Button fullWidth variant="contained" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
                 </Grid>
             </Grid>
         </Card>

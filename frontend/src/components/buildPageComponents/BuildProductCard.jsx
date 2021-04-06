@@ -1,9 +1,10 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardMedia, CssBaseline, Divider, Grid, makeStyles, Modal, ThemeProvider, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Card, CardMedia, CssBaseline, Divider, Grid, makeStyles, Modal, ThemeProvider, Tooltip, Typography } from '@material-ui/core';
 import React from 'react';
 import InfoIcon from '@material-ui/icons/Info';
 import SelectBuildProductModal from './SelectBuildProductModal';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { StoreContext } from '../../util/store';
+import { productDesc } from '../../util/helpers';
 
 const useStyles = makeStyles((theme) => ({
     productInfoContainer: {
@@ -50,7 +51,9 @@ const BuildProductCard = ({type}) => {
                         <Typography align="center" variant="h5">{type}</Typography>
                     </Grid>
                     <Grid item>
-                        <InfoIcon />
+                        <Tooltip title={<Typography>{productDesc[type]}</Typography>}>
+                            <InfoIcon />
+                        </Tooltip>
                     </Grid>
                 </Grid>
                 <Grid item>
