@@ -74,13 +74,13 @@ class BuildPage(Resource):
             CaseBudget = 0.05 * budget
             CoolingBudget = 0.03 * budget
         elif usage == "Business":
-            GPUBudget = 0 * budget
-            CPUBudget = 0.45 * budget
-            MotherboardBudget = 0.12 * budget
-            MemoryBudget = 0.12 * budget
-            StorageBudget = 0.13 * budget
-            PSUBudget = 0.8 * budget
-            CaseBudget = 0.06 * budget
+            GPUBudget = 0.2 * budget
+            CPUBudget = 0.3 * budget
+            MotherboardBudget = 0.11 * budget
+            MemoryBudget = 0.11 * budget
+            StorageBudget = 0.12 * budget
+            PSUBudget = 0.7 * budget
+            CaseBudget = 0.05 * budget
             CoolingBudget = 0.04 * budget
         else:
             GPUBudget = 0.6 * budget
@@ -110,8 +110,9 @@ class BuildPage(Resource):
         #Make a helper function for this
         for part in build:
             if type(build[part]) is dict:
-                    releaseDate = build[part]['release_date'].strftime('%Y-%m-%d')
-                    build[part]['release_date'] = releaseDate
+                releaseDate = build[part]['release_date'].strftime('%Y-%m-%d')
+                build[part]['release_date'] = releaseDate
+                print(part, "id = ",build[part]['id'])
         return build
         
         
@@ -213,8 +214,7 @@ def recommendStorage(budget, Motherboard, format):
 
     for storage in Storages:
         if storage['price'] <= budget:
-            if storage['specs']['format'] == format:
-                print("Storage capacity = ", storage['specs']['capacity'])
+            if (storage['specs']['format']).lower() == (format).lower():
                 if storage['specs']['capacity'] > highestCapacity:
                     highestCapacity = storage['specs']['capacity']
                     currentPrice = storage['price']
