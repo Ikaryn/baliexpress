@@ -29,12 +29,12 @@ class BuildPage(Resource):
         data = request.json
         buildID = db.addNewBuild(data.get('userID'), data.get('buildName'), data.get('buildDesc'))
         build = data.get('build')
-        print("build = ",build)
+        # print("build = ",build)
         for part in build:
             if type(build[part]) is dict:
                 db.addPartToBuild(buildID, build[part]['id'], 1)
         saved = db.getBuild(buildID)
-        print("saved = ",saved)
+        # print("saved = ",saved)
             
         
 
@@ -100,11 +100,18 @@ class BuildPage(Resource):
         build['Storage'] = recommendStorage(StorageBudget, build['Motherboard'], storage)
         # build['Cooling'] = recommendCooling(CoolingBudget)
         powerSum = 0
-        for item in build:
-            powerSum += build[item]['power_usage'] 
+        for part in build:
+            if type(build[part]) is dict:
+                powerSum += build[part]['specs']['power_use'] 
         build['PSU'] = recommendPSU(PSUBudget, powerSum)
         # build['Case'] = recommendCase(CaseBudget, GPU)
-        print(build)
+        #print(build)
+
+        #Make a helper function for this
+        for part in build:
+            if type(build[part]) is dict:
+                    releaseDate = build[part]['release_date'].strftime('%Y-%m-%d')
+                    build[part]['release_date'] = releaseDate
         return build
         
         
@@ -140,6 +147,7 @@ def recommendCPU(budget, usage, overclock):
             if score > highscore:
                 highscore = score
                 recommendation = CPU
+    # print(recommendation)
     return(recommendation)
     
 
@@ -150,8 +158,9 @@ def recommendGPU(budget, usage, overclock):
     clockWeight = 0.5
     coreWeight = 0.2
     highscore = 0.0
-
+    
     for GPU in GPUs:
+        # print("GPU specs = ", GPU['specs'])
         if GPU['price'] <= budget:
             score = memoryWeight * float(GPU['specs']['memory_size']) + clockWeight * float(GPU['specs']['clock_speed']) + coreWeight * float(GPU['specs']['cuda_cores'])
             if score > highscore:
@@ -161,19 +170,22 @@ def recommendGPU(budget, usage, overclock):
                 if recommendation is not None and GPU['price'] < recommendation['price']:
                     highscore = score
                     recommendation = GPU
+    # print(recommendation)
     return(recommendation)
 
 
 def recommendMotherboard(budget, usage, CPU, GPU):
     Motherboards = db.getAllProducts('Motherboards')
     currentPrice = 10000
+    GPUpcie = GPU['specs']['pcie_type']
     for motherboard in Motherboards:
         if motherboard['specs']['cpu_socket'] == CPU['specs']['socket']:
-            if motherboard['specs']['pcie_type'] >= GPU['specs']['pcie_type']:
+            if motherboard['specs']['pcie_type'] >= GPUpcie:
                 if motherboard['price'] < currentPrice:
                     recommendation = motherboard
                     currentPrice = motherboard['price']
     
+    # print(recommendation)
     return(recommendation)
 
 
@@ -197,7 +209,7 @@ def recommendStorage(budget, Motherboard, format):
 
     for storage in Storages:
         if storage['price'] <= budget:
-            if storage['format'] == format:
+            if storage['specs']['format'] == format:
                 if storage['specs']['capacity'] > highestCapacity:
                     highestCapacity = storage['specs']['capacity']
                     currentPrice = storage['price']
@@ -248,7 +260,7 @@ def recommendPSU(budget, sumPower_usage):
                     recommendation = PSU
                     currentPrice = PSU['price']
                     currentRating = ratings.index(PSU['specs']['power_efficiency'])
-    return(PSU)
+    return(recommendation)
     
 # def recommendCase(budget, GPU):
 #     db.getAllProducts('Case')
