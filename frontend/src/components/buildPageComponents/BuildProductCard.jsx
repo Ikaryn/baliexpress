@@ -59,7 +59,7 @@ const BuildProductCard = ({type}) => {
                 <Grid item>
                     <Divider orientation="vertical" />
                 </Grid>
-                {productInfo === '' ? 
+                {productInfo === '' || !productInfo ? 
                 <Grid container item xs={9} alignItems="center" justify="center">
                     <Grid item>     
                         <Button color="primary" variant="contained" onClick={() => {setOpen(true)}}>Select a Part</Button>

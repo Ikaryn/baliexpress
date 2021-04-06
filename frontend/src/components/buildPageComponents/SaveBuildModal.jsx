@@ -37,13 +37,15 @@ const SaveBuildModal = ({build, setSuccess, setOpen}) => {
     }
     
     const handleSubmit = () => {
+        const buildData = {
+            userID: localStorage.getItem('userId'),
+            buildName: name,
+            buildDesc: desc,
+            build: build,
+        };
+        console.log(buildData);
         if(!errorHandler()){
-            api.post(`build`, {
-                userID: localStorage.getItem('userId'),
-                buildName: name,
-                buildDesc: desc,
-                build: build,
-            });
+            api.post(`build`, buildData);
             setOpen(false);
             setSuccess(true);
         }

@@ -11,6 +11,7 @@ import ProductMenuButton from './ProductMenuButton';
 import BaliExpress from '../assets/BaliExpress.png';
 import SearchBar from './searchBar';
 import BuildModalForm from './buildPageComponents/BuildModalForm';
+import { buildTemplate } from '../util/helpers';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 const NavBar = () => {
-    
+    const context = React.useContext(StoreContext)
+    const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
-    
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -40,6 +41,12 @@ const NavBar = () => {
     }
     const redirectHomepage = () => {
         history.push('/');
+    }
+    
+    const handleBuildClick = () => {
+        setBuild(buildTemplate);
+        setBuildOpen(true);
+    
     }
 
     return (
@@ -61,7 +68,7 @@ const NavBar = () => {
                         <ProductMenuButton/>
                     </Grid>
                     <Grid item xs={1}>
-                        <Button onClick={() => {setBuildOpen(true)}}>Build-A-PC</Button>
+                        <Button onClick={() => {handleBuildClick();}}>Build-A-PC</Button>
                         <Modal 
                             open={buildOpen}
                             onClose={() => {setBuildOpen(false)}}

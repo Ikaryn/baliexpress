@@ -2,9 +2,12 @@ import React from 'react';
 import API from '../../util/API';
 import {  Button, Paper,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import { StoreContext } from '../../util/store';
 const api = new API();
 
 const UserBuildList = () => {
+    const context = React.useContext(StoreContext);
+    const {build: [,setBuild]} = context;
     const [builds, setBuilds] = React.useState(null);
     const history = useHistory();
     
@@ -16,6 +19,12 @@ const UserBuildList = () => {
             setBuilds(response.builds);
         })();
     },[])
+    
+    const handleRedirect = (userid, buildid, build) => {
+        console.log(build);
+        setBuild(build);
+        history.push(`/build/${userid}/${buildid}`);
+    }
     
     return(        
     <TableContainer component={Paper}>
@@ -34,7 +43,7 @@ const UserBuildList = () => {
                         <TableCell>{build.buildname}</TableCell>
                         <TableCell>{build.description}</TableCell>
                         <TableCell>
-                            <Button variant="contained" color="primary" onClick={() => {history.push(`/build/${build.userid}/${build.buildid}`)}}>Edit Build</Button>
+                            <Button variant="contained" color="primary" onClick={() => {handleRedirect(build.userid, build.buildid, build)}}>Edit Build</Button>
                             <Button variant="contained" color="secondary">Delete Build</Button>
                         </TableCell>
                     </TableRow>  
