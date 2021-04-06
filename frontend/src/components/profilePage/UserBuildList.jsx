@@ -28,6 +28,8 @@ const UserBuildList = () => {
     
     const handleDelete = async (buildid) => {
         await api.delete(`userBuilds?buildId=${buildid}`);
+        const response = await api.get(`userBuilds?userId=${localStorage.getItem('userId')}`);
+        setBuilds(response.builds)
         
     }
     
