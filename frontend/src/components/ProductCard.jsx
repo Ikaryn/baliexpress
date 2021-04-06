@@ -21,8 +21,8 @@ const ProductCard = ({pid, name, price, image, category}) => {
     }
     
     return (
-        <Grid container direction="column" justify="space-between" className={classes.productCardContainer}>
-            <Card>
+        <Grid container item direction="column" alignItems="stretch" justify="space-between" >
+            <Card className={classes.productCardContainer}>
                     <CardActionArea onClick={() => handleClick()}>
                         <CardMedia title="Product image" className="product-card-image-container">
                             <img src={"data:image/jpeg;base64,"+image} alt="product-thumbnail" class="product-card-image"/>

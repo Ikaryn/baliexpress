@@ -1,7 +1,7 @@
 import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-const SelectProductCard = ({setOpen, productInfo, setProduct, category, redirect}) => {
+const SelectProductCard = ({setOpen, productInfo, setProduct, setComparedProduct, redirect}) => {
     
     const history = useHistory();
     
@@ -16,6 +16,9 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, category, redirect
         if (redirect === 'compare') {
             // pass in the product details via history state
             history.push({pathname:'/build/compare', state: {product: productInfo}})
+            if(setComparedProduct){
+                setComparedProduct(productInfo);
+            }
         } else {
             setProduct(productInfo.category, productInfo);
         }

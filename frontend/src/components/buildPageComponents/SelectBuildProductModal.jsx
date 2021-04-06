@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 });
 
 
-const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
+const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProduct, redirect}) => {
 
     const [products, setProducts] = React.useState([{'': ''}]);
     const [brand, setBrand] = React.useState('');
@@ -85,7 +85,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
                                     setOpen={setOpen} 
                                     productInfo={product} 
                                     setProduct={setProduct}
-                                    category={category}
+                                    setComparedProduct={setComparedProduct}
                                     redirect={redirect}
                                 />
                         </Grid>
