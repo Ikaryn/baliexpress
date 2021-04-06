@@ -26,7 +26,12 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, redirect}) => {
     // get all of the products in the category
     React.useEffect(() => {
         (async () => {
+<<<<<<< HEAD
             const response = await api.get(`product/${category}`);
+=======
+            console.log(category)
+            const response = await api.get(`product?category=${convertCategoryName(category)}`);
+>>>>>>> main
             setProducts(response.products);
         })();
     },[category]);

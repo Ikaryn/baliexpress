@@ -73,16 +73,16 @@ const ProductForm = ({type}) => {
     }
     const history = useHistory();
     const handleSubmit = async () => {
-        const options = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'request-type': 'edit product',
-            },
-            body: JSON.stringify(product)
-        }
-        console.log(product)
-        const newProduct = await api.makeAPIRequest(`addProduct`, options);
+        // const options = {
+        //     method: 'POST',
+        //     headers: { 
+        //         'Content-Type': 'application/json',
+        //         'request-type': 'edit product',
+        //     },
+        //     body: JSON.stringify(product)
+        // }
+        console.log(product);
+        const newProduct = await api.post(`product`, product);
         console.log(newProduct);
         history.push(`/product/${newProduct.product.category}/${newProduct.product.id}`); 
     }
