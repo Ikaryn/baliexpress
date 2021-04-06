@@ -18,6 +18,21 @@ class UserBuilds(Resource):
         data = request.args
         userId = data.get('userId')
         builds = db.getUsersBuilds(userId)
+        
+        for build in builds:
+            print("BUILD IS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            print(build)
+            for parts in build['parts']:
+                parts['price'] = str(parts['price'])
+                releaseDate = parts['release_date'].strftime('%Y-%m-%d')
+                parts['release_date'] = releaseDate
+                if ('power_use' in parts['specs']):
+                    parts['specs']['power_use'] = str(parts['specs']['power_use'])
+                    print(parts['specs']['power_use'])
+                if ('base_clock' in parts['specs']):
+                    parts['specs']['base_clock'] = str(parts['specs']['base_clock'])
+                if ('max_clock' in parts['specs']):
+                    parts['specs']['max_clock'] = str(parts['specs']['max_clock'])
         return {'builds': builds}
         
     def delete(self):
