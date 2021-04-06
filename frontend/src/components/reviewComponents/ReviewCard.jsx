@@ -29,7 +29,6 @@ const ReviewCard = ({review, userId}) => {
     const [username, setUsername] = React.useState('');
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
-    console.log(review);
     
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -39,12 +38,10 @@ const ReviewCard = ({review, userId}) => {
         let up = voteStatus.up;
         let down = voteStatus.down;
         
-        console.log('type was ', type);
         switch (type) {
 
             // If upvote was clicked...
             case 'up':
-            console.log('up was clicked');
                 // If already upvoted
                 if (voteStatus['up']) {
                     const response = await api.delete('review/vote', body);
@@ -62,7 +59,6 @@ const ReviewCard = ({review, userId}) => {
                 break;
             // If downvote was clicked...
             default:
-            console.log('down was clicked');
                 // If already upvoted
                 if (voteStatus['up']) {
                     const response = await api.put('review/vote', body);
@@ -84,6 +80,7 @@ const ReviewCard = ({review, userId}) => {
         // console.log(response);
     }
 
+    console.log(review.rating)
 
     React.useEffect(() => {
 
@@ -106,14 +103,14 @@ const ReviewCard = ({review, userId}) => {
             <Grid container item direction="row" justify="space-between">
                 <Grid container item direction="row" xs={2}>
                     <Grid item xs={6}>
-                        <Avatar>Placeholder</Avatar>
+                        <Avatar>{review.username ? review.username.slice(0,1) : ''}</Avatar>
                     </Grid>
                     <Grid container item direction="column" xs={6}>
                         <Grid item>
                             <Typography className={'light-text'}>{review.username}</Typography>
                         </Grid>
                         <Grid item>
-                            <Rating defaultValue={review.rating} readOnly />
+                            <Rating value={review.rating} defaultValue={review.rating} readOnly />
                         </Grid>
                     </Grid>
                 </Grid>

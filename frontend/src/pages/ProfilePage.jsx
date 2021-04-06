@@ -23,10 +23,10 @@ const ProfilePage = () => {
     const history = useHistory();
     const [value, setValue] = React.useState(0);
     const [accInfo, setAccInfo] = React.useState({
-        name: '', email: '', phone: '', password: ''
+        name: '', email: '', phonenumber: '', password: ''
     });
     const [shippingInfo, setShippingInfo] = React.useState({
-        addr: '', city: '', state:'', pCode: '', country: ''
+        streetaddress: '', city: '', state:'', postcode: '', country: ''
     });
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -56,14 +56,14 @@ const ProfilePage = () => {
             console.log('RESPONSE', response);
             const userAccInfo = {name: userDetails.name, 
                 email: userDetails.email, 
-                phone: userDetails.phone,
+                phonenumber: userDetails.phonenumber,
                 password: userDetails.password,
                 isAdmin: userDetails.admin}
             const userShippingInfo = {
-                addr: userDetails.streetAddress, 
+                streetaddress: userDetails.streetaddress, 
                 state: userDetails.state, 
                 city: userDetails.city, 
-                pCode: userDetails.postcode, 
+                postcode: userDetails.postcode, 
                 country: userDetails.country};
             setShippingInfo(userShippingInfo);
             setAccInfo(userAccInfo);

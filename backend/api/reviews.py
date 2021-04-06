@@ -12,6 +12,9 @@ from datetime import datetime
 import json
 
 class Reviews(Resource):
+
+    # Getting reviews for a product
+    # Url format: `review?productId=${productId}&userId=${userId)}`
     def get(self):
         print('Get reviews attempt received')
 
@@ -42,6 +45,8 @@ class Reviews(Resource):
         print(reviews)
         return {'reviews': reviews}
 
+    # Adding a new review
+    # Url format: `review`
     def post(self):
         print('Add review attempt received')
         data = request.json
@@ -60,7 +65,9 @@ class Reviews(Resource):
             return {'error': 'An error occurred: review not added'}
         else:
             return {'reviewId': reviewId}
-        
+
+    # Removing a review
+    # Url format: `review`
     def delete(self):
         print('Delete review attempt received')
         data = request.json
@@ -75,6 +82,8 @@ class Reviews(Resource):
 
 class Votes(Resource):
 
+    # Adding a vote
+    # Url format: `review/vote`
     def post(self):
         print ('Add vote attempt received')
 
@@ -90,6 +99,8 @@ class Votes(Resource):
         else:
             return {'status': 'Vote successfully submitted'}
 
+    # Changing an existing vote (e.g. from upvote to downvote)
+    # Url format: `review/vote`
     def put(self):
         print ('Edit vote attempt received')
         
@@ -104,7 +115,8 @@ class Votes(Resource):
         else:
             return {'status': 'New vote successfully submitted'}
 
-
+    # Deleting a vote 
+    # Url format: `review/vote`
     def delete(self):
         print ('Delete vote attempt received')
 
