@@ -98,7 +98,8 @@ class BuildPage(Resource):
         build['Motherboard'] = recommendMotherboard(MotherboardBudget, usage, build['CPU'], build['GPU'])
         build['Memory'] = recommendMemory(MemoryBudget, build['Motherboard'])
         build['Storage'] = recommendStorage(StorageBudget, build['Motherboard'], storage)
-        # build['Cooling'] = recommendCooling(CoolingBudget)
+        build['Cooling'] = ""
+        build['CPU_cooling'] = ""
         powerSum = 0
         for part in build:
             if type(build[part]) is dict:
@@ -181,9 +182,10 @@ def recommendMotherboard(budget, usage, CPU, GPU):
     Motherboards = db.getAllProducts('Motherboards')
     currentPrice = 10000
     GPUpcie = GPU['specs']['pcie_type']
+    CPUsocket = CPU['specs']['socket']
     recommendation = None
     for motherboard in Motherboards:
-        if motherboard['specs']['cpu_socket'] == CPU['specs']['socket']:
+        if motherboard['specs']['cpu_socket'] == CPUsocket:
             if motherboard['specs']['pcie_type'] >= GPUpcie:
                 if motherboard['price'] < currentPrice:
                     recommendation = motherboard
