@@ -7,11 +7,12 @@ def connect():
     conn = None
     try:
         conn = psycopg2.connect(database="baliexpress",
-            user=credentials.user,
-            password=credentials.password
+        user=credentials.user,
+        password=credentials.password
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
+        print(e)
         print("Unable to connect to the database")
 
     return conn

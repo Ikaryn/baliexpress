@@ -13,6 +13,8 @@ import SearchBar from './searchBar';
 import BuildModalForm from './buildPageComponents/BuildModalForm';
 import { buildTemplate } from '../util/helpers';
 
+import API from '../util/API';
+const api = new API();
 const useStyles = makeStyles((theme) => ({
     root: {
         background: 'rgb(38,40,64)'
@@ -25,6 +27,7 @@ const NavBar = () => {
     const context = React.useContext(StoreContext)
     const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
+    const [loginStatus, setLoginStatus] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -48,6 +51,34 @@ const NavBar = () => {
         setBuildOpen(true);
     
     }
+    React.useEffect(() => {
+        (async () => {
+            const userId = localStorage.getItem('userId');
+            if(userId){
+                const options = {
+                    method: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Request-Type': 'profile',
+                    },
+                }
+                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const userDetails = response.accountInfo.admin;
+                const userAccInfo = {name: userDetails.name, 
+                    email: userDetails.email, 
+                    phonenumber: userDetails.phonenumber,
+                    password: userDetails.password,
+                    isAdmin: userDetails.admin}
+                if(userAccInfo.isAdmin){
+                    setLoginStatus(`Admin: (${userAccInfo.email})`);
+                }else{
+                    setLoginStatus(`User: (${userAccInfo.email})`);
+                }
+            }else{
+                setLoginStatus("Guest");
+            }
+        })();
+    },[])
 
     return (
         <header>
@@ -85,6 +116,9 @@ const NavBar = () => {
                         <IconButton onClick={() => handleProfileClick()}>
                             <AccountCircleIcon fontSize="large"/>
                         </IconButton>
+                        <Typography className="login-status-text">
+                            {loginStatus}
+                        </Typography>
                     </Grid>
                     <Grid item xs={1}>
                         <ShoppingCartIcon fontSize="large" />

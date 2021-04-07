@@ -24,4 +24,9 @@
     margin: 15% 25%;
     padding: 1em;
     min-width: 50%;
+    max-width: 40%;
+}
+
+.login-status-text{
+    color: white;
 }
