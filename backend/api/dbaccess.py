@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-from . import credentials
+import credentials
 
 def connect():
     conn = None
@@ -598,6 +598,26 @@ def getBuild(buildID):
         rows = cur.fetchall()
         build['parts'] = [{column:data for column, data in record.items()} for record in rows]
 
+        newParts = []
+        # get specs for each part
+        for part in build['parts']:
+            id = part['productid']
+            print(id)
+            query = "SELECT * FROM Products WHERE id = %s"
+            cur.execute(query, [id])
+            row = cur.fetchone()
+            results = {column:data for column, data in row.items()}
+            part = {**part, **results}
+            # get specs
+            category = part['category']
+            query = "SELECT * FROM %s WHERE id = %s"
+            cur.execute(query, (AsIs(category), id))
+            row = cur.fetchone()
+            part['specs'] = {column:data for column, data in row.items()}
+            part.pop('id')
+            part['specs'].pop('id')
+            newParts.append(part)
+        build['parts'] = newParts
         # commit and close database
         conn.commit()
         cur.close()
@@ -634,7 +654,26 @@ def getUsersBuilds(userID):
             cur.execute(query, [build['buildid']])
             rows = cur.fetchall()
             build['parts'] = [{column:data for column, data in record.items()} for record in rows]
-
+            newParts = []
+            # get specs for each part
+            for part in build['parts']:
+                id = part['productid']
+                print(id)
+                query = "SELECT * FROM Products WHERE id = %s"
+                cur.execute(query, [id])
+                row = cur.fetchone()
+                results = {column:data for column, data in row.items()}
+                part = {**part, **results}
+                # get specs
+                category = part['category']
+                query = "SELECT * FROM %s WHERE id = %s"
+                cur.execute(query, (AsIs(category), id))
+                row = cur.fetchone()
+                part['specs'] = {column:data for column, data in row.items()}
+                part.pop('id')
+                part['specs'].pop('id')
+                newParts.append(part)
+            build['parts'] = newParts
         # commit and close database
         conn.commit()
         cur.close()
@@ -977,7 +1016,7 @@ def getCategoryFromID(cur, id):
 
 
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
-
+print(getUsersBuilds(1))
 # # returns the corresponding email for a given user id
 # def getEmail(id):
 #     conn = connect()
