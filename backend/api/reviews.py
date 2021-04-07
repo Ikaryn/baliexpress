@@ -6,7 +6,7 @@ import os
 from base64 import b64encode
 from flask_cors import CORS
 from flask_restful import Api
-from PIL import Image
+#from PIL import Image
 from . import dbaccess as db
 from datetime import datetime
 import json

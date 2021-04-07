@@ -2,6 +2,7 @@ import { Paper, Typography, Grid, TextField, Divider, MenuItem } from '@material
 import React from 'react';
 import { useParams } from 'react-router';
 import ProductCard from '../components/ProductCard';
+import Checkbox from '@material-ui/core/Checkbox';
 import API from '../util/API';
 
 const api = new API();
@@ -14,7 +15,8 @@ const ProductListPage = () => {
     const [filteredProducts, setFilteredProducts] = React.useState([]);
     const [nameFilter, setNameFilter] = React.useState("");
     const [sortType, setSortType] = React.useState(sortTypes[0]);
-    
+    const [brandSet, setBrandSet] = React.useState([]);
+    const [checkBoxState, setCheckBoxState] = React.useState({});
     let {category} = useParams();
     React.useEffect(() => {
         (async () => {
@@ -23,14 +25,37 @@ const ProductListPage = () => {
                 setProducts(p.products);
                 setFilteredProducts(p.products);
             }
+            var set = [];
+            var dict = {};
+            for(const i in p.products){
+                console.log(p.products[i].brand);
+                if(!set.includes(p.products[i].brand)){
+                    set.push(p.products[i].brand);
+                    dict[p.products[i].brand] = false;
+                }
+            }
+            console.log(set);
+            setBrandSet(set);
+            setCheckBoxState(dict);
+            console.log(dict);
         })();
     },[category]);
 
     React.useEffect(() => {
         (async () => {
             var newProducts = [...products];
+            const x = nameFilter.split(" ");
+
+            function test(string){
+                for(var i in x){
+                    if(string.toLowerCase().includes(x[i].toLowerCase())){
+                        return true;
+                    }
+                }
+                return false;
+            }
             if(nameFilter !== ""){
-                newProducts = [...newProducts].filter(product => product.name.toLowerCase().includes(nameFilter.toLowerCase()));
+                newProducts = [...newProducts].filter(product => test(product.name));
             }
 
             if(sortType === "Popularity"){
@@ -45,6 +70,24 @@ const ProductListPage = () => {
         })();
     },[sortType, nameFilter]);
 
+    function changeCheckBox(s){
+        var dict = checkBoxState;
+        dict[s] = !dict[s];
+        var string = "";
+        var first = false;
+        for(var x in dict){
+            if(dict[x]){
+                if(!first){
+                    string += x;
+                    first = true;
+                }else{
+                    string += " " + x; 
+                }
+            }
+        }
+        setNameFilter(string);
+        setCheckBoxState(dict);
+    }
     return (
         <div className="root">
             <Grid container direction="row" className='product-list-page-container'>
@@ -56,7 +99,14 @@ const ProductListPage = () => {
                         </Grid>
                         <Grid item>
                             <Typography variant="h5">Brand:
-                                <TextField onChange={(event) =>{setNameFilter(event.target.value)}}/>
+                                {brandSet.map((s) => (
+                                    <Typography>
+                                        <Checkbox
+                                            onChange={() => {changeCheckBox(s)}}
+                                        />
+                                        {s}
+                                    </Typography>
+                                ))}
                             </Typography>
                         </Grid>
                     </div>
@@ -84,9 +134,9 @@ const ProductListPage = () => {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid container item direction="row" spacing={3}>
+                    <Grid container item direction="row" spacing={3} xs>
                         {filteredProducts.map((p) => (
-                            <Grid item xs={3}>
+                            <Grid container item xs={3} style={{display: 'flex'}}>
                                 <ProductCard 
                                     pid={p.id}
                                     name={p.name}

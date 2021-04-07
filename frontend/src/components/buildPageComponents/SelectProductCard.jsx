@@ -1,7 +1,7 @@
 import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-const SelectProductCard = ({setOpen, productInfo, setProduct}) => {
+const SelectProductCard = ({setOpen, productInfo, setProduct, setComparedProduct, redirect}) => {
     
     const history = useHistory();
     
@@ -9,8 +9,19 @@ const SelectProductCard = ({setOpen, productInfo, setProduct}) => {
         history.push(`/product/${productInfo.category}/${productInfo.id}`)
     }
 
+    // depending on what type of selection it is
+    // either redirect back to the build page
+    // or redirect to the compare page
     const handleSelect = () => {
-        setProduct(productInfo.category, productInfo);
+        if (redirect === 'compare') {
+            // pass in the product details via history state
+            history.push({pathname:'/build/compare', state: {product: productInfo}})
+            if(setComparedProduct){
+                setComparedProduct(productInfo);
+            }
+        } else {
+            setProduct(productInfo.category, productInfo);
+        }
         setOpen(false);
     }
 
@@ -24,7 +35,7 @@ const SelectProductCard = ({setOpen, productInfo, setProduct}) => {
                     </Grid>
                     <Grid container item direction="column" xs={6}>
                         <Grid item>
-                            <Typography variant="body">{productInfo.name}</Typography>
+                            <Typography variant="body1">{productInfo.name}</Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1">{productInfo.description}</Typography>
