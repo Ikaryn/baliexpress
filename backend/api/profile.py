@@ -1,4 +1,3 @@
-# from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
 import secrets, random
