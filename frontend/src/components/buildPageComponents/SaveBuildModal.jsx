@@ -59,7 +59,7 @@ const SaveBuildModal = ({build, setSuccess, setOpen}) => {
                 </Grid>
                 <Divider />
                 <Grid item>
-                    <Typography>Give you build a name!</Typography>
+                    <Typography>Give your build a name!</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
@@ -73,7 +73,7 @@ const SaveBuildModal = ({build, setSuccess, setOpen}) => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Typography>Give you build a description!</Typography>
+                    <Typography>Give your build a description!</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl fullWidth>
