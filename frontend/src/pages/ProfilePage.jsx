@@ -178,7 +178,7 @@ const ProfilePage = () => {
                                     {saleFormOpen ? 'Back' : 'Create Sale'}
                                 </Button>
                                 <Divider />
-                                {saleFormOpen ? <SaleForm /> : <SalesPanel />}
+                                {saleFormOpen ? <SaleForm setSaleFormOpen={setSaleFormOpen} /> : <SalesPanel />}
                             </TabPanel>
                         }
                         <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>

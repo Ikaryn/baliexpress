@@ -1,20 +1,15 @@
-import { Button, FormControl, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
+import API from '../../util/API';
 import SearchBar from '../searchBar';
 
-function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1);
-}
-  
-function intersection(a, b) {
-    return a.filter((value) => b.indexOf(value) !== -1);
-}
+const api = new API();
 
-const SaleProductList = () => {
+const SaleProductList = ({saleProducts, setSaleProducts}) => {
     // this will contain a list of all the products user wants to set a sale for
     const [products, setProducts] = React.useState([]);
     // this will contain a list of dicts {productId, %} that will be sent to backend
-    const [saleProducts, setSaleProducts] = React.useState([])
     const [open, setOpen] = React.useState(false);
     
     const handleAddProduct = (product) => {
@@ -33,10 +28,7 @@ const SaleProductList = () => {
             newSaleProducts.push({'productId': product.id, 'sale %': value});
         // if it does exist just change the value
         } else {
-            console.log(value);
-            for(let i in newSaleProducts){
-                if(newSaleProducts[i].productId === product.id)  newSaleProducts[i]['sale %'] = value;
-            }
+            filteredProduct[0]['sale %'] = value;
         }
         console.log(newSaleProducts);
         setSaleProducts(newSaleProducts);
@@ -73,11 +65,27 @@ const SaleProductList = () => {
 }
 
       
-const SaleForm = () => {
+const SaleForm = ({setSaleFormOpen}) => {
     const [name, setName] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const [saleProducts, setSaleProducts] = React.useState([])
+    const [success, setSuccess] = React.useState(false);
     
+    const handleSubmit = async () => {
+        const body = {
+            'name': name,
+            'start': startDate,
+            'end': endDate,
+            'products': saleProducts,
+        };
+        const response = await api.put('sales', body);
+        setSuccess(true);
+        setTimeout(() => {
+            setSaleFormOpen(false);
+        }, 1000)
+    
+    }
     
     return (
             <Grid container direction="column" spacing={3}>
@@ -87,6 +95,7 @@ const SaleForm = () => {
                         <OutlinedInput
                             value={name}
                             placeholder='Enter sale name'
+                            onChange={(event) => {setName(event.target.value)}}
                         />
                     </FormControl>
                 </Grid>
@@ -111,8 +120,14 @@ const SaleForm = () => {
                                 />
                         </FormControl>
                     </Grid>
-                    <SaleProductList />
+                    <SaleProductList saleProducts={saleProducts} setSaleProducts={setSaleProducts} />
                 </Grid>
+                <Grid item>
+                    <Button onClick={() => handleSubmit()} variant="contained" color="primary">Submit</Button>
+                </Grid>
+                <Snackbar open={success} autoHideDuration={1000}>
+                    <Alert severity="success">Sale created!</Alert>
+                </Snackbar>
             </Grid>
     )
 }
