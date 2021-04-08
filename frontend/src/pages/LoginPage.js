@@ -20,7 +20,6 @@ const Login = () => {
     const [loginError, setLoginError] = React.useState('');
     
     const context = React.useContext(StoreContext);
-    const { userId: [userId, setUserId] } = context;
 
     const history = useHistory();
 
