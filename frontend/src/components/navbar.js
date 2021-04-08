@@ -63,7 +63,7 @@ const NavBar = () => {
                     },
                 }
                 const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
-                const userDetails = response.accountInfo.admin;
+                const userDetails = response.accountInfo;
                 const userAccInfo = {name: userDetails.name, 
                     email: userDetails.email, 
                     phonenumber: userDetails.phonenumber,
