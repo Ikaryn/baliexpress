@@ -11,6 +11,8 @@ from datetime import datetime
 
 class Sales(Resource):
 
+    # Getting sales
+    # Url format: `sales`
     def get(self):
         print('Get sales attempt received')
 
@@ -30,15 +32,17 @@ class Sales(Resource):
 
         # return {'sales': sales}
     
+    # Adding/making a new sale
+    # Url format: `sales`
     def post(self):
         print('Add sale attempt received')
 
         data = request.json
         name = data.get('name')
         start = data.get('start')
-        startDate = datetime.strptime(start, '%y-%m-%d').date()
+        startDate = datetime.strptime(start, '%Y-%m-%d').date()
         end = data.get('end')
-        endDate = datetime.strptime(end, '%y-%m-%d').date()
+        endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
 
         print(name, startDate, endDate, products)
@@ -46,6 +50,8 @@ class Sales(Resource):
         # Placeholder function to send to database
         # db.addSale(name, startDate, endDate, products)
 
+    # Editing a sale such as adding/removing products
+    # Url format: `sales`
     def put(self):
         print('Edit sale attempt received')
 
