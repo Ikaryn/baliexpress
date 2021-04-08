@@ -23,6 +23,9 @@ DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Review_Votes;
+DROP TABLE IF EXISTS Sales CASCADE;
+DROP TABLE IF EXISTS Sale_Products;
+
 
 CREATE TABLE Users(
     id              int GENERATED ALWAYS AS IDENTITY,
@@ -243,4 +246,22 @@ CREATE TABLE Review_Votes(
     primary key (reviewid, voterid),
     foreign key (reviewid) references Reviews(reviewid) on delete CASCADE,
     foreign key (voterid) references Users(id) on delete CASCADE
-)
+);
+
+CREATE TABLE Sales(
+    id          int GENERATED ALWAYS AS IDENTITY,
+    name        text,
+    startdate   date,
+    enddate     date,
+    primary key (id)
+);
+
+CREATE TABLE Sale_Products(
+    saleid          int,
+    productid       int,
+    salepercent     int,
+    sold            int DEFAULT 0,
+    primary key (saleid, productid),
+    foreign key (saleid) references Sales(id) on delete CASCADE,
+    foreign key (productid) references Products(id) on delete CASCADE
+);

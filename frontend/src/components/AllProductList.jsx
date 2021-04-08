@@ -1,9 +1,8 @@
 import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import API from '../util/API';
+import { allProductCategories } from '../util/helpers';
 import AdminProductCard from './AdminProductCard';
-
-const productCategories = ['CPU', 'Motherboards', 'Storage'];
 
 const api = new API();
 
@@ -14,7 +13,7 @@ const AllProductList = () => {
     React.useEffect(() => {
         (async () => {
 
-            const productsInCategory = await Promise.all(productCategories.map(async (category) => {
+            const productsInCategory = await Promise.all(Object.keys(allProductCategories).map(async (category) => {
                 const productList = await api.get(`product?category=${category}`);
                 console.log("productList:", productList)
                 return productList.products;
