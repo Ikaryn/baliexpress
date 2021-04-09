@@ -14,6 +14,8 @@ Frontend
             - "yarn add @material-ui/icons
         - "yarn add @material-ui/lab"
         - "yarn add material-ui-dropzone"
+        - "npm i @date-io/date-fns"
+        - "yarn add @material-ui/pickers"
  
 Backend
     - psycopg2

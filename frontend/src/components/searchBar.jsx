@@ -6,7 +6,7 @@ import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Gri
 import { useHistory } from 'react-router';
 import './styles/search.css';
 const api = new API();
-const SearchBar = ({}) => {
+const SearchBar = ({type = 'search', addProduct}) => {
     const [search, setSearch] = React.useState("");
     const [productOutput, setProductOutput] = React.useState([]);
 
@@ -15,18 +15,18 @@ const SearchBar = ({}) => {
     const history = useHistory();
     
     const handleToggle = (str) => {
-        setOpen(str != "")
+        setOpen(str !== "")
         setSearch(str);
     }
 
     function searchMore(){
-        var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
+        var searchStringTransform = search !== "" ? search.split(" ").join("+") : "";
         history.push(`/search/${searchStringTransform}`);
     }
 
     React.useEffect(() => {
         (async () => {
-            if(search == ""){
+            if(search === ""){
                 setProductOutput([]);
                 return;
             }
@@ -37,7 +37,7 @@ const SearchBar = ({}) => {
             //         'Request-Type': 'quick search',
             //     },
             // }
-            var searchStringTransform = search != "" ? search.split(" ").join("+") : "";
+            var searchStringTransform = search !== "" ? search.split(" ").join("+") : "";
             console.log(searchStringTransform);
             const res = await api.get(`search?query=${searchStringTransform}&quickSearch=${true}`);
             setProductOutput(res.results);
@@ -69,16 +69,14 @@ const SearchBar = ({}) => {
                                     <MenuList autoFocusItem={false}>
                                         {productOutput.map((x) => (
                                             <SmallProductView 
-                                                pid = {x.id}
-                                                name = {x.name}
-                                                price = {x.price}
-                                                image = {x.image}
-                                                category = {x.category}
+                                                productInfo={x}
+                                                type={type}
+                                                addProduct={addProduct}
                                             />
                                         ))}
-                                        {productOutput.length == 0 &&
+                                        {productOutput.length === 0 &&
                                             <Typography className="search-button">
-                                                {search == "" ? "Please enter your search query." : "Product not found."}
+                                                {search === "" ? "Please enter your search query." : "Product not found."}
                                             </Typography>
                                         }
                                         {productOutput.length >= 5 && 

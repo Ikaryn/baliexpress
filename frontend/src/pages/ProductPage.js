@@ -92,14 +92,14 @@ const ProductPage = () => {
                                     <Grid item xs={2}>
                                         <Typography className="light-text" variant="h5">${productInfo.price}.00</Typography>
                                     </Grid>
-                                    <Grid container item direction="column" xs={2}>
+                                    {/* <Grid container item direction="column" xs={2}>
                                         <Grid item>
                                             <Rating value={rating}/>
                                         </Grid>
                                         <Grid item>
                                             <Typography className="light-text" variant="h6">0 reviews</Typography>
                                         </Grid>
-                                    </Grid>
+                                    </Grid> */}
                                 </Grid>
                                 <Grid item >
                                     <Button color="primary" variant="contained" className="cart-button">Add to Cart</Button>
