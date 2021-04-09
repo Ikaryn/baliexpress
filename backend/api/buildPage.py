@@ -110,7 +110,16 @@ class BuildPage(Resource):
             CaseBudget = 0.04 * budget
             CoolingBudget = 0.03 * budget
         
-        build = {}
+        build = {
+            'Cases': None,
+            'Motherboards': None,
+            'CPU': None,
+            'Graphics_Cards': None, 
+            'Memory': None,
+            'Storage': None,
+            'PSU': None, 
+            'CPU_Cooling': None
+            }
         build['CPU'] = recommendCPU(CPUBudget, usage, overclock)
         build['Graphics_Cards'] = recommendGPU(GPUBudget, usage, overclock)
         build['Motherboards'] = recommendMotherboard(MotherboardBudget, usage, build['CPU'], build['Graphics_Cards'])

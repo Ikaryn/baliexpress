@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
+import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
@@ -46,6 +46,7 @@ const BuildPage = () => {
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const classes = useStyles();
+    const [builtByCompany, setBuiltByCompany] = React.useState(false)
     
     // will change later.
     // generate a random unique identifer for a build
@@ -63,6 +64,9 @@ const BuildPage = () => {
             return previous;
         }, { price: 0 });
         console.log(newPrice);
+        if (builtByCompany){
+            newPrice += 50
+        }
         setBuildPrice(newPrice.price);
     },[build])
     
@@ -132,6 +136,14 @@ const BuildPage = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
+                    </Grid>
+                    <Grid item>
+                        <FormControlLabel
+                            control = {
+                                <Checkbox checked={builtByCompany} onChange={() => {builtByCompany ? setBuiltByCompany(false) : setBuiltByCompany(true)}} />
+                            }
+                            label = "Built by Company" className="light-text"
+                        />
                     </Grid>
                 </Grid>
                 <Grid item xs={3}>
