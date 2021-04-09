@@ -82,6 +82,8 @@ class BuildPage(Resource):
             PSUBudget = 0.7 * budget
             CaseBudget = 0.05 * budget
             CoolingBudget = 0.04 * budget
+        elif usage == art:
+        
         else:
             GPUBudget = 0.6 * budget
             CPUBudget = 0.12 * budget
@@ -135,6 +137,8 @@ def recommendCPU(budget, usage, overclock):
     elif usage == "Business":
         coreWeight = 0.5
         clockWeight = 0.5
+    elif usage == art:
+
     else:
         coreWeight = 0.5
         clockWeight = 0.5
