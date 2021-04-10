@@ -1054,6 +1054,88 @@ def deleteSale(saleID):
             conn.close()
         return deleted
 
+# removes given product from a given sale
+# returns 1 if successful, 0 otherwise
+def deleteSaleProduct(saleID, productID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete sale from database
+        query = "DELETE FROM Sale_Products WHERE saleid = %s AND productid = %s"
+        cur.execute (query, [saleID, productID])
+
+        # get number of deleted rows
+        deleted = cur.rowcount
+
+        # commit changes
+        conn.commit()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print ("An error has occured in deleteSaleProduct()")
+        print(error)
+        deleted = 0
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return deleted
+
+# increases Sold for the specified sale by the specified amount for the specified product
+# Returns new Sold count if successful, None otherwise
+def increaseSold(saleID, productID, sold):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # update sold count
+        query = "UPDATE Sale_Products SET sold = sold + %s WHERE saleid = %s AND productid = %s RETURNING sold"
+        cur.execute(query, (AsIs(sold), saleID, productID))
+
+        newSold = cur.fetchone()[0]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        newSold = None
+        print ("An error has occured in addSold()")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return newSold
+
+# changes the sale percent for a given product in a given sale
+# returns 1 if successful, 0 otherwise
+def updateSalePercent(saleID, productID, newPercent):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # update percent
+        query = "UPDATE Sale_Products SET salepercent = %s WHERE saleid = %s AND productid = %s"
+        cur.execute(query, (AsIs(newPercent), saleID, productID))
+
+        status = 1
+
+    except (Exception, psycopg2.DatabaseError) as error:
+
+        print ("An error has occured in updateSalePercent()")
+        print(error)
+        status = 0
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return status
+
 
 # ~~~~~~~~~~ HELPER FUNCTIONS ~~~~~~~~~~
 
@@ -1102,6 +1184,7 @@ def getCurrentSales(cur):
 #print(addSale("2021 sale", "2021-1-1", "2021-12-31", products))
 #print(addSale("2000 sale", "2000-1-1", "2000-12-31", [{'productid': 20, 'salepercent': 69}, {'productid': 40, 'salepercent': 1}]))
 #print(getAllSales())
+print(deleteSaleProduct(1, 1))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):
