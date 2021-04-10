@@ -23,7 +23,7 @@ class Profile(Resource):
 
             if user is None:
                 return {'error': 'User not found'}
-            
+
             print(user)
 
             return {'accountInfo': user}
@@ -65,7 +65,7 @@ class Profile(Resource):
                 user['admin'] = True
             else:
                 user['admin'] = False
-        
+
         else:
             print('Edit profile attempt received')
 
@@ -73,7 +73,7 @@ class Profile(Resource):
             user = db.getUserInfo(int(userId))
             print(user)
 
-            # Replace changed details from request 
+            # Replace changed details from request
             for field in data:
                 print('changing value', user[field], end=' ')
                 user[field] = data.get(field)
@@ -81,7 +81,7 @@ class Profile(Resource):
 
 
             # Update db with new values
-            db.updateUser(userId,
+            db.oldUpdateUser(userId,
                             user['name'],
                             user['email'],
                             user['password'],
