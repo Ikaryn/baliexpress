@@ -962,6 +962,7 @@ def addSale(name, startDate, endDate, products):
     finally:
         conn.close()
         return saleID
+
 # gets all information and products for a given sale
 def getSale(saleID):
     try:
@@ -996,6 +997,32 @@ def getSale(saleID):
             cur.close()
             conn.close()
         return sale
+
+def getAllSales():
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get sales information from Sales table
+        query = "SELECT * FROM Sales"
+        cur.execute(query)
+
+        # convert to dictionary
+        rows = cur.fetchall()
+        sales = [{column:data for column, data in record.items()} for record in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        sale = None
+        print("An error occured in getAllSales()")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return sales
 
 # deletes all records of a specified sale
 # returns 1 if successful, 0 otherwise
@@ -1061,7 +1088,6 @@ def getCategories(cur):
         categories.append(t[0])
     return categories
 
-products = [{'productid': 1, 'salepercent': 10}, {'productid': 10, 'salepercent': 50}]
 
 def getCurrentSales(cur):
     today = datetime.today().strftime('%Y-%m-%d')
@@ -1071,9 +1097,11 @@ def getCurrentSales(cur):
     sales = [{column:data for column, data in record.items()} for record in rows]
     return sales
 
+#products = [{'productid': 1, 'salepercent': 10}, {'productid': 10, 'salepercent': 50}]
+
 #print(addSale("2021 sale", "2021-1-1", "2021-12-31", products))
 #print(addSale("2000 sale", "2000-1-1", "2000-12-31", [{'productid': 20, 'salepercent': 69}, {'productid': 40, 'salepercent': 1}]))
-print(getProduct(1))
+#print(getAllSales())
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):
