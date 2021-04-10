@@ -1230,13 +1230,6 @@ def getCurrentSales(cur):
     sales = [{column:data for column, data in record.items()} for record in rows]
     return sales
 
-#products = [{'productid': 1, 'salepercent': 10}, {'productid': 10, 'salepercent': 50}]
-
-#print(addSale("2021 sale", "2021-1-1", "2021-12-31", products))
-#print(addSale("2000 sale", "2000-1-1", "2000-12-31", [{'productid': 20, 'salepercent': 69}, {'productid': 40, 'salepercent': 1}]))
-#print(getAllSales())
-print(deleteSaleProduct(1, 1))
-print(updateUser(1, {"email": "newEmail"}))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):
