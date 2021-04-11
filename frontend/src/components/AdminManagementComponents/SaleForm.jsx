@@ -77,14 +77,19 @@ const SaleForm = ({setSaleFormOpen}) => {
     const handleSubmit = async () => {
 
         const today = Date.now();
+        
+        const start = Date.parse(startDate);
+        const end = Date.parse(endDate);
+
+        console.log(today, start, end)
 
         if (startDate === '' || endDate === '') {
             setDateError('Start and End Dates cannot be empty');
             return;
-        } else if (startDate < today) {
-            setDateError('Start Date must be from today onwards');
+        } else if (start < today) {
+            setDateError('Start Date must be from tomorrow onwards');
             return;
-        } else if (endDate < startDate) {
+        } else if (end < start) {
             setDateError('End Date cannot be before Start Date');
             return;
         } 
