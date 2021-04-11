@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-import credentials
+from . import credentials
 from datetime import datetime
 
 def connect():
@@ -180,22 +180,6 @@ def addAdmin(name, password, email, phonenumber):
             conn.close()
         return id
 
-# todo: make less stupid
-def oldUpdateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode):
-
-    conn = connect()
-    cur = conn.cursor()
-
-    query =  """UPDATE Users SET name = %s, email = %s, password = %s, phonenumber = %s, streetaddress = %s, city = %s, state = %s, country = %s, postcode = %s WHERE id = %s;"""
-    values = (newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode, id)
-
-    cur.execute(query, values)
-    conn.commit()
-    cur.close()
-    conn.close()
-    print("User succesfully updated")
-    #TODO: error handling
-
 # place all fields that you would like to be edited in the editedUser dictionary
 def updateUser(id, editedUser):
     try:
@@ -220,7 +204,6 @@ def updateUser(id, editedUser):
             cur.close()
             conn.close()
         return status
-
 
 # updates password of user with given id
 # returns 1 if successful, 0 otherwise
@@ -531,14 +514,14 @@ def addPartToBuild(buildID, productID, quantity):
         # commit and close database
         conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
-        status = 1
+        status = 0
         print ("An error has occured in addPartToBuild()")
         print(error)
     finally:
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return status
 
 # gets a specific build
@@ -593,7 +576,7 @@ def getBuild(buildID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return build
 
 # gets all builds by a specific user
@@ -651,7 +634,7 @@ def getUsersBuilds(userID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return builds
 
 # deletes a part from a build
@@ -677,7 +660,7 @@ def removePartFromBuild(buildID, productID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return deleted
 
 # deletes a build entirely
@@ -704,7 +687,7 @@ def deleteBuild(buildID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return deleted
 
 # updates the quantity of a part in a given build
@@ -731,7 +714,7 @@ def updatePartQuantity(buildID, productID, newQuantity):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return status
 
 # ~~~~~~~~~~ REVIEW FUNCTIONS ~~~~~~~~~~
@@ -763,7 +746,7 @@ def addReview(productID, userID, rating, reviewText, reviewDate):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return reviewID
 
 # deletes a review
@@ -790,7 +773,7 @@ def deleteReview(reviewID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return deleted
 
 # gets all reviews for a specific product
@@ -834,7 +817,7 @@ def getProductReviews(productID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return reviews
 
 # adds a vote to a review
@@ -863,7 +846,7 @@ def addVote(reviewID, voterID, vote):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return status
 
 # changes an existing vote
@@ -892,7 +875,7 @@ def editVote(reviewID, voterID, newVote):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return status
 
 # Deletes a vote
@@ -919,7 +902,7 @@ def deleteVote(reviewID, voterID):
         # close connecction to database
         if (conn):
             cur.close()
-            conn.close(
+            conn.close()
         return deleted
 
 # ~~~~~~~~~~ ORDER FUNCTIONS ~~~~~~~~~~
@@ -1309,3 +1292,19 @@ def getCurrentSales(cur):
 #     conn.commit()
 #     cur.close()
 #     conn.close()
+
+# # todo: make less stupid
+# def oldUpdateUser(id, newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode):
+
+#     conn = connect()
+#     cur = conn.cursor()
+
+#     query =  """UPDATE Users SET name = %s, email = %s, password = %s, phonenumber = %s, streetaddress = %s, city = %s, state = %s, country = %s, postcode = %s WHERE id = %s;"""
+#     values = (newName, newEmail, newPassword, newPhoneNumber, newStreetAddress, newCity, newState, newCountry, newPostcode, id)
+
+#     cur.execute(query, values)
+#     conn.commit()
+#     cur.close()
+#     conn.close()
+#     print("User succesfully updated")
+#     #TODO: error handling
