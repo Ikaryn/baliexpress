@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-from . import credentials
+import credentials
 from datetime import datetime
 
 def connect():
@@ -997,16 +997,44 @@ def addSale(name, startDate, endDate, products):
         for product in products:
             cur.execute(query, (saleID, product['productid'], product['salepercent']))
 
-        # commit changes and close connection
+        # commit changes to database
         conn.commit()
-        cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
         saleID = None
         print("An error occured in addSale()")
         print (error)
     finally:
-        conn.close()
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
         return saleID
+
+# adds a product to an existing sale
+# returns 1 if successful, 0 otherwise
+def addSaleProduct(saleID, productID, salePercent):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # insert into Sale_Products table
+        query = "INSERT INTO Sale_Products (saleid, productid, salepercent) VALUES (%s, %s, %s)"
+        cur.execute(query, (saleID, productID, salePercent))
+
+        # commit changes to database
+        conn.commit()
+        status = 1
+    except (Exception, psycopg2.DatabaseError) as error:
+        print("An error occured in addSaleProduct()")
+        print (error)
+        status = 0
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return status
 
 # gets all information and products for a given sale
 def getSale(saleID):
@@ -1075,7 +1103,7 @@ def deleteSale(saleID):
     try:
         # connect to database
         conn = connect()
-        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+        cur = conn.cursor()
 
         # delete sale from database
         query = "DELETE FROM Sales WHERE id = %s"
@@ -1204,7 +1232,6 @@ def getCategories(cur):
         categories.append(t[0])
     return categories
 
-
 def getCurrentSales(cur):
     today = datetime.today().strftime('%Y-%m-%d')
     query = "SELECT id, name FROM Sales WHERE startdate <= %s AND enddate >= %s"
@@ -1212,6 +1239,8 @@ def getCurrentSales(cur):
     rows = cur.fetchall()
     sales = [{column:data for column, data in record.items()} for record in rows]
     return sales
+
+print(addSaleProduct(1,1,100))
 
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
