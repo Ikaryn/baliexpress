@@ -17,20 +17,20 @@ class Sales(Resource):
         print('Get sales attempt received')
 
         # Placeholder function to get sales and sale products from database
-        # sales = db.getSales()
-        # products = db.getSaleProducts()
+        sales = db.getAllSales()
+        for sale in sales:
+            saleProducts = []
 
-        # Placeholder code to add the actual products to each sale object
-        # Depending on how we do it, might not need this or needs to be changed
-        # for sale in sales:
-        #     productList = []
-        #     for product in products:
-        #         if product['saleId'] == sale['saleId']:
-        #             productList.append(product)
+            # Get associated productIds for the sale
+            products = db.getSale(sale['id'])
+            for product in products:
 
-        #     sale['productList'] = productList
+                # Get the actual product from the productIds
+                saleProducts.append(db.getProduct(product['id']))
+            sale['productList'] = saleProducts
+        
+        return {'sales': sales}
 
-        # return {'sales': sales}
     
     # Adding/making a new sale
     # Url format: `sales`
@@ -48,7 +48,11 @@ class Sales(Resource):
         print(name, startDate, endDate, products)
         
         # Placeholder function to send to database
-        # db.addSale(name, startDate, endDate, products)
+        saleId = db.addSale(name, startDate, endDate, products)
+        if saleID is None:
+            return {'error': 'Failed to create sale'}
+        
+        return {'saleId': saleId}
 
     # Editing a sale such as adding/removing products
     # Url format: `sales`

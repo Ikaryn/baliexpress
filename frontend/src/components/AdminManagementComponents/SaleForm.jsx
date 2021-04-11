@@ -6,6 +6,14 @@ import SearchBar from '../searchBar';
 
 const api = new API();
 
+function not(a, b) {
+    return a.filter((value) => b.indexOf(value) === -1);
+}
+  
+function intersection(a, b) {
+    return a.filter((value) => b.indexOf(value) !== -1);
+}
+
 const SaleProductList = ({saleProducts, setSaleProducts}) => {
     // this will contain a list of all the products user wants to set a sale for
     const [products, setProducts] = React.useState([]);
@@ -72,7 +80,24 @@ const SaleForm = ({setSaleFormOpen}) => {
     const [saleProducts, setSaleProducts] = React.useState([])
     const [success, setSuccess] = React.useState(false);
     
+
+    const [dateError, setDateError] = React.useState('');
+
     const handleSubmit = async () => {
+        const today = new Date.now();
+        setDateError('');
+
+        if (startDate === '' || endDate === '') {
+            setDateError('Start and End Dates cannot be empty');
+            return;
+        } else if (startDate < today) {
+            setDateError('Start Date must be either from today onwards');
+            return;
+        } else if (endDate < startDate) {
+            setDateError('End Date must be after the Start Date');
+            return;
+        }
+
         const body = {
             'name': name,
             'start': startDate,
@@ -80,11 +105,11 @@ const SaleForm = ({setSaleFormOpen}) => {
             'products': saleProducts,
         };
         const response = await api.put('sales', body);
+        console.log(response);
         setSuccess(true);
         setTimeout(() => {
             setSaleFormOpen(false);
         }, 1000)
-    
     }
     
     return (
@@ -101,17 +126,18 @@ const SaleForm = ({setSaleFormOpen}) => {
                 </Grid>
                 <Grid container item direction="row" spacing={5}>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>Start Date</FormLabel>
                             <TextField
                                 type="date"
                                 value={startDate}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 />
+                            <FormHelperText>{dateError}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>End Date</FormLabel>
                             <TextField
                                 type="date"
