@@ -1,6 +1,9 @@
-import { Button, FormControl, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, TextField, Typography } from '@material-ui/core';
 import React from 'react';
+import API from '../../util/API';
 import SearchBar from '../searchBar';
+
+const api = new API();
 
 function not(a, b) {
     return a.filter((value) => b.indexOf(value) === -1);
@@ -77,7 +80,34 @@ const SaleForm = () => {
     const [name, setName] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
-    
+
+    const [dateError, setDateError] = React.useState('');
+
+    const handleSubmit = async () => {
+        const today = new Date.now();
+        setDateError('');
+
+        if (startDate === '' || endDate === '') {
+            setDateError('Start and End Dates cannot be empty');
+            return;
+        } else if (startDate < today) {
+            setDateError('Start Date must be either from today onwards');
+            return;
+        } else if (endDate < startDate) {
+            setDateError('End Date must be after the Start Date');
+            return;
+        }
+
+        const body = {
+                        'name': name,
+                        'startDate': startDate,
+                        'endDate': endDate,
+                        // 'products': saleProducts
+                    }
+
+        const response = await api.post('sales', body);
+        console.log(response);
+    }
     
     return (
             <Grid container direction="column" spacing={3}>
@@ -87,22 +117,24 @@ const SaleForm = () => {
                         <OutlinedInput
                             value={name}
                             placeholder='Enter sale name'
+                            onChange={(event) => setName(event.target.value)}
                         />
                     </FormControl>
                 </Grid>
                 <Grid container item direction="row" spacing={5}>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>Start Date</FormLabel>
                             <TextField
                                 type="date"
                                 value={startDate}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 />
+                            <FormHelperText>{dateError}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>End Date</FormLabel>
                             <TextField
                                 type="date"
@@ -111,8 +143,17 @@ const SaleForm = () => {
                                 />
                         </FormControl>
                     </Grid>
-                    <SaleProductList />
+                </Grid> 
+                <Grid item>
+                    <Button
+                        variant="contained" 
+                        color="primary"
+                        onClick={(handleSubmit)}
+                    >
+                        Submit Sale
+                    </Button>
                 </Grid>
+                <SaleProductList />
             </Grid>
     )
 }

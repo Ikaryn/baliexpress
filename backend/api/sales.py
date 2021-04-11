@@ -17,7 +17,7 @@ class Sales(Resource):
         print('Get sales attempt received')
 
         # Placeholder function to get sales and sale products from database
-        sales = db.getSales()
+        sales = db.getAllSales()
         for sale in sales:
             saleProducts = []
 
