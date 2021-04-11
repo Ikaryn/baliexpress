@@ -21,8 +21,9 @@
 }
 
 .modal-container {
-    margin: 15% 30%;
+    margin: 15% 25%;
     padding: 1em;
+    min-width: 50%;
     max-width: 40%;
 }
 

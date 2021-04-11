@@ -85,3 +85,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.image {
+  width: 100%;
+}
+
+/* .search-bar {
+  margin: 1em;
+} */

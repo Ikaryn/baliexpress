@@ -134,9 +134,9 @@ const ProductListPage = () => {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid container item direction="row" spacing={3}>
+                    <Grid container item direction="row" spacing={3} xs>
                         {filteredProducts.map((p) => (
-                            <Grid item xs={3}>
+                            <Grid container item xs={3} style={{display: 'flex'}}>
                                 <ProductCard 
                                     pid={p.id}
                                     name={p.name}

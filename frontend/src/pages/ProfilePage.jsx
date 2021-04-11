@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal, Divider } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -9,6 +9,9 @@ import API from '../util/API';
 import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
+import UserBuildList from '../components/profilePage/UserBuildList';
+import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
+import SaleForm from '../components/AdminManagementComponents/SaleForm';
 // import './App.css';
 const api = new API();
 
@@ -31,6 +34,9 @@ const ProfilePage = () => {
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     
+    const [saleFormOpen, setSaleFormOpen] = React.useState(false);
+    
+    // when logout remove all of cookies
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
@@ -41,6 +47,8 @@ const ProfilePage = () => {
     const handleOpen = () => {
         open ? setOpen(false) : setOpen(true);
     }
+    
+    //get all of the user details
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
@@ -127,8 +135,7 @@ const ProfilePage = () => {
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            {/* <Tab label="Logout" />
-                            */}
+                            {accInfo.isAdmin && <Tab label="Manage Sales" />}    
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
@@ -143,7 +150,7 @@ const ProfilePage = () => {
                             My Orders
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            My Builds
+                            <UserBuildList />
                         </TabPanel>      
                         {accInfo.isAdmin && 
                             <TabPanel value={value} index={3}>
@@ -160,7 +167,21 @@ const ProfilePage = () => {
                                 <ViewUsers/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
+                        {accInfo.isAdmin &&                     
+                            <TabPanel value={value} index={6}>
+                                <Typography variant="h3">Manage Sales</Typography>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    onClick={() => {saleFormOpen ? setSaleFormOpen(false) : setSaleFormOpen(true)}}
+                                >
+                                    {saleFormOpen ? 'Back' : 'Create Sale'}
+                                </Button>
+                                <Divider />
+                                {saleFormOpen ? <SaleForm /> : <SalesPanel />}
+                            </TabPanel>
+                        }
+                        <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

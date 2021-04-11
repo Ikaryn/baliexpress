@@ -3,24 +3,28 @@ import { Card, CardActionArea, CardMedia,
 import React from 'react';
 import { useHistory } from 'react-router';
 
-const SmallProductView = ({pid, name, price, image, category}) => {
-
+// const SmallProductView = ({pid, name, price, image, category, type, addProduct}) => {
+    const SmallProductView = ({productInfo, type, addProduct}) => {
     const history = useHistory();
 
     const handleClick = () => {
-        history.push(`/product/${category}/${pid}`)
+        if (type === 'sale') {
+            addProduct(productInfo);
+        } else {
+            history.push(`/product/${productInfo.category}/${productInfo.id}`)
+        }
     }
     return (
         <Card className="product-card-container">
             <CardActionArea onClick={() => handleClick()}>
                 <div className="product-card-container-action">
-                    <img src={"data:image/jpeg;base64,"+image} alt="product-thumbnail" class="product-card-image"/>
+                    <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product-thumbnail" class="product-card-image"/>
                     <CardContent>
                         <Typography variant="subtitle2">
-                            {name}
+                            {productInfo.name}
                         </Typography>
                         <Typography variant="h6">
-                            ${price}
+                            ${productInfo.price}
                         </Typography>
                     </CardContent>
                 </div>

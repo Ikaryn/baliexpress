@@ -1,7 +1,13 @@
-import { AppBar, Button, Grid, makeStyles, Modal, Paper, rgbToHex, Typography, useTheme } from '@material-ui/core';
+import { AppBar, Button, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
+import SaveBuildModal from '../components/buildPageComponents/SaveBuildModal';
+import API from '../util/API';
 import { generateBuildString } from '../util/helpers';
+import { StoreContext } from '../util/store';
+
+const api = new API();
 
 const buildTemplate = {
     'Case': '', 
@@ -15,7 +21,7 @@ const buildTemplate = {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginBottom: '5%',
+        marginBottom: '10%',
     },
     footerBar: {
         top: 'auto',
@@ -30,9 +36,15 @@ const useStyles = makeStyles((theme) => ({
 
 const BuildPage = () => {
     
-    const [build, setBuild] = React.useState(buildTemplate);
+    // const [build, setBuild] = React.useState(buildTemplate);
+    const context = React.useContext(StoreContext)
+    const { build: [build, setBuild]} = context;
+    console.log(build);
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
+    // modal states
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const classes = useStyles();
     
     // will change later.
@@ -43,44 +55,51 @@ const BuildPage = () => {
         setBuildNumber(generateBuildString());
     },[])
     
-    const handleChangeProduct = (type, product) => {
-        const newBuild = JSON.parse(JSON.stringify(build));
-        newBuild[type] = product;
-        setBuild(newBuild);
-        console.log(newBuild);
-        
-        // loop through the build and sum all the prices
-        const newPrice = Object.keys(newBuild).reduce((previous, key) => {
-            if(newBuild[key].price){
-                previous.price += newBuild[key].price;
+    React.useEffect(() => {
+        const newPrice = Object.keys(build).reduce((previous, key) => {
+            if(build[key].price){
+                previous.price += build[key].price;
             }
             return previous;
         }, { price: 0 });
         console.log(newPrice);
         setBuildPrice(newPrice.price);
-    }
+    },[build])
+    
+    
     
     const handleAddToCart = () => {
     
     }
     
-    const handleSaveBuild = () => {
-        console.log(build);
+    const handleSaveBuild = (event) => {
+        setOpen(true);
+        // setAnchorEl(event.currentTarget);
+        // setOpen(open ? false : true);
+        // console.log(build);
+        // console.log('Send post request')
+        // api.post(`build`, {
+        //     userID: localStorage.getItem('userId'),
+        //     buildName: 'buildName',
+        //     buildDesc: 'buildDesc',
+        //     build: build,
+        // })
     }
+    
     
     return (
     <div className={classes.root}>
         <Grid container alignItems="center" direction="column" spacing={3}>
             <Grid item>
-                <Typography className="light-text" variant="h2" >Custom Pc Builder</Typography>
+                <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
                 <Paper>
                     <Typography>Sort placeholder</Typography>
                 </Paper>
-            </Grid>
+            </Grid> */}
             <Grid container item direction="row">
-                <Grid container item xs={2}>
+                {/* <Grid container item xs={2}>
                     <Paper>
                         <Grid item>
                             <Typography variant="h4">Overview</Typography>
@@ -89,11 +108,11 @@ const BuildPage = () => {
                             <Typography>specs placeholder</Typography>
                         </Grid>
                     </Paper>
-                </Grid>
-                <Grid container item direction="column" xs={10} spacing={3}>
-                    {Object.keys(buildTemplate).map((category) => (
+                </Grid> */}
+                <Grid container item direction="column" xs={12} spacing={3}>
+                    {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
-                            <BuildProductCard type={category} product={buildTemplate[category]} setBuild={handleChangeProduct}/>
+                            <BuildProductCard type={category} />
                         </Grid>
                     ))}
                 </Grid>
@@ -109,7 +128,7 @@ const BuildPage = () => {
                 </Grid>
                 <Grid container item direction="row" xs={3}>
                     <Grid item xs={6}>
-                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleSaveBuild()}}>Save build</Button>
+                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild}>Save build</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
@@ -119,7 +138,13 @@ const BuildPage = () => {
                     <Typography className="light-text" variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
                 </Grid>
             </Grid>
+            <Modal open={open} onClose={() => {setOpen(false)}}>
+                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} />
+            </Modal>
         </AppBar>
+        <Snackbar open={success} autoHideDuration={5} onClose={() => {setSuccess(false)}}>
+            <Alert severity="success">Build successfully saved!</Alert>
+        </Snackbar>
     </div>
     )
 }

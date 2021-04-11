@@ -5,10 +5,11 @@ import {
     useHistory,
   } from 'react-router-dom';
 import NewProductFeature from '../components/featuredProductComponents/NewProductFeature';
-import { Button, CardActionArea, Grid, makeStyles, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@material-ui/core';
+import { Button, CardActionArea, CircularProgress, Grid, makeStyles, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@material-ui/core';
 import BuildPcImage from '../assets/BuildPcImage.png';
 import MinorFeaturedProductCards from '../components/featuredProductComponents/MinorFeaturedProductCards';
 import BuildModalForm from '../components/buildPageComponents/BuildModalForm';
+import LoadingComponent from '../components/LoadingComponent';
 
 
 const api = new API();
@@ -73,7 +74,7 @@ const HomePage = () => {
                     ))}
                 </Grid>
                 <Grid item xs={5}>
-                    {products && <NewProductFeature feature={products['major_features']}/>}
+                    {products ? <NewProductFeature feature={products['major_features']}/> : <LoadingComponent/>}
                 </Grid>
                 <Grid item xs={4}>
                     <CardActionArea onClick={() => {setBuildOpen(true)}}>
@@ -88,11 +89,11 @@ const HomePage = () => {
                 <Table>
                     <TableBody>
                         <TableRow className={classes.minorProductTableCard}>
-                            {products && products['minor_features'].map((product) => (
+                            {products ? products['minor_features'].map((product) => (
                                 <TableCell key={product.name}>
                                     <MinorFeaturedProductCards productInfo={product} />
                                 </TableCell>
-                            ))}
+                            )) : <LoadingComponent />}
                         </TableRow>
                     </TableBody>
                 </Table>
