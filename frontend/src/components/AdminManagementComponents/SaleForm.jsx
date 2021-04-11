@@ -1,4 +1,4 @@
-import { Button, FormControl, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import API from '../../util/API';
@@ -71,8 +71,24 @@ const SaleForm = ({setSaleFormOpen}) => {
     const [endDate, setEndDate] = React.useState('');
     const [saleProducts, setSaleProducts] = React.useState([])
     const [success, setSuccess] = React.useState(false);
+
+    const [dateError, setDateError] = React.useState('');
     
     const handleSubmit = async () => {
+
+        const today = Date.now();
+
+        if (startDate === '' || endDate === '') {
+            setDateError('Start and End Dates cannot be empty');
+            return;
+        } else if (startDate < today) {
+            setDateError('Start Date must be from today onwards');
+            return;
+        } else if (endDate < startDate) {
+            setDateError('End Date cannot be before Start Date');
+            return;
+        } 
+
         const body = {
             'name': name,
             'start': startDate,
