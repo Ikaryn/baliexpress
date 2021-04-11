@@ -13,6 +13,7 @@ import SearchBar from './searchBar';
 import BuildModalForm from './buildPageComponents/BuildModalForm';
 import API from '../util/API';
 const api = new API();
+
 const useStyles = makeStyles((theme) => ({
     root: {
         background: 'rgb(38,40,64)'
@@ -25,6 +26,7 @@ const NavBar = () => {
     
     const [buildOpen, setBuildOpen] = React.useState(false);
     const [loginStatus, setLoginStatus] = React.useState("");
+    const [currUser, setCurrUser] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -44,7 +46,8 @@ const NavBar = () => {
     }
     React.useEffect(() => {
         (async () => {
-            const userId = localStorage.getItem('userId');
+            const userId = await localStorage.getItem('userId');
+            setCurrUser(userId);
             if(userId){
                 const options = {
                     method: 'GET',
@@ -54,7 +57,8 @@ const NavBar = () => {
                     },
                 }
                 const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
-                const userDetails = response.accountInfo.admin;
+                console.log(response);
+                const userDetails = response.accountInfo;
                 const userAccInfo = {name: userDetails.name, 
                     email: userDetails.email, 
                     phonenumber: userDetails.phonenumber,
