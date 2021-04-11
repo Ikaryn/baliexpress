@@ -95,7 +95,7 @@ const SaleForm = ({setSaleFormOpen}) => {
             'end': endDate,
             'products': saleProducts,
         };
-        const response = await api.put('sales', body);
+        const response = await api.post('sales', body);
         setSuccess(true);
         setTimeout(() => {
             setSaleFormOpen(false);

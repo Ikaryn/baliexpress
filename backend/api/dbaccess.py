@@ -311,6 +311,15 @@ def getAllProducts(*args):
 # gets product information for a single products
 # returns dictionary containing product information if successful, None otherwise
 def getProduct(id):
+
+    # create function to convert decimal type numbers to floats
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )
+    psycopg2.extensions.register_type(decimalToFloat)
+
     try:
         # connect to database
         conn = connect()
@@ -995,7 +1004,7 @@ def addSale(name, startDate, endDate, products):
         # insert products into Sale_Products table
         query = "INSERT INTO Sale_Products(saleid, productid, salepercent) VALUES (%s, %s, %s)"
         for product in products:
-            cur.execute(query, (saleID, product['productid'], product['salepercent']))
+            cur.execute(query, (saleID, product['productId'], product['sale %']))
 
         # commit changes and close connection
         conn.commit()
