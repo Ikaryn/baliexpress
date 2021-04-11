@@ -1,4 +1,3 @@
-# from flask_restplus import Namespace, Resource, fields
 from flask import Flask, request, Response
 from flask_restful import Resource
 import secrets, random
@@ -23,7 +22,7 @@ class Profile(Resource):
 
             if user is None:
                 return {'error': 'User not found'}
-            
+
             print(user)
 
             return {'accountInfo': user}
@@ -65,32 +64,19 @@ class Profile(Resource):
                 user['admin'] = True
             else:
                 user['admin'] = False
-        
+
         else:
             print('Edit profile attempt received')
 
             print("id:", userId)
-            user = db.getUserInfo(int(userId))
-            print(user)
 
-            # Replace changed details from request 
+            editedUser = {}
+            # Get changed details from request
             for field in data:
-                print('changing value', user[field], end=' ')
-                user[field] = data.get(field)
-                print('to', user[field])
-
+                editedUser[field] = data.get(field)
 
             # Update db with new values
-            db.updateUser(userId,
-                            user['name'],
-                            user['email'],
-                            user['password'],
-                            user['phonenumber'],
-                            user['streetaddress'],
-                            user['city'],
-                            user['state'],
-                            user['country'],
-                            user['postcode'])
+            db.updateUser(userId, editedUser)
 
             user = db.getUserInfo(userId)
             return {'accountInfo': user}

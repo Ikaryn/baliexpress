@@ -101,17 +101,18 @@ const SaleForm = ({setSaleFormOpen}) => {
                 </Grid>
                 <Grid container item direction="row" spacing={5}>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>Start Date</FormLabel>
                             <TextField
                                 type="date"
                                 value={startDate}
                                 onChange={(event) => setStartDate(event.target.value)}
                                 />
+                            <FormHelperText>{dateError}</FormHelperText>
                         </FormControl>
                     </Grid>
                     <Grid item>
-                        <FormControl>
+                        <FormControl error={dateError === '' ? false : true}>
                             <FormLabel>End Date</FormLabel>
                             <TextField
                                 type="date"
