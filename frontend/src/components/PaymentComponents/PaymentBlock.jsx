@@ -2,7 +2,6 @@ import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Ou
 import React from 'react';
 import VisaLogo from '../../assets/Visa.png'
 import MasterCardLogo from '../../assets/Mastercard.png'
-import ExpiryDateInput from "credit-card-expiry-date";
 
 const PaymentBlock = () => {
 
@@ -42,18 +41,18 @@ const PaymentBlock = () => {
     }
     
     return (
-        <Grid container direction="column">
+        <Grid container direction="column" spacing={3} className="light-text">
             <Grid item>
-                <Typography variant="h3">Payment Method</Typography>
+                <Typography variant="h4">Payment Method</Typography>
             </Grid>
-            <Grid container item direction="row">
-                <Grid item>
+            <Grid container item direction="row" xs={12}>
+                <Grid item xs={5}>
                     <FormControlLabel
                         control={<Checkbox checked={true} />}
                         label="Credit Card"
                     />
                 </Grid>
-                <Grid container item direction="row">
+                <Grid container item direction="row" xs={7}>
                     <Grid item>
                         <img src={VisaLogo} alt="visa logo" />
                     </Grid>
@@ -62,10 +61,11 @@ const PaymentBlock = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
                 <FormControl>
                     <InputLabel>Credit Card Type</InputLabel>
                     <Select
+                        fullWidth
                         value={cardType}
                         onChange={(event) => {setCardType(event.target.value)}}
                     >
@@ -75,7 +75,7 @@ const PaymentBlock = () => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
                 <FormControl>
                     <InputLabel>Credit Card Number</InputLabel>
                     <OutlinedInput 
@@ -86,7 +86,7 @@ const PaymentBlock = () => {
                 </FormControl>
             </Grid>
             <Grid container item direction="row">
-                <Grid item>
+                <Grid item xs={3}>
                     <FormControl>
                         <InputLabel>Expiry Date</InputLabel>
                         {/* <ExpiryDateInput 
@@ -96,7 +96,7 @@ const PaymentBlock = () => {
                         /> */}
                     </FormControl>
                 </Grid>
-                <Grid item>
+                <Grid item xs={3}>
                     <FormControl>
                         <InputLabel>Card Validation Number</InputLabel>
                         <OutlinedInput 
