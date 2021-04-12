@@ -19,8 +19,8 @@ const Login = () => {
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
     
-    const context = React.useContext(StoreContext);
-    const { userId: [userId, setUserId] } = context;
+    // const context = React.useContext(StoreContext);
+    // const { userId: [userId, setUserId] } = context;
 
     const history = useHistory();
 

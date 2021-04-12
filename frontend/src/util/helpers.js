@@ -38,6 +38,17 @@ export const buildTemplate = {
     'CPU_Cooling':'',
     }
 
+export const allProductCategories = {
+    'Cases': '', 
+    'Motherboards':'', 
+    'CPU':'',
+    'Graphics_Cards':'', 
+    'Memory': '',
+    'Storage': '',
+    'PSU': '', 
+    'CPU_Cooling':'',
+    
+}
 // function to convert category names in frontend to backend table names
 export function convertCategoryName(category) {
     

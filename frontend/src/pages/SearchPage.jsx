@@ -23,7 +23,7 @@ const SearchPage = () => {
             setProductOutput(res.results);
             console.log(res.results);
         })();
-    },[])
+    },[search])
     
     return (
         <div>

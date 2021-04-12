@@ -9,6 +9,9 @@ import { productDesc } from '../../util/helpers';
 const useStyles = makeStyles((theme) => ({
     productInfoContainer: {
         padding: theme.spacing(2)
+    },
+    image: {
+        width: '100%',
     }
 
 }));
@@ -67,8 +70,8 @@ const BuildProductCard = ({type}) => {
                 </Grid>
                 :
                 <Grid item container direction="row" xs={9} spacing={4} className={classes.productInfoContainer}>
-                    <Grid item xs={2}>
-                        <img src={productInfo.image} alt={productInfo.name}/>
+                    <Grid item xs={3}>
+                        <img className={classes.image} src={"data:image/jpeg;base64,"+productInfo.image} alt={productInfo.name}/>
                     </Grid>
                     <Grid item xs={4}>
                         <Accordion>
@@ -91,7 +94,7 @@ const BuildProductCard = ({type}) => {
                             </AccordionDetails>
                         </Accordion>
                     </Grid>
-                    <Grid item container direction="column" xs={3}>
+                    <Grid item container direction="column" xs={2}>
                         <Grid item>             
                             <Typography variant="h6">Product Name</Typography>
                         </Grid>

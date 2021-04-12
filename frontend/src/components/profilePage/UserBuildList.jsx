@@ -22,8 +22,15 @@ const UserBuildList = () => {
     
     const handleRedirect = (userid, buildid, build) => {
         console.log(build);
-        setBuild(build);
+        setBuild(build.parts);
         history.push(`/build/${userid}/${buildid}`);
+    }
+    
+    const handleDelete = async (buildid) => {
+        await api.delete(`userBuilds?buildId=${buildid}`);
+        const response = await api.get(`userBuilds?userId=${localStorage.getItem('userId')}`);
+        setBuilds(response.builds)
+        
     }
     
     return(        
@@ -44,7 +51,7 @@ const UserBuildList = () => {
                         <TableCell>{build.description}</TableCell>
                         <TableCell>
                             <Button variant="contained" color="primary" onClick={() => {handleRedirect(build.userid, build.buildid, build)}}>Edit Build</Button>
-                            <Button variant="contained" color="secondary">Delete Build</Button>
+                            <Button variant="contained" color="secondary" onClick={() => {handleDelete(build.buildid)}}>Delete Build</Button>
                         </TableCell>
                     </TableRow>  
                 ))}
