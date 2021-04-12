@@ -11,6 +11,7 @@ import EditProductPage from '../pages/EditProductPage';
 import SearchPage from '../pages/SearchPage';
 import BuildPage from '../pages/BuildPage';
 import ComparePage from '../pages/ComparePage';
+import PaymentPage from '../pages/PaymentPage';
 
 
 const routes = [
@@ -26,6 +27,7 @@ const routes = [
     <PublicRoute key="route-build" component={BuildPage} path="/build" exact />,
     <PublicRoute key="route-compare" component={ComparePage} path="/build/compare" exact />,
     <PublicRoute key="route-search" component={SearchPage} path="/search/:search" exact/>,
+    <PublicRoute key="route-payment" component={PaymentPage} path="/payment" exact />,
 ];
 
 export default routes;
