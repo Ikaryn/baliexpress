@@ -63,7 +63,6 @@ class BuildPage(Resource):
         usage = data.get('usage')
         overclock = data.get('overclock')
         storage = data.get('storage')
-
         if usage == "Gaming":
             GPUBudget = 0.6 * budget
             CPUBudget = 0.12 * budget
@@ -109,7 +108,8 @@ class BuildPage(Resource):
             PSUBudget = 0.05 * budget
             CaseBudget = 0.04 * budget
             CoolingBudget = 0.03 * budget
-        
+        if (overclock):
+            CPU_CoolingBudget = 0.05
         build = {
             'Cases': None,
             'Motherboards': None,
@@ -170,8 +170,8 @@ def recommendCPU(budget, usage, overclock):
     recommendation = None
     for CPU in CPUs:
         if CPU['price'] <= budget:
-            if overclock == True:
-                if CPU['specs']['overclockable'] == False:
+            if overclock is True:
+                if CPU['specs']['overclockable'] is False:
                     continue
             score = coreWeight*CPU['specs']['cores']+clockWeight*CPU['specs']['max_clock']
             if score > highscore:
@@ -223,13 +223,16 @@ def recommendMotherboard(budget, usage, CPU, GPU):
 
 
 def recommendCPUCooler(budget, CPU, overclock):
-    CPUcoolers = db.getAllProducts('CPU_Coolers')
+    CPUcoolers = db.getAllProducts('CPU_Cooling')
     lowestPrice = 100000.0
+    highestReview = 0
     recommendation = None
-    if (overclock or not CPU['specs']['cooler_included']):
+    if (not CPU['specs']['cooler_included']):
         for cooler in CPUcoolers:
-            if (cooler['price'] <= budget and cooler['price'] < lowestPrice):
-                recommendation = cooler 
+            if cooler['specs']['socket'] == CPU['specs']['socket']:
+                if 
+                if (cooler['price'] <= budget and cooler['price'] < lowestPrice):
+                    recommendation = cooler 
     else:    
         return(None)
     return (recommendation)
@@ -304,3 +307,13 @@ def recommendPSU(budget, sumPower_usage):
 
 # def recommendCooling(budget)
 #     return(Cooling)
+
+def getAverageProductRating(productID):
+    reviews = db.getProductReviews(productID)
+    sumRating = 0
+    nRatings = 0
+    for review in reviews:
+        averageRating += review['rating']
+        nRatings += 1
+    meanRating = sumRating/nRatings
+    return (meanRating)
