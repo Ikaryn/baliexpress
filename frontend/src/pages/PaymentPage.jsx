@@ -17,7 +17,7 @@ const PaymentPage = () => {
     },[]);
 
     return (
-        <Grid>
+        <Grid container direction="column" xs>
             <PaymentBlock />
         </Grid>
     )

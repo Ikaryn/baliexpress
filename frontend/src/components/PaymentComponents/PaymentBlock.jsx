@@ -1,4 +1,4 @@
-import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, OutlinedInput, Select, Typography } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from '@material-ui/core';
 import React from 'react';
 import VisaLogo from '../../assets/Visa.png'
 import MasterCardLogo from '../../assets/Mastercard.png'
@@ -42,71 +42,73 @@ const PaymentBlock = () => {
     
     return (
         <Grid container direction="column" spacing={3} className="light-text">
-            <Grid item>
-                <Typography variant="h4">Payment Method</Typography>
-            </Grid>
-            <Grid container item direction="row" xs={12}>
-                <Grid item xs={5}>
-                    <FormControlLabel
-                        control={<Checkbox checked={true} />}
-                        label="Credit Card"
-                    />
+            <Paper variant="outlined">
+                <Grid item>
+                    <Typography variant="h4">Payment Method</Typography>
                 </Grid>
-                <Grid container item direction="row" xs={7}>
-                    <Grid item>
-                        <img src={VisaLogo} alt="visa logo" />
+                <Grid container item direction="row" xs={12}>
+                    <Grid item xs={5}>
+                        <FormControlLabel
+                            control={<Checkbox checked={true} />}
+                            label="Credit Card"
+                            />
                     </Grid>
-                    <Grid item>
-                        <img src={MasterCardLogo} alt="Mastercard logo" />
+                    <Grid container item direction="row" xs={7}>
+                        <Grid item>
+                            <img src={VisaLogo} alt="visa logo" />
+                        </Grid>
+                        <Grid item>
+                            <img src={MasterCardLogo} alt="Mastercard logo" />
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid item xs={12}>
-                <FormControl>
-                    <InputLabel>Credit Card Type</InputLabel>
-                    <Select
-                        fullWidth
-                        value={cardType}
-                        onChange={(event) => {setCardType(event.target.value)}}
-                    >
-                        <MenuItem value="" />
-                        <MenuItem value="visa">Visa</MenuItem>
-                        <MenuItem value="mastercard">Mastercard</MenuItem>
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-                <FormControl>
-                    <InputLabel>Credit Card Number</InputLabel>
-                    <OutlinedInput 
-                        placeholder='' 
-                        value={ccDetails.number}
-                        onChange={(event) => {handleCardDetailsChange('number', event.target.value)}} 
-                    />
-                </FormControl>
-            </Grid>
-            <Grid container item direction="row">
-                <Grid item xs={3}>
+                <Grid item xs={12}>
                     <FormControl>
-                        <InputLabel>Expiry Date</InputLabel>
-                        {/* <ExpiryDateInput 
-                            onChange={date => {handleCardDetailsChange('date', date)}}
-                            value={ccDetails.date}
-                            disabled={false}
-                        /> */}
+                        <InputLabel>Credit Card Type</InputLabel>
+                        <Select
+                            fullWidth
+                            value={cardType}
+                            onChange={(event) => {setCardType(event.target.value)}}
+                            >
+                            <MenuItem value="" />
+                            <MenuItem value="visa">Visa</MenuItem>
+                            <MenuItem value="mastercard">Mastercard</MenuItem>
+                        </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12}>
                     <FormControl>
-                        <InputLabel>Card Validation Number</InputLabel>
+                        <InputLabel>Credit Card Number</InputLabel>
                         <OutlinedInput 
-                            placeholder=""
-                            value={ccDetails.cvn}
-                            onChange={(event) => {handleCardDetailsChange('cvn', event.target.value)}}
-                        />
+                            placeholder='' 
+                            value={ccDetails.number}
+                            onChange={(event) => {handleCardDetailsChange('number', event.target.value)}} 
+                            />
                     </FormControl>
                 </Grid>
-            </Grid>
+                <Grid container item direction="row">
+                    <Grid item xs={3}>
+                        <FormControl>
+                            <InputLabel>Expiry Date</InputLabel>
+                            {/* <ExpiryDateInput 
+                                onChange={date => {handleCardDetailsChange('date', date)}}
+                                value={ccDetails.date}
+                                disabled={false}
+                            /> */}
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <FormControl>
+                            <InputLabel>Card Validation Number</InputLabel>
+                            <OutlinedInput 
+                                placeholder=""
+                                value={ccDetails.cvn}
+                                onChange={(event) => {handleCardDetailsChange('cvn', event.target.value)}}
+                                />
+                        </FormControl>
+                    </Grid>
+                </Grid>
+            </Paper>
         </Grid>
     )
 
