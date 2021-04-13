@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, TextField, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
@@ -7,9 +7,36 @@ import {
   } from 'react-router-dom';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { fileToDataUrl } from '../util/helpers';
+
 const api = new API();
+
+const useStyles = makeStyles(() => ({
+
+    field: {
+        'margin-top': '0.5em',
+    },
+
+    label: {
+        'margin-top': '1em',
+        'margin-right': '1em',
+    },
+
+    title: {
+        'padding': '1em',
+    },
+
+    fieldsBox: {
+        'padding-left': '8em',
+        'padding-right': '8em',
+        'padding-bottom': '2em',
+    }
+
+}))
+
 const EditProductPage = ({}) => {
+
     const history = useHistory();
+    const classes = useStyles();
     const { category, pid } = useParams();
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const [image, setImage] = React.useState('');
@@ -20,6 +47,8 @@ const EditProductPage = ({}) => {
             console.log(products)
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
+            console.log(productInfo);
+            console.log(product);
         })();
     },[category, pid])
 
@@ -57,28 +86,76 @@ const EditProductPage = ({}) => {
         console.log(productInfo);
         setProductInfo(newProduct);
     }
+
+    const changeSpecsValue = (key, value) => {
+        const newSpecs = JSON.parse(JSON.stringify(productInfo.specs));
+        newSpecs[key] = value;
+        changeValue('specs', newSpecs);
+    }
+
+    const fields =  {
+                        'name': "Title",
+                        'brand': "Brand",
+                        'price': "Price",
+                        'stock': "Stock",
+                        'desc': "Description",
+                        'warranty': "Warranty"
+                    };
     
     return(
-        <div className="root">
-            <Grid container item direction="column" className="information-tab">
-                <Typography variant="h3">Edit Product Details:</Typography>
-                <TextField onChange={(event) => {changeValue('name', event.target.value)}} placeholder="Title" value={productInfo.name} />
-                <TextField onChange={(event) => {changeValue('brand', event.target.value)}} placeholder="Subheading" value={productInfo.brand} />
-                <TextField onChange={(event) => {changeValue('price', event.target.value)}} placeholder="Price" value={productInfo.price} />
-                <TextField onChange={(event) => {changeValue('stock', event.target.value)}} placeholder="Stock" value={productInfo.stock} />
-                {/*<TextField onChange={(event) => {setSpecs(event.target.value)}} placeholder="Specs" value={specs} />*/}
-                <TextField onChange={(event) => {changeValue('desc', event.target.value)}} placeholder="Description" value={productInfo.desc} />
-                <TextField onChange={(event) => {changeValue('warranty', event.target.value)}} placeholder="Warranty" value={productInfo.warranty} />
-                <DropzoneArea
-                    acceptedFiles={['image/*']}
-                    dropzoneText="Set product image thumbnail"
-                    onChange={(file) => {handleImageUpload(file); }}
-                
-                />
-                <Button onClick={() => {updateItem()}}>Update Item</Button>
-                <Button onClick={() => {removeItem()}}>Remove Item</Button>
+        <Grid container item direction="column" className="information-tab" className="light-text">
+            <Grid container justify="center">
+                <Typography variant="h3" className={classes.title}>Edit Product Details</Typography>
             </Grid>
-        </div>
+            <Grid container direction="row" justify="center">
+                <Grid item container xs={6} alignContent="flex-start" justify="flex-end" className={classes.fieldsBox}>
+                    <Grid container justify="flex-end">
+                        <Typography variant="h4">General Information</Typography>
+                    </Grid>
+                    <Grid item>
+                        {Object.keys(fields).map((label, value) => (
+                            <Grid item container className={classes.label}>
+                                <Typography>{fields[label]}:</Typography>
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <Grid item>
+                        {Object.keys(fields).map((label, value) => (
+                            <Grid item container className={classes.field}>
+                                <TextField onChange={(event) => {changeValue(label, event.target.value)}} value={productInfo[label]} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+                <Grid item container xs={6} alignContent="flex-start" className={classes.fieldsBox}>
+                    <Grid container>
+                        <Typography variant="h4">Specifications</Typography>
+                    </Grid>
+                    <Grid item>
+                        {productInfo.specs && Object.keys(productInfo.specs).map((label) => (
+                            <Grid item container className={classes.label}>
+                                <Typography>{label}:</Typography>
+                            </Grid>
+                        ))}
+                    </Grid>
+                     <Grid item>
+                        {productInfo.specs && Object.keys(productInfo.specs).map((label) => (
+                            <Grid item container className={classes.field}>
+                                <TextField onChange={(event) => {changeSpecsValue(label, event.target.value)}} value={productInfo.specs[label]} />
+                            </Grid>
+                        ))}
+                     </Grid>
+                </Grid>
+            </Grid>
+            <DropzoneArea
+                acceptedFiles={['image/*']}
+                dropzoneText="Set product image thumbnail"
+                onChange={(file) => {handleImageUpload(file); }}
+            
+            />
+            <Button onClick={() => {updateItem()}}>Update Item</Button>
+            <Button onClick={() => {removeItem()}}>Remove Item</Button>
+        </Grid>
     )
 }
 

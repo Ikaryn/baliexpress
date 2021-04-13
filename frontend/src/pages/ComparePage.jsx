@@ -33,7 +33,7 @@ const ComparePage = () => {
         const updatedBuild = JSON.parse(JSON.stringify(build));
         updatedBuild[category] = comparedProduct;
         setBuild(updatedBuild);
-        history.goBack();
+        history.push('/builds');
     }
     
     const reselectHandler = () => {
