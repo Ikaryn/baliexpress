@@ -93,3 +93,19 @@ body {
 /* .search-bar {
   margin: 1em;
 } */
+
+.chatbot-button-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+  width: 75px;
+  border-radius: 5em;
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 6em;
+  right: 2em;
+  /* width: 350px; */
+}
