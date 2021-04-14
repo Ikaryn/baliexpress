@@ -14,9 +14,15 @@ class Order(Resource):
         orderId = int(request.args.get('orderId'))
 
         order = db.getOrder(orderId)
-
         if order is None:
             return {'Error: Failed to get order'}
+        else:
+            productList = {}
+            for productId in order['products']:
+                productList[str(productId)] = db.getProduct(productId)
+
+            order['date'] = order['date'].strftime('%Y-%m-%d')
+            order['productList'] = productList
 
         return {'order': order}
 

@@ -7,6 +7,7 @@ const api = new API();
 const OrderConfirmPage = () => {
 
     const [order, setOrder] = React.useState([])
+    const [productList, setProductList] = React.useState({})
 
     React.useEffect(() => {
         (async () => {
@@ -14,6 +15,7 @@ const OrderConfirmPage = () => {
             if (orderId) {
                 const response = await api.get(`order?orderId=${orderId}`);
                 setOrder(response.order);
+                setProductList(response.order.productList);
                 console.log(order);
             }
         })();
@@ -33,13 +35,13 @@ const OrderConfirmPage = () => {
                         <Typography>Order Date: {order.date}</Typography>
                     </Grid>
                     <Grid>
-                        {order.products.map((product) => (
+                        {order.products.map((productId) => (
                             <Grid container item>
                                 <Grid item>
-                                  <Typography>{product.name}</Typography>  
+                                  <Typography>{productList[productId].name}</Typography>  
                                 </Grid>
                                 <Grid item>
-                                    <Typography>Quantity: {product.quantity}</Typography>
+                                    <Typography>Quantity: {order.products[productId]}</Typography>
                                 </Grid>
                             </Grid>
                         ))}
