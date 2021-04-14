@@ -59,7 +59,26 @@ class Sales(Resource):
         if saleId is None:
             return {'error': 'Failed to create sale'}
         
-        return {'saleId': saleId}
+        sales = db.getAllSales()
+        for sale in sales:
+            saleProducts = []
+
+            # Get associated productIds for the sale
+            item = db.getSale(sale['id'])
+            print("sale:", item)
+            for saleProduct in item['products']:
+
+                # Get the actual product from the productIds
+                product = db.getProduct(saleProduct['productid'])
+                product['release_date'] = product['release_date'].strftime('%Y-%m-%d')
+                saleProducts.append(product)
+
+            sale['productList'] = saleProducts
+
+            sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
+            sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
+        
+        return {'sales': sales}
 
     # Editing a sale such as adding/removing products
     # Url format: `sales`
