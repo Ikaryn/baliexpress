@@ -1,4 +1,5 @@
 import { Button, Grid } from '@material-ui/core';
+import { useHistory } from 'react-router';
 import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
@@ -9,6 +10,7 @@ const api = new API();
 
 const PaymentPage = () => {
 
+    const history = useHistory();
     const [user, setUser] = React.useState(null);
     const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
     const [paymentErrors, setPaymentErrors] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
@@ -109,7 +111,7 @@ const PaymentPage = () => {
         return true;
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
         const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         Object.keys(shippingErrors).forEach(field => newShippingErrors[field]='');
@@ -123,6 +125,19 @@ const PaymentPage = () => {
             console.log('There was an error');
         } else {
             console.log('No errors were found');
+            const products = {};
+            const cart = localStorage.getItem('cart');
+            cart.forEach(product => products[product.id] = product.quantity);
+
+            const body = {
+                userId: localStorage.getItem('userId'),
+                products: products
+            };
+
+            const response = await api.post(`order`, body);
+            console.log(response);
+            if (response) history.push(`order?orderId=${response.orderId}`);
+
         }
     }
 

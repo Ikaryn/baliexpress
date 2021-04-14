@@ -12,6 +12,7 @@ import SearchPage from '../pages/SearchPage';
 import BuildPage from '../pages/BuildPage';
 import ComparePage from '../pages/ComparePage';
 import PaymentPage from '../pages/PaymentPage';
+import OrderConfirmPage from '../pages/OrderConfirmPage';
 
 
 const routes = [
@@ -28,6 +29,7 @@ const routes = [
     <PublicRoute key="route-compare" component={ComparePage} path="/build/compare" exact />,
     <PublicRoute key="route-search" component={SearchPage} path="/search/:search" exact/>,
     <PublicRoute key="route-payment" component={PaymentPage} path="/payment" exact />,
+    <PublicRoute key="route-order-confirm" componen={OrderConfirmPage} path="/order" exact />,
 ];
 
 export default routes;
