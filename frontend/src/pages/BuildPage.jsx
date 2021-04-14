@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         padding: '1em',
         background: 'rgb(25,25,25)',
+        zIndex: 1,
     },
     standoutButton: {
         background: 'rgb(245,245,0)',

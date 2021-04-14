@@ -107,5 +107,6 @@ body {
   position: fixed;
   bottom: 6em;
   right: 2em;
+  z-index: 10;
   /* width: 350px; */
 }
