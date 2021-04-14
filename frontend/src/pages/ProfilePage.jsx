@@ -10,8 +10,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
-import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
-import SaleForm from '../components/AdminManagementComponents/SaleForm';
+// import SalesPanel from '../components/AdminManagementComponents/SalesTable';
+// import SaleForm from '../components/AdminManagementComponents/SaleForm';
+// import SaleInformation from '../components/AdminManagementComponents/SaleInformation';
+import SalePanel from '../components/AdminManagementComponents/SalePanel';
 // import './App.css';
 const api = new API();
 
@@ -34,7 +36,7 @@ const ProfilePage = () => {
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     
-    const [saleFormOpen, setSaleFormOpen] = React.useState(false);
+    // const [saleComponent, setSaleComponent] = React.useState('table');
     
     // when logout remove all of cookies
     const handleLogout = () => {
@@ -118,6 +120,16 @@ const ProfilePage = () => {
     }));
     const classes = useStyles();
 
+    // const renderSaleComponent = () => {
+    //     if (saleComponent === 'table') {
+    //         return <SalesPanel />
+    //     } else if (saleComponent === 'form') { 
+    //         return <SaleForm setSaleComponent={setSaleComponent} />
+    //     }
+        
+    //     return <SaleInformation />
+    // }
+
     return(
         <div className="root">
             <Paper className="profile-page-container">
@@ -169,16 +181,18 @@ const ProfilePage = () => {
                         }
                         {accInfo.isAdmin &&                     
                             <TabPanel value={value} index={6}>
-                                <Typography variant="h3">Manage Sales</Typography>
+                                {/* <Typography variant="h3">Manage Sales</Typography>
                                 <Button 
                                     variant="contained" 
                                     color="primary" 
-                                    onClick={() => {saleFormOpen ? setSaleFormOpen(false) : setSaleFormOpen(true)}}
+                                    onClick={() => {saleComponent === 'table' ? setSaleComponent('form') : setSaleComponent('table')}}
                                 >
-                                    {saleFormOpen ? 'Back' : 'Create Sale'}
+                                    {saleComponent === 'form' ? 'Back' : 'Create Sale'}
                                 </Button>
                                 <Divider />
-                                {saleFormOpen ? <SaleForm setSaleFormOpen={setSaleFormOpen} /> : <SalesPanel />}
+                                {renderSaleComponent()}
+                                {saleComponent ? <SaleForm setSaleFormOpen={setSaleFormOpen} /> : <SalesPanel />} */}
+                                <SalePanel />
                             </TabPanel>
                         }
                         <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>

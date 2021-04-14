@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, FormLabel, Grid, InputAdornment, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, FormLabel, Grid, InputAdornment, makeStyles, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import API from '../../util/API';
@@ -12,6 +12,7 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
     // this will contain a list of dicts {productId, %} that will be sent to backend
     const [open, setOpen] = React.useState(false);
     
+    // use this just to add the product card with % of sale
     const handleAddProduct = (product) => {
         const newProductList = JSON.parse(JSON.stringify(products));
         newProductList.push(product);
@@ -65,31 +66,30 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
 }
 
       
-const SaleForm = ({setSaleFormOpen}) => {
+const SaleForm = ({setSaleComponent}) => {
     const [name, setName] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
     const [saleProducts, setSaleProducts] = React.useState([])
     const [success, setSuccess] = React.useState(false);
-
+    const [nameError, setNameError] = React.useState(false);
     const [dateError, setDateError] = React.useState('');
     
+    
+    
     const handleSubmit = async () => {
-
         const today = Date.now();
-        
-        const start = Date.parse(startDate);
-        const end = Date.parse(endDate);
-
-        console.log(today, start, end)
-
+        if (name === '') {
+            setNameError('Sale name cannot be empty');
+            return;
+        }
         if (startDate === '' || endDate === '') {
             setDateError('Start and End Dates cannot be empty');
             return;
-        } else if (start < today) {
-            setDateError('Start Date must be from tomorrow onwards');
+        } else if (startDate < today) {
+            setDateError('Start Date must be from today onwards');
             return;
-        } else if (end < start) {
+        } else if (endDate < startDate) {
             setDateError('End Date cannot be before Start Date');
             return;
         } 
@@ -100,24 +100,25 @@ const SaleForm = ({setSaleFormOpen}) => {
             'end': endDate,
             'products': saleProducts,
         };
-        const response = await api.post('sales', body);
+        const response = await api.put('sales', body);
         setSuccess(true);
         setTimeout(() => {
-            setSaleFormOpen(false);
+            setSaleComponent('table');
         }, 1000)
-    
+        console.log(response);
     }
     
     return (
             <Grid container direction="column" spacing={3}>
                 <Grid item>
-                    <FormControl>
+                    <FormControl error={nameError === '' ? false : true}>
                         <FormLabel>Sale Name</FormLabel>
                         <OutlinedInput
                             value={name}
                             placeholder='Enter sale name'
                             onChange={(event) => {setName(event.target.value)}}
                         />
+                        <FormHelperText>{nameError}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid container item direction="row" spacing={5}>
