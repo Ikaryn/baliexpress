@@ -8,7 +8,9 @@ import { convertCategoryName } from '../util/helpers';
 const api = new API();
 
 const PaymentPage = () => {
+    
     const [user, setUser] = React.useState(null);
+    const [ccDetails, setCCDetails] = React.useState({'number': '', 'date':'', 'cvn':''});
 
     React.useEffect(() => {
         (async () => {

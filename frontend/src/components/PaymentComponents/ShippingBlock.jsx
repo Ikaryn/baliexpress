@@ -44,9 +44,9 @@ const ShippingBlock = ({user}) => {
     const handleChange = (key, value) => {
 
         attributes[key].setField(value);
-
     }
 
+    // If the current values are the same as the user's details, disable the update button
     React.useEffect(() => {
 
         // console.log("Fields:");
