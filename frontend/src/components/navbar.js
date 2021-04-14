@@ -30,6 +30,7 @@ const NavBar = () => {
     const [buildOpen, setBuildOpen] = React.useState(false);
     const [loginStatus, setLoginStatus] = React.useState("");
     const [currUser, setCurrUser] = React.useState("");
+    const [cartAmount, setCartAmount] = React.useState(JSON.parse(localStorage.getItem('cart')).length);
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -124,8 +125,10 @@ const NavBar = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <ShoppingCartIcon fontSize="large" />
-                        <Typography>(0)</Typography>
+                        <IconButton onClick={() => {history.push('/cart');}}>
+                            <ShoppingCartIcon fontSize="large" />
+                            <Typography>({cartAmount})</Typography>
+                        </IconButton>
                     </Grid>
                 </Grid>
             </AppBar>
