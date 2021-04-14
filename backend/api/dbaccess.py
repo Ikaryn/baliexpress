@@ -917,7 +917,7 @@ def addOrder(userID, date, products):
         conn = connect()
         cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-        # insert into Review_Votes table
+        # insert into Orders table
         query = "INSERT INTO Orders (userid, date) VALUES (%s, %s)  RETURNING id"
         cur.execute(query, (userID, date))
 
@@ -957,6 +957,104 @@ def addOrder(userID, date, products):
             conn.close()
         return orderID
 
+def getOrder(orderID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get order information from Orders
+        query = "SELECT * FROM Orders WHERE id = %s"
+        cur.execute(query, [orderID])
+
+        # convert to dictionary
+        row = cur.fetchone()
+        order = {column:data for column, data in row.items()}
+
+        # get order items from Order_Items table
+        query = "SELECT * FROM Order_Items WHERE orderID = %s"
+        cur.execute(query, [orderID])
+        rows = cur.fetchall()
+        order['products'] = [{column:data for column, data in record.items()} for record in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        order = None
+        print ("An error has occured in getOrder()")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return order
+
+def getUsersOrders(userID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get orders from Orders table
+        query = "SELECT * FROM Orders WHERE userid = %s"
+        cur.execute(query, [userID])
+
+        # convert to dictionary
+        rows = cur.fetchall()
+        orders = [{column:data for column, data in record.items()} for record in rows]
+
+        # get order items from Order_Items table
+        query = "SELECT * FROM Order_Items WHERE orderID = %s"
+        for order in orders:
+            cur.execute(query, [order['id']])
+            rows = cur.fetchall()
+            order['products'] = [{column:data for column, data in record.items()} for record in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        orders = None
+        print ("An error has occured in getUsersOrders()")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return orders
+
+def getAllOrders():
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get orders from Orders table
+        query = "SELECT * FROM Orders"
+        cur.execute(query)
+
+        # convert to dictionary
+        rows = cur.fetchall()
+        orders = [{column:data for column, data in record.items()} for record in rows]
+
+        # get order items from Order_Items table
+        query = "SELECT * FROM Order_Items WHERE orderID = %s"
+        for order in orders:
+            cur.execute(query, [order['id']])
+            rows = cur.fetchall()
+            order['products'] = [{column:data for column, data in record.items()} for record in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        orders = None
+        print ("An error has occured in getAllOrders()")
+        print(error)
+
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return orders
+
 # deletes an order
 # returns 1 if successful, 0 otherwise
 def deleteOrder(orderID):
@@ -987,7 +1085,7 @@ def deleteOrder(orderID):
         return deleted
 
 # ~~~~~~~~~~ SALES FUNCTIONS ~~~~~~~~~~
-#TODO: ensure that a product can't be on two sales at the same time 
+#TODO: ensure that a product can't be on two sales at the same time
 # creates a new sale
 # returns sale id if successful, None otherwise
 # dates should be in the format 'YYYY-MM-DD'
@@ -1254,7 +1352,8 @@ def getCurrentSales(cur):
     return sales
 
 #addSale("fully sick sale", "2021-01-01", "2021-12-31", [{'productid': 1, 'salepercent': 10}])
-#print(addOrder(1, '2021-04-04', {1: 5, 10: 11}))
+#print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
+#print(getAllOrders())
 
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
