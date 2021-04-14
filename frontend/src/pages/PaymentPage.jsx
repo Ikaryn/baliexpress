@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
@@ -8,28 +8,145 @@ import { convertCategoryName } from '../util/helpers';
 const api = new API();
 
 const PaymentPage = () => {
-    
+
     const [user, setUser] = React.useState(null);
-    const [ccDetails, setCCDetails] = React.useState({'number': '', 'date':'', 'cvn':''});
+    const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
+    const [paymentErrors, setPaymentErrors] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
+    const [shippingDetails, setShippingDetails] = React.useState({  'address': '', 
+                                                                    'city': '',
+                                                                    'postcode': '',
+                                                                    'state': '',
+                                                                    'country': ''});
+    const [shippingErrors, setShippingErrors] = React.useState({'address': '', 
+                                                                'city': '',
+                                                                'postcode': '',
+                                                                'state': '',
+                                                                'country': ''});
 
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
             if (userId) {
                 const response = await api.get(`profile?userId=${userId}`);
-                setUser(response.accountInfo);
+                const account = response.accountInfo;
+                setUser(account);
                 console.log(user);
+                const newShippingDetails = JSON.parse(JSON.stringify(shippingDetails));
+                newShippingDetails['address'] = account.streetaddress;
+                newShippingDetails['city'] = account.city;
+                newShippingDetails['postcode'] = account.postcode;
+                newShippingDetails['state'] = account.state;
+                newShippingDetails['country'] = account.country;
+                setShippingDetails(newShippingDetails);
             }
         })();
     },[]);
+    
+    function checkInputNumber (input) {
+        return /^[1-9]\d*$/.test(input);
+    }
+
+    function checkInputAlpha (input) {
+        return /^[a-zA-Z ]+$/.test(input);
+    }
+
+    const checkErrors = () => {
+
+        console.log("Checking for errors...")
+        console.log("Shipping Info:", shippingDetails);
+        console.log("Payment Info:", paymentDetails);
+
+        const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
+        let error = false;
+
+        Object.keys(shippingDetails).forEach(field => {
+            if (shippingDetails[field] === '') {
+                newShippingErrors[field] = field.charAt(0).toUpperCase() + field.slice(1) + ' cannot be empty';
+                error = true;
+            } else if (field === 'city' || field === 'state' || field === 'country'){
+                if (!checkInputAlpha(shippingDetails[field])) {
+                    newShippingErrors[field] = 'Invalid ' + field;
+                    error = true;
+                };
+            } else if (field === 'postcode') {
+                if (!checkInputNumber(shippingDetails[field])) {
+                    newShippingErrors[field] = 'Invalid ' + field;
+                    error = true;
+                };
+            };
+        });
+
+        const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
+
+        if (paymentDetails.type === '') {
+            newPaymentErrors['type'] = "Please select your card type";
+            error = true;
+        }
+
+        if (paymentDetails.number === '') {
+            newPaymentErrors['number'] = "Credit Card Number cannot be empty";
+            error = true;
+        } else if (String(paymentDetails.number).length !== 16) {
+            newPaymentErrors['number'] = "Credit Card Number Invalid"
+            error = true;
+        }
+        
+        const today = new Date();
+        const year = today.getYear();
+        const month = today.getMonth() + 1;
+        
+        if (String(paymentDetails.cvn).length !== 3) {
+            newPaymentErrors['cvn'] = "CVV is invalid";
+            error = true;
+        }
+
+        if (error) {
+            setShippingErrors(newShippingErrors);
+            setPaymentErrors(newPaymentErrors);
+            return false; 
+        };
+
+        return true;
+    }
+
+    const handleSubmit = () => {
+
+        const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
+        Object.keys(shippingErrors).forEach(field => newShippingErrors[field]='');
+        setShippingErrors(newShippingErrors);
+        
+        const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
+        Object.keys(paymentErrors).forEach(field => newPaymentErrors[field]='');
+        setPaymentErrors(newPaymentErrors);
+
+        if (!checkErrors()) {
+            console.log('There was an error');
+        } else {
+            console.log('No errors were found');
+        }
+    }
 
     return (
         <Grid container direction="column">   
             <Grid item>
-                {user && <ShippingBlock user={user}/>}
+                {user && <ShippingBlock 
+                                        shipping={shippingDetails} 
+                                        errors={shippingErrors}
+                                        setShippingDetails={setShippingDetails}/>}
             </Grid>
             <Grid item>
-                <PaymentBlock />
+                <PaymentBlock   payment={paymentDetails}
+                                errors={paymentErrors}
+                                setPaymentDetails={setPaymentDetails}/>
+            </Grid>
+            <Grid item>
+                <Button
+                    color="primary" 
+                    variant="contained"
+                    onClick={() => handleSubmit()}
+                >
+                    Submit here
+                </Button>
             </Grid>
         </Grid>
     )

@@ -1,43 +1,14 @@
-import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from '@material-ui/core';
+import { Checkbox, FormControl, FormControlLabel, FormHelperText, Grid, InputLabel, MenuItem, OutlinedInput, Paper, Select, Typography } from '@material-ui/core';
 import React from 'react';
 import VisaLogo from '../../assets/Visa.png'
 import MasterCardLogo from '../../assets/Mastercard.png'
 
-const PaymentBlock = () => {
-
-    const [cardType, setCardType] = React.useState('');
-    const [ccDetails, setCCDetails] = React.useState({'number': '', 'date':'', 'cvn':''});
-    const [error, setError] = React.useState({'numberError':'', 'dateError':'', 'cvnError':''})
+const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
     
-    const errorHandler = () => {
-        let error = false;
-        const newError = JSON.parse(JSON.stringify(error));
-        
-        if (String(ccDetails.number).length !== 16) {
-            newError.numberError = "Credit Card Number Invalid"
-            error = true;
-        }
-        if (ccDetails.number === '') {
-            newError.numberError = "Credit Card Number cannot be empty";
-            error = true;
-        }
-        
-        const today = new Date();
-        const year = today.getYear();
-        const month = today.getMonth() + 1;
-        
-        if (String(ccDetails.cvn).length !== 3) {
-            newError.cvnError = "CVV is invalid";
-            error = true;
-        }
-        
-        return error;
-    }
-    
-    const handleCardDetailsChange = (type, value) => {
-        const newCCDetails = JSON.parse(JSON.stringify(ccDetails));
-        newCCDetails[type] = value;
-        setCCDetails(newCCDetails);
+    const handleChange = (key, value) => {
+        const newPaymentDetails = JSON.parse(JSON.stringify(payment));
+        newPaymentDetails[key] = value;
+        setPaymentDetails(newPaymentDetails);
     }
     
     return (
@@ -63,27 +34,29 @@ const PaymentBlock = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl>
+                    <FormControl error={errors.type === '' ? false : true}>
                         <InputLabel>Credit Card Type</InputLabel>
                         <Select
                             fullWidth
-                            value={cardType}
-                            onChange={(event) => {setCardType(event.target.value)}}
+                            value={payment.type}
+                            onChange={(event) => {handleChange('type', event.target.value)}}
                             >
                             <MenuItem value="" />
                             <MenuItem value="visa">Visa</MenuItem>
                             <MenuItem value="mastercard">Mastercard</MenuItem>
                         </Select>
+                        <FormHelperText>{errors.type}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl>
+                    <FormControl error={errors.number === '' ? false : true}>
                         <InputLabel>Credit Card Number</InputLabel>
                         <OutlinedInput 
                             placeholder='' 
-                            value={ccDetails.number}
-                            onChange={(event) => {handleCardDetailsChange('number', event.target.value)}} 
+                            value={payment.number}
+                            onChange={(event) => {handleChange('number', event.target.value)}} 
                             />
+                        <FormHelperText>{errors.number}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid container item direction="row">
@@ -98,13 +71,14 @@ const PaymentBlock = () => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={3}>
-                        <FormControl>
+                        <FormControl error={errors.cvn === '' ? false : true}>
                             <InputLabel>Card Validation Number</InputLabel>
                             <OutlinedInput 
                                 placeholder=""
-                                value={ccDetails.cvn}
-                                onChange={(event) => {handleCardDetailsChange('cvn', event.target.value)}}
+                                value={payment.cvn}
+                                onChange={(event) => {handleChange('cvn', event.target.value)}}
                                 />
+                            <FormHelperText>{errors.cvn}</FormHelperText>
                         </FormControl>
                     </Grid>
                 </Grid>
