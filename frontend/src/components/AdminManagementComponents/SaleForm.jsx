@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, FormLabel, Grid, InputAdornment, makeStyles, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, FormLabel, Grid, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import API from '../../util/API';
@@ -66,7 +66,7 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
 }
 
       
-const SaleForm = ({setSaleComponent}) => {
+const SaleForm = ({setSaleComponent, setSales}) => {
     const [name, setName] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
@@ -100,12 +100,12 @@ const SaleForm = ({setSaleComponent}) => {
             'end': endDate,
             'products': saleProducts,
         };
-        const response = await api.put('sales', body);
+        const response = await api.post('sales', body);
         setSuccess(true);
         setTimeout(() => {
             setSaleComponent('table');
         }, 1000)
-        console.log(response);
+        setSales(response.sales)
     }
     
     return (

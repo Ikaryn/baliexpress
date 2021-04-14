@@ -27,7 +27,7 @@ const SalePanel = () => {
         if (saleComponent === 'table') {
             return <SalesTable sales={sales} setSaleComponent={redirectSaleDetails}/>
         } else if (saleComponent === 'form') { 
-            return <SaleForm setSaleComponent={setSaleComponent} />
+            return <SaleForm setSaleComponent={setSaleComponent} setSales={setSales}/>
         }
         
         return <SaleInformation saleInfo={sales[saleIndex]}/>
