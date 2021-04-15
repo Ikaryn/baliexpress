@@ -1,6 +1,6 @@
 import { Breadcrumbs, Button, Divider, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import CompareProductCard from '../components/buildPageComponents/CompareProductCard';
 import SelectBuildProductModal from '../components/buildPageComponents/SelectBuildProductModal';
 import { reverseCategoryName } from '../util/helpers';
@@ -17,9 +17,8 @@ const ComparePage = () => {
     const context = React.useContext(StoreContext);
     const history = useHistory();
     const classes = useStyles();
-    
     const [comparedProduct, setComparedProduct] = React.useState(history.location.state.product)
-    const category = comparedProduct.category
+    const { category } = useParams();
     const {build: [build, setBuild]} = context;
     const [open, setOpen] = React.useState(false);
     console.log(comparedProduct);

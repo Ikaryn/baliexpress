@@ -1,6 +1,7 @@
-import { Avatar, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
+import { useHistory } from 'react-router';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import API from '../../util/API';
@@ -27,7 +28,9 @@ const ReviewCard = ({review, userId}) => {
     const classes = useStyles();
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
-    
+    const history = useHistory();
+    const [isAdmin, setIsAdmin] = React.useState(false);
+
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
         const value = type === 'down' ? -1 : 1;
@@ -138,6 +141,7 @@ const ReviewCard = ({review, userId}) => {
                                 <ThumbDownIcon className={voteStatus.down ? classes.downVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
+                       
                     </Grid>
                 </Grid>
             </Grid>
