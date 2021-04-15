@@ -15,6 +15,7 @@ import { buildTemplate } from '../util/helpers';
 
 import API from '../util/API';
 const api = new API();
+
 const useStyles = makeStyles((theme) => ({
     root: {
         background: 'rgb(38,40,64)'
@@ -28,6 +29,8 @@ const NavBar = () => {
     const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
     const [loginStatus, setLoginStatus] = React.useState("");
+    const [currUser, setCurrUser] = React.useState("");
+    const [cartAmount, setCartAmount] = React.useState(JSON.parse(localStorage.getItem('cart')).length);
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -53,7 +56,8 @@ const NavBar = () => {
     }
     React.useEffect(() => {
         (async () => {
-            const userId = localStorage.getItem('userId');
+            const userId = await localStorage.getItem('userId');
+            setCurrUser(userId);
             if(userId){
                 const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
@@ -114,8 +118,10 @@ const NavBar = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={1}>
-                        <ShoppingCartIcon fontSize="large" />
-                        <Typography>(0)</Typography>
+                        <IconButton onClick={() => {history.push('/cart');}}>
+                            <ShoppingCartIcon fontSize="large" />
+                            <Typography>({cartAmount})</Typography>
+                        </IconButton>
                     </Grid>
                 </Grid>
             </AppBar>
