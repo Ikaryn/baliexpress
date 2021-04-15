@@ -3,7 +3,6 @@ from psycopg2.extensions import AsIs
 import psycopg2.extras
 from . import credentials
 from datetime import datetime
-from . import credentials
 
 def connect():
     conn = None

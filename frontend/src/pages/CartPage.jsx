@@ -2,8 +2,7 @@ import { Paper, Typography, Grid, TextField, Button, Checkbox } from '@material-
 import React from 'react';
 import API from '../util/API';
 import '../App.css';
-import CartItem from '../components/CartItem';
-import { useHistory } from 'react-router';
+import CartItem from '../components/CartComponents/CartItem';
 
 const api = new API();
 
@@ -31,15 +30,7 @@ const CartPage = () => {
         }
         setTotalPrice(total);
     }
-    /*
-    React.useEffect(() => {
-        (async () => {
-            const res = await api.get(`search?query=${search}`);
-            setProductOutput(res.results);
-            console.log(res.results);
-        })();
-    },[search])
-    */
+    
     return (
         <div>
             <div>
