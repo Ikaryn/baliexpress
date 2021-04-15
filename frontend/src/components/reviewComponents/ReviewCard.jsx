@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Button, Grid, IconButton, makeStyles, Modal, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -31,6 +31,22 @@ const ReviewCard = ({review, userId}) => {
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
     const history = useHistory();
     const [isAdmin, setIsAdmin] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [reportReason, setReportReason] = React.useState();
+    const reasons = [
+        {
+            value: 'harassment',
+            label: 'This review is harassing me or someone else',
+        },
+        {
+            value: 'offensive',
+            label: 'This review is offensive',
+        },
+        {
+            value: 'irrelevant',
+            label: 'This review is irrelevant to the product',
+        }
+    ]
 
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -97,6 +113,9 @@ const ReviewCard = ({review, userId}) => {
 
     },[review.userVote])
 
+    const handleReport = () => {
+        setOpen(true)
+    }
     
     return (
         <Grid container item direction="column" className={classes.root} spacing={3} xs={9}>
@@ -142,9 +161,25 @@ const ReviewCard = ({review, userId}) => {
                                 <ThumbDownIcon className={voteStatus.down ? classes.downVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
+                        <Grid item>
+                            <IconButton onClick={() => {handleReport()}}>
+                                <FlagIcon></FlagIcon>
+                            </IconButton>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <Grid className="logout-confirmation-container">
+                    <Typography>Why would you like to report this review?</Typography>
+                    <Grid item>
+                        <TextField
+                            helperText = "Please select a reason"
+                            select
+                        ></TextField>
+                    </Grid>
+                </Grid>
+            </Modal>
         </Grid>
         
     )
