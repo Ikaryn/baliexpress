@@ -71,7 +71,27 @@ const ProductPage = () => {
             }
         })();
     }, [])
-    
+    function handleCart(){
+        //localStorage.removeItem('cart');
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        if(cart == null){
+            cart = [];
+        }
+        const item = cart.find(x => productInfo.id == x["id"]);
+        if(item == undefined){
+            cart.push({
+                "name": productInfo.name,
+                "id": productInfo.id,
+                "image": productInfo.image,
+                "price": productInfo.price,
+                "quantity": 1,
+                "category": productInfo.category
+            });
+        }else{
+            item["quantity"] = item["quantity"] + 1;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
     return (
         <div className="root">
             <Grid container direction="column">
@@ -102,7 +122,7 @@ const ProductPage = () => {
                                     </Grid> */}
                                 </Grid>
                                 <Grid item >
-                                    <Button color="primary" variant="contained" className="cart-button">Add to Cart</Button>
+                                    <Button color="primary" variant="contained" className="cart-button" onClick={() => {handleCart()}}>Add to Cart</Button>
                                     {isAdmin && <Button color="primary" variant="contained" 
                                         className="cart-button" 
                                         onClick={() => {history.push(`/edit-product/${category}/${pid}`)}}

@@ -13,6 +13,7 @@ import BuildPage from '../pages/BuildPage';
 import ComparePage from '../pages/ComparePage';
 import PaymentPage from '../pages/PaymentPage';
 import OrderConfirmPage from '../pages/OrderConfirmPage';
+import CartPage from '../pages/CartPage';
 
 
 const routes = [
@@ -30,6 +31,7 @@ const routes = [
     <PublicRoute key="route-search" component={SearchPage} path="/search/:search" exact/>,
     <PublicRoute key="route-payment" component={PaymentPage} path="/payment" exact />,
     <PublicRoute key="route-order-confirm" componen={OrderConfirmPage} path="/order" exact />,
+    <PublicRoute key="route-cart" component={CartPage} path="/cart" exact/>,
 ];
 
 export default routes;
