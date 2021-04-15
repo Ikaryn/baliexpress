@@ -5,6 +5,8 @@ export const StoreContext = React.createContext(null);
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ children }) => {
     const [build, setBuild] = React.useState({
+        'name': 'Your Custom Built PC',
+        'desc': '',
         'Cases': '', 
         'Motherboards':'', 
         'CPU':'',
@@ -13,6 +15,7 @@ export default ({ children }) => {
         'Storage': '',
         'PSU': '', 
         'CPU_Cooling':'',
+        'price': 0,
         });
     const [cart, setCart] = React.useState([]);
     const store = {

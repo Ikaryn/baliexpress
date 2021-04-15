@@ -9,16 +9,6 @@ import { StoreContext } from '../util/store';
 
 const api = new API();
 
-const buildTemplate = {
-    'Case': '', 
-    'Motherboard':'', 
-    'Graphics Card':'', 
-    'Memory': '',
-    'Storage': '',
-    'Power Supply': '', 
-    'CPU Cooler':''
-    };
-
 const useStyles = makeStyles((theme) => ({
     root: {
         marginBottom: '10%',
@@ -40,10 +30,11 @@ const BuildPage = () => {
     // const [build, setBuild] = React.useState(buildTemplate);
     const context = React.useContext(StoreContext)
     const { build: [build, setBuild]} = context;
-    const { cart: [cart, setCart] } = context;
     console.log(build);
+    const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
+    const [buildName, setBuildName] = React.useState('Your Custom Built PC');
     // modal states
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -64,15 +55,26 @@ const BuildPage = () => {
             }
             return previous;
         }, { price: 0 });
-        console.log(newPrice);
+        // const updatedBuild = JSON.parse(JSON.stringify(build));
+        // updatedBuild['price'] = newPrice.price;
+        // console.log(updatedBuild);
+        // setBuild(updatedBuild);
+        
         setBuildPrice(newPrice.price);
     },[build])
     
     
     
     const handleAddToCart = () => {
+        const buildInfo = JSON.parse(JSON.stringify(build));
+        buildInfo['price'] = buildPrice;
+        buildInfo['buildname'] = buildName;
+        buildInfo['quantity'] = 1;
+        
         const updatedCart = JSON.parse(JSON.stringify(cart));
-        updatedCart.push(build);
+        console.log(buildInfo);
+        updatedCart.push(buildInfo);
+        
         setCart(updatedCart);
     }
     

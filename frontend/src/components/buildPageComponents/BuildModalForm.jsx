@@ -72,11 +72,8 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
             handleToggle(false);
             history.push('/build');
         } else if (flag === 'build'){
-            console.log(errorHandler());
             if (!errorHandler()) {
                 const res = await api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
-                console.log(usage, budget, overclock, storage)
-                console.log(res);
                 setBuild(res);
                 handleToggle(false);
                 history.push('/build/custom');

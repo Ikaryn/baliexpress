@@ -81,7 +81,7 @@ const BuildProductCard = ({type}) => {
                             <AccordionDetails>
                                 <Grid container item direction="column">
                                 {Object.keys(productInfo.specs).map((spec) => (
-                                    <Grid container item direction="row" key={`${productInfo.name}-card`}>
+                                    <Grid container item direction="row" key={`${productInfo.name}-product-card`}>
                                         <Grid item>
                                             <Typography>{spec}:</Typography>
                                         </Grid>
