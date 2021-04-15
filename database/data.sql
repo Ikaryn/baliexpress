@@ -1057,7 +1057,7 @@ VALUES
 INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
 VALUES
     (108, 9, 1, 'This Monitor works so well. It imperfectly improves my baseball by a lot.', '2020-06-15'),
-    (108, 13, 2. 'My co-worker Namon has one of these. He says it looks funny-looking.', ' 2020-06-30'),
+    (108, 13, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', ' 2020-06-30'),
     (108, 11, 5, 'i use it for 10 weeks when i''m in my sauna', '2020-12-19');
 
 -- Product 109 Reviews
@@ -1066,7 +1066,6 @@ VALUES
     (109, 17, 4, 'talk about sadness.', '2018-01-20'),
     (109, 15, 2, 'I saw one of these in Cote d''Ivoire and I bought one.', '2020-01-22'),
     (109, 14, 3, 'My neighbor Betha has one of these. She works as a teacher and she says it looks wide.', '2020-01-28'),
-    (109, 15, 2, 'this Monitor is mellow.', '2020-06-18'),
     (109, 19, 3, 'talk about hatred.', '2020-07-23');
 
 -- Product 110 Reviews
@@ -1076,7 +1075,7 @@ VALUES
     (110, 3, 1, 'I saw one of these in Grenada and I bought one.', '2021-02-07'),
     (110, 5, 1, 'talk about shame.', ' 2021-02-12');
 
--- Product 111 gets no reviews 
+-- Product 111 gets no reviews
 
 -- Mouses
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
