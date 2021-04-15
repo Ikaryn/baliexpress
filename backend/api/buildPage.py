@@ -230,7 +230,6 @@ def recommendCPUCooler(budget, CPU, overclock):
     if (not CPU['specs']['cooler_included']):
         for cooler in CPUcoolers:
             if cooler['specs']['socket'] == CPU['specs']['socket']:
-                if 
                 if (cooler['price'] <= budget and cooler['price'] < lowestPrice):
                     recommendation = cooler 
     else:    

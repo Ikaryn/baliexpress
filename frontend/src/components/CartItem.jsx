@@ -1,77 +1,72 @@
 import React from 'react';
 import API from '../util/API';
 import '../App.css';
-import { Card, CardActionArea, Select, Typography, CardContent, Button, MenuItem} from '@material-ui/core';
+import { Card, CardActionArea, Select, Typography, CardContent, Button, MenuItem, OutlinedInput, Grid, TextField} from '@material-ui/core';
 import { useHistory } from 'react-router';
+import { StoreContext } from '../util/store';
 
 const api = new API();
-const CartItem = (productInfo, setTotal) => {
+const CartItem = ({productInfo, setTotal}) => {
+    
+    const context = React.useContext(StoreContext);
+    const { cart: [cart, setCart] } = context;
     const history = useHistory();
     const [removed, setRemoved] = React.useState(false);
-    const [totalPrice, setTotalPrice] = React.useState(productInfo.productInfo.quantity * productInfo.productInfo.price);
-    const [quantity, setQuantity] = React.useState(productInfo.productInfo.quantity);
+    const [totalPrice, setTotalPrice] = React.useState(productInfo.quantity * productInfo.price);
+    const [quantity, setQuantity] = React.useState(productInfo.quantity);
+    
     const handleRemove = () => {
-        var cart = JSON.parse(localStorage.getItem('cart'));
-        var ret = false;
-        for(var i = 0; i < cart.length; i++){
-            if(cart[i].id == productInfo.productInfo.id){
-                cart.splice(i, 1);
-                ret = true;
-                break;
-            }
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        if(ret){
-            setRemoved(true);
-        }
+        const updatedCart = JSON.parse(JSON.stringify(cart));        
+        const newCart = updatedCart.filter(product => productInfo.id !== product.id);
+        setCart(newCart);
     }
-    const handleQuantity = (event) => { 
-        var cart = JSON.parse(localStorage.getItem('cart'));
-        for(var i = 0; i < cart.length; i++){
-            if(cart[i].id == productInfo.productInfo.id){
-                cart[i].quantity = event.target.value;
-                break;
-            }
+    
+    
+    const handleQuantity = (value) => { 
+        
+        const updatedCart = JSON.parse(JSON.stringify(cart));
+        
+        const found = updatedCart.filter(product => productInfo.id === product.id);
+        if (found) {
+            found[0].quantity = quantity;
         }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        setTotalPrice(event.target.value * productInfo.productInfo.price);
-        setQuantity(event.target.value);
+        setTotalPrice(value * productInfo.price);
+        setQuantity(value);
         console.log(cart);
     }
     return (
-        <Card className="product-card-container">
-            {removed == false && <CardActionArea>
-                <div className="product-card-container-action">
-                    <img src={"data:image/jpeg;base64,"+productInfo.productInfo.image} alt="product-thumbnail" class="product-card-image"/>
-                    <CardContent>
-                        <Typography variant="subtitle1">
-                            {productInfo.productInfo.name}
-                        </Typography>
-                        <div>
-                            <Typography variant="subtitle2">
-                                ${productInfo.productInfo.price} per unit
-                            </Typography>
-                            <Typography>
-                                {"Quantity: "}
-                                <Select value={quantity} onChange={handleQuantity}>
-                                    <MenuItem value={1}>One</MenuItem>
-                                    <MenuItem value={2}>Two</MenuItem>
-                                    <MenuItem value={3}>Three</MenuItem>
-                                </Select>
-                            </Typography>
-                        </div>
-                    </CardContent>
-                    <div>
-                        <Button onClick={() => handleRemove()} variant="contained">
-                            Remove
-                        </Button>
-                        <Typography>
-                            Price: ${totalPrice}
-                        </Typography>
-                    </div>
-                </div>
-            </CardActionArea>}
-        </Card>
+        <Grid container item direction="row" spacing={1} justify="flex-end" alignItems="center">
+            <Grid item xs={3}>
+                <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product-thumbnail" class="image"/>
+            </Grid>
+            <Grid container item direction="column" xs={6}>
+                <Grid item>
+                    <Typography variant="caption">
+                        {productInfo.name}
+                    </Typography>
+                </Grid>
+                <Grid container item direction="row" alignItems="center" spacing={6}>
+                    <Grid item xs={6}>
+                        <Typography>Quantity: </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                    <TextField value={quantity} variant="outlined" onChange={(event) => {handleQuantity(event.target.value)}}/>
+                    </Grid>
+                </Grid>    
+            </Grid>
+            <Grid container item direction="column" xs={3}>
+                <Grid item>
+                    <Button variant="contained" color="primary" onClick={handleRemove}>
+                        Remove
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Typography>
+                        Price: ${totalPrice}
+                    </Typography>
+                </Grid>
+            </Grid>
+        </Grid>
     )
 
 }

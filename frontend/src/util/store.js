@@ -12,10 +12,12 @@ export default ({ children }) => {
         'Memory': '',
         'Storage': '',
         'PSU': '', 
-        'CPU_Cooling':''
+        'CPU_Cooling':'',
         });
+    const [cart, setCart] = React.useState([]);
     const store = {
         build: [build, setBuild],
+        cart: [cart, setCart],
     };
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 

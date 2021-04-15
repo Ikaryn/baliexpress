@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         padding: '1em',
         background: 'rgb(25,25,25)',
+        zIndex: 1,
     },
     standoutButton: {
         background: 'rgb(245,245,0)',
@@ -39,6 +40,7 @@ const BuildPage = () => {
     // const [build, setBuild] = React.useState(buildTemplate);
     const context = React.useContext(StoreContext)
     const { build: [build, setBuild]} = context;
+    const { cart: [cart, setCart] } = context;
     console.log(build);
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
@@ -73,21 +75,13 @@ const BuildPage = () => {
     
     
     const handleAddToCart = () => {
-    
+        const updatedCart = JSON.parse(JSON.stringify(cart));
+        updatedCart.push(build);
+        setCart(updatedCart);
     }
     
     const handleSaveBuild = (event) => {
         setOpen(true);
-        // setAnchorEl(event.currentTarget);
-        // setOpen(open ? false : true);
-        // console.log(build);
-        // console.log('Send post request')
-        // api.post(`build`, {
-        //     userID: localStorage.getItem('userId'),
-        //     buildName: 'buildName',
-        //     buildDesc: 'buildDesc',
-        //     build: build,
-        // })
     }
     
     
@@ -97,22 +91,7 @@ const BuildPage = () => {
             <Grid item>
                 <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
-            {/* <Grid item>
-                <Paper>
-                    <Typography>Sort placeholder</Typography>
-                </Paper>
-            </Grid> */}
             <Grid container item direction="row">
-                {/* <Grid container item xs={2}>
-                    <Paper>
-                        <Grid item>
-                            <Typography variant="h4">Overview</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>specs placeholder</Typography>
-                        </Grid>
-                    </Paper>
-                </Grid> */}
                 <Grid container item direction="column" xs={12} spacing={3}>
                     {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
