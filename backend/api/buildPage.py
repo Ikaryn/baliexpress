@@ -149,7 +149,7 @@ class BuildPage(Resource):
             if type(build[part]) is dict:
                 powerSum += build[part]['specs']['power_use'] 
         build['PSU'] = recommendPSU(PSUBudget, powerSum)
-        build['Case'] = recommendCase(CaseBudget, build['Graphics_Cards'])
+        build['Cases'] = recommendCase(CaseBudget, build['Graphics_Cards'])
         #print(build)
 
         #Make a helper function for this
