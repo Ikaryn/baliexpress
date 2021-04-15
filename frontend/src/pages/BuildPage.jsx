@@ -56,18 +56,10 @@ const BuildPage = () => {
             }
             return previous;
         }, { price: 0 });
-<<<<<<< HEAD
-        // const updatedBuild = JSON.parse(JSON.stringify(build));
-        // updatedBuild['price'] = newPrice.price;
-        // console.log(updatedBuild);
-        // setBuild(updatedBuild);
-        
-=======
         console.log(newPrice);
         if (builtByCompany){
             newPrice += 50
         }
->>>>>>> 8a8949c8c35c6a403d959385e059d8a6e1e64d80
         setBuildPrice(newPrice.price);
     },[build])
     
