@@ -18,11 +18,15 @@ class Order(Resource):
             return {'Error: Failed to get order'}
         else:
             productList = {}
-            for productId in order['products']:
-                productList[str(productId)] = db.getProduct(productId)
+            for product in order['products']:
+                productId = product['productid']
+                p = db.getProduct(productId)
+                p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
+                productList[str(productId)] = p
 
             order['date'] = order['date'].strftime('%Y-%m-%d')
             order['productList'] = productList
+        
 
         return {'order': order}
 
@@ -35,7 +39,7 @@ class Order(Resource):
 
         orderDate = datetime.today().strftime('%Y-%m-%d')
         userId = int(data.get('userId'))
-        products = date.get('products')
+        products = data.get('products')
 
         orderId = db.addOrder(userId, orderDate, products)
         

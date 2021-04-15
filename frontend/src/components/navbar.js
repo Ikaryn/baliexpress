@@ -30,7 +30,7 @@ const NavBar = () => {
     const [buildOpen, setBuildOpen] = React.useState(false);
     const [loginStatus, setLoginStatus] = React.useState("");
     const [currUser, setCurrUser] = React.useState("");
-    const [cartAmount, setCartAmount] = React.useState(JSON.parse(localStorage.getItem('cart')).length);
+    const [cartAmount, setCartAmount] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -57,6 +57,8 @@ const NavBar = () => {
     React.useEffect(() => {
         (async () => {
             const userId = await localStorage.getItem('userId');
+            const cart = localStorage.getItem('cart');
+            if (cart) setCartAmount(JSON.parse(cart).length);
             setCurrUser(userId);
             if(userId){
                 const options = {

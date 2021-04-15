@@ -126,7 +126,7 @@ const PaymentPage = () => {
         } else {
             console.log('No errors were found');
             const products = {};
-            const cart = localStorage.getItem('cart');
+            const cart = JSON.parse(localStorage.getItem('cart'));
             cart.forEach(product => products[product.id] = product.quantity);
 
             const body = {
@@ -136,7 +136,11 @@ const PaymentPage = () => {
 
             const response = await api.post(`order`, body);
             console.log(response);
-            if (response) history.push(`order?orderId=${response.orderId}`);
+            if (response) {
+                localStorage.removeItem('cart'); 
+                localStorage.setItem('orderId', response.orderId);
+                history.push(`order`);
+            }
 
         }
     }

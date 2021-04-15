@@ -30,7 +30,7 @@ const routes = [
     <PublicRoute key="route-compare" component={ComparePage} path="/build/compare" exact />,
     <PublicRoute key="route-search" component={SearchPage} path="/search/:search" exact/>,
     <PublicRoute key="route-payment" component={PaymentPage} path="/payment" exact />,
-    <PublicRoute key="route-order-confirm" componen={OrderConfirmPage} path="/order" exact />,
+    <PublicRoute key="route-order-confirm" component={OrderConfirmPage} path="/order" exact />,
     <PublicRoute key="route-cart" component={CartPage} path="/cart" exact/>,
 ];
 
