@@ -3,6 +3,7 @@ import API from '../../util/API';
 import {  Button, Paper,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { StoreContext } from '../../util/store';
+import { buildTemplate } from '../../util/helpers';
 const api = new API();
 
 const UserBuildList = () => {
@@ -21,8 +22,20 @@ const UserBuildList = () => {
     },[])
     
     const handleRedirect = (userid, buildid, build) => {
-        console.log(build);
-        setBuild(build.parts);
+        console.log('REDIRECT', build);
+        const editBuild = buildTemplate;
+        
+        // Object.keys(build.parts).forEach((category) => {
+        //     console.log(category);
+        //     editBuild[category] = build.parts[category];
+        // })
+        
+        build.forEach((part) => {
+            editBuild[part.category] = part;
+        })
+        console.log(editBuild);
+        
+        setBuild(editBuild);
         history.push(`/build/${userid}/${buildid}`);
     }
     

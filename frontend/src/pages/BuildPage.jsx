@@ -54,7 +54,7 @@ const BuildPage = () => {
     React.useEffect(() => {
         const newPrice = Object.keys(build).reduce((previous, key) => {
             if(build[key].price){
-                previous.price += build[key].price;
+                previous.price += Number(build[key].price);
             }
             return previous;
         }, { price: 0 });
