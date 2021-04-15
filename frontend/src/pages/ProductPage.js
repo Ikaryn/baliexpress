@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import API from '../util/API';
 import { useHistory } from 'react-router';
 import ReviewBlock from '../components/reviewComponents/ReviewBlock';
+import { StoreContext } from '../util/store';
 // import SpecificationList from '../components/SpecificationList'
 
 const api = new API();
@@ -27,9 +28,11 @@ const TabPanel = ({children, value, index, ...other}) => {
 
 const ProductPage = () => {
     const history = useHistory();
+    const context = React.useContext(StoreContext);
+    const { cart: [cart, setCart] } = context;
+    
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const { category, pid } = useParams();
-    
     const [value, setValue] = React.useState(0);
     const [rating, setRating] = React.useState(0);
     const [isAdmin, setIsAdmin] = React.useState(false);
@@ -43,12 +46,9 @@ const ProductPage = () => {
     // find the specific product to display its information
     React.useEffect(() => {
         (async () => {
-            console.log(category)
             const products = await api.get(`product?category=${category}`);
-            console.log(products)
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
             setProductInfo(product[0]);
-            console.log(product[0]);
         })();
     
     },[category, pid])
@@ -56,13 +56,7 @@ const ProductPage = () => {
     // check if the current user is admin and set the relevant state
     React.useEffect(() => {
         (async () => {
-            // const options = {
-            //     method: 'GET',
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //         'Request-Type': 'profile',
-            //     },
-            // }
+
             const userId = localStorage.getItem('userId');
             if (userId) {
                 const response = await api.get(`profile?userId=${userId}`);
@@ -71,7 +65,27 @@ const ProductPage = () => {
             }
         })();
     }, [])
-    
+    function handleCart(){
+        
+        const newCart = JSON.parse(JSON.stringify(cart));
+        
+        const found = newCart.filter(product => productInfo.id === product["id"]);
+        console.log(found);
+        if (!found[0]) {
+            newCart.push({
+                "name": productInfo.name,
+                "id": productInfo.id,
+                "image": productInfo.image,
+                "price": productInfo.price,
+                "quantity": 1,
+                "category": productInfo.category
+            });
+        } else {
+            found[0]['quantity'] += 1;
+        }
+        console.log(newCart);
+        setCart(newCart);
+    }
     return (
         <div className="root">
             <Grid container direction="column">
@@ -102,7 +116,7 @@ const ProductPage = () => {
                                     </Grid> */}
                                 </Grid>
                                 <Grid item >
-                                    <Button color="primary" variant="contained" className="cart-button">Add to Cart</Button>
+                                    <Button color="primary" variant="contained" className="cart-button" onClick={() => {handleCart()}}>Add to Cart</Button>
                                     {isAdmin && <Button color="primary" variant="contained" 
                                         className="cart-button" 
                                         onClick={() => {history.push(`/edit-product/${category}/${pid}`)}}

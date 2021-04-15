@@ -14,7 +14,9 @@ import BuildModalForm from './buildPageComponents/BuildModalForm';
 import { buildTemplate } from '../util/helpers';
 
 import API from '../util/API';
+import CartPopper from './CartComponents/CartPopper';
 const api = new API();
+
 const useStyles = makeStyles((theme) => ({
     root: {
         background: 'rgb(38,40,64)'
@@ -28,9 +30,12 @@ const NavBar = () => {
     const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
     const [loginStatus, setLoginStatus] = React.useState("");
+    const [currUser, setCurrUser] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
+    
+    
     // handle click of the profile icon
     // if user isnt logged in redirect to login page, otherwise send them to profile page
     const handleProfileClick = () => {
@@ -38,7 +43,6 @@ const NavBar = () => {
         if(!userId){
             history.push('/login');
         } else {
-            console.log(`user id is ${userId}`);
             history.push(`/profile/${userId}`);
         }
     }
@@ -49,11 +53,12 @@ const NavBar = () => {
     const handleBuildClick = () => {
         setBuild(buildTemplate);
         setBuildOpen(true);
-    
     }
+    
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
+            setCurrUser(userId);
             if(userId){
                 const options = {
                     method: 'GET',
@@ -120,10 +125,13 @@ const NavBar = () => {
                             {loginStatus}
                         </Typography>
                     </Grid>
-                    <Grid item xs={1}>
-                        <ShoppingCartIcon fontSize="large" />
-                        <Typography>(0)</Typography>
-                    </Grid>
+                    {/* <Grid item xs={1}>
+                        <IconButton onClick={() => {history.push('/cart');}}>
+                            <ShoppingCartIcon fontSize="large" />
+                            <Typography>({cartAmount})</Typography>
+                        </IconButton>
+                    </Grid> */}
+                    <CartPopper />
                 </Grid>
             </AppBar>
         </header>
