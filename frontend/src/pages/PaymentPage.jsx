@@ -1,18 +1,28 @@
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
 import API from '../util/API';
-import { convertCategoryName } from '../util/helpers';
 
 const api = new API();
 
+const useStyles = makeStyles(() => ({
+
+    block: {
+        'margin-top': '0.5em',
+        'margin-bottom': '0.5em',
+        'width': '100%'
+    },
+
+}))
+
 const PaymentPage = () => {
 
+    const classes = useStyles();
     const history = useHistory();
     const [user, setUser] = React.useState(null);
-    const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
+    const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'month':'', 'year':'', 'cvn':''});
     const [paymentErrors, setPaymentErrors] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
     const [shippingDetails, setShippingDetails] = React.useState({  'address': '', 
                                                                     'city': '',
@@ -33,6 +43,8 @@ const PaymentPage = () => {
                 const account = response.accountInfo;
                 setUser(account);
                 console.log(user);
+
+                // Get the shipping information from the user
                 const newShippingDetails = JSON.parse(JSON.stringify(shippingDetails));
                 newShippingDetails['address'] = account.streetaddress;
                 newShippingDetails['city'] = account.city;
@@ -52,6 +64,7 @@ const PaymentPage = () => {
         return /^[a-zA-Z ]+$/.test(input);
     }
 
+    // Check for any errors in both the shipping and payment blocks
     const checkErrors = () => {
 
         console.log("Checking for errors...")
@@ -61,6 +74,7 @@ const PaymentPage = () => {
         const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         let error = false;
 
+        // Check for any empty fields, and the associated input types are correct, e.g. numbers only for postcode
         Object.keys(shippingDetails).forEach(field => {
             if (shippingDetails[field] === '') {
                 newShippingErrors[field] = field.charAt(0).toUpperCase() + field.slice(1) + ' cannot be empty';
@@ -80,11 +94,14 @@ const PaymentPage = () => {
 
         const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
 
+        // Check if any fields in the payment block are empty
+
         if (paymentDetails.type === '') {
             newPaymentErrors['type'] = "Please select your card type";
             error = true;
         }
 
+        // Card number should be a specific length
         if (paymentDetails.number === '') {
             newPaymentErrors['number'] = "Credit Card Number cannot be empty";
             error = true;
@@ -96,12 +113,23 @@ const PaymentPage = () => {
         const today = new Date();
         const year = today.getYear();
         const month = today.getMonth() + 1;
+
+        // Expiry date should not be empty and not expired
+        if (paymentDetails.month === '' || paymentDetails.year === '') {
+            newPaymentErrors['date'] = "Please enter your expiry date";
+        } else {
+            if (paymentDetails.year < year || (paymentDetails.year === year && paymentDetails.month < month)) {
+                newPaymentErrors['date'] = "Invalid card: Exceed expiry date";
+            }
+        }
         
+        // CVV should also be a specific length of 3
         if (String(paymentDetails.cvn).length !== 3) {
             newPaymentErrors['cvn'] = "CVV is invalid";
             error = true;
         }
 
+        // If either block has an error, display the errors, and do not continue with the purchase
         if (error) {
             setShippingErrors(newShippingErrors);
             setPaymentErrors(newPaymentErrors);
@@ -113,6 +141,7 @@ const PaymentPage = () => {
 
     const handleSubmit = async () => {
 
+        // Reset the errors for both shipping and payment
         const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         Object.keys(shippingErrors).forEach(field => newShippingErrors[field]='');
         setShippingErrors(newShippingErrors);
@@ -121,14 +150,18 @@ const PaymentPage = () => {
         Object.keys(paymentErrors).forEach(field => newPaymentErrors[field]='');
         setPaymentErrors(newPaymentErrors);
 
+        // Check if there are any errors in either block
         if (!checkErrors()) {
             console.log('There was an error');
         } else {
             console.log('No errors were found');
+
+            // Get the items from the cart, and put the id and quanity into a new dict
             const products = {};
             const cart = JSON.parse(localStorage.getItem('cart'));
             cart.forEach(product => products[product.id] = product.quantity);
 
+            // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
                 products: products
@@ -136,9 +169,22 @@ const PaymentPage = () => {
 
             const response = await api.post(`order`, body);
             console.log(response);
+
+            // If successful, remove the items from the cart, set the orderId in localStorage,
+            // and redirect to the order confirm page
             if (response) {
                 localStorage.removeItem('cart'); 
                 localStorage.setItem('orderId', response.orderId);
+                
+                // Update the user's profile details using the new shipping details if they changed them.
+                const shipBody = {
+                    streetaddress: shippingDetails['address'],
+                    city: shippingDetails['city'],
+                    postcode: shippingDetails['postcode'],
+                    state: shippingDetails['state'],
+                    country: shippingDetails['country']
+                }
+                await api.put(`profile?userId=${localStorage.getItem('userId')}`, shipBody);
                 history.push(`order`);
             }
 
@@ -146,17 +192,21 @@ const PaymentPage = () => {
     }
 
     return (
-        <Grid container direction="column">   
-            <Grid item>
-                {user && <ShippingBlock 
-                                        shipping={shippingDetails} 
-                                        errors={shippingErrors}
-                                        setShippingDetails={setShippingDetails}/>}
+        <Grid container direction="column" alignContent="center">   
+            <Grid item className={classes.block} xs={6}>
+                {user && 
+                    <ShippingBlock 
+                        shipping={shippingDetails} 
+                        errors={shippingErrors}
+                        setShippingDetails={setShippingDetails}
+                    />}
             </Grid>
-            <Grid item>
-                <PaymentBlock   payment={paymentDetails}
-                                errors={paymentErrors}
-                                setPaymentDetails={setPaymentDetails}/>
+            <Grid item className={classes.block} xs={6}>
+                <PaymentBlock   
+                    payment={paymentDetails}
+                    errors={paymentErrors}
+                    setPaymentDetails={setPaymentDetails}
+                />
             </Grid>
             <Grid item>
                 <Button
@@ -164,7 +214,7 @@ const PaymentPage = () => {
                     variant="contained"
                     onClick={() => handleSubmit()}
                 >
-                    Submit here
+                    Make Order
                 </Button>
             </Grid>
         </Grid>
