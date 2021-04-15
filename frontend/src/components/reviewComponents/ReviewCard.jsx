@@ -4,6 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import FlagIcon from '@material-ui/icons/Flag'
 import API from '../../util/API';
 
 const api = new API()
@@ -141,7 +142,6 @@ const ReviewCard = ({review, userId}) => {
                                 <ThumbDownIcon className={voteStatus.down ? classes.downVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
-                       
                     </Grid>
                 </Grid>
             </Grid>
