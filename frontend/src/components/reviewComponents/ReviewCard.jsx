@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, IconButton, makeStyles, Modal, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Grid, IconButton, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -32,21 +32,7 @@ const ReviewCard = ({review, userId}) => {
     const history = useHistory();
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const [reportReason, setReportReason] = React.useState();
-    const reasons = [
-        {
-            value: 'harassment',
-            label: 'This review is harassing me or someone else',
-        },
-        {
-            value: 'offensive',
-            label: 'This review is offensive',
-        },
-        {
-            value: 'irrelevant',
-            label: 'This review is irrelevant to the product',
-        }
-    ]
+    const [reportReason, setReportReason] = React.useState("");
 
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -173,10 +159,14 @@ const ReviewCard = ({review, userId}) => {
                 <Grid className="logout-confirmation-container">
                     <Typography>Why would you like to report this review?</Typography>
                     <Grid item>
-                        <TextField
-                            helperText = "Please select a reason"
-                            select
-                        ></TextField>
+                        <Select
+                            value = {reportReason}
+                            onChange = {event => {setReportReason(event.target.value)}}
+                        >
+                            <MenuItem value='harassment'>This review is harassing me or someone else</MenuItem>
+                            <MenuItem value='offensive'>This review is offensive</MenuItem>
+                            <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
+                        </Select>
                     </Grid>
                 </Grid>
             </Modal>
