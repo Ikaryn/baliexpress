@@ -68,13 +68,12 @@ const PaymentPage = () => {
     }
 
     // Check for any errors in both the shipping and payment blocks
-    const checkErrors = () => {
+    const checkErrors = (newShippingErrors, newPaymentErrors) => {
 
         console.log("Checking for errors...")
         console.log("Shipping Info:", shippingDetails);
         console.log("Payment Info:", paymentDetails);
 
-        const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         let error = false;
 
         // Check for any empty fields, and the associated input types are correct, e.g. numbers only for postcode
@@ -95,8 +94,6 @@ const PaymentPage = () => {
             };
         });
 
-        const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
-
         // Check if any fields in the payment block are empty
 
         if (paymentDetails.type === '') {
@@ -114,15 +111,17 @@ const PaymentPage = () => {
         }
         
         const today = new Date();
-        const year = today.getYear();
+        const year = today.getFullYear() % 2000;
         const month = today.getMonth() + 1;
+        console.log("year", year, "month", month);
+        console.log("entered year", paymentDetails.year, "entered month", paymentDetails.month);
 
         // Expiry date should not be empty and not expired
         if (paymentDetails.month === '' || paymentDetails.year === '') {
             newPaymentErrors['date'] = "Please enter your expiry date";
         } else {
             if (paymentDetails.year < year || (paymentDetails.year === year && paymentDetails.month < month)) {
-                newPaymentErrors['date'] = "Invalid card: Exceed expiry date";
+                newPaymentErrors['date'] = "Invalid card: Exceeded expiry date";
             }
         }
         
@@ -147,14 +146,12 @@ const PaymentPage = () => {
         // Reset the errors for both shipping and payment
         const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         Object.keys(shippingErrors).forEach(field => newShippingErrors[field]='');
-        setShippingErrors(newShippingErrors);
         
         const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
         Object.keys(paymentErrors).forEach(field => newPaymentErrors[field]='');
-        setPaymentErrors(newPaymentErrors);
 
         // Check if there are any errors in either block
-        if (!checkErrors()) {
+        if (!checkErrors(newShippingErrors, newPaymentErrors)) {
             console.log('There was an error');
         } else {
             console.log('No errors were found');

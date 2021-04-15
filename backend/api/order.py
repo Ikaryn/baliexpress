@@ -8,27 +8,52 @@ from datetime import datetime
 class Order(Resource):
 
     # Getting an order
-    # Url format: `order?orderId=${orderId}`
+    # Url formats
+    # For a single order: `order?orderId=${orderId}`
+    # For a single user: `order?userId=${userId}`
     def get(self):
         print('Get order attempt received')
-        orderId = int(request.args.get('orderId'))
+        orderId = request.args.get('orderId')
+        userId = request.args.get('userId')
 
-        order = db.getOrder(orderId)
-        if order is None:
-            return {'Error: Failed to get order'}
+        if orderId is not None:
+            order = db.getOrder(int(orderId))
+            if order is None:
+                return {'Error: Failed to get order'}
+            else:
+                productList = []
+                for product in order['products']:
+                    productId = product['productid']
+                    p = db.getProduct(productId)
+                    p['quantity'] = product['quantity']
+                    p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
+                    productList.append(p)
+
+                order['date'] = order['date'].strftime('%Y-%m-%d')
+                order['products'] = productList
+
+            return {'order': order}
         else:
-            productList = []
-            for product in order['products']:
-                productId = product['productid']
-                p = db.getProduct(productId)
-                p['quantity'] = product['quantity']
-                p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
-                productList.append(p)
+            orders = db.getUsersOrders(int(userId))
+            if orders is None:
+                return{'orders': None}
+            else:
+                for order in orders:
+                    productList = []
+                    total = 0
+                    for product in order['products']:
+                        productId = product['productid']
+                        p = db.getProduct(productId)
+                        p['quantity'] = product['quantity']
+                        p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
+                        productList.append(p)
+                        total += p['price'] * product['quantity']
 
-            order['date'] = order['date'].strftime('%Y-%m-%d')
-            order['products'] = productList
+                    order['date'] = order['date'].strftime('%Y-%m-%d')
+                    order['products'] = productList
+                    order['total'] = total
 
-        return {'order': order}
+                return {'orders': orders}
 
 
     # Making a payment/adding a new order

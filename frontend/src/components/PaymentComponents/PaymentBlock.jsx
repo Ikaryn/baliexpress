@@ -45,7 +45,7 @@ const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
 
     let years = [];
     for (let j = 21; j <= 30; j++) {
-        years.push(<MenuItem value={j}>{j}</MenuItem>);
+        years.push(<MenuItem value={j}>20{j}</MenuItem>);
     }
     
     return (
@@ -102,7 +102,7 @@ const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={4} direction="row" className={classes.date}>
-                        <FormControl>
+                        <FormControl error={errors.date === '' ? false : true}>
                             <FormLabel>Expiry Date</FormLabel>
                             <Grid container direction="row">
                                 <Grid item>

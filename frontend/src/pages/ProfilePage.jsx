@@ -12,6 +12,7 @@ import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
 import SaleForm from '../components/AdminManagementComponents/SaleForm';
+import UserOrderList from '../components/profilePage/UserOrderList';
 // import './App.css';
 const api = new API();
 
@@ -147,7 +148,7 @@ const ProfilePage = () => {
                                 />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            My Orders
+                            <UserOrderList />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <UserBuildList />
