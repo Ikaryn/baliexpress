@@ -60,14 +60,7 @@ const NavBar = () => {
             const userId = localStorage.getItem('userId');
             setCurrUser(userId);
             if(userId){
-                const options = {
-                    method: 'GET',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Request-Type': 'profile',
-                    },
-                }
-                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
                 const userAccInfo = {name: userDetails.name, 
                     email: userDetails.email, 

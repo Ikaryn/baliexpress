@@ -131,7 +131,7 @@ dmypy.json
 .pyre/
 
 # credentials
-/backend/api/credentials.py
+backend/api/credentials.py
 
-#pycache
-/backend/api/__pycache__/
+# pycache
+backend/api/__pycache__/
