@@ -32,7 +32,7 @@ const CartContent = () => {
     return (
     <Grid>
         {cart.length === 0 ? 
-            <Typography>Cart is empty!</Typography> 
+            <Typography variant="h5">Cart is empty!</Typography> 
             :
             cart.map((product) => {
                 if (product.buildname) {

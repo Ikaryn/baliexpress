@@ -4,6 +4,7 @@ import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
 import API from '../util/API';
+import { StoreContext } from '../util/store';
 
 const api = new API();
 
@@ -19,6 +20,8 @@ const useStyles = makeStyles(() => ({
 
 const PaymentPage = () => {
 
+    const context = React.useContext(StoreContext);
+    const { cart: [cart, setCart] } = context;
     const classes = useStyles();
     const history = useHistory();
     const [user, setUser] = React.useState(null);
@@ -158,13 +161,13 @@ const PaymentPage = () => {
 
             // Get the items from the cart, and put the id and quanity into a new dict
             const products = {};
-            const cart = JSON.parse(localStorage.getItem('cart'));
             cart.forEach(product => products[product.id] = product.quantity);
 
             // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
-                products: products
+                products: products,
+                shipping: shippingDetails
             };
 
             const response = await api.post(`order`, body);
@@ -173,7 +176,7 @@ const PaymentPage = () => {
             // If successful, remove the items from the cart, set the orderId in localStorage,
             // and redirect to the order confirm page
             if (response) {
-                localStorage.removeItem('cart'); 
+                setCart([]);
                 localStorage.setItem('orderId', response.orderId);
                 
                 // Update the user's profile details using the new shipping details if they changed them.

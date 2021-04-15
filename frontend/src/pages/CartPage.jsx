@@ -3,6 +3,7 @@ import React from 'react';
 import API from '../util/API';
 import '../App.css';
 import CartItem from '../components/CartComponents/CartItem';
+import { useHistory } from 'react-router';
 
 const api = new API();
 
