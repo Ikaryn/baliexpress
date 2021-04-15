@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, IconButton, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, FormControl, Grid, IconButton, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -159,14 +159,16 @@ const ReviewCard = ({review, userId}) => {
                 <Grid className="logout-confirmation-container">
                     <Typography>Why would you like to report this review?</Typography>
                     <Grid item>
-                        <Select
-                            value = {reportReason}
-                            onChange = {event => {setReportReason(event.target.value)}}
-                        >
-                            <MenuItem value='harassment'>This review is harassing me or someone else</MenuItem>
-                            <MenuItem value='offensive'>This review is offensive</MenuItem>
-                            <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
-                        </Select>
+                        <FormControl>
+                            <Select
+                                value = {reportReason}
+                                onChange = {event => {setReportReason(event.target.value)}}
+                            >
+                                <MenuItem value='harassment'>This review is harassing me or someone else</MenuItem>
+                                <MenuItem value='offensive'>This review is offensive</MenuItem>
+                                <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                 </Grid>
             </Modal>
