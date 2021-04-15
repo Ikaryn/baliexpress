@@ -2,8 +2,10 @@ import { CardActionArea, makeStyles, Paper, Typography } from '@material-ui/core
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../../util/API';
+import NewProduct from '../../assets/NewProduct.png';
 
 const api = new API();
+
 const useStyles = makeStyles(() => ({
     featuredImage: {
         width: '100%'
@@ -11,6 +13,11 @@ const useStyles = makeStyles(() => ({
     imageOverlay: {
         position: 'relative',
         top: '-3.5em',
+    },
+    newImageOverlay: {
+        position: 'relative',
+        top: '-68em',
+        left: '50em',
     }
 }))
 
@@ -54,6 +61,11 @@ const NewProductFeature = ({feature}) => {
                     {'Displayed Product: ' +hightlightedProduct.product.name}
                 </Typography>
             </Paper>
+            <img
+                className={classes.newImageOverlay}
+                src={NewProduct}
+                alt="new-product"
+            />
         </CardActionArea>
     )
     

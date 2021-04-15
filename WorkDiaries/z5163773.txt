@@ -32,4 +32,4 @@ Added featured reviews, sorting and filtering reviews. Implemented the HomePage,
 
 Week 9.
 
-Wrote the initial PaymentPage, along side with the Payment components. Brainstormed with Darryl Liu and Marcus Lee on the chatbot functionality. I wrote the functionality of the chatbot -All by myself.
+Wrote the initial PaymentPage, along side with the Payment components. Brainstormed with Darryl Liu and Marcus Lee on the chatbot functionality. I wrote the functionality of the chatbot. I rewrote the cart, and added more functionality to it. -All by myself.
