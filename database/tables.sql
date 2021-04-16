@@ -55,6 +55,7 @@ CREATE TABLE Products(
     stock           int DEFAULT 0 CHECK (stock >= 0),
     release_date    date,
     sold            int DEFAULT 0,
+    discontinued    boolean DEFAULT 'f',
     primary key (id)
 );
 
@@ -268,6 +269,7 @@ CREATE TABLE Sales(
     name        text,
     startdate   date NOT NULL,
     enddate     date NOT NULL,
+    image       text,
     primary key (id)
 );
 

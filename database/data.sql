@@ -1077,6 +1077,37 @@ VALUES
 
 -- Product 111 gets no reviews
 
+-- Product 112 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (112, 18, 5, 'one of my hobbies is poetry. and when i''m writing poems this works great.', '2020-06-22'),
+    (112, 6, 2, 'i use it for 10 weeks when i''m in my jail.', '2020-07-03');
+
+-- Product 113 gets no reviews
+
+-- Product 114 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (114, 10, 5, 'talk about sadness!!', '2021-01-12'),
+    (114, 2, 2, 'talk about contempt!!!', '2021-02-15'),
+    (114, 7, 5, 'My vulture loves to play with it.', '2021-02-18'),
+    (114, 19, 1, 'talk about surprise!!!', '2021-03-11'),
+    (114, 4, 1, 'talk about remorse!!!', '2021-03-14');
+
+-- Product 115 gets no reviews
+
+-- Product 116 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (116, 6, 1, 'This Monitor works too well. It buoyantly improves my football by a lot.', '2021-01-18');
+
+-- Product 117 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (117, 9, 2, 'this Monitor is standard.', '2020-02-08'),
+    (117, 12, 4, 'one of my hobbies is programming. and when i''m programming this works great.', '2020-05-16'),
+    (117, 7, 5, 'This Monitor works so well. It delightedly improves my football by a lot.', '2020-09-14');
+
 -- Mouses
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
@@ -1103,6 +1134,50 @@ VALUES
     (125, 'Wireless', 't'),
     (126, 'Wireless', 'f'),
     (127, 'Wireless', 't');
+
+-- Mouse Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+-- Product 118 Reviews
+    (118, 9, 4, 'The box this comes in is 5 foot by 6 inch and weights 17 pound!!!', '2018-06-07'),
+-- Product 119 Reviews
+    (119, 16, 1, 'My neighbor Elisha has one of these. She works as a fortune teller and she says it looks floppy.', '2018-09-16'),
+    (119, 21, 3, 'heard about this on hip-hop music radio, decided to give it a try.', '2019-03-29'),
+    (119, 3, 3, 'i use it never when i''m in my nightclub.', '2019-05-10'),
+-- Product 120 Reviews
+    (120, 18, 2, 'My co-worker Ali has one of these. He says it looks towering.', '2020-04-23'),
+    (120, 16, 4, 'This Mouse works quite well. It professionally improves my soccer by a lot.', '2020-11-14'),
+    (120, 7, 5, 'one of my hobbies is drawing. and when i''m drawing this works great.', '2021-01-18'),
+    (120, 9, 4, 'This Mouse works really well. It wildly improves my baseball by a lot.', '2021-01-22'),
+    (120, 20, 4, 'My baboon loves to play with it.', '2021-02-12'),
+-- Product 121 Reviews
+    (121, 10, 2, 'i use it hardly when i''m in my prison.', '2018-01-29'),
+    (121, 18, 4, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2018-06-02'),
+    (121, 4, 5, 'SoCal cockroaches are unwelcome, crafty, and tenacious. This Mouse keeps them away.', '2019-02-25'),
+    (121, 22, 4, 'i use it once a week when i''m in my firetruck.', '2020-01-16'),
+-- Product 122 Reviews
+    (122, 15, 2, 'this Mouse is ratty.', '2021-01-09'),
+    (122, 14, 4, 'talk about irritation.', '2021-01-30'),
+    (122, 4, 5, 'My co-worker Nile has one of these. He says it looks crooked.', '2021-02-23'),
+-- Product 123 has no reviews
+-- Product 124 reviews
+    (124, 20, 4, 'The box this comes in is 4 mile by 5 yard and weights 18 pound!!', '2018-07-11'),
+    (124, 19, 3, 'heard about this on dance-rock radio, decided to give it a try.', '2019-06-18'),
+    (124, 15, 1, 'one of my hobbies is piano. and when i''m playing piano this works great.', '2019-09-02'),
+    (124, 3, 2, 'My co-worker Linnie has one of these. He says it looks wide.', '2019-12-08'),
+-- Product 125 reviews
+    (125, 13, 3, 'The box this comes in is 4 kilometer by 5 mile and weights 17 gram.', '2020-04-10'),
+    (125, 9, 4, 'This Mouse works certainly well. It perfectly improves my tennis by a lot.', '2020-04-12'),
+    (125, 4, 2, 'My co-worker Reed has one of these. He says it looks microscopic.', '2020-07-22'),
+-- Product 126 reviews
+    (126, 5, 3, 'heard about this on hip-hop music radio, decided to give it a try.', '2018-12-03'),
+    (126, 14, 3, 'The box this comes in is 5 yard by 6 centimeter and weights 12 kilogram.', '2019-12-21'),
+    (126, 8, 2, 'My co-worker Matthew has one of these. He says it looks gigantic.', '2020-05-20'),
+    (126, 7, 5, 'i use it this time when i''m in my port-a-potty.', '2020-12-20'),
+    (126, 19, 2, 'I saw one of these in Grenada and I bought one.', '2021-03-25'),
+-- Product 127 reviews
+    (127, 6, 4, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2019-02-01'),
+    (127, 19, 3, 'this Mouse is hyper.', '2019-02-03');
 
 -- Keyboards
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
