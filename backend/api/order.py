@@ -43,7 +43,7 @@ class Order(Resource):
 
             return {'order': order}
 
-        else if userId is not None:
+        elif userId is not None:
             orders = db.getUsersOrders(int(userId))
             if orders is None:
                 return{'orders': None}
