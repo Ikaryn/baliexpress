@@ -25,10 +25,13 @@ def productSearch(*args):
 
         return results if len(args) == 1 else results[:args[1]]
 
-# Converting release date in products from a date object to string for JSON serialization
-def dateToString(products):
+# Converting release date in products from a date object and booleans to string for JSON serialization
+def boolDateToString(products):
 
     for product in products:
+        for field in product['specs']:
+            if (isinstance(product['specs'][field], bool)):
+                product['specs'][field] = 'Yes' if product['specs'][field] else 'No'
         releaseDate = product['release_date'].strftime('%Y-%m-%d')
         product['release_date'] = releaseDate
     
@@ -37,24 +40,34 @@ def dateToString(products):
 class Products(Resource):
     
     # Getting all products of a certain category
-    # Url format: `product?category=${category}`
+    # Url formats:
+    # All products for a category: `product?category=${category}`
+    # A list of specific products: `product?productIds=${productIds}`
     def get(self):
-        print("Get ProductList attempt received")
 
         data = request.args
         category= data.get('category')
+        productIds = data.get('productIds')
 
-        products = db.getAllProducts(str(category))
+        if category is not None:
+            print("Get ProductList attempt received")
+            products = db.getAllProducts(str(category))
 
-        # Converting all date objects to strings for serialization
-        for product in products:
-            for field in product['specs']:
-                if (isinstance(product['specs'][field], bool)):
-                    product['specs'][field] = 'Yes' if product['specs'][field] else 'No'
+            # Converting all date objects and booleans to strings for serialization
+            products = boolDateToString(products)
 
-            releaseDate = product['release_date'].strftime('%Y-%m-%d')
-            product['release_date'] = releaseDate
-        return ({'products':products})
+            return ({'products':products})
+        else:
+            print("Get Products attempt received")
+
+            # Split the query string into productIds
+            productIds = productIds.split(',')
+
+            products = []
+            for productId in productIds:
+                products.append(db.getProduct(int(productId)))
+            products = boolDateToString(products)
+            return ({'products':products})
 
     # Adding a new product to database
     # Url format: `product`
@@ -156,12 +169,12 @@ class Search (Resource):
             resultSize = 5 # Max number of products to be returned
 
             results = productSearch(query, resultSize)
-            results = dateToString(results)
+            results = boolDateToString(results)
             return {'results': results}
 
         else:
             print('Search attempt received')
 
             results = productSearch(query)
-            results = dateToString(results)
+            results = boolDateToString(results)
             return {'results': results}
