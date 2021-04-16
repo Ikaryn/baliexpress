@@ -96,11 +96,9 @@ const ProductPage = () => {
     }, [])
     // add the item to the cart.
     const handleCart = () => {
-        
         const newCart = JSON.parse(JSON.stringify(cart));
         
         const found = newCart.filter(product => productInfo.id === product["id"]);
-        console.log(found);
         if (!found[0]) {
             newCart.push({
                 "name": productInfo.name,
@@ -113,7 +111,6 @@ const ProductPage = () => {
         } else {
             found[0]['quantity'] += 1;
         }
-        console.log(newCart);
         setCart(newCart);
     }
     return (

@@ -25,10 +25,9 @@ const ProductListPage = () => {
             if (p.products) {
                 setProducts(p.products);
                 setFilteredProducts(p.products);
-                console.log(p.products);
             }
-            var set = [];
-            var dict = {};
+            let set = [];
+            let dict = {};
             for(const i in p.products){
                 console.log(p.products[i].brand);
                 if(!set.includes(p.products[i].brand)){
@@ -43,11 +42,11 @@ const ProductListPage = () => {
 
     React.useEffect(() => {
         (async () => {
-            var newProducts = [...products];
+            let newProducts = [...products];
             const x = nameFilter.split(" ");
 
             function test(string){
-                for(var i in x){
+                for(let i in x){
                     if(string.toLowerCase().includes(x[i].toLowerCase())){
                         return true;
                     }
@@ -68,14 +67,14 @@ const ProductListPage = () => {
 
             setFilteredProducts(newProducts);
         })();
-    },[sortType, nameFilter]);
+    },[sortType, nameFilter, products]);
 
     function changeCheckBox(s){
-        var dict = checkBoxState;
+        let dict = checkBoxState;
         dict[s] = !dict[s];
-        var string = "";
-        var first = false;
-        for(var x in dict){
+        let string = "";
+        let first = false;
+        for(let x in dict){
             if(dict[x]){
                 if(!first){
                     string += x;

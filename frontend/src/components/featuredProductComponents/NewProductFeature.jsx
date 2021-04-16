@@ -11,13 +11,12 @@ const useStyles = makeStyles(() => ({
         width: '100%'
     },
     imageOverlay: {
-        position: 'relative',
-        top: '-3.5em',
+        position: 'absolute',
+        bottom: '0.2em'
     },
     newImageOverlay: {
-        position: 'relative',
-        top: '-68em',
-        left: '50em',
+        position: 'absolute',
+        right: '0'
     }
 }))
 
@@ -51,21 +50,28 @@ const NewProductFeature = ({feature}) => {
     
     return(
         <CardActionArea onClick={() => {handleClick()}}>
-            <img  
-              className={classes.featuredImage}
-              src={"data:image/jpeg;base64,"+hightlightedProduct.product.image} 
-              alt={hightlightedProduct.product.name} 
-            />
-            <Paper className={classes.imageOverlay}>
-                <Typography>
-                    {'Displayed Product: ' +hightlightedProduct.product.name}
-                </Typography>
-            </Paper>
-            <img
+            <div>
+                <img
+                    className={classes.newImageOverlay}
+                    src={NewProduct}
+                    alt="new-product"
+                />
+                <img  
+                  className={classes.featuredImage}
+                  src={"data:image/jpeg;base64,"+hightlightedProduct.product.image} 
+                  alt={hightlightedProduct.product.name} 
+                  />
+                <Paper className={classes.imageOverlay}>
+                    <Typography>
+                        {'Displayed Product: ' +hightlightedProduct.product.name}
+                    </Typography>
+                </Paper>
+            </div>
+            {/* <img
                 className={classes.newImageOverlay}
                 src={NewProduct}
                 alt="new-product"
-            />
+            /> */}
         </CardActionArea>
     )
     

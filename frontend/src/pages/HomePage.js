@@ -10,15 +10,14 @@ import BuildPcImage from '../assets/BuildPcImage.png';
 import MinorFeaturedProductCards from '../components/featuredProductComponents/MinorFeaturedProductCards';
 import BuildModalForm from '../components/buildPageComponents/BuildModalForm';
 import LoadingComponent from '../components/LoadingComponent';
-
+import SuperSale from '../assets/SuperSale.png';
 
 const api = new API();
 
 const useStyles = makeStyles(() => ({
     menuContainer: {
         backgroundColor: 'rgb(66,66,66)',
-        marginLeft: '2em',
-        height: '100%',
+        marginLeft: '5.5em',
     },
     majorFeatureContainer: {
         width: '79%',
@@ -30,6 +29,9 @@ const useStyles = makeStyles(() => ({
     minorProductTableCard: {
         width: '30%',
         height: '20%',
+    },
+    contentHeaders: {
+        margin: '0 0.5em',
     }
 }));
 
@@ -67,16 +69,21 @@ const HomePage = () => {
 
     return (
         <Grid container direction="column" alignItems="center">
-            <Grid container item direction="row" spacing={1} justify="center">
-                <Grid container item direction="column" xs={2} className={classes.menuContainer}>
-                    {categories.map((category) => (
-                        <Button key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
-                    ))}
-                </Grid>
-                <Grid item xs={5}>
+            <Grid item>
+                <img src={SuperSale} alt="sale-promotion"/>
+            </Grid>
+            <Grid container item direction="row"  justify="center" className={classes.contentHeaders}>
+                <Paper className={classes.menuContainer}>
+                    <Grid container item direction="column" xs={2}>
+                            {categories.map((category) => (
+                                <Button key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
+                                ))}
+                    </Grid>
+                </Paper>
+                <Grid item xs={5} className={classes.contentHeaders}>
                     {products ? <NewProductFeature feature={products['major_features']}/> : <LoadingComponent/>}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} className={classes.contentHeaders}>
                     <CardActionArea onClick={() => {setBuildOpen(true)}}>
                         <img className={classes.majorFeatureContainer} src={BuildPcImage} alt="buildPCLink"/>
                     </CardActionArea>
