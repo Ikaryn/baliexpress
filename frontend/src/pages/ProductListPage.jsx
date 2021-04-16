@@ -18,12 +18,14 @@ const ProductListPage = () => {
     const [brandSet, setBrandSet] = React.useState([]);
     const [checkBoxState, setCheckBoxState] = React.useState({});
     let {category} = useParams();
+    
     React.useEffect(() => {
         (async () => {
             const p = await api.get(`product?category=${category}`);
             if (p.products) {
                 setProducts(p.products);
                 setFilteredProducts(p.products);
+                console.log(p.products);
             }
             var set = [];
             var dict = {};
@@ -34,10 +36,8 @@ const ProductListPage = () => {
                     dict[p.products[i].brand] = false;
                 }
             }
-            console.log(set);
             setBrandSet(set);
             setCheckBoxState(dict);
-            console.log(dict);
         })();
     },[category]);
 
@@ -100,7 +100,7 @@ const ProductListPage = () => {
                         <Grid item>
                             <Typography variant="h5">Brand:
                                 {brandSet.map((s) => (
-                                    <Typography>
+                                    <Typography key={s}>
                                         <Checkbox
                                             onChange={() => {changeCheckBox(s)}}
                                         />
@@ -136,13 +136,14 @@ const ProductListPage = () => {
                     </Grid>
                     <Grid container item direction="row" spacing={3} xs>
                         {filteredProducts.map((p) => (
-                            <Grid container item xs={3} style={{display: 'flex'}}>
+                            <Grid container item xs={3} style={{display: 'flex'}} key={p.name + p.id}>
                                 <ProductCard 
                                     pid={p.id}
                                     name={p.name}
                                     price={p.price}
                                     image={p.image}
                                     category={p.category}
+                                    sale={p.sale}
                                     />
                             </Grid>
                         ))}

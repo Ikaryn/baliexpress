@@ -3,18 +3,27 @@ import { Card, CardActionArea, CardMedia,
         Button, Grid, makeStyles} from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-import amdryzen52600 from '../assets/amdryzen52600.jpg'
 
 const useStyles = makeStyles(() => ({
     productCardContainer: {
         height: '100%'
-    }
+    },
 }))
 
-const ProductCard = ({pid, name, price, image, category}) => {
+const ProductCard = ({pid, name, price, image, category, sale}) => {
     
     const classes = useStyles();
     const history = useHistory();
+    
+    
+    // if the product is on sale, calculate the price
+    const productPrice = (() => {
+        if (sale) {
+            return (price - (price * (sale.salepercent / 100))).toFixed(2);
+        }
+        return price.toFixed(2);
+    })();
+    
     
     const handleClick = () => {
         history.push(`/product/${category}/${pid}`)
@@ -31,9 +40,20 @@ const ProductCard = ({pid, name, price, image, category}) => {
                             <Typography variant="h6">
                                 {name}
                             </Typography>
+                            {sale ?
+                            <div>
+                                <Typography variant="h5" className="saleOldPrice">
+                                    ${price.toFixed(2)}
+                                </Typography>
+                                <Typography variant="h5" className='saleNewPrice'>
+                                    ${productPrice} On Sale!
+                                </Typography>
+                            </div>
+                            :
                             <Typography variant="h5">
-                                ${price}
+                                ${productPrice}
                             </Typography>
+                            }
                         </CardContent>
                         <CardActions>
                             <Button onClick={() => handleClick()}>View Product Details</Button>

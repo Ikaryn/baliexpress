@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 // this component will display the data surrounding the ratings reviewers give.
-const BarPercentages = ({ratings}) => {
+const BarPercentages = ({ratings , setRating}) => {
 
     const [stars, setStars] = React.useState([]);
     const [overallRating, setOverallRating] = React.useState(0);
@@ -53,7 +53,9 @@ const BarPercentages = ({ratings}) => {
             }
         }
         
-        setOverallRating(Math.round(totalRating/ratings.length));
+        const rating = Math.round(totalRating/ratings.length)
+        setOverallRating(rating);
+        setRating({rating: rating, 'num': ratings.length});
         setStars(initStars);
     }, [ratings])
     
@@ -122,7 +124,7 @@ const FeaturedReview = ({review}) => (
     </Grid>
 )
 
-const ReviewBlock = ({rating, productId}) => {
+const ReviewBlock = ({rating, productId, setRating}) => {
     
     const [reviews, setReviews] = React.useState([{}])
     const [sort, setSort] = React.useState('popularity');
@@ -237,7 +239,7 @@ const ReviewBlock = ({rating, productId}) => {
             <Grid item container direction="row">
                 <Grid item container direction="column" xs={6}>
                     <Grid item>
-                        {reviews && <BarPercentages ratings={allReviews} />}
+                        {reviews && <BarPercentages ratings={allReviews} setRating={setRating}/>}
                     </Grid>
                 </Grid>
                 <Grid container item xs={6} direction="column">
