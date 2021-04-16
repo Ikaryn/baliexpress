@@ -5,12 +5,30 @@ from flask_restful import Api
 from . import dbaccess as db
 from datetime import datetime
 
+# Helper function to attach all associated products to an order and format for JSON serialization
+def formatOrder(order):
+    productList = []
+    total = 0
+
+    for product in order['products']:
+        productId = product['productid']
+        p = db.getProduct(productId)
+        p['quantity'] = product['quantity']
+        p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
+        total += p['price'] * p['quantity']
+        productList.append(p)
+
+    order['date'] = order['date'].strftime('%Y-%m-%d')
+    order['products'] = productList
+    order['total'] = total
+
 class Order(Resource):
 
     # Getting an order
     # Url formats
     # For a single order: `order?orderId=${orderId}`
     # For a single user: `order?userId=${userId}`
+    # For all orders (admin use): `order`
     def get(self):
         print('Get order attempt received')
         orderId = request.args.get('orderId')
@@ -21,39 +39,28 @@ class Order(Resource):
             if order is None:
                 return {'Error: Failed to get order'}
             else:
-                productList = []
-                for product in order['products']:
-                    productId = product['productid']
-                    p = db.getProduct(productId)
-                    p['quantity'] = product['quantity']
-                    p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
-                    productList.append(p)
-
-                order['date'] = order['date'].strftime('%Y-%m-%d')
-                order['products'] = productList
+                formatOrder(order)
 
             return {'order': order}
-        else:
+
+        else if userId is not None:
             orders = db.getUsersOrders(int(userId))
             if orders is None:
                 return{'orders': None}
             else:
                 for order in orders:
-                    productList = []
-                    total = 0
-                    for product in order['products']:
-                        productId = product['productid']
-                        p = db.getProduct(productId)
-                        p['quantity'] = product['quantity']
-                        p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
-                        productList.append(p)
-                        total += p['price'] * product['quantity']
-
-                    order['date'] = order['date'].strftime('%Y-%m-%d')
-                    order['products'] = productList
-                    order['total'] = total
+                    formatOrder(order)
 
                 return {'orders': orders}
+        else:
+            orders = db.getAllOrders()
+            if orders is None:
+                return{'orders': None}
+            else:
+                for order in orders:
+                    formatOrder(order)
+                return {'orders': orders}
+
 
 
     # Making a payment/adding a new order

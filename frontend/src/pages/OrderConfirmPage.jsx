@@ -43,7 +43,7 @@ const OrderConfirmPage = () => {
     const history = useHistory();
     const [order, setOrder] = React.useState(null)
     const [productList, setProductList] = React.useState(null)
-	const [total, setTotal] = React.useState('');
+	// const [total, setTotal] = React.useState('');
 
     React.useEffect(() => {
         (async () => {
@@ -62,9 +62,9 @@ const OrderConfirmPage = () => {
                 console.log(order);
                 localStorage.removeItem('orderId');
 				
-				let sum = 0;
-				products.forEach(product => (sum += product.price * product.quantity));
-				setTotal(sum);
+				// let sum = 0;
+				// products.forEach(product => (sum += product.price * product.quantity));
+				// setTotal(sum);
 
 
             // If there is no orderId (e.g. from someone manually accessing the url), then redirect to the homepage
@@ -121,7 +121,7 @@ const OrderConfirmPage = () => {
 							</List>
 						</Grid>
 						<Grid item container className={classes.total} justify="flex-end">
-							<Typography variant="h5">Total: ${total}</Typography>
+							{order && <Typography variant="h5">Total: ${order.total}</Typography>}
 						</Grid>
 					</Paper>
                 </Grid>
