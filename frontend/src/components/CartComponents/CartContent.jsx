@@ -6,12 +6,16 @@ import { useHistory } from 'react-router';
 const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
+    },
+    emptyCart: {
+        padding: '2em'
     }
 }))
 
 const CartContent = () => {
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
+    
     const [totalPrice, setTotalPrice] = React.useState(0);
     const history = useHistory();
     const classes = useStyles();
@@ -32,7 +36,9 @@ const CartContent = () => {
     return (
     <Grid>
         {cart.length === 0 ? 
-            <Typography variant="h5">Cart is empty!</Typography> 
+            <Grid container item justify="center" className={classes.emptyCart}>
+                <Typography>Cart is empty!</Typography>
+            </Grid>
             :
             cart.map((product) => {
                 if (product.buildname) {
@@ -47,6 +53,7 @@ const CartContent = () => {
             </Grid>
             <Grid item>
                 <Button 
+                    disabled={cart.length === 0}
                     variant="contained" 
                     color="primary"
                     onClick={handleClick}

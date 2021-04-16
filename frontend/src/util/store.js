@@ -18,9 +18,11 @@ export default ({ children }) => {
         'price': 0,
         });
     const [cart, setCart] = React.useState([]);
+    const [comparedProduct, setComparedProduct] = React.useState({});
     const store = {
         build: [build, setBuild],
         cart: [cart, setCart],
+        comparedProduct: [comparedProduct, setComparedProduct],
     };
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 

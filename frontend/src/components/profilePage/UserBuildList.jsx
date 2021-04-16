@@ -22,18 +22,14 @@ const UserBuildList = () => {
     },[])
     
     const handleRedirect = (userid, buildid, build) => {
-        console.log('REDIRECT', build);
+        
         const editBuild = buildTemplate;
         
-        // Object.keys(build.parts).forEach((category) => {
-        //     console.log(category);
-        //     editBuild[category] = build.parts[category];
-        // })
-        
-        build.forEach((part) => {
+        // since saved builds may not have all parts filled out
+        // populate the build with empty key/fields so it renders properly.
+        build.parts.forEach((part) => {
             editBuild[part.category] = part;
         })
-        console.log(editBuild);
         
         setBuild(editBuild);
         history.push(`/build/${userid}/${buildid}`);
