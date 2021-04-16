@@ -111,18 +111,6 @@ const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
                                         onChange={(event) => {handleChange('month', event.target.value)}}
                                         >
                                         {months}
-                                        {/* <MenuItem value={1}>One</MenuItem>
-                                        <MenuItem value={2}>Two</MenuItem>
-                                        <MenuItem value={3}>Three</MenuItem>
-                                        <MenuItem value={4}>Four</MenuItem>
-                                        <MenuItem value={1}>Five</MenuItem>
-                                        <MenuItem value={1}>Six</MenuItem>
-                                        <MenuItem value={1}>Seven</MenuItem>
-                                        <MenuItem value={1}>Eight</MenuItem>
-                                        <MenuItem value={1}>Nine</MenuItem>
-                                        <MenuItem value={1}>Ten</MenuItem>
-                                        <MenuItem value={1}>Eleven</MenuItem>
-                                        <MenuItem value={1}>Twelve</MenuItem> */}
 
                                     </Select>
                                 </Grid>
@@ -135,18 +123,6 @@ const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
                                         onChange={(event) => {handleChange('year', event.target.value)}}
                                         >
                                         {years}
-                                        {/* <MenuItem value={1}>Twenty One</MenuItem>
-                                        <MenuItem value={2}>Twenty Two</MenuItem>
-                                        <MenuItem value={3}>Twenty Three</MenuItem>
-                                        <MenuItem value={4}>Twenty Four</MenuItem>
-                                        <MenuItem value={1}>Twenty Five</MenuItem>
-                                        <MenuItem value={1}>Twenty Six</MenuItem>
-                                        <MenuItem value={1}>Twenty Seven</MenuItem>
-                                        <MenuItem value={1}>Twenty Eight</MenuItem>
-                                        <MenuItem value={1}>Twenty Nine</MenuItem>
-                                        <MenuItem value={1}>Thirty</MenuItem>
-                                        <MenuItem value={1}>Thirty One</MenuItem>
-                                        <MenuItem value={1}>Thirty Two</MenuItem> */}
 
                                     </Select>
                                 </Grid>
