@@ -51,11 +51,13 @@ class Sales(Resource):
         end = data.get('end')
         endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
+        image = data.get('image')
 
         print(name, startDate, endDate, products)
+        image = image.split(',')[1]
         
         # Placeholder function to send to database
-        saleId = db.addSale(name, startDate, endDate, products)
+        saleId = db.addSale(name, startDate, endDate, products, image)
         if saleId is None:
             return {'error': 'Failed to create sale'}
         
