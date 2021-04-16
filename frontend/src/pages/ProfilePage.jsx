@@ -159,7 +159,7 @@ const ProfilePage = () => {
                                 />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            My Orders
+                            <UserOrderList />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <UserBuildList />

@@ -1,17 +1,17 @@
 import { Card, CardActionArea, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-
+import HighlyRated from '../../assets/HighRated.png';
 const useStyles = makeStyles(() => ({
     image: {
         width: '20em'
     },
+    overlay: {
+        position: 'absolute',
+    },
     cardContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
         height: '31em',
-    }
+    },
 }));
 
 const MinorFeaturedProductCards = ({productInfo}) => {
@@ -27,13 +27,17 @@ const MinorFeaturedProductCards = ({productInfo}) => {
     return(
         <Card className={classes.cardContainer}>
             <CardActionArea onClick={() => {handleClick()}}>
-                <img
-                    className={classes.image}
-                    src={"data:image/jpeg;base64,"+productInfo.image}
-                    alt={productInfo.name}
-                />
+                <div>
+                    <img src={HighlyRated} alt="highly-rated-overlay" className={classes.overlay}/>
+                    <img
+                        className={classes.image}
+                        src={"data:image/jpeg;base64,"+productInfo.image}
+                        alt={productInfo.name}
+                    />
+                </div>
                 <Typography variant="h6" >{productInfo.name}</Typography>
                 <Typography variant="h6" >${productInfo.price}</Typography>
+                <Typography>View Product Details</Typography>
             </CardActionArea>
         </Card>
     )

@@ -18,6 +18,7 @@ const ProductListPage = () => {
     const [brandSet, setBrandSet] = React.useState([]);
     const [checkBoxState, setCheckBoxState] = React.useState({});
     let {category} = useParams();
+    
     React.useEffect(() => {
         (async () => {
             const p = await api.get(`product?category=${category}`);
@@ -25,8 +26,8 @@ const ProductListPage = () => {
                 setProducts(p.products);
                 setFilteredProducts(p.products);
             }
-            var set = [];
-            var dict = {};
+            let set = [];
+            let dict = {};
             for(const i in p.products){
                 console.log(p.products[i].brand);
                 if(!set.includes(p.products[i].brand)){
@@ -34,20 +35,18 @@ const ProductListPage = () => {
                     dict[p.products[i].brand] = false;
                 }
             }
-            console.log(set);
             setBrandSet(set);
             setCheckBoxState(dict);
-            console.log(dict);
         })();
     },[category]);
 
     React.useEffect(() => {
         (async () => {
-            var newProducts = [...products];
+            let newProducts = [...products];
             const x = nameFilter.split(" ");
 
             function test(string){
-                for(var i in x){
+                for(let i in x){
                     if(string.toLowerCase().includes(x[i].toLowerCase())){
                         return true;
                     }
@@ -68,14 +67,14 @@ const ProductListPage = () => {
 
             setFilteredProducts(newProducts);
         })();
-    },[sortType, nameFilter]);
+    },[sortType, nameFilter, products]);
 
     function changeCheckBox(s){
-        var dict = checkBoxState;
+        let dict = checkBoxState;
         dict[s] = !dict[s];
-        var string = "";
-        var first = false;
-        for(var x in dict){
+        let string = "";
+        let first = false;
+        for(let x in dict){
             if(dict[x]){
                 if(!first){
                     string += x;
@@ -100,7 +99,7 @@ const ProductListPage = () => {
                         <Grid item>
                             <Typography variant="h5">Brand:
                                 {brandSet.map((s) => (
-                                    <Typography>
+                                    <Typography key={s}>
                                         <Checkbox
                                             onChange={() => {changeCheckBox(s)}}
                                         />
@@ -136,13 +135,14 @@ const ProductListPage = () => {
                     </Grid>
                     <Grid container item direction="row" spacing={3} xs>
                         {filteredProducts.map((p) => (
-                            <Grid container item xs={3} style={{display: 'flex'}}>
+                            <Grid container item xs={3} style={{display: 'flex'}} key={p.name + p.id}>
                                 <ProductCard 
                                     pid={p.id}
                                     name={p.name}
                                     price={p.price}
                                     image={p.image}
                                     category={p.category}
+                                    sale={p.sale}
                                     />
                             </Grid>
                         ))}

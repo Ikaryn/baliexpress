@@ -23,16 +23,17 @@ DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Review_Votes;
+DROP TABLE IF EXISTS Reports;
 DROP TABLE IF EXISTS Sales CASCADE;
 DROP TABLE IF EXISTS Sale_Products;
 
 
 CREATE TABLE Users(
     id              int GENERATED ALWAYS AS IDENTITY,
-    name            text,
-    email           varchar(40) UNIQUE,
-    password        varchar(35),
-    phonenumber     text UNIQUE,
+    name            text NOT NULL,
+    email           varchar(40) UNIQUE NOT NULL,
+    password        varchar(35) NOT NULL,
+    phonenumber     text UNIQUE NOT NULL,
     streetaddress   text,
     city            text,
     state           text,
@@ -44,22 +45,29 @@ CREATE TABLE Users(
 
 CREATE TABLE Products(
     id              int GENERATED ALWAYS AS IDENTITY,
-    name            text,
-    category        categories,
+    name            varchar(150) NOT NULL,
+    category        categories NOT NULL,
     brand           text,
-    price           numeric(50, 2),
+    price           numeric(50, 2) NOT NULL,
     image           text,
     warranty        text,
     description     text,
-    stock           int,
+    stock           int DEFAULT 0 CHECK (stock >= 0),
     release_date    date,
+    sold            int DEFAULT 0,
+    discontinued    boolean DEFAULT 'f',
     primary key (id)
 );
 
 CREATE TABLE Orders(
     id      int GENERATED ALWAYS AS IDENTITY,
-    userid  integer,
-    date    date,
+    userid  integer NOT NULL,
+    date    date NOT NULL,
+    streetaddress   text,
+    city            text,
+    state           text,
+    country         text,
+    postcode        text,
     primary key (id),
     foreign key (userid) references Users(id)
 );
@@ -67,7 +75,7 @@ CREATE TABLE Orders(
 CREATE TABLE Order_Items(
     orderid     integer,
     productid   integer,
-    quantity    integer,
+    quantity    integer NOT NULL CHECK (quantity > 0),
     primary key (orderid, productid),
     foreign key (orderid) references Orders(id) on delete CASCADE,
     foreign key (productid) references Products(id)
@@ -170,9 +178,9 @@ CREATE TABLE PSU(
 
 CREATE TABLE Monitors(
     id              int,
-    size            int,
-    resolution      int,
-    refresh_rate    int,
+    size            text,
+    resolution      text,
+    refresh_rate    text,
     aspect_ratio    text,
     panel_type      text,
     power_use       numeric(50, 1),
@@ -211,8 +219,8 @@ CREATE TABLE Wifi_Adaptors(
 
 CREATE TABLE Builds(
     buildid     int GENERATED ALWAYS AS IDENTITY,
-    userid      int,
-    buildname        text,
+    userid      int NOT NULL,
+    buildname   text NOT NULL,
     description text,
     primary key (buildid),
     foreign key (userid) references Users(id)
@@ -221,7 +229,7 @@ CREATE TABLE Builds(
 CREATE TABLE BuildParts(
     buildid     int,
     productid   int,
-    quantity    int,
+    quantity    int NOT NULL CHECK (quantity > 0),
     primary key (buildid, productid),
     foreign key (buildid) references Builds(buildid) on delete CASCADE,
     foreign key (productid) references Products(id) on delete CASCADE
@@ -231,9 +239,9 @@ CREATE TABLE Reviews(
     reviewid    int GENERATED ALWAYS AS IDENTITY UNIQUE,
     productid   int,
     userid      int,
-    rating      int,
+    rating      int NOT NULL CHECK (rating <= 5) CHECK (rating >= 0),
     reviewtext  text,
-    reviewdate  date,
+    reviewdate  date NOT NULL,
     primary key (productid, userid),
     foreign key (productid) references Products(id) on delete CASCADE,
     foreign key (userid) references Users(id) on delete CASCADE
@@ -242,24 +250,33 @@ CREATE TABLE Reviews(
 CREATE TABLE Review_Votes(
     reviewid    int,
     voterid     int,
-    vote        int CHECK (vote IN (-1, 1)),
+    vote        int NOT NULL CHECK (vote IN (-1, 1)),
     primary key (reviewid, voterid),
     foreign key (reviewid) references Reviews(reviewid) on delete CASCADE,
     foreign key (voterid) references Users(id) on delete CASCADE
 );
 
+CREATE TABLE Reports(
+    reportid    int GENERATED ALWAYS AS IDENTITY UNIQUE,
+    reviewid    int,
+    reason      text,
+    primary key (reportid),
+    foreign key (reviewid) references Reviews(reviewid) on delete CASCADE
+);
+
 CREATE TABLE Sales(
     id          int GENERATED ALWAYS AS IDENTITY,
     name        text,
-    startdate   date,
-    enddate     date,
+    startdate   date NOT NULL,
+    enddate     date NOT NULL,
+    image       text,
     primary key (id)
 );
 
 CREATE TABLE Sale_Products(
     saleid          int,
     productid       int,
-    salepercent     int,
+    salepercent     int NOT NULL,
     sold            int DEFAULT 0,
     primary key (saleid, productid),
     foreign key (saleid) references Sales(id) on delete CASCADE,

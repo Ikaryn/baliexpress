@@ -1,4 +1,4 @@
-import { AppBar, Button, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
+import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
@@ -9,16 +9,6 @@ import { StoreContext } from '../util/store';
 
 const api = new API();
 
-const buildTemplate = {
-    'Case': '', 
-    'Motherboard':'', 
-    'Graphics Card':'', 
-    'Memory': '',
-    'Storage': '',
-    'Power Supply': '', 
-    'CPU Cooler':''
-    };
-
 const useStyles = makeStyles((theme) => ({
     root: {
         marginBottom: '10%',
@@ -28,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: 0,
         padding: '1em',
         background: 'rgb(25,25,25)',
+        zIndex: 1,
     },
     standoutButton: {
         background: 'rgb(245,245,0)',
@@ -40,12 +31,17 @@ const BuildPage = () => {
     const context = React.useContext(StoreContext)
     const { build: [build, setBuild]} = context;
     console.log(build);
+    const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
+    const [buildName, setBuildName] = React.useState('Your Custom Built PC');
     // modal states
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [successType, setSuccessType] = React.useState('');
+    
     const classes = useStyles();
+    const [builtByCompany, setBuiltByCompany] = React.useState(false)
     
     // will change later.
     // generate a random unique identifer for a build
@@ -58,32 +54,36 @@ const BuildPage = () => {
     React.useEffect(() => {
         const newPrice = Object.keys(build).reduce((previous, key) => {
             if(build[key].price){
-                previous.price += build[key].price;
+                previous.price += Number(build[key].price);
             }
             return previous;
         }, { price: 0 });
         console.log(newPrice);
+        if (builtByCompany){
+            newPrice += 50
+        }
         setBuildPrice(newPrice.price);
     },[build])
     
     
     
     const handleAddToCart = () => {
-    
+        const buildInfo = JSON.parse(JSON.stringify(build));
+        buildInfo['price'] = buildPrice;
+        buildInfo['buildname'] = buildName;
+        buildInfo['quantity'] = 1;
+        
+        const updatedCart = JSON.parse(JSON.stringify(cart));
+        console.log(buildInfo);
+        updatedCart.push(buildInfo);
+        setSuccessType('cart');
+        setSuccess(true);
+        setCart(updatedCart);
     }
     
     const handleSaveBuild = (event) => {
+        setSuccessType('save');
         setOpen(true);
-        // setAnchorEl(event.currentTarget);
-        // setOpen(open ? false : true);
-        // console.log(build);
-        // console.log('Send post request')
-        // api.post(`build`, {
-        //     userID: localStorage.getItem('userId'),
-        //     buildName: 'buildName',
-        //     buildDesc: 'buildDesc',
-        //     build: build,
-        // })
     }
     
     
@@ -93,22 +93,7 @@ const BuildPage = () => {
             <Grid item>
                 <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
-            {/* <Grid item>
-                <Paper>
-                    <Typography>Sort placeholder</Typography>
-                </Paper>
-            </Grid> */}
             <Grid container item direction="row">
-                {/* <Grid container item xs={2}>
-                    <Paper>
-                        <Grid item>
-                            <Typography variant="h4">Overview</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>specs placeholder</Typography>
-                        </Grid>
-                    </Paper>
-                </Grid> */}
                 <Grid container item direction="column" xs={12} spacing={3}>
                     {Object.keys(build).map((category) => (
                         <Grid item key={`${category}-card`}>
@@ -133,6 +118,14 @@ const BuildPage = () => {
                     <Grid item xs={6}>
                         <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
                     </Grid>
+                    <Grid item>
+                        <FormControlLabel
+                            control = {
+                                <Checkbox checked={builtByCompany} onChange={() => {builtByCompany ? setBuiltByCompany(false) : setBuiltByCompany(true)}} />
+                            }
+                            label = "Built by Company" className="light-text"
+                        />
+                    </Grid>
                 </Grid>
                 <Grid item xs={3}>
                     <Typography className="light-text" variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
@@ -142,8 +135,8 @@ const BuildPage = () => {
                 <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} />
             </Modal>
         </AppBar>
-        <Snackbar open={success} autoHideDuration={5} onClose={() => {setSuccess(false)}}>
-            <Alert severity="success">Build successfully saved!</Alert>
+        <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>
+            <Alert severity="success">{successType === 'save' ? 'Build Successfully Saved!' : 'Build added to cart!'}</Alert>
         </Snackbar>
     </div>
     )

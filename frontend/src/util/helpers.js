@@ -94,6 +94,35 @@ export function reverseCategoryName(category) {
     }
 }
 
+export const brands = [
+    'intel',
+    'amd',
+    'msi',
+    'asrock',
+    'asus',
+    'gigabyte',
+    'seagate',
+    'western digital purple',
+    'adapta',
+    'samsung',
+    'silicon',
+    'crucial',
+    'evga',
+    'be quiet!',
+    'thermaltake',
+    'silverstone',
+    'corsair',
+    'g.skill',
+    'kingston',
+    'gigabyte',
+    'galax',
+    'inno3d',
+    'coolermaster',
+    'azza',
+    'thermaltake',
+    'fractal',
+]
+
 export function generateBuildString() {
     return Math.random().toString(36).slice(2);
 }
