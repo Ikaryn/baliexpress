@@ -1,9 +1,8 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-# import credentials
+from . import credentials
 from datetime import datetime
-import credentials
 
 def connect():
     conn = None
@@ -314,6 +313,15 @@ def getAllProducts(*args):
 # gets product information for a single products
 # returns dictionary containing product information if successful, None otherwise
 def getProduct(id):
+
+    # create function to convert decimal type numbers to floats
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )
+    psycopg2.extensions.register_type(decimalToFloat)
+
     try:
         # connect to database
         conn = connect()
@@ -631,19 +639,70 @@ def getUsersBuilds(userID):
             cur.execute(query, [build['buildid']])
             rows = cur.fetchall()
             build['parts'] = [{column:data for column, data in record.items()} for record in rows]
-
+            newParts = []
+            # get specs for each part
+            for part in build['parts']:
+                id = part['productid']
+                print(id)
+                query = "SELECT * FROM Products WHERE id = %s"
+                cur.execute(query, [id])
+                row = cur.fetchone()
+                results = {column:data for column, data in row.items()}
+                part = {**part, **results}
+                # get specs
+                category = part['category']
+                query = "SELECT * FROM %s WHERE id = %s"
+                cur.execute(query, (AsIs(category), id))
+                row = cur.fetchone()
+                part['specs'] = {column:data for column, data in row.items()}
+                part.pop('id')
+                part['specs'].pop('id')
+                newParts.append(part)
+            build['parts'] = newParts
         # commit and close database
         conn.commit()
+        cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
         builds = None
         print ("An error has occured in getUsersBuilds()")
         print(error)
     finally:
-        # close connecction to database
-        if (conn):
-            cur.close()
-            conn.close()
+        conn.close()
         return builds
+# def getUsersBuilds(userID):
+#     try:
+#         # connect to database
+#         conn = connect()
+#         cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+#         # get builds
+#         builds = []
+#         query = "SELECT * FROM Builds WHERE userid = %s"
+#         cur.execute(query, [userID])
+
+#         # convert rows to list of dictionaries
+#         rows = cur.fetchall()
+#         builds = [{column:data for column, data in record.items()} for record in rows]
+
+#         # get parts for each build and add to build's dictionary
+#         for build in builds:
+#             query = "SELECT productid, quantity FROM BuildParts WHERE buildid = %s"
+#             cur.execute(query, [build['buildid']])
+#             rows = cur.fetchall()
+#             build['parts'] = [{column:data for column, data in record.items()} for record in rows]
+
+#         # commit and close database
+#         conn.commit()
+#     except (Exception, psycopg2.DatabaseError) as error:
+#         builds = None
+#         print ("An error has occured in getUsersBuilds()")
+#         print(error)
+#     finally:
+#         # close connecction to database
+#         if (conn):
+#             cur.close()
+#             conn.close()
+#         return builds
 
 # deletes a part from a build
 # returns 1 if successful, 0 otherwise

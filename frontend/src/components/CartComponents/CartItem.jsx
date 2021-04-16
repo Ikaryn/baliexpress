@@ -27,10 +27,11 @@ const CartItem = ({productInfo, setTotal, type}) => {
         
         const found = updatedCart.filter(product => productInfo.id === product.id);
         if (found) {
-            found[0].quantity = quantity;
+            found[0].quantity = value;
         }
         setTotalPrice(value * productInfo.price);
         setQuantity(value);
+        setCart(updatedCart);
         console.log(cart);
     }
     return (
