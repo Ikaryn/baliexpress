@@ -19,8 +19,8 @@ const Login = () => {
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
     
-    // const context = React.useContext(StoreContext);
-    // const { userId: [userId, setUserId] } = context;
+    const context = React.useContext(StoreContext);
+    const { userType: [, setUserType] } = context;
 
     const history = useHistory();
 
@@ -52,7 +52,8 @@ const Login = () => {
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.userId);
             // localStorage.setItem('isAdmin', response.)
-            history.push('')
+            response.admin === true ? setUserType('Admin') : setUserType('User');
+            history.push('');
         } else {
             setLoginError(response.error);
         }

@@ -20,8 +20,7 @@ class Login(Resource):
         attemptPass = data.get('password')
 
         # Attempt to get the relevant userId from database
-        userId = db.getUserIDFromEmail(email)
-
+        userId, admin = db.getUserIDFromEmail(email)
         if userId is None:
             return {'error':'Invalid Login Details'}
         else:
@@ -29,7 +28,7 @@ class Login(Resource):
             if (attemptPass == userPass):
                 print('Login successful')
                 t = secrets.token_hex()
-                return {'token': t, 'userId': userId}
+                return {'token': t, 'userId': userId, 'admin': admin}
             else:
                 return {'error':'Invalid Password'}
 

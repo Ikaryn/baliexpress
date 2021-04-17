@@ -29,8 +29,9 @@ const NavBar = () => {
     const context = React.useContext(StoreContext)
     const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
-    const [loginStatus, setLoginStatus] = React.useState("");
-    const [currUser, setCurrUser] = React.useState("");
+    // const [loginStatus, setLoginStatus] = React.useState("");
+    const {userType: [userType, setUserType]} = context;
+    // const [currUser, setCurrUser] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
@@ -58,7 +59,7 @@ const NavBar = () => {
     React.useEffect(() => {
         (async () => {
             const userId = localStorage.getItem('userId');
-            setCurrUser(userId);
+            // setCurrUser(userId);
             if(userId){
                 const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
@@ -68,15 +69,26 @@ const NavBar = () => {
                     password: userDetails.password,
                     isAdmin: userDetails.admin}
                 if(userAccInfo.isAdmin){
-                    setLoginStatus(`Admin: (${userAccInfo.email})`);
+                    setUserType(`Admin`);
                 }else{
-                    setLoginStatus(`User: (${userAccInfo.email})`);
+                    setUserType(`User`);
                 }
             }else{
-                setLoginStatus("Guest");
+                setUserType("Guest");
             }
         })();
     },[])
+
+    const generateProfileText = () => {
+        console.log(userType);
+        if (userType === 'Admin') {
+            return 'Admin'
+        }
+        if(userType === 'User') {
+            return 'View Profile'
+        }
+        return 'Login';
+    }
 
     return (
         <header>
@@ -115,7 +127,7 @@ const NavBar = () => {
                             <AccountCircleIcon fontSize="large"/>
                         </IconButton>
                         <Typography className="login-status-text">
-                            {loginStatus}
+                            {generateProfileText()}
                         </Typography>
                     </Grid>
                     {/* <Grid item xs={1}>

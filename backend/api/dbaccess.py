@@ -109,11 +109,12 @@ def getUserIDFromEmail(email):
         cur = conn.cursor()
 
         # query Users table for ID
-        query = "SELECT id FROM Users WHERE email = %s"
+        query = "SELECT id, admin FROM Users WHERE email = %s"
         cur.execute(query, [email])
-        id = cur.fetchone()[0]
+        id, admin = cur.fetchone()
     except (Exception, psycopg2.DatabaseError) as error:
         id = None
+        admin = None
         print("An error has occured in getUserIDFromEmail")
         print(error)
     finally:
@@ -121,7 +122,7 @@ def getUserIDFromEmail(email):
         if (conn):
             cur.close()
             conn.close()
-        return id
+        return id, admin
 
 # creates a new user from given paramters
 # Note: id does not need to be specified, database generates it automatically
