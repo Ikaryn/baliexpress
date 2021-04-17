@@ -80,8 +80,8 @@ const BuildProductCard = ({type}) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Grid container item direction="column">
-                                {Object.keys(productInfo.specs).map((spec) => (
-                                    <Grid container item direction="row" key={`${productInfo.name}-card`}>
+                                {Object.keys(productInfo.specs).map((spec, index) => (
+                                    <Grid container item direction="row" key={`${productInfo.name}-product-card` + index}>
                                         <Grid item>
                                             <Typography>{spec}:</Typography>
                                         </Grid>
@@ -113,7 +113,7 @@ const BuildProductCard = ({type}) => {
                     <Grid item container direction="column" xs={1} justify="center">
                         <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('compare')}}>Compare</Button>
                         <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('change')}}>Change</Button>
-                        <Button color="secondary" variant="contained" onClick={()=>{setProductInfo('')}}>Delete</Button>
+                        <Button color="secondary" variant="contained" onClick={()=>{handleCardUpdate(type, '')}}>Delete</Button>
                     </Grid>
                 </Grid>
                 }

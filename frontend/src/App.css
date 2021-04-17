@@ -110,3 +110,14 @@ body {
   z-index: 10;
   /* width: 350px; */
 }
+
+
+.saleOldPrice {
+  text-decoration: 'line-through';
+}
+
+
+.saleNewPrice {
+  color: 'rgb(255, 77, 77)';
+  font-weight: 'bold';
+}

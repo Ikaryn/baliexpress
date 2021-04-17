@@ -12,13 +12,7 @@ const SearchPage = () => {
 
     React.useEffect(() => {
         (async () => {
-            // const options = {
-            //     method: 'GET',
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //         'Request-Type': 'search',
-            //     },
-            // }
+
             const res = await api.get(`search?query=${search}`);
             setProductOutput(res.results);
             console.log(res.results);

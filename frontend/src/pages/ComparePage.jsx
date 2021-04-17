@@ -1,6 +1,6 @@
 import { Breadcrumbs, Button, Divider, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import CompareProductCard from '../components/buildPageComponents/CompareProductCard';
 import SelectBuildProductModal from '../components/buildPageComponents/SelectBuildProductModal';
 import { reverseCategoryName } from '../util/helpers';
@@ -17,13 +17,10 @@ const ComparePage = () => {
     const context = React.useContext(StoreContext);
     const history = useHistory();
     const classes = useStyles();
-    
-    const [comparedProduct, setComparedProduct] = React.useState(history.location.state.product)
-    const category = comparedProduct.category
+    const { category } = useParams();
     const {build: [build, setBuild]} = context;
+    const { comparedProduct: [comparedProduct, setComparedProduct] } = context;
     const [open, setOpen] = React.useState(false);
-    console.log(comparedProduct);
-    console.log(build[category], comparedProduct);
     
     const redirectHandler = () => {
         history.goBack();
@@ -33,7 +30,7 @@ const ComparePage = () => {
         const updatedBuild = JSON.parse(JSON.stringify(build));
         updatedBuild[category] = comparedProduct;
         setBuild(updatedBuild);
-        history.push('/builds');
+        history.push('/build');
     }
     
     const reselectHandler = () => {
@@ -58,7 +55,7 @@ const ComparePage = () => {
                     xs={5} 
                     className={classes.productContainer}
                 >
-                    <CompareProductCard productInfo={comparedProduct} />
+                    {comparedProduct && <CompareProductCard productInfo={comparedProduct} />}
                 </Grid>
             </Grid>
             <Grid container item direction="row" justify="center" spacing={2}>

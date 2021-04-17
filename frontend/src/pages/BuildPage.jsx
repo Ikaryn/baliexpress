@@ -9,16 +9,6 @@ import { StoreContext } from '../util/store';
 
 const api = new API();
 
-const buildTemplate = {
-    'Case': '', 
-    'Motherboard':'', 
-    'Graphics Card':'', 
-    'Memory': '',
-    'Storage': '',
-    'Power Supply': '', 
-    'CPU Cooler':''
-    };
-
 const useStyles = makeStyles((theme) => ({
     root: {
         marginBottom: '10%',
@@ -40,13 +30,16 @@ const BuildPage = () => {
     // const [build, setBuild] = React.useState(buildTemplate);
     const context = React.useContext(StoreContext)
     const { build: [build, setBuild]} = context;
-    const { cart: [cart, setCart] } = context;
     console.log(build);
+    const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
     const [buildNumber, setBuildNumber] = React.useState(0);
+    const [buildName, setBuildName] = React.useState('Your Custom Built PC');
     // modal states
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
+    const [successType, setSuccessType] = React.useState('');
+    
     const classes = useStyles();
     const [builtByCompany, setBuiltByCompany] = React.useState(false)
     
@@ -61,7 +54,7 @@ const BuildPage = () => {
     React.useEffect(() => {
         const newPrice = Object.keys(build).reduce((previous, key) => {
             if(build[key].price){
-                previous.price += build[key].price;
+                previous.price += Number(build[key].price);
             }
             return previous;
         }, { price: 0 });
@@ -75,12 +68,21 @@ const BuildPage = () => {
     
     
     const handleAddToCart = () => {
+        const buildInfo = JSON.parse(JSON.stringify(build));
+        buildInfo['price'] = buildPrice;
+        buildInfo['buildname'] = buildName;
+        buildInfo['quantity'] = 1;
+        
         const updatedCart = JSON.parse(JSON.stringify(cart));
-        updatedCart.push(build);
+        console.log(buildInfo);
+        updatedCart.push(buildInfo);
+        setSuccessType('cart');
+        setSuccess(true);
         setCart(updatedCart);
     }
     
     const handleSaveBuild = (event) => {
+        setSuccessType('save');
         setOpen(true);
     }
     
@@ -133,8 +135,8 @@ const BuildPage = () => {
                 <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} />
             </Modal>
         </AppBar>
-        <Snackbar open={success} autoHideDuration={5} onClose={() => {setSuccess(false)}}>
-            <Alert severity="success">Build successfully saved!</Alert>
+        <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>
+            <Alert severity="success">{successType === 'save' ? 'Build Successfully Saved!' : 'Build added to cart!'}</Alert>
         </Snackbar>
     </div>
     )
