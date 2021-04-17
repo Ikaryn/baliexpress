@@ -17,6 +17,7 @@ const CartPopper = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const classes = useStyles();
+    
     React.useEffect(() => {
         setCartAmount(cart.length);
     },[cart.length]);

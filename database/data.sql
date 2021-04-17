@@ -1034,7 +1034,7 @@ VALUES
     ('AOC C24G2 23.6" 165Hz Full HD Curved Monitor with FreeSync', 															'Monitors', 'AOC', 		209.00, '1 year', 	'Introducing the AOC C24G2 – the casual gamer’s choice with smooth visuals and customization.', 															500, '2020-10-20'),
     ('Samsung 27 Inch Curved Gaming Monitor with 240Hz Refresh Rate,Dark Blue Gray', 										'Monitors', 'Samsung',	328.02, '3 years', 	'CURVED 27 inch monitor/ VA/ 4ms/ 240Hz/ 1500R/ 1920 x 1080/ 16: 9/ 16.7M/ 2 X HDMI 2.0, 1 X DP 1.2/ 3 year warranty', 										700, '2019-09-25'),
     ('Samsung 34" Flat Ultra WQHD Monitor,LS34J550', 																		'Monitors', 'Samsung', 	498.99, '5 years', 	'With its 34" ultra-wide screen and 21: 9 WQHD resolution, the SJ55W provides all the workspace you need to comfortably multi-task on a single screen.',	400, '2019-03-12'),
-    ('Thinlerain 11.6 inch HDMI VGA Portable Monitor, Full HD 1920 x 1080P IPS LED Display Monitor for Raspberry Pi, Camera, Security Monitor, Xbox360, PS3, PS4, Windows 7 8 10, Laptop', 'Monitors', 'Thinlerain', 149.99, '3 years', 'Thinlerain 11.6 Inch HDMI VGA Portable Monitor with LED display is an Aluminium alloy based HD resolution gaming monitor. ', 800, '2020-05-06'),
+    ('Thinlerain 11.6 inch HDMI VGA Portable Monitor', 'Monitors', 'Thinlerain', 149.99, '3 years', 'Thinlerain 11.6 Inch HDMI VGA Portable Monitor with LED display is an Aluminium alloy based HD resolution gaming monitor. ', 800, '2020-05-06'),
     ('Samsung LC32R500FHEXXY 32 inch Curved Monitor, Dark Blue Gray', 'Monitors', 'Samsung', 353.00, '5 years', '3 sided thin bezel display, AMD Radeon FreeSync, 3000: 1 contrast ratio', 900, '2020-04-15'),
     ('LG 32MP58HQ 32" FHD IPS Monitor, 5ms (GTG), HDMI, D-Sub, Screen Split, Sleek Cut Design, Black', 'Monitors', 'LG', 295.99, '3 years', 'LG 32MP58HQ IPS panel allows you to enjoy life like picture quality with minimal variation from wider viewing angles and boast excellent image reproduction.', 200, '2018-10-26'),
     ('AOC G2490VX 23.8" 144Hz Full HD VA Gaming Monitor with 1ms R', 'Monitors', 'AOC', 192.95, '3 years', '23.8 inch VA, 144 Hz, Adaptive Sync, Low Blue Mode, Flicker Free Monitor The 24-inch G2490VX in the AOC G90 series of newly enhanced mainstream gaming monitors offers experienced gamers a ghost-, stutter- and tear-free gameplay experience in the tried and tested FHD (1920 x 1080) format they have come to trust, plus competitive features that include a VA panel, a fast refresh rate of 144Hz, plus a 1.0ms (MPRT) smart response time.', 200, '2020-11-16'),
@@ -1053,6 +1053,61 @@ VALUES
     (116, '23.8"', '1920 x 1080', '144 Hz', '16:9', 'LED'),
     (117, '24"', '1920 x 1080', '144 Hz', '16:9', 'LCD');
 
+-- Product 108 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (108, 9, 1, 'This Monitor works so well. It imperfectly improves my baseball by a lot.', '2020-06-15'),
+    (108, 13, 2, 'My co-worker Namon has one of these. He says it looks funny-looking.', ' 2020-06-30'),
+    (108, 11, 5, 'i use it for 10 weeks when i''m in my sauna', '2020-12-19');
+
+-- Product 109 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (109, 17, 4, 'talk about sadness.', '2018-01-20'),
+    (109, 15, 2, 'I saw one of these in Cote d''Ivoire and I bought one.', '2020-01-22'),
+    (109, 14, 3, 'My neighbor Betha has one of these. She works as a teacher and she says it looks wide.', '2020-01-28'),
+    (109, 19, 3, 'talk about hatred.', '2020-07-23');
+
+-- Product 110 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (110, 4, 4, 'My neighbor Frona has one of these. She works as a gambler and she says it looks bearded.', '2021-01-11'),
+    (110, 3, 1, 'I saw one of these in Grenada and I bought one.', '2021-02-07'),
+    (110, 5, 1, 'talk about shame.', ' 2021-02-12');
+
+-- Product 111 gets no reviews
+
+-- Product 112 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (112, 18, 5, 'one of my hobbies is poetry. and when i''m writing poems this works great.', '2020-06-22'),
+    (112, 6, 2, 'i use it for 10 weeks when i''m in my jail.', '2020-07-03');
+
+-- Product 113 gets no reviews
+
+-- Product 114 Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (114, 10, 5, 'talk about sadness!!', '2021-01-12'),
+    (114, 2, 2, 'talk about contempt!!!', '2021-02-15'),
+    (114, 7, 5, 'My vulture loves to play with it.', '2021-02-18'),
+    (114, 19, 1, 'talk about surprise!!!', '2021-03-11'),
+    (114, 4, 1, 'talk about remorse!!!', '2021-03-14');
+
+-- Product 115 gets no reviews
+
+-- Product 116 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (116, 6, 1, 'This Monitor works too well. It buoyantly improves my football by a lot.', '2021-01-18');
+
+-- Product 117 reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+    (117, 9, 2, 'this Monitor is standard.', '2020-02-08'),
+    (117, 12, 4, 'one of my hobbies is programming. and when i''m programming this works great.', '2020-05-16'),
+    (117, 7, 5, 'This Monitor works so well. It delightedly improves my football by a lot.', '2020-09-14');
+
 -- Mouses
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
@@ -1060,7 +1115,7 @@ VALUES
     ('Logitech 910-004792 Triathlon Wireless Mouse M720', 'Mouses', 'Logitech', 55.00, '3 years', 'Pair your mouse with 3 computers, then switch seamlessly between them at a touch of the button conveniently positioned under your thumb, the 3 illuminated numbers always let you know to which device you''re connected.', 700, '2017-11-17'),
     ('Lenovo 520 Mouse (Blue)', 'Mouses', 'Lenovo', 34.00, '1 year', ' Sleek and compact design', 200, '2019-08-27'),
     ('Logitech 910-004521 Bluetooth Mouse M337, Black', 'Mouses', 'Logitech', 35.00, '1 year', 'Slip stylish black coloured Logitech M337 mobile mouse into your bag or pocket so you have it anywhere you need it. ', 500, '2017-11-7'),
-    ('Razer Viper Mini Ultralight Gaming Mouse: Fastest Gaming Switches - 8500 DPI Optical Sensor - Chroma RGB Underglow Lighting - 6 Programmable Buttons - Drag-Free Cord - Classic Black', 'Mouses', 'Razer', 57.26, '3 years', 'Experience hard-hitting performance with our lightest mouse ever created—a lean ultra-lightweight build that makes control effortless Featuring cutting-edge optical mouse switches a precise8 500 DPI sensor and Razer Speedflex Cable for supreme accuracy and speed. ', 900, '2020-04-04'),
+    ('Razer Viper Mini Ultralight Gaming Mouse: Fastest Gaming Switches', 'Mouses', 'Razer', 57.26, '3 years', 'Experience hard-hitting performance with our lightest mouse ever created—a lean ultra-lightweight build that makes control effortless Featuring cutting-edge optical mouse switches a precise8 500 DPI sensor and Razer Speedflex Cable for supreme accuracy and speed. ', 900, '2020-04-04'),
     ('Logitech MX Anywhere 3 - Graphite (910-005992)', 'Mouses', 'Logitech', 118.00, '3 years', 'The Logitech MX Anywhere 3 gaming mouse is extremely versatile and offers remarkable performance.', 90, '2020-11-19'),
     ('Microsoft U7Z-00005 Wireless MBL Mouse 1850 Win7/8 EN/XT/ZH/HI/KO/TH APAC Hdwr Black ', 'Mouses', 'Microsoft', 17.00, 'None', 'Enjoy the comfort of wireless movements for your data inputting or gaming with the Microsoft Wireless Mobile Mouse 1850, Black (U7Z-00005).', 750, '2017-09-01'),
     ('Lenovo 520 Mouse (Silver)', 'Mouses', 'Lenovo', 34.00, '1 year', 'Scroll through with speed and ease. Features 3 unique buttons—left-click, right-click and scroll wheel. Buttons will last to 3 million clicks and beyond.', 900, '2019-08-27'),
@@ -1080,15 +1135,59 @@ VALUES
     (126, 'Wireless', 'f'),
     (127, 'Wireless', 't');
 
+-- Mouse Reviews
+INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
+VALUES
+-- Product 118 Reviews
+    (118, 9, 4, 'The box this comes in is 5 foot by 6 inch and weights 17 pound!!!', '2018-06-07'),
+-- Product 119 Reviews
+    (119, 16, 1, 'My neighbor Elisha has one of these. She works as a fortune teller and she says it looks floppy.', '2018-09-16'),
+    (119, 21, 3, 'heard about this on hip-hop music radio, decided to give it a try.', '2019-03-29'),
+    (119, 3, 3, 'i use it never when i''m in my nightclub.', '2019-05-10'),
+-- Product 120 Reviews
+    (120, 18, 2, 'My co-worker Ali has one of these. He says it looks towering.', '2020-04-23'),
+    (120, 16, 4, 'This Mouse works quite well. It professionally improves my soccer by a lot.', '2020-11-14'),
+    (120, 7, 5, 'one of my hobbies is drawing. and when i''m drawing this works great.', '2021-01-18'),
+    (120, 9, 4, 'This Mouse works really well. It wildly improves my baseball by a lot.', '2021-01-22'),
+    (120, 20, 4, 'My baboon loves to play with it.', '2021-02-12'),
+-- Product 121 Reviews
+    (121, 10, 2, 'i use it hardly when i''m in my prison.', '2018-01-29'),
+    (121, 18, 4, 'My co-worker Namon has one of these. He says it looks funny-looking.', '2018-06-02'),
+    (121, 4, 5, 'SoCal cockroaches are unwelcome, crafty, and tenacious. This Mouse keeps them away.', '2019-02-25'),
+    (121, 22, 4, 'i use it once a week when i''m in my firetruck.', '2020-01-16'),
+-- Product 122 Reviews
+    (122, 15, 2, 'this Mouse is ratty.', '2021-01-09'),
+    (122, 14, 4, 'talk about irritation.', '2021-01-30'),
+    (122, 4, 5, 'My co-worker Nile has one of these. He says it looks crooked.', '2021-02-23'),
+-- Product 123 has no reviews
+-- Product 124 reviews
+    (124, 20, 4, 'The box this comes in is 4 mile by 5 yard and weights 18 pound!!', '2018-07-11'),
+    (124, 19, 3, 'heard about this on dance-rock radio, decided to give it a try.', '2019-06-18'),
+    (124, 15, 1, 'one of my hobbies is piano. and when i''m playing piano this works great.', '2019-09-02'),
+    (124, 3, 2, 'My co-worker Linnie has one of these. He says it looks wide.', '2019-12-08'),
+-- Product 125 reviews
+    (125, 13, 3, 'The box this comes in is 4 kilometer by 5 mile and weights 17 gram.', '2020-04-10'),
+    (125, 9, 4, 'This Mouse works certainly well. It perfectly improves my tennis by a lot.', '2020-04-12'),
+    (125, 4, 2, 'My co-worker Reed has one of these. He says it looks microscopic.', '2020-07-22'),
+-- Product 126 reviews
+    (126, 5, 3, 'heard about this on hip-hop music radio, decided to give it a try.', '2018-12-03'),
+    (126, 14, 3, 'The box this comes in is 5 yard by 6 centimeter and weights 12 kilogram.', '2019-12-21'),
+    (126, 8, 2, 'My co-worker Matthew has one of these. He says it looks gigantic.', '2020-05-20'),
+    (126, 7, 5, 'i use it this time when i''m in my port-a-potty.', '2020-12-20'),
+    (126, 19, 2, 'I saw one of these in Grenada and I bought one.', '2021-03-25'),
+-- Product 127 reviews
+    (127, 6, 4, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2019-02-01'),
+    (127, 19, 3, 'this Mouse is hyper.', '2019-02-03');
+
 -- Keyboards
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
-    ('Z-88 Mechanical Gaming Keyboard, Blue Switch - Tactile & Clicky, Programmable RGB Backlit, 104 Keys Anti-Ghosting Keyboard for Mac PC Computer Games (Blue Switch White)', 'Keyboards', 'E Element', 69.99, '1 year', 'FN+INS: 10 blacklight mode, make a beautiful sight on your desk. Press FN+1-5 to the fixed game mode, then press FN+HOME to set color of each key with no driver needed', 400, '2018-10-08'),
-    ('EPOMAKER SK61 61 Keys Hot Swappable 60% Mechanical Keyboard with RGB Backlit, ABS Keycaps, Dustproof IP68 Waterproof for Win/Mac/Gamers (Gateron Optical Black, White)', 'Keyboards', 'EPOMAKER', 96.58, '3 years', '16.8 Million RGB Backlight. RGB is such a cool element while playing games.', 200, '2020-07-16'),
+    ('Z-88 Mechanical Gaming Keyboard, Blue Switch - Tactile & Clicky', 'Keyboards', 'E Element', 69.99, '1 year', 'FN+INS: 10 blacklight mode, make a beautiful sight on your desk. Press FN+1-5 to the fixed game mode, then press FN+HOME to set color of each key with no driver needed', 400, '2018-10-08'),
+    ('EPOMAKER SK61 61 Keys Hot Swappable 60% Mechanical Keyboard with RGB Backlit', 'Keyboards', 'EPOMAKER', 96.58, '3 years', '16.8 Million RGB Backlight. RGB is such a cool element while playing games.', 200, '2020-07-16'),
     ('Dell Wired Multimedia Keyboard, Black, 580-AHHG', 'Keyboards', 'DELL', 12.12, 'None', 'The Dell KB216 Wired Keyboard provides a convenient keyboard solution for everyday home or office computing uses.', 200, '2019-08-27'),
     ('Logitech 920-007558 Multi-Device Bluetooth Keyboard K380, Dark Grey', 'Keyboards', 'Logitech', 62.21, '1 year', 'Enjoy the comfort and convenience of desktop typing on your smartphone and tablet with this mobile keyboard.', 500, '2015-09-03'),
     ('Microsoft N9Z-00028 All-in-One Media Keyboard USB Port Eng Intl Row Hdwr,Black', 'Keyboards', 'Microsoft', 49.95, '1 year', 'The All-in-One Media Keyboard is the perfect device for your living room or home office.', 400, '2017-11-13'),
-    ('Keychron K6 Hot Swappable Wireless Bluetooth 5.1/Wired Mechanical Gaming Keyboard, 65% Compact 68-Key RGB LED Backlight/Gateron Brown Switch/Rechargeable Battery for Mac Windows', 'Keyboards', 'Keychron', 129.00, '3 years', 'An innovative 65% layout (68-key) compact wireless mechanical keyboard crafted to maximize your workspace and enhance productivity.', 300, '2019-12-26');
+    ('Keychron K6 Hot Swappable Wireless Bluetooth 5.1/Wired Mechanical Gaming Keyboard', 'Keyboards', 'Keychron', 129.00, '3 years', 'An innovative 65% layout (68-key) compact wireless mechanical keyboard crafted to maximize your workspace and enhance productivity.', 300, '2019-12-26');
 
 INSERT INTO Keyboards(id, mechanical, connectivity, backlight, size)
 VALUES

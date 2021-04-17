@@ -1,0 +1,105 @@
+Week 1:
+I formed a group for the project with 4 other members. We decided on the chosen 
+project, name, and scrum master. The project we decided to make was a computer 
+part retail store. Together, we came up with features we wanted to put into the 
+website. We delegated tasks to each member for the upcoming proposal with Joanna 
+and myself having the main responsibility for user stories. We also discussed our 
+strengths and weaknesses regarding the software languages that we can use for the 
+project.
+I created several user stories this week for the main features and ideas that we 
+wanted to put into the website including viewing and ordering products, build 
+page, and recommendation system. It is planned to have another meeting next Monday 
+to see how everyone is progressing.
+
+Week 2:
+As a team, we let each other know how we are progressing for our own given tasks. 
+While everyone has not completed their tasks, we are all progressing fine. I 
+edited and added a few more user stories after a discussion about it including 
+adding featured products to the main page of the website. I also added all the 
+user stories we had on a google doc to Jira. 
+
+Week 3:
+We had a couple of meetings this week to work out the remaining parts of the proposal 
+to be completed. As a team, we went through each of the user stories again to ensure 
+that all the details were correct, and the priorities and story points agreed on. 
+After the user stories were finalised, I converted/edited them in Jira for 
+screenshotting them in the proposal. As a group, we also separated our user stories 
+into 3 initial sprints that was done in Jira. 
+
+Week 4:
+As a team, we discussed our next steps forward with starting the code base and 
+foundation for our site. Van and I were delegated to the user login including making 
+a new account, logging in, and editing details. Van and I together worked on setting 
+up the initial front end and back end to communicate with each other. We both worked 
+on the user login page, and the register page doing some work in both the front end 
+and back end.
+
+Week 5:
+I continued to work on development with my main focus being on the backend. I 
+completed the functions for the login page, register page, and editing profile 
+details in the backend. I also added valid input checking for the login, register, 
+and edit profile pages in the front end. I also added admin product management 
+functions in the backend including adding, editing and removing products. Initially, 
+the users and products were stored locally in the backend while the database was 
+being setup. After it was successfully setup, I connected the accounts system (login, 
+register, edit) to the database and pushed to a separate not used in the demo model. 
+After the demonstration on Wednesday, as a group, we had a retrospective meeting in 
+which we discussed how the first sprint went.  We decided to spend the rest of this 
+week working on the parts of the code that were part of the first sprint that we did 
+manage to get finished by Wednesday.
+I worked on merging the database connected version to the main branch codebase in 
+Github. I worked on using new headers to allow incoming request to be distinguished 
+properly in the backend. In addition to the account system, I also implemented the 
+backend code for adding new products to the database. 
+
+Week 6:
+I finalised the integrating the site with the database so that now all required 
+items are stored in the database. I discussed the search function for products with 
+Jordan with how it was going to work with certain inputs. I wrote the backend code 
+for searching for products while Jordan wrote the frontend. I also fixed saving images 
+from database either by adding products or editing products through the frontend. I did 
+product research finding sample products to put into the initial database including 
+CPUs, GPUs, RAM, Storage and Motherboards. Joanna then put the sample products into the 
+database code so that they are present when loaded up.
+
+Week 7:
+I started to write the backend code for reviews with Van writing the frontend for it. 
+This included getting reviews, creating reviews, deleting reviews, adding votes, changing 
+votes, and removing votes. I also refactored the backend to simplify API calls and also 
+to restructure for better readability and access. Previously, some URLs were used for 
+several of the same type of API calls being separated by a custom header, but after the 
+refactor, the API request have been distributed so that the custom is no longer needed. 
+I also formatting images and wrote code to load the images when the database is first 
+rendered with Joanna.
+
+Week 8:
+The beginning of the week I was refining some features that were planned to be in the 
+demo including reviews/voting and images for the products in the database. I wrote the 
+backend code for feature products on the home page which was the last feature to be 
+included before the demo. 
+After the demo, as a team, we had our second retrospective where we went through how 
+our progression was going and things to improve on moving forward. One of the best things 
+in which we improved on compared to our last sprint was GitHub management. Properly 
+separating features in progress into separate branches and merging branches when necessary, 
+made workflow much smoother with several people working at the same time. We agreed that 
+communication needs to be improved on for out last sprint. This mainly focused on know 
+what other people are doing at the moment as well as what they are planning to do next so 
+other people can plan their work accordingly as well. This is important because 1 feature 
+of the site requires 3 different code bases to be completed for it to work: frontend, 
+backend, and database. 
+I had a discussion with Marcus and Van for the details on how the chatbot was going to be 
+implemented. The chatbot should address queries and items that the site currently is not 
+able to do or access to it is not so simple. One example of this is recommending products 
+to the user for certain use cases.
+For the rest of the week, I worked on the initial code for managing sales on the site in 
+the backend. This including getting sales, making new sales, and editing sales.
+
+Week 9:
+I worked on the payment system with Van. I wrote the frontend block for the shipping 
+information on the payment page while Van wrote the payment information block. I also 
+wrote the backend code for the payment which involved processing the frontend request 
+as a new order and adding the order to the database as well as getting the orders from the 
+database to send to the frontend. I wrote an order confirmed page which shows after a 
+purchase was successful from the payment page and the order was placed. I connected the 
+payment page with the cart to properly create the order to send to the backend. I also wrote 
+a block in the profile page that allows users to view their orders.

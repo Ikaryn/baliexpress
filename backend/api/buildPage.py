@@ -18,11 +18,11 @@ class UserBuilds(Resource):
         data = request.args
         userId = data.get('userId')
         builds = db.getUsersBuilds(userId)
-        
+        print(builds)
         for build in builds:
-            print("BUILD IS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             print(build)
             for parts in build['parts']:
+                print(parts)
                 parts['price'] = str(parts['price'])
                 releaseDate = parts['release_date'].strftime('%Y-%m-%d')
                 parts['release_date'] = releaseDate

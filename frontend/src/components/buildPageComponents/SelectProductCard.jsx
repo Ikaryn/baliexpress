@@ -1,9 +1,14 @@
 import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
-const SelectProductCard = ({setOpen, productInfo, setProduct, setComparedProduct, redirect}) => {
+import { StoreContext } from '../../util/store';
+const SelectProductCard = ({setOpen, productInfo, setProduct, redirect}) => {
     
     const history = useHistory();
+    
+    const context = React.useContext(StoreContext);
+    const { comparedProduct: [, setComparedProduct] } = context;
+    
     
     const handleRedirect = () => {
         history.push(`/product/${productInfo.category}/${productInfo.id}`)
@@ -15,10 +20,8 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, setComparedProduct
     const handleSelect = () => {
         if (redirect === 'compare') {
             // pass in the product details via history state
-            history.push({pathname:'/build/compare', state: {product: productInfo}})
-            if(setComparedProduct){
-                setComparedProduct(productInfo);
-            }
+            setComparedProduct(productInfo);
+            history.push(`/build/compare/${productInfo.category}`);
         } else {
             setProduct(productInfo.category, productInfo);
         }
@@ -28,12 +31,16 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, setComparedProduct
     return (
         <Card>
             <Grid container direction="row">
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <CardMedia>
-                            <img src={productInfo.image} alt={productInfo.name} />
+                            <img 
+                            src={"data:image/jpeg;base64,"+productInfo.image} 
+                            alt={productInfo.name} 
+                            className="image"
+                        />
                         </CardMedia>
                     </Grid>
-                    <Grid container item direction="column" xs={6}>
+                    <Grid container item direction="column" xs={7}>
                         <Grid item>
                             <Typography variant="body1">{productInfo.name}</Typography>
                         </Grid>

@@ -1,0 +1,57 @@
+Week 1
+
+Group formed. I created the Jira account. As a whole group we wrote the user stories and decided on all languages, frameworks and libraries. 
+I also lead the scrum on Thursday (2/18/21) to gain an understanding of the project, what we're developing, and to delegate work. I also wrote the background section of the proposal. 
+I tasked myself with completing the Background, and starting on the userstory Storyboard.
+
+Week 2
+
+Lead a standup on monday to see where everyone was at and what they are working on.
+Created proposal document, and completed 90% of the background. 
+Started on the Recommendation System storyboard and product pages.
+
+Week 3
+
+Finished storyboards for Recommendation System, Product pages and reviews, and Customer profile pages. 
+Also compiled them into the product proposal page.
+
+Week 4
+
+Created codebase for frontend and backend. Together with Darryl Liu we setup the API. 
+I also created the foundation for Routes/indexes in frontend that is PublicRoute.js, PrivateRoute.js, index.js. 
+I completed register class for backend. Also completed Login, abit of Register (With Darryl Liu), 
+and Profile page front end pages (ProfilePageAccountInfo.jsx, StepperComponents.jsx, ProfilePage.jsx, LoginPage.jsx, RegisterPage.jsx, AccInfoBlock.jsx). 
+Lastly completed setting up all of the routing/url handling for frontend. 
+
+Week 5
+
+Created and Finished off assigned user stories, that is profile page, product list, and product pages (Minus sorting/filtering)(ProductPage.js, ProductListPage.jsx, ProductCard.jsx). 
+Also fixed errors in add/edit products and setting admin status with Darryl. Refactored add products(ProductForm.jsx), 
+After demo, we set up a meeting for a retro on Thursday (3/18/2019). Also completed navbar functionality where I could. 
+I implemented AllProductList.jsx , to view all product tab for admin users in profile page - All by myself.
+
+Week 6
+
+Converted website into a dark mode. Created the build PC page with relevant components 
+(BuildPage.jsx, BuildProductCard.jsx, BuildModalForm.jsx, SelectBuildPRoductModal.KSX, SelectProductCard.jsx) -All by myself.
+
+Week 7
+
+Along side with Darryl Liu, we came up with the algorithm to calculate performance on the comparison page in DataVis.js. 
+I then wrote ComparePage.jsx, CompareProductCard.jsx. -All by myself. Started the framework for Reviews. 
+Created ReviewBlock.jsx, ReviewCard.jsx, ReviewForm.jsx - all by myself.
+
+Week 8.
+
+Added featured reviews, sorting and filtering reviews. Implemented the HomePage, 
+created the design for the Build-A-PC button image. Fixed alot of bugs in BuildPage. 
+Added some helper text in BuildPCForm, and in build product cards. 
+Implemented edit builds, users builds, and save Build PCs for frontend and backend(only for edit and save). 
+I wrote the frontend Sales Components, ProductSaleCard.jsx, SaleForm.jsx, SalePanel.jsx -All by myself.
+
+Week 9.
+
+Wrote the initial PaymentPage, along side with the Payment components. 
+Brainstormed with Darryl Liu and Marcus Lee on the chatbot functionality. 
+I wrote the functionality of the chatbot. I rewrote the cart, and added more functionality to it. 
+Added more polish to product and list pages. Fixed bugs with Build Page.  -All by myself
