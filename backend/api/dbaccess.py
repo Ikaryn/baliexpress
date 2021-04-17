@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-from . import credentials
+import credentials
 from datetime import datetime
 
 def connect():
@@ -845,6 +845,41 @@ def deleteReview(reviewID):
             conn.close()
         return deleted
 
+# gets a single review with the specified ID
+def getReview(reviewID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get review and convert to dictionary
+        query = "SELECT * FROM Reviews WHERE reviewid = %s"
+        cur.execute(query, [reviewID])
+
+        row = cur.fetchone()
+        review = {column:data for column, data in row.items()}
+
+        # get votes and convert to dictionary
+        query = "SELECT voterid, vote FROM Review_Votes WHERE reviewid = %s"
+        cur.execute(query, [review['reviewid']])
+
+        rows = cur.fetchall()
+        votes = {}
+        for row in rows:
+            votes[row['voterid']] = row['vote']
+        review['votes'] = votes
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        review = None
+        print ("An error has occured in getReview()")
+        print(error)
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return review
+
 # gets all reviews for a specific product
 # if successful, returns a list of dictionaries. If a product has no reviews,
 # returns an empty list. If an error has occured, returns none
@@ -876,8 +911,6 @@ def getProductReviews(productID):
                 votes[record['voterid']] = record['vote']
             review['votes'] = votes
 
-        # commit and close database
-        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         reviews = None
         print ("An error has occured in getProductReviews()")
@@ -1503,7 +1536,7 @@ def getCurrentSales(cur):
 #print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
 #print(getAllOrders())
 #print(addOrder(1, '2021-01-01', {1: 10, 2:3}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
-print(discontinueProduct(1))
+#print(getReview(1))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):
