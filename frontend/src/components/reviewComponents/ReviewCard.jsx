@@ -100,7 +100,7 @@ const ReviewCard = ({review, userId}) => {
     },[review.userVote])
 
     const handleReport = () => {
-        setOpen(true)
+        
     }
     
     return (
@@ -148,7 +148,7 @@ const ReviewCard = ({review, userId}) => {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            <IconButton onClick={() => {handleReport()}}>
+                            <IconButton onClick={() => {setOpen(true)}}>
                                 <FlagIcon></FlagIcon>
                             </IconButton>
                         </Grid>
@@ -161,14 +161,30 @@ const ReviewCard = ({review, userId}) => {
                     <Grid item>
                         <FormControl>
                             <Select
-                                value = {reportReason}
-                                onChange = {event => {setReportReason(event.target.value)}}
+                                // value = {reportReason}
+                                onChange={(event)=>{setReportReason(event.target.value)}}
                             >
                                 <MenuItem value='harassment'>This review is harassing me or someone else</MenuItem>
                                 <MenuItem value='offensive'>This review is offensive</MenuItem>
                                 <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
                             </Select>
                         </FormControl>
+                    </Grid>
+                    <Grid container item direction="row">
+                        <Grid item>
+                            <Button 
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {setOpen(false)}}>Cancel
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {handleReport()}}>Submit
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Modal>

@@ -12,6 +12,7 @@ import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
 import SaleForm from '../components/AdminManagementComponents/SaleForm';
+import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 // import './App.css';
 const api = new API();
 
@@ -135,7 +136,8 @@ const ProfilePage = () => {
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            {accInfo.isAdmin && <Tab label="Manage Sales" />}    
+                            {accInfo.isAdmin && <Tab label="Manage Sales" />}   
+                            {accInfo.isAdmin && <Tab label="View Reported Reviews" />} 
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
@@ -179,6 +181,11 @@ const ProfilePage = () => {
                                 </Button>
                                 <Divider />
                                 {saleFormOpen ? <SaleForm /> : <SalesPanel />}
+                            </TabPanel>
+                        }
+                        {accInfo.isAdmin &&
+                            <TabPanel value={value} index={7}>
+                                <ReportedReviewsList/>
                             </TabPanel>
                         }
                         <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>
