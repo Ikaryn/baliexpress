@@ -8,7 +8,7 @@ const AdminProductCard = ({productInfo}) => {
 
     return (
         <Card>
-            <Grid container direction="row">
+            <Grid container direction="row" alignItems="center">
                 <Grid item xs={3}>
                     <CardMedia title="product image"  className="product-card-image-container">
                         <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product" class="product-card-image"/>
@@ -18,13 +18,12 @@ const AdminProductCard = ({productInfo}) => {
                     <CardContent>
                         <Typography variant="h6">{productInfo.name}</Typography>
                         <Typography variant="h5">${productInfo.price}</Typography>
-                        <Typography variant="h5">{productInfo.stock}</Typography>
+                        <Typography variant="h5">Stock: {productInfo.stock}</Typography>
                     </CardContent>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button fullWidth variant="contained">Create Sale</Button>
-                    <Button fullWidth variant="contained" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
-                    <Button fullWidth variant="contained" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
+                    <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
+                    <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
                 </Grid>
             </Grid>
         </Card>
