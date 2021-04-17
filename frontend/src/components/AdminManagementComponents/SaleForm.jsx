@@ -87,6 +87,7 @@ const SaleForm = () => {
                         <OutlinedInput
                             value={name}
                             placeholder='Enter sale name'
+                            onChange={(event) => setName(event.target.value)}
                         />
                     </FormControl>
                 </Grid>
