@@ -13,6 +13,7 @@ import UserBuildList from '../components/profilePage/UserBuildList';
 import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
 import SaleForm from '../components/AdminManagementComponents/SaleForm';
 import UserOrderList from '../components/profilePage/UserOrderList';
+import { StoreContext } from '../util/store';
 // import './App.css';
 const api = new API();
 
@@ -32,8 +33,9 @@ const ProfilePage = () => {
     const [shippingInfo, setShippingInfo] = React.useState({
         streetaddress: '', city: '', state:'', postcode: '', country: ''
     });
-    const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
+    const context = React.useContext(StoreContext);
+    const {userType: [,setUserType] } = context;
     
     const [saleFormOpen, setSaleFormOpen] = React.useState(false);
     
@@ -42,6 +44,7 @@ const ProfilePage = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
+        setUserType('guest')
         history.push('/');
     }
     
