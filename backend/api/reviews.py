@@ -126,3 +126,21 @@ class Votes(Resource):
             return {'error': 'Error: deleting vote failed'}
         else:
             return {'status': 'Vote successfully removed'}
+
+class Reports(Resource):
+    def get(self):
+        print("Get reports received")
+        reports = db.getReports()
+        if reports is not None:
+            return reports
+        else:
+            return []
+    
+    def post(self):
+        print("Post report recieved")
+        data = request.json
+        print(data)
+        reviewID = data.get('reviewID')
+        reason = data.get('reason')
+
+        db.reportReview(reviewID, reason)

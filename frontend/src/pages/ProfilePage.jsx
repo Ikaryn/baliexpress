@@ -12,7 +12,7 @@ import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
 import SaleForm from '../components/AdminManagementComponents/SaleForm';
-import ReporgittedReviewsList from '../components/profilePage/ReportedReviewsList';
+import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 import UserOrderList from '../components/profilePage/UserOrderList';
 // import './App.css';
 const api = new API();

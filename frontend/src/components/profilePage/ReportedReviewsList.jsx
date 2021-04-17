@@ -7,16 +7,16 @@ const api = new API();
 
 
 const ReportedReviewsList = () => {
-    const [reviews, setReviews] = React.useState(null);
+    const [reviews, setReviews] = React.useState([]);
     const history = useHistory();
     
     React.useEffect(() => {
         (async () => {
-            const response = await api.get(`reviews/reports`)
+            const response = await api.get('review/reports')
             console.log(response)
-            setReviews(response.reviews)
+            setReviews(response)
         })();
-    })();
+    },[]);
 
 
     return(

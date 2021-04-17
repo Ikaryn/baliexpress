@@ -1,4 +1,4 @@
-import { Avatar, Button, FormControl, Grid, IconButton, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, FormControl, Grid, IconButton, makeStyles, MenuItem, Modal, Select, Snackbar, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -6,6 +6,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FlagIcon from '@material-ui/icons/Flag'
 import API from '../../util/API';
+import Alert from '@material-ui/lab/Alert';
 
 const api = new API()
 
@@ -33,6 +34,7 @@ const ReviewCard = ({review, userId}) => {
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [reportReason, setReportReason] = React.useState("");
+    const [success, setSucccess] = React.useState(false);
 
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -100,7 +102,10 @@ const ReviewCard = ({review, userId}) => {
     },[review.userVote])
 
     const handleReport = () => {
-        
+        const body = {reviewID: review.reviewid, reason: reportReason}
+        api.post('review/reports', body)
+        setOpen(false)
+        setSucccess(true)
     }
     
     return (
@@ -188,6 +193,11 @@ const ReviewCard = ({review, userId}) => {
                     </Grid>
                 </Grid>
             </Modal>
+            {success &&
+            <Snackbar open={success} autoHideDuration={1000}>
+                <Alert severity="success">This review has been reported</Alert>
+            </Snackbar>
+            }
         </Grid>
         
     )
