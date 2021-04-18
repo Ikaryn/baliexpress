@@ -3,19 +3,40 @@ import React from 'react';
 import API from '../../util/API';
 import CanvasJSReact from '../../canvasjs/canvasjs.react';
 const api = new API();
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 
 const ProductStats = ({setOpen, productInfo}) => {
     console.log(productInfo)
     const [stats, setStats] = React.useState([]);
+    const [chartOptions, setChartOptions] = React.useState(null);
     
     React.useEffect(() => {
         (async () => {
-            const data = await api.get(`stats?productId=1}`);
-            console.log(data)
-            
+            const data = await api.get(`stats?productId=1`);
+            console.log(data);
+            const options = {
+                title: {
+                    text: 'Product sold over',
+                },
+                axisY: {
+                    title: 'Units Sold'
+                },
+                axisX: {
+                    title: 'Date'
+                },
+                data: [
+                    {
+                        type: 'line',
+                        dataPoints: data.stats
+                    }
+                ]
+                
+            }
+            setChartOptions(options);
         })();
-    
-    });
+        
+    }, []);
     
     
     return(
@@ -46,6 +67,7 @@ const ProductStats = ({setOpen, productInfo}) => {
                         <Typography variant="h6">Product Price: ${productInfo.price.toFixed(2)}</Typography>
                     </Grid>
             </Grid>
+            <CanvasJSChart options={chartOptions} />
         </Grid>
     );
 }
