@@ -106,8 +106,12 @@ class Products(Resource):
         productId = data.get('id')
         product = db.getProduct(productId)
 
-        print("Product before:", product)
-        print("Data received:", data)
+        # for field in product:
+        #     if field != 'image':
+        #         print(field, ":", product[field], type(product[field]))
+        # for field in data:
+        #     if field != 'image':
+        #         print(field, ":", data.get(field), type(data.get(field)))
 
         for field in data:
             if field == 'specs':
@@ -123,8 +127,9 @@ class Products(Resource):
                 product[field] = data.get(field)
         
         product.pop('id')
-        print("Edited product:", product)
+        product.pop('sale')
         db.editProduct(productId, product)
+
         
         return
     

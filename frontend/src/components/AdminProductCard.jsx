@@ -2,9 +2,14 @@ import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@materia
 import React from 'react';
 import { useHistory } from 'react-router';
 
-const AdminProductCard = ({productInfo}) => {
+const AdminProductCard = ({productInfo, setProduct, setOpen}) => {
     
     const history = useHistory();
+
+    const handleRedirect = () => {
+        setProduct(productInfo)
+        setOpen(true);
+    }
 
     return (
         <Card>
@@ -24,6 +29,7 @@ const AdminProductCard = ({productInfo}) => {
                 <Grid item xs={2}>
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
+                    <Button fullWidth variant="contained" color="primary" onClick={handleRedirect}>View Sale Data</Button>
                 </Grid>
             </Grid>
         </Card>
