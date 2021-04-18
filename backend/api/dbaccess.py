@@ -446,6 +446,9 @@ def editProduct(id, editedProduct):
             cur.execute(query, (tuple(specs.values())))
 
         status = 1
+
+        # commit changes to database
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print("An error has occured in editProduct")
         print(error)
@@ -1382,7 +1385,7 @@ def getAllCurrentSales():
         currentSales = None
         print("An error occured in getAllCurrentSales()")
         print(error)
-    
+
     finally:
         # close connection to database
         if (conn):
