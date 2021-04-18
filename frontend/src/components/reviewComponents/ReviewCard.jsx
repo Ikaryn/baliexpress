@@ -102,10 +102,10 @@ const ReviewCard = ({review, userId}) => {
     },[review.userVote])
 
     const handleReport = () => {
-        const body = {reviewID: review.reviewid, reason: reportReason}
-        api.post('review/reports', body)
-        setOpen(false)
-        setSucccess(true)
+        const body = {reviewID: review.reviewid, reason: reportReason};
+        api.post('review/reports', body);
+        setOpen(false);
+        setSucccess(true);
     }
     
     return (

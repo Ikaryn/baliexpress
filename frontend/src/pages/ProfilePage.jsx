@@ -141,7 +141,7 @@ const ProfilePage = () => {
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {accInfo.isAdmin && <Tab label="Manage Sales" />}   
-                            {accInfo.isAdmin && <Tab label="View Reported Reviews" />} 
+                            {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
@@ -192,7 +192,7 @@ const ProfilePage = () => {
                                 <ReportedReviewsList/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 8 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

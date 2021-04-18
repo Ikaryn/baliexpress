@@ -2,13 +2,12 @@ import React from 'react';
 import API from '../../util/API';
 import {  Button, Grid, Paper,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { useHistory } from 'react-router';
-import ReviewCard from '../reviewComponents/ReviewCard';
+import ReportedReviewCard from '../reviewComponents/ReportedReviewCard';
 const api = new API();
 
 
 const ReportedReviewsList = () => {
     const [reviews, setReviews] = React.useState([]);
-    const history = useHistory();
     
     React.useEffect(() => {
         (async () => {
@@ -22,8 +21,8 @@ const ReportedReviewsList = () => {
     return(
         <Grid container item direction="column" className="information-tab">
             {reviews.map((review) => (
-                <Grid item>
-                    <ReviewCard review={review} userId={localStorage.getItem('userId')}/>
+                <Grid item className="light-text">
+                    <ReportedReviewCard reportedReview={review} reviews={reviews} setReviews={setReviews}/>
                 </Grid>
             ))}
         </Grid>

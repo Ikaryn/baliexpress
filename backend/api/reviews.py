@@ -131,10 +131,32 @@ class Reports(Resource):
     def get(self):
         print("Get reports received")
         reports = db.getReports()
-        if reports is not None:
-            return reports
-        else:
-            return []
+        reportedReviews = []
+        reportedReview = {
+            'productname': None,
+            'reviewid': None,
+            'reviewtext': "",
+            'harassment': 0,
+            'offensive': 0,
+            'irrelevant': 0
+        }
+        for report in reports:
+            print ("Report = ",report)
+            review = db.getReview(report['reviewid'])
+            print("Review = ", review)
+            reportedReview['reviewid'] = review['reviewid']
+            reportedReview['reviewtext'] = review['reviewtext']
+            product = db.getProduct(review['productid'])
+            reportedReview['productname'] = product['name']
+            if reportedReview not in reportedReviews:
+                reportedReviews.append(reportedReview)
+        for reported in reportedReviews:
+            reviewReports = db.getReviewReports(reported['reviewid'])
+            for reviewReport in reviewReports:
+                reported[reviewReport['reason']] += 1
+            print(reported)
+        return reportedReviews
+        
     
     def post(self):
         print("Post report recieved")

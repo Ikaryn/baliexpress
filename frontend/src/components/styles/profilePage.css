@@ -44,3 +44,7 @@
 .modal-button-container {
     padding-top: 2em;
 }
+
+.report-review-productname {
+    font-weight: bold;
+}
