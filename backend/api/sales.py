@@ -34,6 +34,7 @@ class Sales(Resource):
             return {'Error: Invalid api request'}
 
         for sale in sales:
+            print(sale)
             saleProducts = []
 
             # Get associated productIds for the sale
