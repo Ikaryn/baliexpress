@@ -30,11 +30,13 @@ class Stats(Resource):
             endDate = date.today()
             curDate = startDate
 
+            # Initialise list for all days with no sales and no sale period
             while curDate <= endDate:
                 dateString = curDate.strftime('%Y-%m-%d')
                 productStats[dateString] = [0, '', '']
                 curDate += timedelta(days=1)
             
+            # Attach the associated sale to the their dates in the list
             sales = db.getAllSales()
             for sale in sales:
                 saleInfo = db.getSale(sale['id'])
@@ -48,6 +50,7 @@ class Stats(Resource):
                             if dateString in productStats:
                                 productStats[dateString] = [0, sale['name'], product['salepercent']]
 
+            # Iterate through every order and to the date the quantity of the product bought
             orders = db.getAllOrders()       
             for order in orders:
                 for product in order['products']:
@@ -59,11 +62,12 @@ class Stats(Resource):
                         else:
                             productStats[orderDate][0] = product['quantity']
             
+            # Format into a list of dicts for the frontend to process
             stats = []
-
             for key in productStats:
                 entry = productStats[key]
-                stats.append({'date': key, 'sold': entry[0], 'saleName': entry[1], 'salePercent': entry[2]})
+                # stats.append({'date': key, 'sold': entry[0], 'saleName': entry[1], 'salePercent': entry[2]})
+                stats.append({'x': key, 'y': entry[0]})
 
             return {'stats': stats}
 
@@ -74,16 +78,22 @@ class Stats(Resource):
 
             saleStats = {}
 
+            # Get the start and end date for the sale
             startDate = sale['startdate']
             endDate = sale['enddate']
             curDate = startDate
+
+            # Initliase all units sold for each day of the sale to 0
             while curDate <= endDate:
                 saleStats[curDate.strftime('%Y-%m-%d')] = 0
 
+            # Get all the productIds for products associated with the sale
             saleProducts = []
             for product in sale['products']:
                 saleProducts.append(product['productid'])
 
+            # For each order that was made within the sale period, add to the count
+            # for that date any products that were included in the sale
             orders = db.getAllOrders()
             for order in orders:
                 if order['date'] >= startDate and order['date'] <= endDate:
@@ -91,8 +101,10 @@ class Stats(Resource):
                         if product['productid'] in saleProducts:
                             saleStats[order['date'].strftime('%Y-%m-%d')] += product['quantity']
             
+            # Format into a list of dicts for the frontend to process
             stats = []
             for key in saleStats:
-                stats.append({'date': key, 'sold': saleStats[key]})
+                # stats.append({'date': key, 'sold': saleStats[key]})
+                stats.append({'x': key, 'y': saleStates[key]})
             
             return {'stats': stats}
