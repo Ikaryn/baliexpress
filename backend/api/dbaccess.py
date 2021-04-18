@@ -1005,6 +1005,32 @@ def getReviewReports(reviewID):
             conn.close()
         return reports
 
+# returns number of reports deleted if successful, 0 otherwise
+def deleteReports(reviewID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete reports from database
+        query = "DELETE FROM Reports WHERE reviewid = %s"
+        cur.execute(query, [reviewID])
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteReports()")
+        print (error)
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return deleted
+
 # adds a vote to a review
 # vote should be 1 for an upvote, -1 for a downvote
 # returns 1 if successful, 0 otherwise
@@ -1573,6 +1599,11 @@ def getCurrentSales(cur):
 #print(addOrder(1, '2021-01-01', {1: 10}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
 #print(getProduct(1))
 #print(getReview(1))
+#print(reportReview(1, "hur dur"))
+#print(reportReview(1, "i don't like it"))
+#print(getReviewReports(1))
+#print(deleteReports(1))
+#print(getReviewReports(1))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):
