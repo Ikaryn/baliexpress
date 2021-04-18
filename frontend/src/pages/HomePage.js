@@ -1,16 +1,21 @@
 import React from 'react';
-import NavBar from '../components/navbar';
 import API from '../util/API.js';
 import {
     useHistory,
   } from 'react-router-dom';
 import NewProductFeature from '../components/featuredProductComponents/NewProductFeature';
-import { Button, CardActionArea, CircularProgress, Grid, makeStyles, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@material-ui/core';
+import { Button, CardActionArea, Grid, makeStyles, Modal, 
+        Paper, Table, TableBody, TableCell, TableContainer, 
+        TableRow, Typography } 
+        from '@material-ui/core';
 import BuildPcImage from '../assets/BuildPcImage.png';
 import MinorFeaturedProductCards from '../components/featuredProductComponents/MinorFeaturedProductCards';
 import BuildModalForm from '../components/buildPageComponents/BuildModalForm';
 import LoadingComponent from '../components/LoadingComponent';
 import SuperSale from '../assets/SuperSale.png';
+import { StoreContext } from '../util/store';
+import Carousel from 'react-material-ui-carousel';
+import BaliexpressBanner from '../assets/BaliexpressBanner.png'
 
 const api = new API();
 
@@ -20,7 +25,7 @@ const useStyles = makeStyles(() => ({
         marginLeft: '5.5em',
     },
     majorFeatureContainer: {
-        width: '79%',
+        width: '100%',
     },
     minorProductTable: {
         width: '100%',
@@ -32,7 +37,7 @@ const useStyles = makeStyles(() => ({
     },
     contentHeaders: {
         margin: '0 0.5em',
-    }
+    },
 }));
 
 const categories = [
@@ -56,9 +61,13 @@ const categories = [
 const HomePage = () => {
     const history = useHistory();
     const classes = useStyles();
+    const context = React.useContext(StoreContext);
+    
     const [products, setProducts] = React.useState(null);
     const [buildOpen, setBuildOpen] = React.useState(false);
+    const { sales: [sales, setSales] } = context;
 
+    // get featured products
     React.useEffect(() => {
         (async () => {
             const response = await api.get('featured');
@@ -66,24 +75,49 @@ const HomePage = () => {
 
         })();
     },[])
-
+    
+    // get sales
+    React.useEffect(() => {
+        api.get('sales?all=false')
+        .then((data) => {
+            console.log(data.sales);
+            setSales(data.sales);
+        })
+    },[setSales])
+    
     return (
         <Grid container direction="column" alignItems="center">
             <Grid item>
-                <img src={SuperSale} alt="sale-promotion"/>
+                {sales.length === 0 ?
+                    <img src={BaliexpressBanner} alt="sale-promotion"/>
+                :
+                <Carousel 
+                    autoPlay={true} 
+                    interval={4000} 
+                    indicatorContainerProps={{style: {position: 'absolute', bottom: '0.5em'}}}    
+                >
+                    <img src={BaliexpressBanner} alt="sale-promotion"/>
+                    {sales.map((sale, index) => (
+                        <CardActionArea key={'sale-'+index} onClick={() => {history.push(`/sales`)}}>
+                            <img src={"data:image/jpeg;base64,"+sale.image} alt={sale.name} />
+                        </CardActionArea>
+                    ))}
+                </Carousel>
+                }
             </Grid>
-            <Grid container item direction="row"  justify="center" className={classes.contentHeaders}>
+            <Grid container item direction="row"  justify="center">
                 <Paper className={classes.menuContainer}>
                     <Grid container item direction="column" xs={2}>
                             {categories.map((category) => (
                                 <Button key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
-                                ))}
+                            ))}
+                            <Button color="secondary" onClick={() => {history.push(`/sales`)}}>On Sale</Button>
                     </Grid>
                 </Paper>
                 <Grid item xs={5} className={classes.contentHeaders}>
                     {products ? <NewProductFeature feature={products['major_features']}/> : <LoadingComponent/>}
                 </Grid>
-                <Grid item xs={4} className={classes.contentHeaders}>
+                <Grid item xs={3} className={classes.contentHeaders}>
                     <CardActionArea onClick={() => {setBuildOpen(true)}}>
                         <img className={classes.majorFeatureContainer} src={BuildPcImage} alt="buildPCLink"/>
                     </CardActionArea>

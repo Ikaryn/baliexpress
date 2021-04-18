@@ -17,6 +17,7 @@ Frontend
         - "npm i @date-io/date-fns"
         - "yarn add @material-ui/pickers"
         - "npm install react-chatbot-kit"
+        - npm install react-material-ui-carousel --save
  
 Backend
     - psycopg2

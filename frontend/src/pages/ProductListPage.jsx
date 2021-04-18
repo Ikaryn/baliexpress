@@ -4,13 +4,15 @@ import { useParams } from 'react-router';
 import ProductCard from '../components/ProductCard';
 import Checkbox from '@material-ui/core/Checkbox';
 import API from '../util/API';
+import { StoreContext } from '../util/store';
 
 const api = new API();
 
 const sortTypes = ['Popularity', 'Price-High', 'Price-Low'];
 
 const ProductListPage = () => {
-    
+    const context = React.useContext(StoreContext);
+    const { sales: [sales] } = context;
     const [products, setProducts] = React.useState([]);
     const [filteredProducts, setFilteredProducts] = React.useState([]);
     const [nameFilter, setNameFilter] = React.useState("");
@@ -21,24 +23,39 @@ const ProductListPage = () => {
     
     React.useEffect(() => {
         (async () => {
-            const p = await api.get(`product?category=${category}`);
-            if (p.products) {
-                setProducts(p.products);
-                setFilteredProducts(p.products);
+            let products = [];
+            // set the products determined by if viewing sale products or just normal products
+            if(!category) {
+                sales.forEach((sale) => {
+                    console.log(sale.productList);
+                    sale.productList.forEach((product) => {
+                        products.push(product);
+                    })
+                })
+            } else {
+                const p = await api.get(`product?category=${category}`);
+                if (p.products) {
+                    products = p.products;
+                }
             }
             let set = [];
             let dict = {};
-            for(const i in p.products){
-                console.log(p.products[i].brand);
-                if(!set.includes(p.products[i].brand)){
-                    set.push(p.products[i].brand);
-                    dict[p.products[i].brand] = false;
+            
+            
+            for(const i in products){
+                if(!set.includes(products[i].brand)){
+                    set.push(products[i].brand);
+                    dict[products[i].brand] = false;
                 }
             }
+            
             setBrandSet(set);
             setCheckBoxState(dict);
+            setFilteredProducts(products);
+            setProducts(products);
         })();
-    },[category]);
+        
+    },[category, sales]);
 
     React.useEffect(() => {
         (async () => {
