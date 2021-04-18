@@ -1337,8 +1337,12 @@ def getAllCurrentSales():
         conn = connect()
         cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-        # call helper function to get all current sales
-        currentSales = getCurrentSales(cur)
+        # get the current sales from the database
+        today = datetime.today().strftime('%Y-%m-%d')
+        query = "SELECT * FROM Sales WHERE startdate <= %s AND enddate >= %s"
+        cur.execute(query, (today, today))
+        rows = cur.fetchall()
+        currentSales = [{column:data for column, data in record.items()} for record in rows]
 
     except (Exception, psycopg2.DatabaseError) as error:
         currentSales = None
