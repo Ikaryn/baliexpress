@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-from . import credentials
+import credentials
 from datetime import datetime
 
 def connect():
@@ -1112,6 +1112,7 @@ def addOrder(userID, date, products, streetaddress, city, state, country, postco
         orderItemsQuery = "INSERT INTO Order_Items (orderid, productid, quantity) VALUES (%s, %s, %s)"
         soldQuery = "UPDATE Products SET sold = sold + %s WHERE id = %s"
         salesSoldQuery = "UPDATE Sale_Products SET sold = SOLD + %s WHERE saleid = %s AND productid = %s"
+        stockQuery = "UPDATE Products SET stock = stock - %s WHERE id = %s"
         currentSales = getCurrentSales(cur)
         print('Current sales are')
         print(currentSales)
@@ -1126,6 +1127,9 @@ def addOrder(userID, date, products, streetaddress, city, state, country, postco
             for sale in currentSales:
                 saleID = sale['id']
                 cur.execute(salesSoldQuery, (quantity, saleID, productID))
+
+            # decrease product stock
+            cur.execute(stockQuery, (quantity, productID))
 
         # commit changes to database
         conn.commit()
@@ -1565,7 +1569,9 @@ def getCurrentSales(cur):
 #addSale("fully sick sale", "2021-01-01", "2021-12-31", [{'productid': 1, 'salepercent': 10}])
 #print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
 #print(getAllOrders())
-#print(addOrder(1, '2021-01-01', {1: 10, 2:3}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
+#print(getProduct(1))
+#print(addOrder(1, '2021-01-01', {1: 10}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
+#print(getProduct(1))
 #print(getReview(1))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
