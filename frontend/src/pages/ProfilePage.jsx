@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
+import UserOrderList from '../components/profilePage/UserOrderList';
 import SalePanel from '../components/AdminManagementComponents/SalePanel';
 import { StoreContext } from '../util/store';
 // import './App.css';
@@ -149,7 +150,7 @@ const ProfilePage = () => {
                                 />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            {/* <UserOrderList /> */}
+                            <UserOrderList />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
                             <UserBuildList />
