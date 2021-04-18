@@ -177,18 +177,7 @@ const ProfilePage = () => {
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={3}>
-                                {/* <Typography variant="h3">Manage Sales</Typography>
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    onClick={() => {saleComponent === 'table' ? setSaleComponent('form') : setSaleComponent('table')}}
-                                >
-                                    {saleComponent === 'form' ? 'Back' : 'Create Sale'}
-                                </Button>
-                                <Divider />
-                                {renderSaleComponent()}
-                                {saleComponent ? <SaleForm setSaleFormOpen={setSaleFormOpen} /> : <SalesPanel />} */}
+                            <TabPanel value={value} index={6}>
                                 <SalePanel />
                             </TabPanel>
                         }

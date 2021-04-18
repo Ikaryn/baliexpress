@@ -12,7 +12,6 @@ import BuildPcImage from '../assets/BuildPcImage.png';
 import MinorFeaturedProductCards from '../components/featuredProductComponents/MinorFeaturedProductCards';
 import BuildModalForm from '../components/buildPageComponents/BuildModalForm';
 import LoadingComponent from '../components/LoadingComponent';
-import SuperSale from '../assets/SuperSale.png';
 import { StoreContext } from '../util/store';
 import Carousel from 'react-material-ui-carousel';
 import BaliexpressBanner from '../assets/BaliexpressBanner.png'
@@ -22,10 +21,14 @@ const api = new API();
 const useStyles = makeStyles(() => ({
     menuContainer: {
         backgroundColor: 'rgb(66,66,66)',
-        marginLeft: '5.5em',
+        margin: '0 0.5em',
+    },
+    upperContentContainer: {
+        width: '80%',
     },
     majorFeatureContainer: {
         width: '100%',
+        height: 'auto'
     },
     minorProductTable: {
         width: '100%',
@@ -38,6 +41,9 @@ const useStyles = makeStyles(() => ({
     contentHeaders: {
         margin: '0 0.5em',
     },
+    aboutUsContainer: {
+        padding: '0.5em',
+    }
 }));
 
 const categories = [
@@ -72,7 +78,6 @@ const HomePage = () => {
         (async () => {
             const response = await api.get('featured');
             setProducts(response);
-
         })();
     },[])
     
@@ -80,47 +85,62 @@ const HomePage = () => {
     React.useEffect(() => {
         api.get('sales?all=false')
         .then((data) => {
-            console.log(data.sales);
             setSales(data.sales);
         })
     },[setSales])
     
+    // if there are no sales currently, this should just be the banner.
+    const generateAdvertisements = () => {
+        const ads = [<img src={BaliexpressBanner} alt="baliexpress-banner"/>];
+        sales.forEach((sale, index) => {
+            ads.push(
+                <CardActionArea key={'sale-'+index} onClick={() => {history.push(`/sales`)}}>
+                    <img src={"data:image/jpeg;base64,"+sale.image} alt={sale.name} />
+                </CardActionArea>
+            )
+        })
+        
+        return ads;
+    }
+    
     return (
-        <Grid container direction="column" alignItems="center">
-            <Grid item>
+        <Grid container direction="column" alignItems="center" justify="center">
+            <Grid container item className={classes.upperContentContainer} justify="center">
                 {sales.length === 0 ?
-                    <img src={BaliexpressBanner} alt="sale-promotion"/>
+                    <Grid item>
+                        <img src={BaliexpressBanner} alt="baliexpress-banner"/>
+                    </Grid>
                 :
-                <Carousel 
-                    autoPlay={true} 
-                    interval={4000} 
-                    indicatorContainerProps={{style: {position: 'absolute', bottom: '0.5em'}}}    
-                >
-                    <img src={BaliexpressBanner} alt="sale-promotion"/>
-                    {sales.map((sale, index) => (
-                        <CardActionArea key={'sale-'+index} onClick={() => {history.push(`/sales`)}}>
-                            <img src={"data:image/jpeg;base64,"+sale.image} alt={sale.name} />
-                        </CardActionArea>
-                    ))}
-                </Carousel>
+                <Grid item>
+                    <Carousel 
+                        autoPlay={true} 
+                        interval={4000} 
+                        indicatorContainerProps={{style: {position: 'absolute', bottom: '0.5em'}}}    
+                    >
+                        {generateAdvertisements()}
+                    </Carousel>
+                </Grid>
                 }
             </Grid>
-            <Grid container item direction="row"  justify="center">
+            <Grid container item direction="row"  justify="center" className={classes.upperContentContainer}>
                 <Paper className={classes.menuContainer}>
-                    <Grid container item direction="column" xs={2}>
+                    <Grid container item direction="column" xs={1}>
                             {categories.map((category) => (
-                                <Button key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
+                                <Button size="medium" key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
                             ))}
-                            <Button color="secondary" onClick={() => {history.push(`/sales`)}}>On Sale</Button>
+                            <Button size="medium" color="secondary" onClick={() => {history.push(`/sales`)}}>On Sale</Button>
                     </Grid>
                 </Paper>
-                <Grid item xs={5} className={classes.contentHeaders}>
+                <Grid item xs={6} className={classes.contentHeaders}>
                     {products ? <NewProductFeature feature={products['major_features']}/> : <LoadingComponent/>}
                 </Grid>
                 <Grid item xs={3} className={classes.contentHeaders}>
                     <CardActionArea onClick={() => {setBuildOpen(true)}}>
                         <img className={classes.majorFeatureContainer} src={BuildPcImage} alt="buildPCLink"/>
                     </CardActionArea>
+                    <Paper className={classes.aboutUsContainer}>
+                        <Typography>About us. We are an Australian based E-Commerse website that specialises in Computer Parts and accessories. Please don't hesitate to reach out to us if you have any questions or need any help!</Typography>
+                    </Paper>
                 </Grid>
             </Grid>
             <Grid item>
