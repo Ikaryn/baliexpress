@@ -9,6 +9,7 @@ from api.featured import *
 from api.auth import *
 from api.sales import *
 from api.order import *
+from api.stats import *
 # import api.user
 # import api.products
 
@@ -27,3 +28,4 @@ api.add_resource(BuildPage, '/build')
 api.add_resource(UserBuilds, '/userBuilds')
 api.add_resource(Sales, '/sales')
 api.add_resource(Order, '/order')
+api.add_resource(Stats, '/stats')
