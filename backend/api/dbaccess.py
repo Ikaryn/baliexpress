@@ -1330,6 +1330,28 @@ def getSale(saleID):
             conn.close()
         return sale
 
+def getAllCurrentSales():
+
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # call helper function to get all current sales
+        currentSales = getCurrentSales(cur)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        currentSales = None
+        print("An error occured in getAllCurrentSales()")
+        print(error)
+    
+    finally:
+        # close connection to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return currentSales
+
 def getAllSales():
     try:
         # connect to database

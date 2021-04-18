@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_restful import Api
 from . import dbaccess as db
 from datetime import datetime
+from .helpers import *
 
 # ALL PLACEHOLDER DB FUNCTIONS ARE JUST COSMETICS,
 # NO NEED TO FOLLOW THAT SYNTAX, YOU DO YOU
@@ -12,12 +13,26 @@ from datetime import datetime
 class Sales(Resource):
 
     # Getting sales
-    # Url format: `sales`
+    # Url formats:
+    # Get all sales: `sales?all=true`
+    # Get only the current sales: `sales?all=false`
     def get(self):
-        print('Get sales attempt received')
 
-        # Placeholder function to get sales and sale products from database
-        sales = db.getAllSales()
+        allSales = request.args.get('all')
+
+        if allSales == 'true':
+
+            print('Get all sales attempt received')
+            sales = db.getAllSales()
+
+        elif allSales == 'false':
+
+            print('Get current sales attempt received')
+            sales = db.getAllCurrentSales()
+
+        else:
+            return {'Error: Invalid api request'}
+
         for sale in sales:
             saleProducts = []
 
@@ -28,17 +43,15 @@ class Sales(Resource):
 
                 # Get the actual product from the productIds
                 product = db.getProduct(saleProduct['productid'])
-                product['release_date'] = product['release_date'].strftime('%Y-%m-%d')
                 saleProducts.append(product)
 
-            sale['productList'] = saleProducts
+            sale['productList'] = boolDateToString(saleProducts)
 
             sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
             sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
-        
-        return {'sales': sales}
-
     
+        return {'sales': sales}
+        
     # Adding/making a new sale
     # Url format: `sales`
     def post(self):
