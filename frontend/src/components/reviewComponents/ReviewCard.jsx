@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ReviewCard = ({review, userId}) => {
+const ReviewCard = ({review, userId, reviews, setReviews}) => {
     
     const classes = useStyles();
 
@@ -106,6 +106,15 @@ const ReviewCard = ({review, userId}) => {
         api.post('review/reports', body);
         setOpen(false);
         setSucccess(true);
+    }
+
+    const handleRemove = (reviewid) => {
+        const body = {reviewId: reviewid};
+        api.delete('review', body);
+        const tempReviews = JSON.parse(JSON.stringify(reviews));
+        const newReviews = tempReviews.filter(tempR => tempR.reviewid !== reviewid);
+        setReviews(newReviews)
+        console.log(isAdmin)
     }
     
     return (
@@ -193,6 +202,18 @@ const ReviewCard = ({review, userId}) => {
                     </Grid>
                 </Grid>
             </Modal>
+            <Grid item>
+                {/* {isAdmin && */}
+                <Button
+                    color="primary" 
+                    variant="contained"
+                    onClick={() => {handleRemove(review.reviewid)}}
+                >
+                    Remove Review
+                </Button>
+
+            </Grid>
+
             {success &&
             <Snackbar open={success} autoHideDuration={1000}>
                 <Alert severity="success">This review has been reported</Alert>

@@ -70,11 +70,12 @@ class Reviews(Resource):
 
         reviewId = int(data.get('reviewId'))
         status = db.deleteReview(reviewId)
-
+        db.deleteReports(reviewId)
         if status == 1:
             return {'status': 'Review successfully removed'}
         else:
             return {'error': 'Error: unable to delete review'}
+        
 
 class Votes(Resource):
 

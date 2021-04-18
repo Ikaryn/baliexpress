@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
-import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
 import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 import UserOrderList from '../components/profilePage/UserOrderList';
 import SalePanel from '../components/AdminManagementComponents/SalePanel';

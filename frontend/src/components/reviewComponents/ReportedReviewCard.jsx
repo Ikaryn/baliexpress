@@ -21,11 +21,11 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
     const [success, setSuccess] = React.useState(false);
 
     const handleRemove = (reviewid) => {
-        const body = {reviewId: reportedReview.reviewID};
+        const body = {reviewId: reviewid};
         api.delete('review', body);
         setSuccess(true);
-        const tempReviews = JSON.parse(JSON.stringify(reviews))
-        const newReviews = tempReviews.filter(tempR => tempR.reviewid !== reviewid)
+        const tempReviews = JSON.parse(JSON.stringify(reviews));
+        const newReviews = tempReviews.filter(tempR => tempR.reviewid !== reviewid);
         setReviews(newReviews)
     }
 
