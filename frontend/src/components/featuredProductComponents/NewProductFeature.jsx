@@ -8,15 +8,16 @@ const api = new API();
 
 const useStyles = makeStyles(() => ({
     featuredImage: {
-        width: '100%'
+        width: '100%',
     },
     imageOverlay: {
         position: 'absolute',
-        bottom: '0.2em'
+        bottom: '0.2em',
+        width: '100%',
     },
     newImageOverlay: {
         position: 'absolute',
-        right: '0'
+        right: '0',
     }
 }))
 
@@ -58,12 +59,12 @@ const NewProductFeature = ({feature}) => {
                 />
                 <img  
                   className={classes.featuredImage}
-                  src={"data:image/jpeg;base64,"+hightlightedProduct.product.image} 
+                  src={"data:image/jpeg;base64,"+ hightlightedProduct.product.image} 
                   alt={hightlightedProduct.product.name} 
                   />
                 <Paper className={classes.imageOverlay}>
                     <Typography>
-                        {'Displayed Product: ' +hightlightedProduct.product.name}
+                        {'Displayed Product: ' + hightlightedProduct.product.name}
                     </Typography>
                 </Paper>
             </div>
