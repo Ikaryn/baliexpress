@@ -1,7 +1,9 @@
 import { Button, FormControl, FormHelperText, FormLabel, Grid, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import { DropzoneArea } from 'material-ui-dropzone';
 import React from 'react';
 import API from '../../util/API';
+import { fileToDataUrl } from '../../util/helpers';
 import SearchBar from '../searchBar';
 
 const api = new API();
@@ -9,13 +11,17 @@ const api = new API();
 const SaleProductList = ({saleProducts, setSaleProducts}) => {
     // this will contain a list of all the products user wants to set a sale for
     const [products, setProducts] = React.useState([]);
-    // this will contain a list of dicts {productId, %} that will be sent to backend
-    const [open, setOpen] = React.useState(false);
     
     // use this just to add the product card with % of sale
     const handleAddProduct = (product) => {
         const newProductList = JSON.parse(JSON.stringify(products));
-        newProductList.push(product);
+        
+        // if the product already exists dont add it
+        const found = newProductList.find((p) => product.id === p.id);
+        if (!found){
+            newProductList.push(product);
+        }
+        
         setProducts(newProductList);
     }
     
@@ -74,8 +80,15 @@ const SaleForm = ({setSaleComponent, setSales}) => {
     const [success, setSuccess] = React.useState(false);
     const [nameError, setNameError] = React.useState(false);
     const [dateError, setDateError] = React.useState('');
+    const [image, setImage] = React.useState(null);
     
-    
+    const handleImageUpload = async (file) => {
+        if(file.length > 0){
+            console.log(file);
+            const imageString = await fileToDataUrl(file[0]);
+            setImage(imageString);
+        }
+    }
     
     const handleSubmit = async () => {
         const today = Date.now();
@@ -99,6 +112,7 @@ const SaleForm = ({setSaleComponent, setSales}) => {
             'start': startDate,
             'end': endDate,
             'products': saleProducts,
+            'image': image,
         };
         const response = await api.post('sales', body);
         setSuccess(true);
@@ -143,8 +157,15 @@ const SaleForm = ({setSaleComponent, setSales}) => {
                                 />
                         </FormControl>
                     </Grid>
-                    <SaleProductList saleProducts={saleProducts} setSaleProducts={setSaleProducts} />
                 </Grid>
+                <Grid item>
+                    <DropzoneArea
+                        acceptedFiles={['image/*']}
+                        dropzoneText="Attach a Sale Banner"
+                        onChange={(file) => {handleImageUpload(file); }}
+                    />
+                </Grid>
+                <SaleProductList saleProducts={saleProducts} setSaleProducts={setSaleProducts} />
                 <Grid item>
                     <Button onClick={() => handleSubmit()} variant="contained" color="primary">Submit</Button>
                 </Grid>

@@ -16,7 +16,7 @@ const SalePanel = () => {
 
     React.useEffect(() => {
         (async () => {
-            const response = await api.get('sales');
+            const response = await api.get('sales?all=true');
             console.log(response);
             setSales(response.sales);
         })();
