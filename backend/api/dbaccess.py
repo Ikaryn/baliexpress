@@ -446,6 +446,9 @@ def editProduct(id, editedProduct):
             cur.execute(query, (tuple(specs.values())))
 
         status = 1
+
+        # commit changes to database
+        conn.commit()
     except (Exception, psycopg2.DatabaseError) as error:
         print("An error has occured in editProduct")
         print(error)
@@ -1002,6 +1005,32 @@ def getReviewReports(reviewID):
             conn.close()
         return reports
 
+# returns number of reports deleted if successful, 0 otherwise
+def deleteReports(reviewID):
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor()
+
+        # delete reports from database
+        query = "DELETE FROM Reports WHERE reviewid = %s"
+        cur.execute(query, [reviewID])
+        deleted = cur.rowcount
+
+        # commit changes and close connection
+        conn.commit()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        deleted = 0
+        print("An error occured in deleteReports()")
+        print (error)
+    finally:
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return deleted
+
 # adds a vote to a review
 # vote should be 1 for an upvote, -1 for a downvote
 # returns 1 if successful, 0 otherwise
@@ -1109,6 +1138,7 @@ def addOrder(userID, date, products, streetaddress, city, state, country, postco
         orderItemsQuery = "INSERT INTO Order_Items (orderid, productid, quantity) VALUES (%s, %s, %s)"
         soldQuery = "UPDATE Products SET sold = sold + %s WHERE id = %s"
         salesSoldQuery = "UPDATE Sale_Products SET sold = SOLD + %s WHERE saleid = %s AND productid = %s"
+        stockQuery = "UPDATE Products SET stock = stock - %s WHERE id = %s"
         currentSales = getCurrentSales(cur)
         print('Current sales are')
         print(currentSales)
@@ -1123,6 +1153,9 @@ def addOrder(userID, date, products, streetaddress, city, state, country, postco
             for sale in currentSales:
                 saleID = sale['id']
                 cur.execute(salesSoldQuery, (quantity, saleID, productID))
+
+            # decrease product stock
+            cur.execute(stockQuery, (quantity, productID))
 
         # commit changes to database
         conn.commit()
@@ -1288,7 +1321,7 @@ def addSale(name, startDate, endDate, products, image):
         # insert products into Sale_Products table
         query = "INSERT INTO Sale_Products(saleid, productid, salepercent) VALUES (%s, %s, %s)"
         for product in products:
-            cur.execute(query, (saleID, product['productid'], product['salepercent']))
+            cur.execute(query, (saleID, product['productId'], product['sale %']))
 
         # commit changes to database
         conn.commit()
@@ -1363,6 +1396,32 @@ def getSale(saleID):
             cur.close()
             conn.close()
         return sale
+
+def getAllCurrentSales():
+
+    try:
+        # connect to database
+        conn = connect()
+        cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        # get the current sales from the database
+        today = datetime.today().strftime('%Y-%m-%d')
+        query = "SELECT * FROM Sales WHERE startdate <= %s AND enddate >= %s"
+        cur.execute(query, (today, today))
+        rows = cur.fetchall()
+        currentSales = [{column:data for column, data in record.items()} for record in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        currentSales = None
+        print("An error occured in getAllCurrentSales()")
+        print(error)
+
+    finally:
+        # close connection to database
+        if (conn):
+            cur.close()
+            conn.close()
+        return currentSales
 
 def getAllSales():
     try:
@@ -1536,8 +1595,15 @@ def getCurrentSales(cur):
 #addSale("fully sick sale", "2021-01-01", "2021-12-31", [{'productid': 1, 'salepercent': 10}])
 #print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
 #print(getAllOrders())
-#print(addOrder(1, '2021-01-01', {1: 10, 2:3}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
+#print(getProduct(1))
+#print(addOrder(1, '2021-01-01', {1: 10}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
+#print(getProduct(1))
 #print(getReview(1))
+#print(reportReview(1, "hur dur"))
+#print(reportReview(1, "i don't like it"))
+#print(getReviewReports(1))
+#print(deleteReports(1))
+#print(getReviewReports(1))
 # ~~~~~~~~~~ UNUSED FUNCTIONS ~~~~~~~~~~
 # # returns the corresponding email for a given user id
 # def getEmail(id):

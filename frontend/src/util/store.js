@@ -1,15 +1,9 @@
 import React from 'react';
-import API from './API';
-
 export const StoreContext = React.createContext(null);
 
-const api = new API();
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ children }) => {
     
-    // React.useEffect(() => {
-        
-    // },[])
     
     const [build, setBuild] = React.useState({
         'name': 'Your Custom Built PC',
@@ -28,11 +22,13 @@ export default ({ children }) => {
     const [comparedProduct, setComparedProduct] = React.useState({});
     const [userType, setUserType] = React.useState('guest');
     
+    const [sales, setSales] = React.useState([]);
     const store = {
         build: [build, setBuild],
         cart: [cart, setCart],
         comparedProduct: [comparedProduct, setComparedProduct],
         userType: [userType, setUserType],
+        sales: [sales, setSales],
     };
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 

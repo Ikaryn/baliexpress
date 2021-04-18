@@ -16,7 +16,7 @@ const categories = [
 'Monitors',
 'Mouses',
 'Keyboards',
-'Wifi Adaptors'
+'Wifi Adaptors',
 ];
 
 const ProductMenuButton = () => {
@@ -48,6 +48,7 @@ const ProductMenuButton = () => {
                                     {categories.map((c) => (
                                         <MenuItem key={c} onClick={() => handleMenuButtonclick(c)}>{c}</MenuItem>
                                     ))}
+                                    <MenuItem color="secondary" onClick={() => history.push('/sales')}>On Sale</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>

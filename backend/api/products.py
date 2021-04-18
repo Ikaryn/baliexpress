@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_restful import Api
 from . import dbaccess as db
 from datetime import datetime
+from .helpers import *
 
 # Returns a list of products that fit a certain query with a string
 # args is either just the query string, or the query string and desired
@@ -24,18 +25,6 @@ def productSearch(*args):
         tokens.pop()
 
         return results if len(args) == 1 else results[:args[1]]
-
-# Converting release date in products from a date object and booleans to string for JSON serialization
-def boolDateToString(products):
-
-    for product in products:
-        for field in product['specs']:
-            if (isinstance(product['specs'][field], bool)):
-                product['specs'][field] = 'Yes' if product['specs'][field] else 'No'
-        releaseDate = product['release_date'].strftime('%Y-%m-%d')
-        product['release_date'] = releaseDate
-    
-    return products
 
 class Products(Resource):
     
@@ -117,8 +106,12 @@ class Products(Resource):
         productId = data.get('id')
         product = db.getProduct(productId)
 
-        print("Product before:", product)
-        print("Data received:", data)
+        # for field in product:
+        #     if field != 'image':
+        #         print(field, ":", product[field], type(product[field]))
+        # for field in data:
+        #     if field != 'image':
+        #         print(field, ":", data.get(field), type(data.get(field)))
 
         for field in data:
             if field == 'specs':
@@ -134,8 +127,9 @@ class Products(Resource):
                 product[field] = data.get(field)
         
         product.pop('id')
-        print("Edited product:", product)
+        product.pop('sale')
         db.editProduct(productId, product)
+
         
         return
     

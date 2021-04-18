@@ -23,6 +23,7 @@ const routes = [
     <PrivateRoute key="route-profilepage" component={ProfilePage} path="/profile/:uid" exact/>,
     <PublicRoute key="route-product" component={ProductPage} path="/product/:category/:pid" exact/>,
     <PrivateRoute key="route-edit-product" component={EditProductPage} path="/edit-product/:category/:pid" exact/>,
+    <PublicRoute key="route-sale-products" component={ProductListPage} path="/sales" exact/>,
     <PublicRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>,
     <PublicRoute key="route-compare" component={ComparePage} path="/build/compare/:category" exact />,
     <PublicRoute key="route-build" component={BuildPage} path="/build/:uid/:bid" exact />,

@@ -11,9 +11,9 @@ import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
-import SaleForm from '../components/AdminManagementComponents/SaleForm';
 import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 import UserOrderList from '../components/profilePage/UserOrderList';
+import SalePanel from '../components/AdminManagementComponents/SalePanel';
 import { StoreContext } from '../util/store';
 // import './App.css';
 const api = new API();
@@ -38,7 +38,7 @@ const ProfilePage = () => {
     const context = React.useContext(StoreContext);
     const {userType: [,setUserType] } = context;
     
-    const [saleFormOpen, setSaleFormOpen] = React.useState(false);
+    // const [saleComponent, setSaleComponent] = React.useState('table');
     
     // when logout remove all of cookies
     const handleLogout = () => {
@@ -134,9 +134,9 @@ const ProfilePage = () => {
                             orientation="vertical"
                             className={classes.tabs}
                             >
-                            <Tab label="Profile" />
-                            <Tab label="My Orders" />
-                            <Tab label="My Builds" />
+                            {!accInfo.isAdmin && <Tab label="Profile" />}
+                            {!accInfo.isAdmin && <Tab label="My Orders" />}
+                            {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
@@ -146,45 +146,42 @@ const ProfilePage = () => {
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
-                        <TabPanel value={value} index={0}>
-                            <ProfilePageAccountInfo
-                                accInfo={accInfo}
-                                shippingInfo={shippingInfo}
-                                />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <UserOrderList />
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <UserBuildList />
-                        </TabPanel>      
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={0}>
+                                <ProfilePageAccountInfo
+                                    accInfo={accInfo}
+                                    shippingInfo={shippingInfo}
+                                    />
+                            </TabPanel>
+                        }
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={1}>
+                                <UserOrderList />
+                            </TabPanel>
+                        }
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={2}>
+                                <UserBuildList />
+                            </TabPanel>      
+                        }
                         {accInfo.isAdmin && 
-                            <TabPanel value={value} index={3}>
+                            <TabPanel value={value} index={0}>
                                 <AddProduct/>
                             </TabPanel>   
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={4}>
+                            <TabPanel value={value} index={1}>
                                 <AllProductList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={5}>
+                            <TabPanel value={value} index={2}>
                                 <ViewUsers/>
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
                             <TabPanel value={value} index={6}>
-                                <Typography variant="h3">Manage Sales</Typography>
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    onClick={() => {saleFormOpen ? setSaleFormOpen(false) : setSaleFormOpen(true)}}
-                                >
-                                    {saleFormOpen ? 'Back' : 'Create Sale'}
-                                </Button>
-                                <Divider />
-                                {saleFormOpen ? <SaleForm /> : <SalesPanel />}
+                                <SalePanel />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&
