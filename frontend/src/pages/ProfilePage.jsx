@@ -132,9 +132,9 @@ const ProfilePage = () => {
                             orientation="vertical"
                             className={classes.tabs}
                             >
-                            <Tab label="Profile" />
-                            <Tab label="My Orders" />
-                            <Tab label="My Builds" />
+                            {!accInfo.isAdmin && <Tab label="Profile" />}
+                            {!accInfo.isAdmin && <Tab label="My Orders" />}
+                            {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
@@ -143,35 +143,41 @@ const ProfilePage = () => {
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
-                        <TabPanel value={value} index={0}>
-                            <ProfilePageAccountInfo
-                                accInfo={accInfo}
-                                shippingInfo={shippingInfo}
-                                />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <UserOrderList />
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
-                            <UserBuildList />
-                        </TabPanel>      
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={0}>
+                                <ProfilePageAccountInfo
+                                    accInfo={accInfo}
+                                    shippingInfo={shippingInfo}
+                                    />
+                            </TabPanel>
+                        }
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={1}>
+                                <UserOrderList />
+                            </TabPanel>
+                        }
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={2}>
+                                <UserBuildList />
+                            </TabPanel>      
+                        }
                         {accInfo.isAdmin && 
-                            <TabPanel value={value} index={3}>
+                            <TabPanel value={value} index={0}>
                                 <AddProduct/>
                             </TabPanel>   
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={4}>
+                            <TabPanel value={value} index={1}>
                                 <AllProductList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={5}>
+                            <TabPanel value={value} index={2}>
                                 <ViewUsers/>
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={6}>
+                            <TabPanel value={value} index={3}>
                                 {/* <Typography variant="h3">Manage Sales</Typography>
                                 <Button 
                                     variant="contained" 
@@ -186,7 +192,7 @@ const ProfilePage = () => {
                                 <SalePanel />
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 4 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

@@ -78,7 +78,7 @@ const SaleForm = ({setSaleComponent, setSales}) => {
     const [endDate, setEndDate] = React.useState('');
     const [saleProducts, setSaleProducts] = React.useState([])
     const [success, setSuccess] = React.useState(false);
-    const [nameError, setNameError] = React.useState(false);
+    const [nameError, setNameError] = React.useState('');
     const [dateError, setDateError] = React.useState('');
     const [image, setImage] = React.useState(null);
     
