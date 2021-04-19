@@ -68,7 +68,11 @@ class Sales(Resource):
         if image is not None:
             image = image.split(',')[1]
         else:
+<<<<<<< HEAD
             return {'Error: No image'}, 400
+=======
+            return {'Error: No image', 400}
+>>>>>>> 40862841361b7ef54be1186ed6a31eaae2e6a86c
         
         # Add the sale to the database
         saleId = db.addSale(name, startDate, endDate, products, image)

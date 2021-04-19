@@ -81,6 +81,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
                 console.log(res);
                 const newBuild = JSON.parse(JSON.stringify(build));
                 newBuild.parts = res;
+                newBuild.id = 0;
                 console.log(newBuild);
                 setBuild(newBuild);
                 handleToggle(false);
