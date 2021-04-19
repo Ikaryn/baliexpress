@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-from . import credentials
+import credentials
 from datetime import datetime
 
 def connect():
