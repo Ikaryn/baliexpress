@@ -35,7 +35,7 @@ const AdminOrderList = () => {
     const classes = useStyles();
     const [orders, setOrders] = React.useState(null);
     const [orderSelected, setOrderSelected] = React.useState(false);
-    const [order, setOrder] = React.useState(null);
+    const [orderId, setOrderId] = React.useState(null);
 
     React.useEffect(() => {
         (async () => {
@@ -59,7 +59,7 @@ const AdminOrderList = () => {
                         </TableHead>
                         <TableBody>
                             {orders && orders.length > 0 && orders.map((order) => (
-                                <TableRow hover onClick={(event) => {setOrderSelected(true); setOrder(order)}}>
+                                <TableRow hover onClick={(event) => {setOrderSelected(true); setOrderId(order.id)}}>
                                     <TableCell align="left">{order.id}</TableCell>
                                     <TableCell align="left">{order.date}</TableCell>
                                     <TableCell align="left">${order.total}</TableCell>
@@ -105,7 +105,7 @@ const AdminOrderList = () => {
 						<Grid item container direction="column" alignItems="center">
 							<List>
 								<Divider variant="middle"/>
-								{order.products.map((product) => (
+								{order && order.products.map((product) => (
 									<ListItem>
 										<Grid item container direction="row" className={classes.product} justify="space-between" alignItems="center">
 												<Grid item xs={1}>
@@ -138,7 +138,7 @@ const AdminOrderList = () => {
 
     return (
         <Grid>
-            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard order={order}/>}
+            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard orderId={orderId}/>}
         </Grid>
     );
 

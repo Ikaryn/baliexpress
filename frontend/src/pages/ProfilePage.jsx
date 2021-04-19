@@ -11,8 +11,7 @@ import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
-import UserOrderList from '../components/profilePage/UserOrderList';
-import AdminOrderList from '../components/profilePage/AdminOrderList';
+import OrderList from '../components/profilePage/OrderList';
 import SalePanel from '../components/AdminManagementComponents/SalePanel';
 import { StoreContext } from '../util/store';
 
@@ -129,11 +128,10 @@ const ProfilePage = () => {
                             className={classes.tabs}
                             >
                             {!accInfo.isAdmin && <Tab label="Profile" />}
-                            {!accInfo.isAdmin && <Tab label="My Orders" />}
                             {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
-                            {accInfo.isAdmin && <Tab label="View all orders" />}
+                            <Tab label="View orders" />
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {accInfo.isAdmin && <Tab label="Manage Sales" />}   
                             {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
@@ -154,14 +152,12 @@ const ProfilePage = () => {
                         }
                         {!accInfo.isAdmin &&
                             <TabPanel value={value} index={1}>
-                                <UserOrderList />
-                            </TabPanel>
-                        }
-                        {!accInfo.isAdmin &&
-                            <TabPanel value={value} index={2}>
                                 <UserBuildList />
                             </TabPanel>      
                         }
+                        <TabPanel value={value} index={2}>
+                            <OrderList admin={accInfo.isAdmin}/>
+                        </TabPanel>
                         {accInfo.isAdmin && 
                             <TabPanel value={value} index={0}>
                                 <AddProduct/>
@@ -170,11 +166,6 @@ const ProfilePage = () => {
                         {accInfo.isAdmin &&
                             <TabPanel value={value} index={1}>
                                 <AllProductList />
-                            </TabPanel>
-                        }
-                        {accInfo.isAdmin &&
-                            <TabPanel value={value} index={2}>
-                                <AdminOrderList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
