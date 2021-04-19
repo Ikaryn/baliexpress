@@ -30,7 +30,6 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
     }
 
     return (
-        
         <Grid container>
             <Grid item>
                 <Typography className={classes.title} >{reportedReview.productname}</Typography>

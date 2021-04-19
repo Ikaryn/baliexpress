@@ -48,9 +48,12 @@ class BuildPage(Resource):
         buildID = db.addNewBuild(data.get('userID'), data.get('buildName'), data.get('buildDesc'))
         build = data.get('build')
         # print("build = ",build)
-        for part in build:
-            if type(build[part]) is dict:
-                db.addPartToBuild(buildID, build[part]['id'], 1)
+        for part in build['parts']:
+            # if type(build[part]) is dict:
+            print(part)
+            if isinstance(build['parts'], dict):
+                if not isinstance(build['parts'][part], str):
+                    db.addPartToBuild(buildID, build['parts'][part]['id'], 1)
         saved = db.getBuild(buildID)
         # print("saved = ",saved)
             

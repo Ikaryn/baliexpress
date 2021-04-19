@@ -26,8 +26,8 @@ const ProductListPage = () => {
             let products = [];
             // set the products determined by if viewing sale products or just normal products
             if(!category) {
+                // loop through each sale 
                 sales.forEach((sale) => {
-                    console.log(sale.productList);
                     sale.productList.forEach((product) => {
                         products.push(product);
                     })
