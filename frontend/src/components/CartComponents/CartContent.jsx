@@ -30,7 +30,7 @@ const CartContent = () => {
     },[cart]);
     
     const handleClick = () => {
-        history.push(`/cart`);
+        history.push(`/payment`);
     }
     
     return (
