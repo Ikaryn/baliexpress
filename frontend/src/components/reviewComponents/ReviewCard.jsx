@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Button, FormControl, Grid, IconButton, makeStyles, MenuItem, Modal, Select, Snackbar, TextField, Typography } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -6,6 +6,7 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import FlagIcon from '@material-ui/icons/Flag'
 import API from '../../util/API';
+import Alert from '@material-ui/lab/Alert';
 
 const api = new API()
 
@@ -24,13 +25,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ReviewCard = ({review, userId}) => {
+const ReviewCard = ({review, userId, reviews, setReviews}) => {
     
     const classes = useStyles();
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
     const history = useHistory();
     const [isAdmin, setIsAdmin] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [reportReason, setReportReason] = React.useState("");
+    const [success, setSucccess] = React.useState(false);
 
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -46,16 +50,16 @@ const ReviewCard = ({review, userId}) => {
             case 'up':
                 // If already upvoted
                 if (voteStatus['up']) {
-                    const response = await api.delete('review/vote', body);
+                    await api.delete('review/vote', body);
                     up = false;
                 // If already downvoted
                 } else if (voteStatus['down']) {
-                    const response = await api.put('review/vote', body);
+                    await api.put('review/vote', body);
                     up = true;
                     down = false;     
                 // If not voted yet
                 } else {
-                    const response = await api.post('review/vote', body);
+                    await api.post('review/vote', body);
                     up = true;
                 }
                 break;
@@ -63,16 +67,16 @@ const ReviewCard = ({review, userId}) => {
             default:
                 // If already upvoted
                 if (voteStatus['up']) {
-                    const response = await api.put('review/vote', body);
+                    await api.put('review/vote', body);
                     up = false;
                     down = true;
                 // If already downvoted
                 } else if (voteStatus['down']) {
-                    const response = await api.delete('review/vote', body);
+                    await api.delete('review/vote', body);
                     down = false;            
                 // If not voted yet
                 } else {
-                    const response = await api.post('review/vote', body);
+                    await api.post('review/vote', body);
                     down = true;
                 }
                 break;
@@ -97,6 +101,21 @@ const ReviewCard = ({review, userId}) => {
 
     },[review.userVote])
 
+    const handleReport = () => {
+        const body = {reviewID: review.reviewid, reason: reportReason};
+        api.post('review/reports', body);
+        setOpen(false);
+        setSucccess(true);
+    }
+
+    const handleRemove = (reviewid) => {
+        const body = {reviewId: reviewid};
+        api.delete('review', body);
+        const tempReviews = JSON.parse(JSON.stringify(reviews));
+        const newReviews = tempReviews.filter(tempR => tempR.reviewid !== reviewid);
+        setReviews(newReviews)
+        console.log(isAdmin)
+    }
     
     return (
         <Grid container item direction="column" className={classes.root} spacing={3} xs={9}>
@@ -142,9 +161,64 @@ const ReviewCard = ({review, userId}) => {
                                 <ThumbDownIcon className={voteStatus.down ? classes.downVote : classes.noVote}/>
                             </IconButton>
                         </Grid>
+                        <Grid item>
+                            <IconButton onClick={() => {setOpen(true)}}>
+                                <FlagIcon></FlagIcon>
+                            </IconButton>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+            <Modal open={open} onClose={() => setOpen(false)}>
+                <Grid className="logout-confirmation-container">
+                    <Typography>Why would you like to report this review?</Typography>
+                    <Grid item>
+                        <FormControl>
+                            <Select
+                                // value = {reportReason}
+                                onChange={(event)=>{setReportReason(event.target.value)}}
+                            >
+                                <MenuItem value='harassment'>This review is harassing me or someone else</MenuItem>
+                                <MenuItem value='offensive'>This review is offensive</MenuItem>
+                                <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid container item direction="row">
+                        <Grid item>
+                            <Button 
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {setOpen(false)}}>Cancel
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {handleReport()}}>Submit
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Modal>
+            <Grid item>
+                {/* {isAdmin && */}
+                <Button
+                    color="primary" 
+                    variant="contained"
+                    onClick={() => {handleRemove(review.reviewid)}}
+                >
+                    Remove Review
+                </Button>
+
+            </Grid>
+
+            {success &&
+            <Snackbar open={success} autoHideDuration={1000}>
+                <Alert severity="success">This review has been reported</Alert>
+            </Snackbar>
+            }
         </Grid>
         
     )

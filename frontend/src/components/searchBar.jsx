@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../util/API';
 import SearchIcon from '@material-ui/icons/Search';
 import SmallProductView from './SmallProductView';
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Grid, InputBase, Typography } from '@material-ui/core';
+import { Button, ClickAwayListener, Grow, MenuList, Paper, Popper, Grid, InputBase, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import './styles/search.css';
 const api = new API();

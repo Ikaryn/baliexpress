@@ -127,8 +127,7 @@ const UserOrderList = () => {
 
     return (
         <Grid>
-            {!orderSelected && <OrderTable orders={orders}/>}
-            {orderSelected && <OrderCard order={order}/>}
+            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard order={order}/>}
         </Grid>
     );
 

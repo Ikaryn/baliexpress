@@ -311,7 +311,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
                 className={reviewOpen ? '' : classes.closedReviewFormCardBlock}
             >
                 {reviews && reviews.map((review) => (
-                    <ReviewCard review={review} userId={localStorage.getItem('userId')}/>
+                    <ReviewCard review={review} userId={localStorage.getItem('userId')} reviews={reviews} setReviews={setReviews}/>
                 ))}
             </Grid>
         </Grid>

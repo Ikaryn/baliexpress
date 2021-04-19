@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, ListItemSecondaryAction, makeStyles, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, makeStyles, Paper, Tab, Tabs, Typography } from '@material-ui/core';
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
@@ -8,7 +8,6 @@ import API from '../util/API';
 import { useHistory } from 'react-router';
 import ReviewBlock from '../components/reviewComponents/ReviewBlock';
 import { StoreContext } from '../util/store';
-// import SpecificationList from '../components/SpecificationList'
 
 const api = new API();
 

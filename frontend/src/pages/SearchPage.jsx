@@ -1,4 +1,4 @@
-import { Paper, Typography, Grid, TextField, Divider } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router';
 import ProductCard from '../components/ProductCard';

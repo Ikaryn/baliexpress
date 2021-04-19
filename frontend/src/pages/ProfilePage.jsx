@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal, Divider } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, Tab, Tabs, Box, Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -10,17 +10,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
+import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 import UserOrderList from '../components/profilePage/UserOrderList';
 import SalePanel from '../components/AdminManagementComponents/SalePanel';
 import { StoreContext } from '../util/store';
-// import './App.css';
-const api = new API();
 
-const pageStatus = {
-    ACCINFO: 'accInfo',
-    ORDERS: 'orders',
-    BUILDS: 'builds'
-}
+const api = new API();
 
 const ProfilePage = () => {
 
@@ -138,11 +133,15 @@ const ProfilePage = () => {
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            {accInfo.isAdmin && <Tab label="Manage Sales" />}    
+                            {accInfo.isAdmin && <Tab label="Manage Sales" />}   
+                            {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
+                        {/* Showing different options for users and admins:
+                            For users: Profile information, user's orders and their builds
+                            For admins: Adding products, manage products, all users and manage sales */}
                         {!accInfo.isAdmin &&
                             <TabPanel value={value} index={0}>
                                 <ProfilePageAccountInfo
@@ -181,7 +180,12 @@ const ProfilePage = () => {
                                 <SalePanel />
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 4 : 3}>
+                        {accInfo.isAdmin &&
+                            <TabPanel value={value} index={7}>
+                                <ReportedReviewsList/>
+                            </TabPanel>
+                        }
+                        <TabPanel value={value} index={accInfo.isAdmin ? 8 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

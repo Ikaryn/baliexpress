@@ -1,4 +1,4 @@
-import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Paper, Popper, rgbToHex, Snackbar, Typography, useTheme } from '@material-ui/core';
+import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';

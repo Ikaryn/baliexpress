@@ -1139,7 +1139,7 @@ def addOrder(userID, date, products, streetaddress, city, state, country, postco
         soldQuery = "UPDATE Products SET sold = sold + %s WHERE id = %s"
         salesSoldQuery = "UPDATE Sale_Products SET sold = SOLD + %s WHERE saleid = %s AND productid = %s"
         stockQuery = "UPDATE Products SET stock = stock - %s WHERE id = %s"
-        currentSales = getCurrentSales(cur)
+        currentSales = getSalesForDate(cur, date)
         print('Current sales are')
         print(currentSales)
         for productID, quantity in products.items():
@@ -1588,6 +1588,13 @@ def getCurrentSales(cur):
     today = datetime.today().strftime('%Y-%m-%d')
     query = "SELECT id, name FROM Sales WHERE startdate <= %s AND enddate >= %s"
     cur.execute(query, (today, today))
+    rows = cur.fetchall()
+    sales = [{column:data for column, data in record.items()} for record in rows]
+    return sales
+
+def getSalesForDate(cur, date):
+    query = "SELECT id, name FROM Sales WHERE startdate <= %s AND enddate >= %s"
+    cur.execute(query, (date, date))
     rows = cur.fetchall()
     sales = [{column:data for column, data in record.items()} for record in rows]
     return sales

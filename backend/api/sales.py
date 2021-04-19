@@ -7,9 +7,6 @@ from . import dbaccess as db
 from datetime import datetime
 from .helpers import *
 
-# ALL PLACEHOLDER DB FUNCTIONS ARE JUST COSMETICS,
-# NO NEED TO FOLLOW THAT SYNTAX, YOU DO YOU
-
 class Sales(Resource):
 
     # Getting sales
@@ -21,12 +18,10 @@ class Sales(Resource):
         allSales = request.args.get('all')
 
         if allSales == 'true':
-
             print('Get all sales attempt received')
             sales = db.getAllSales()
 
         elif allSales == 'false':
-
             print('Get current sales attempt received')
             sales = db.getAllCurrentSales()
 
@@ -46,8 +41,8 @@ class Sales(Resource):
                 product = db.getProduct(saleProduct['productid'])
                 saleProducts.append(product)
 
+            # Format appropriate fields for JSON serialization
             sale['productList'] = boolDateToString(saleProducts)
-
             sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
             sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
     
@@ -58,6 +53,7 @@ class Sales(Resource):
     def post(self):
         print('Add sale attempt received')
 
+        # Getting data from request
         data = request.json
         name = data.get('name')
         start = data.get('start')
@@ -66,15 +62,14 @@ class Sales(Resource):
         endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
         image = data.get('image')
-
-        print(name, startDate, endDate, products)
         image = image.split(',')[1]
         
-        # Placeholder function to send to database
+        # Add the sale to the database
         saleId = db.addSale(name, startDate, endDate, products, image)
         if saleId is None:
             return {'error': 'Failed to create sale'}
         
+        # Return list of all sales to the frontend
         sales = db.getAllSales()
         for sale in sales:
             saleProducts = []
