@@ -13,9 +13,11 @@ const ProductStats = ({setOpen, productInfo}) => {
     
     React.useEffect(() => {
         (async () => {
-            const data = await api.get(`stats?productId=1`);
-            console.log(data);
+            const data = await api.get(`stats?productId=${productInfo.id}`);
+            const dps = JSON.parse(JSON.stringify(data.stats));
+            dps.forEach((stat) => stat.x = new Date(stat.x))
             const options = {
+                zoomEnabled: true,
                 title: {
                     text: 'Product sold over',
                 },
@@ -28,15 +30,16 @@ const ProductStats = ({setOpen, productInfo}) => {
                 data: [
                     {
                         type: 'line',
-                        dataPoints: data.stats
+                        dataPoints: dps
                     }
                 ]
                 
             }
             setChartOptions(options);
+            console.log(data.stats);
         })();
         
-    }, []);
+    }, [productInfo.id]);
     
     
     return(

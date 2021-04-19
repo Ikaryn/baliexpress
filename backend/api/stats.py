@@ -18,8 +18,9 @@ class Stats(Resource):
 
         productId = request.args.get('productId')
         saleId = request.args.get('saleId')
-
+        
         if productId is not None:
+
             print('Getting product stats attempt received')
             productId = int(productId)
             productStats = {}
@@ -34,7 +35,7 @@ class Stats(Resource):
                 dateString = curDate.strftime('%Y-%m-%d')
                 productStats[dateString] = [0, '', '']
                 curDate += timedelta(days=1)
-            
+            print('iterating through sales')
             # Attach the associated sale to the their dates in the list
             sales = db.getAllSales()
             for sale in sales:
@@ -48,7 +49,9 @@ class Stats(Resource):
                             dateString = cur.strftime('%Y-%m-%d')
                             if dateString in productStats:
                                 productStats[dateString] = [0, sale['name'], product['salepercent']]
-
+                            cur += timedelta(days=1)
+                            
+            print('iterating through orders')
             # Iterate through every order and to the date the quantity of the product bought
             orders = db.getAllOrders()       
             for order in orders:
@@ -60,7 +63,7 @@ class Stats(Resource):
                             productStats[orderDate][0] += product['quantity']
                         else:
                             productStats[orderDate][0] = product['quantity']
-            
+            print('hello')
             # Format into a list of dicts for the frontend to process
             stats = []
             for key in productStats:
@@ -99,7 +102,7 @@ class Stats(Resource):
                     for product in order['products']:
                         if product['productid'] in saleProducts:
                             saleStats[order['date'].strftime('%Y-%m-%d')] += product['quantity']
-            
+            print('yo')
             # Format into a list of dicts for the frontend to process
             stats = []
             for key in saleStats:

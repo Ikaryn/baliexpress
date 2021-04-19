@@ -23,23 +23,45 @@ I completed register class for backend. Also completed Login, abit of Register (
 and Profile page front end pages (ProfilePageAccountInfo.jsx, StepperComponents.jsx, ProfilePage.jsx, LoginPage.jsx, RegisterPage.jsx, AccInfoBlock.jsx). 
 Lastly completed setting up all of the routing/url handling for frontend. 
 
+The technical obstacles was setting up the initial api. We tried following flask documentation, but had different usecases. We had alot of problems around CORS
+and routing. After a bunch of googling we had fixed the problem by adding CORS(app) to our file.
+
 Week 5
 
-Created and Finished off assigned user stories, that is profile page, product list, and product pages (Minus sorting/filtering)(ProductPage.js, ProductListPage.jsx, ProductCard.jsx). 
-Also fixed errors in add/edit products and setting admin status with Darryl. Refactored add products(ProductForm.jsx), 
+We (all of us) planned to finish off the bulk of the product pages done since the last diary entry.
+
+I Created and Finished off assigned user stories, that is profile page, product list, and product pages (Minus sorting/filtering)(ProductPage.js, ProductListPage.jsx, ProductCard.jsx). 
+Also fixed errors in add/edit products and setting admin status with Darryl. Adding and editing products I believe was developed quite poorly, where it was essentially
+imcomplete close of the demo date, so I refactored add products(ProductForm.jsx).
 After demo, we set up a meeting for a retro on Thursday (3/18/2019). Also completed navbar functionality where I could. 
 I implemented AllProductList.jsx , to view all product tab for admin users in profile page - All by myself.
 
+Since the database wasn't connected at this point and time, we had to come up and use alot of dummy data. 
+After the demo we had planned to connect the database with the backend/frontend. We had also sat down and delegated jira tickets for everyone.
+
 Week 6
+
+From the last diary entry we had connected the database with the backend, this created some problems with accessing the api, in terms of naming semantics.
+Once we standardised the names, it was sorted easily.
 
 Converted website into a dark mode. Created the build PC page with relevant components 
 (BuildPage.jsx, BuildProductCard.jsx, BuildModalForm.jsx, SelectBuildPRoductModal.KSX, SelectProductCard.jsx) -All by myself.
+
+Initially with our dummy data, we had to improvise image strings. When we integrated the database all of this was completely lost. So we had to figure out a way to do this.
+At this time and point, the backend wasn't setup for the build-A-PC recommendation system, so I was only able to complete the skeleton of interaction.
+
+For the next week, we had planned to finish off the recommendation system and its coupled components.
 
 Week 7
 
 Along side with Darryl Liu, we came up with the algorithm to calculate performance on the comparison page in DataVis.js. 
 I then wrote ComparePage.jsx, CompareProductCard.jsx. -All by myself. Started the framework for Reviews. 
 Created ReviewBlock.jsx, ReviewCard.jsx, ReviewForm.jsx - all by myself.
+
+Alot of the obstacles I had faced was around calculating performance values, and creating actual performance weightings. This was overcome by getting help from
+some of the more knowledgable group members like Darryl Liu.
+
+Next week was our demo, so it was important to finish off the rest of the tickets assigned.
 
 Week 8.
 

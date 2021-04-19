@@ -15,6 +15,7 @@ import LoadingComponent from '../components/LoadingComponent';
 import { StoreContext } from '../util/store';
 import Carousel from 'react-material-ui-carousel';
 import BaliexpressBanner from '../assets/BaliexpressBanner.png'
+import { convertCategoryName } from '../util/helpers.js';
 
 const api = new API();
 
@@ -126,7 +127,7 @@ const HomePage = () => {
                 <Paper className={classes.menuContainer}>
                     <Grid container item direction="column" xs={1}>
                             {categories.map((category) => (
-                                <Button size="medium" key={`${category} button`} onClick={()=> {history.push(`/product/${category}`)}}>{category}</Button>
+                                <Button size="medium" key={`${category} button`} onClick={()=> {history.push(`/product/${convertCategoryName(category)}`)}}>{category}</Button>
                             ))}
                             <Button size="medium" color="secondary" onClick={() => {history.push(`/sales`)}}>On Sale</Button>
                     </Grid>

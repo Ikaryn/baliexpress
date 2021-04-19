@@ -1,4 +1,6 @@
 import React from 'react';
+
+
 export const StoreContext = React.createContext(null);
 
 // eslint-disable-next-line import/no-anonymous-default-export

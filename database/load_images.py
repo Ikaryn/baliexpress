@@ -10,7 +10,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
             user="postgres",
-            password="PASSWORD"
+            password="iloverice12345"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:

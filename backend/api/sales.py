@@ -34,7 +34,8 @@ class Sales(Resource):
 
             # Get associated productIds for the sale
             item = db.getSale(sale['id'])
-            print("sale:", item)
+            # print("sale:", item)
+            print('in Sales')
             for saleProduct in item['products']:
 
                 # Get the actual product from the productIds

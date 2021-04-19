@@ -176,16 +176,16 @@ const ProfilePage = () => {
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={6}>
+                            <TabPanel value={value} index={3}>
                                 <SalePanel />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={7}>
+                            <TabPanel value={value} index={4}>
                                 <ReportedReviewsList/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 8 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

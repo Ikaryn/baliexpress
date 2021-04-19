@@ -1,9 +1,12 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Divider, Grid, Grow, LinearProgress, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
+import { Avatar, Button, Divider, Grid, Grow, LinearProgress,
+            makeStyles, MenuItem, Paper, Select, Typography 
+        } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewForm from './ReviewForm';
 import API from '../../util/API';
+import { StoreContext } from '../../util/store';
 
 const api = new API()
 
@@ -57,7 +60,7 @@ const BarPercentages = ({ratings , setRating}) => {
         setOverallRating(rating);
         setRating({rating: rating, 'num': ratings.length});
         setStars(initStars);
-    }, [ratings])
+    }, [ratings, setRating])
     
 
     
@@ -125,6 +128,9 @@ const FeaturedReview = ({review}) => (
 )
 
 const ReviewBlock = ({rating, productId, setRating}) => {
+    
+    const context = React.useContext(StoreContext);
+    const {userType: [userType]} = context;
     
     const [reviews, setReviews] = React.useState([{}])
     const [sort, setSort] = React.useState('popularity');
@@ -247,7 +253,13 @@ const ReviewBlock = ({rating, productId, setRating}) => {
                         <Typography variant="h6" className="light-text">Featured Review</Typography>
                     </Grid>
                     <Grid item className={classes.featuredProductContainer}>
-                        {featuredReview &&<FeaturedReview review={featuredReview} />}
+                        {featuredReview ? 
+                            <FeaturedReview review={featuredReview}/>
+                        : 
+                            <Grid container justify="center" alignItems="center">
+                                <Typography>There are currently no reviews for this product</Typography>
+                            </Grid>
+                        }
                     </Grid>
                 </Grid>
             </Grid>
@@ -260,7 +272,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
                         variant="contained" 
                         className={classes.standoutButton} 
                         onClick={()=>{handleReviewFormOpen()}}
-                        disabled={localStorage.getItem('userId' ? false : true)}
+                        disabled={userType === 'guest'}
                     >
                         {generateReviewButtonText()}
                     </Button>

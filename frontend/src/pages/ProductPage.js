@@ -112,13 +112,27 @@ const ProductPage = () => {
         }
         setCart(newCart);
     }
+    
+    const handleQuantity = (direction) => {
+        if (direction === '+') {
+            if (quantity < productInfo.stock) {
+                setQuantity(quantity + 1);
+            }
+        } else {
+            if (quantity !== 1) {
+                setQuantity(quantity - 1);
+            }
+        }
+    
+    }
+    
     return (
         <div className="root" >
             <Grid container direction="column" className="light-text">
                 <Grid container item direction="row" className="product-info" >
                         <Grid item xs={3}>
                             <div className="product-image-container">
-                                <img src={productInfo.image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
+                                <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
                             </div>
                         </Grid>
                         <Grid container item direction="column" xs={7} alignItems="center" className="product-text-info">
@@ -153,19 +167,19 @@ const ProductPage = () => {
                                                 <Typography>Quantity:</Typography>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="outlined" onClick={() => {setQuantity(quantity - 1)}}>-</Button>
+                                                <Button variant="outlined" onClick={() => handleQuantity('-')}>-</Button>
                                             </Grid>
                                             <Grid item>
                                                 <Typography>{quantity}</Typography>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="outlined" onClick={() => {setQuantity(quantity + 1)}}>+</Button>
+                                                <Button variant="outlined" onClick={() => handleQuantity('+')}>+</Button>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" xs={2}>
                                         <Grid item>
-                                            <Rating value={rating.rating}/>
+                                            <Rating value={rating.rating} readOnly/>
                                         </Grid>
                                         <Grid item>
                                             <Typography className="light-text" variant="h6">{rating.num} reviews</Typography>
