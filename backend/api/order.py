@@ -6,21 +6,18 @@ from . import dbaccess as db
 from datetime import datetime
 
 # Helper function to attach all associated products to an order and format for JSON serialization
-def formatOrder(order):
+def addProductsToOrder(order):
     productList = []
-    total = 0
 
     for product in order['products']:
         productId = product['productid']
         p = db.getProduct(productId)
         p['quantity'] = product['quantity']
         p['release_date'] = p['release_date'].strftime('%Y-%m-%d')
-        total += p['price'] * p['quantity']
         productList.append(p)
 
     order['date'] = order['date'].strftime('%Y-%m-%d')
     order['products'] = productList
-    order['total'] = total
 
 class Order(Resource):
 
@@ -39,7 +36,7 @@ class Order(Resource):
             if order is None:
                 return {'Error: Failed to get order'}
             else:
-                formatOrder(order)
+                addProductsToOrder(order)
 
             return {'order': order}
 
@@ -49,7 +46,7 @@ class Order(Resource):
                 return{'orders': None}
             else:
                 for order in orders:
-                    formatOrder(order)
+                    order['date'] = order['date'].strftime('%Y-%m-%d')
 
                 return {'orders': orders}
         else:
@@ -58,7 +55,7 @@ class Order(Resource):
                 return{'orders': None}
             else:
                 for order in orders:
-                    formatOrder(order)
+                    order['date'] = order['date'].strftime('%Y-%m-%d')
                 return {'orders': orders}
 
 
@@ -74,6 +71,7 @@ class Order(Resource):
         products = data.get('products')
         builds = data.get('builds')
         shipping = data.get('shipping')
+        total = data.get('total') + data.get('shippingPrice')
 
         print(products)
         
@@ -84,16 +82,16 @@ class Order(Resource):
 
         # For each build, get the parts and add them to the above dictionary
         for build in builds:
-            for field in build:
+            for field in build['parts']:
 
                 # Checking if the component has a product or is empty
-                if isinstance(build[field], dict):
+                if isinstance(build['parts'][field], dict):
                     
                     # Add to exisitng quantity if the product was already in the cart
-                    if str(build[field]['id']) in products:
-                        products[str(build[field]['id'])] += build['quantity']
+                    if str(build['parts'][field]['id']) in products:
+                        products[str(build['parts'][field]['id'])] += build['quantity']
                     else:
-                        products[str(build[field]['id'])] = build['quantity']
+                        products[str(build['parts'][field]['id'])] = build['quantity']
 
         # Convert back to list of dicts
         # productList = [{'productid': key, 'quantity': productDict[key]} for key in productDict]
@@ -101,7 +99,8 @@ class Order(Resource):
         print(products)
 
         orderId = db.addOrder(  userId, 
-                                orderDate, 
+                                orderDate,
+                                total, 
                                 products,
                                 shipping['address'],
                                 shipping['city'],

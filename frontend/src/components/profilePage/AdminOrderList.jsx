@@ -30,16 +30,16 @@ const useStyles = makeStyles(() => ({
 
 }))
 
-const UserOrderList = () => {
+const AdminOrderList = () => {
 
     const classes = useStyles();
     const [orders, setOrders] = React.useState(null);
     const [orderSelected, setOrderSelected] = React.useState(false);
-    const [order, setOrder] = React.useState(null);
+    const [orderId, setOrderId] = React.useState(null);
 
     React.useEffect(() => {
         (async () => {
-            const response = await api.get(`order?userId=${localStorage.getItem('userId')}`);
+            const response = await api.get(`order?`);
             console.log(response);
             setOrders(response.orders);
         })();
@@ -59,7 +59,7 @@ const UserOrderList = () => {
                         </TableHead>
                         <TableBody>
                             {orders && orders.length > 0 && orders.map((order) => (
-                                <TableRow hover onClick={(event) => {setOrderSelected(true); setOrder(order)}}>
+                                <TableRow hover onClick={(event) => {setOrderSelected(true); setOrderId(order.id)}}>
                                     <TableCell align="left">{order.id}</TableCell>
                                     <TableCell align="left">{order.date}</TableCell>
                                     <TableCell align="left">${order.total}</TableCell>
@@ -74,7 +74,18 @@ const UserOrderList = () => {
         )
     }
 
-    const OrderCard = ({order}) => {
+    const OrderCard = ({orderId}) => {
+
+        const [order, setOrder] = React.useState(null);
+
+        React.useEffect(() => {
+            (async () => {
+                const response = await api.get(`order?orderId=${orderId}`);
+                console.log(response);
+                setOrder(response.order);
+            })();
+        },[])
+
         return (
             <Grid container>
                 <Grid item>
@@ -94,7 +105,7 @@ const UserOrderList = () => {
 						<Grid item container direction="column" alignItems="center">
 							<List>
 								<Divider variant="middle"/>
-								{order.products.map((product) => (
+								{order && order.products.map((product) => (
 									<ListItem>
 										<Grid item container direction="row" className={classes.product} justify="space-between" alignItems="center">
 												<Grid item xs={1}>
@@ -127,10 +138,10 @@ const UserOrderList = () => {
 
     return (
         <Grid>
-            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard order={order}/>}
+            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard orderId={orderId}/>}
         </Grid>
     );
 
 }
 
-export default UserOrderList;
+export default AdminOrderList;

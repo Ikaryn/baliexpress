@@ -175,14 +175,16 @@ const PaymentPage = () => {
             cart.forEach(item => {
                 if (item.id) products[item.id] = item.quantity;
                 else builds.push(item);
-                });
+            });
 
             // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
                 products: products,
                 builds: builds,
-                shipping: shippingDetails
+                shipping: shippingDetails,
+                shippingPrice: shippingPrice,
+                total: price
             };
 
             const response = await api.post(`order`, body);
