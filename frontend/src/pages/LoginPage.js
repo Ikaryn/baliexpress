@@ -1,9 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
-import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel, Input } from '@material-ui/core';
+import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel } from '@material-ui/core';
 import { StoreContext } from '../util/store';
-// import checkValidEmail from 'RegisterPage';
 
 const api = new API();
 

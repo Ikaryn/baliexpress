@@ -16,6 +16,10 @@ def productSearch(*args):
     tokens = query.split(' ')
     products = db.getAllProducts()
 
+    # Using all the tokens, find the associated products containing all the tokens
+    # Then assign a score (relevance) equal to the length of tokens
+    # After the products have been found, pop the first token and repeat
+    # Check if the found products have a relevance score yet and then assign then the score which would be lower
     results = []
     while len(tokens) > 0:
         for product in products:
@@ -73,6 +77,8 @@ class Products(Resource):
                 if img is not None:
                     img = img.split(',')[1]
                     newProduct[field] = img
+            
+            # Converting strings to boolean values
             elif field == 'cooler_included' or field == 'overclockable':
                 value = data.get(field)
                 if value.lower() == 'yes':
@@ -106,13 +112,6 @@ class Products(Resource):
         productId = data.get('id')
         product = db.getProduct(productId)
 
-        # for field in product:
-        #     if field != 'image':
-        #         print(field, ":", product[field], type(product[field]))
-        # for field in data:
-        #     if field != 'image':
-        #         print(field, ":", data.get(field), type(data.get(field)))
-
         for field in data:
             if field == 'specs':
                 specs = data.get('specs')
@@ -126,11 +125,11 @@ class Products(Resource):
             else:
                 product[field] = data.get(field)
         
+        # Remove the id and sale fields as they are not required
         product.pop('id')
         product.pop('sale')
         db.editProduct(productId, product)
 
-        
         return
     
     # Remove an existing product

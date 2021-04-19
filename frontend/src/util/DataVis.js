@@ -1,4 +1,3 @@
-import { matchPath } from "react-router";
 
 const normalise = (value, max, min) => (value - min) * 100 / (max - min);
 

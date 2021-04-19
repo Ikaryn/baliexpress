@@ -50,16 +50,16 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
             case 'up':
                 // If already upvoted
                 if (voteStatus['up']) {
-                    const response = await api.delete('review/vote', body);
+                    await api.delete('review/vote', body);
                     up = false;
                 // If already downvoted
                 } else if (voteStatus['down']) {
-                    const response = await api.put('review/vote', body);
+                    await api.put('review/vote', body);
                     up = true;
                     down = false;     
                 // If not voted yet
                 } else {
-                    const response = await api.post('review/vote', body);
+                    await api.post('review/vote', body);
                     up = true;
                 }
                 break;
@@ -67,16 +67,16 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
             default:
                 // If already upvoted
                 if (voteStatus['up']) {
-                    const response = await api.put('review/vote', body);
+                    await api.put('review/vote', body);
                     up = false;
                     down = true;
                 // If already downvoted
                 } else if (voteStatus['down']) {
-                    const response = await api.delete('review/vote', body);
+                    await api.delete('review/vote', body);
                     down = false;            
                 // If not voted yet
                 } else {
-                    const response = await api.post('review/vote', body);
+                    await api.post('review/vote', body);
                     down = true;
                 }
                 break;

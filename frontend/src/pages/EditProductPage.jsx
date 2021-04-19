@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const EditProductPage = ({}) => {
+const EditProductPage = () => {
 
     const history = useHistory();
     const classes = useStyles();

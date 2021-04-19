@@ -21,6 +21,7 @@ class Reviews(Resource):
         userId = request.args.get('userId')
         reviews = db.getProductReviews(int(productId))
 
+        # For each review, calculate the overall score based on the number of upvotes and downvotes
         for review in reviews:
             review['reviewdate'] = json.dumps(review['reviewdate'].__str__())
             score = 0
@@ -31,6 +32,8 @@ class Reviews(Resource):
                     print('here')
                     review['userVote'] = review['votes'][id]
 
+            # If the score is negative, display it just as
+            # 0 people found this helpful
             if score < 0:
                 score = 0
 
