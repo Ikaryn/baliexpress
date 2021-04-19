@@ -30,14 +30,14 @@ const ProfilePage = () => {
     const [open, setOpen] = React.useState(false);
     const context = React.useContext(StoreContext);
     const {userType: [,setUserType] } = context;
-    
-    // const [saleComponent, setSaleComponent] = React.useState('table');
+    const {cart: [,setCart]} = context;
     
     // when logout remove all of cookies
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
+        setCart([]);
         setUserType('guest')
         history.push('/');
     }

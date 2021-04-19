@@ -1,65 +1,69 @@
-import { Typography, Button, Checkbox } from '@material-ui/core';
+import { Typography, Button, Checkbox, Grid, Divider } from '@material-ui/core';
 import React from 'react';
 import API from '../util/API';
 import '../App.css';
 import CartItem from '../components/CartComponents/CartItem';
 import { useHistory } from 'react-router';
+import { StoreContext } from '../util/store';
 
 const CartPage = () => {
 
     const history = useHistory();
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    const [cartList, setCartList] = React.useState(cart);
-    const [prebuild, setPrebuild] = React.useState(false);
-    const [totalPrice, setTotalPrice] = React.useState(calcTotal());
-
+    
+    const context = React.useContext(StoreContext);
+    const {cart : [cart, setCart]} = context;
+    
+    // Calculate the final price in the cart.
     function calcTotal(){
-        var total = 0;
-        console.log(cart);
+        let total = 0;
         for(const i in cart){
-            total =+ parseInt(cart[i].price);
+            total += (parseInt(cart[i].price) * cart[i].quantity);
         }
         return total;
     }
-    function handleTotal(){
-        var total = 0;
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        for(const i in cart){
-            total =+ parseInt(cart[i].price);
-        }
-        setTotalPrice(total);
-    }
     
     return (
-        <div>
-            <div>
-                {cartList != null && cartList.map((x) => (
+        <Grid 
+            container 
+            direction="column" 
+            className="light-text" 
+            alignItems="center"
+            spacing={3}
+        >
+            <Grid item>
+                <Typography variant="h3">Cart Checkout</Typography>
+            </Grid>
+            <Divider />
+            {cart != null && cart.map((x) => (
+                <Grid item xs={12} style={{width: '60%'}}>
                     <CartItem 
-                        productInfo={x}
+                        productInfo={x} 
+                        type={x.buildName ? 'build' : 'product'}
+                        setCartList={setCart}
                     />
-                ))}                
-            </div>
-            <div>
-                <div>
-                    <Typography color="primary">
-                        Would you like to have your PC prebuilt?
-                        <Checkbox onChange={() => setPrebuild(!prebuild)}/>
-                    </Typography>
-                </div>
-                <div>
-                    <Typography color="primary">
-                        {"Checkout and Pay: "}
+                </Grid>
+            ))}
+            <Divider />
+            <Grid item container direction="row" justify="center">
+                <Grid item xs={3}>
+                    <Typography variant="h4">Total Price: ${calcTotal().toFixed(2)}</Typography>
+                </Grid>
+                <Grid item container direction="row" xs={2}  alignItems="center">
+                    <Grid item xs={7}>
+                        <Typography>Checkout and Pay:</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
                         <Button 
                             variant="contained" 
-                            color="secondary"
+                            color="secondary" 
                             onClick={() => history.push(`/payment`)}
-                        >
-                            Checkout
+                            >
+                            Checkout        
                         </Button>
-                    </Typography>
-                </div>
-            </div>
-        </div>        
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>   
     )
 
 }

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, makeStyles, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, makeStyles, Paper, Snackbar, Tab, Tabs, Typography } from '@material-ui/core';
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
@@ -8,6 +8,7 @@ import API from '../util/API';
 import { useHistory } from 'react-router';
 import ReviewBlock from '../components/reviewComponents/ReviewBlock';
 import { StoreContext } from '../util/store';
+import Alert from '@material-ui/lab/Alert';
 
 const api = new API();
 
@@ -50,6 +51,7 @@ const ProductPage = () => {
     const history = useHistory();
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
+    
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const { category, pid } = useParams();
     const [value, setValue] = React.useState(0);
@@ -57,6 +59,7 @@ const ProductPage = () => {
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [price, setPrice] = React.useState(0);
     const [quantity, setQuantity] = React.useState(1);
+    const [success, setSuccess] = React.useState(false);
     
     const classes = useStyles();
     // will be temporary to read in. (replace with values inside the product dict)
@@ -110,6 +113,7 @@ const ProductPage = () => {
         } else {
             found[0]['quantity'] += 1;
         }
+        setSuccess(true);
         setCart(newCart);
     }
     
@@ -251,6 +255,9 @@ const ProductPage = () => {
                     {productInfo.id && <ReviewBlock rating={rating} productId={productInfo.id} setRating={setRating}/>}
                 </Grid>
             </Grid>
+            <Snackbar open={success} autoHideDuration={2000} onClose={() => setSuccess(false)}>
+                <Alert severity="success">Successfully added product to cart.</Alert>
+            </Snackbar>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { StoreContext } from '../../util/store';
 
 const api = new API();
-const CartItem = ({productInfo, setTotal, type}) => {
+const CartItem = ({productInfo, setCartList, type}) => {
     
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
@@ -36,21 +36,25 @@ const CartItem = ({productInfo, setTotal, type}) => {
     }
     return (
         <Grid container item direction="row" spacing={1} justify="flex-end" alignItems="center">
-            <Grid item xs={3}>
-                {type === 'product' && <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product-thumbnail" class="image"/>}
+            <Grid item xs={1}>
+                {type === 'product' && 
+                    <img src={"data:image/jpeg;base64,"+productInfo.image} 
+                    alt="product-thumbnail" 
+                    class="image"
+                />}
             </Grid>
             <Grid container item direction="column" xs={6}>
                 <Grid item>
-                    <Typography variant="caption">
+                    <Typography variant="h6">
                         {productInfo.name ? productInfo.name : productInfo.buildname}
                     </Typography>
                 </Grid>
-                <Grid container item direction="row" alignItems="center" spacing={6}>
-                    <Grid item xs={6}>
+                <Grid container item direction="row" alignItems="center">
+                    <Grid item xs={2}>
                         <Typography>Quantity: </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                    <TextField value={quantity} variant="outlined" onChange={(event) => {handleQuantity(event.target.value)}}/>
+                    <Grid item xs={2}>
+                        <TextField value={quantity} variant="outlined" onChange={(event) => {handleQuantity(event.target.value)}}/>
                     </Grid>
                 </Grid>    
             </Grid>
