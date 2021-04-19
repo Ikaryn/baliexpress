@@ -158,12 +158,17 @@ const PaymentPage = () => {
 
             // Get the items from the cart, and put the id and quanity into a new dict
             const products = {};
-            cart.forEach(product => products[product.id] = product.quantity);
+            const builds = [];
+            cart.forEach(item => {
+                if (item.id) products[item.id] = item.quantity;
+                else builds.push(item);
+                });
 
             // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
                 products: products,
+                builds: builds,
                 shipping: shippingDetails
             };
 

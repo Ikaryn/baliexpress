@@ -190,7 +190,7 @@ def recommendCPU(budget, usage, overclock):
     recommendation = None
     print("CPU Budget: ",budget)
     for CPU in CPUs:
-        if CPU['price'] <= budget:
+        if CPU['price'] <= budget and CPU['stock'] > 0:
             if overclock == "true":
                 if CPU['specs']['overclockable'] is False:
                     continue
@@ -221,7 +221,7 @@ def recommendGPU(budget, usage, overclock):
     recommendation = None
     for GPU in GPUs:
         # print("GPU specs = ", GPU['specs'])
-        if GPU['price'] <= budget:
+        if GPU['price'] <= budget and GPU['stock'] > 0:
             averageRating = getAverageProductRating(GPU['id'])
             score = memoryWeight * float(GPU['specs']['memory_size']) + clockWeight * float(GPU['specs']['clock_speed']) + coreWeight * float(GPU['specs']['cuda_cores']) + averageRating
             if score > highscore:
@@ -245,7 +245,7 @@ def recommendMotherboard(budget, usage, CPU, GPU):
     CPUsocket = CPU['specs']['socket']
     recommendation = None
     for motherboard in Motherboards:
-        if motherboard['specs']['cpu_socket'] == CPUsocket:
+        if motherboard['specs']['cpu_socket'] == CPUsocket and motherboard['stock'] > 0:
             if motherboard['specs']['pcie_type'] >= GPUpcie:
                 averageRating = getAverageProductRating(motherboard['id'])
                 if averageRating > currentRating:
@@ -271,7 +271,7 @@ def recommendCPU_Cooling(budget, CPU, overclock):
     recommendation = None
     if (not CPU['specs']['cooler_included']):
         for cooler in CPUcoolers:
-            if cooler['price'] <= budget:
+            if cooler['price'] <= budget and cooler['stock'] > 0:
                 if cooler['specs']['socket'] == CPU['specs']['socket']:
                     averageRating = getAverageProductRating(cooler['id'])
                     if averageRating > currentRating:
@@ -295,7 +295,7 @@ def recommendStorage(budget, Motherboard, format):
     recommendation = None
 
     for storage in Storages:
-        if storage['price'] <= budget:
+        if storage['price'] <= budget and storage['stock'] > 0:
             if (storage['specs']['format']).lower() == (format).lower():
                 if storage['specs']['capacity'] > highestCapacity:
                     highestCapacity = storage['specs']['capacity']
@@ -318,7 +318,7 @@ def recommendMemory(budget, Motherboard):
     recommendation = None
 
     for memory in Memorys:
-        if memory['price'] <= budget:
+        if memory['price'] <= budget and memory['stock'] > 0:
             averageRating = getAverageProductRating(memory['id'])
             score = memory['specs']['number_of_sticks'] * memory['specs']['capacity'] + 0.01 * memory['specs']['frequency'] + averageRating
             if score > highscore:
@@ -341,7 +341,7 @@ def recommendPSU(budget, sumPower_usage):
     currentRating = -1
     recommendation = None
     for PSU in PSUs:
-        if PSU['price'] <= budget and PSU['specs']['wattage'] >= sumPower_usage:
+        if PSU['price'] <= budget and PSU['specs']['wattage'] >= sumPower_usage and PSU['stock'] > 0:
             if ratings.index(PSU['specs']['power_efficiency']) > currentRating:
                 recommendation = PSU
                 currentPrice = PSU['price']
@@ -362,15 +362,16 @@ def recommendCase(budget, GPU):
     currentPrice = 10000
     for case in cases:
         averageRating = getAverageProductRating(case['id'])
-        if averageRating > currentRating:
-            recommendation = case
-            currentRating = averageRating
-            currentPrice = case['price']
-        elif averageRating == currentRating:
-            if case['price'] < currentPrice:
+        if case['stock'] > 0:
+            if averageRating > currentRating:
                 recommendation = case
                 currentRating = averageRating
                 currentPrice = case['price']
+            elif averageRating == currentRating:
+                if case['price'] < currentPrice:
+                    recommendation = case
+                    currentRating = averageRating
+                    currentPrice = case['price']
 
     if recommendation is None:
         return ("")
@@ -383,15 +384,16 @@ def recommendPC_Cooling(budget):
     currentPrice = 10000
     for cooler in coolers:
         averageRating = getAverageProductRating(cooler['id'])
-        if averageRating > currentRating:
-            recommendation = cooler
-            currentRating = averageRating
-            currentPrice = cooler['price']
-        elif averageRating == currentRating:
-            if cooler['price'] < currentPrice:
+        if cooler['stock'] > 0:
+            if averageRating > currentRating:
                 recommendation = cooler
                 currentRating = averageRating
                 currentPrice = cooler['price']
+            elif averageRating == currentRating:
+                if cooler['price'] < currentPrice:
+                    recommendation = cooler
+                    currentRating = averageRating
+                    currentPrice = cooler['price']
 
     if recommendation is None:
         return ("")
