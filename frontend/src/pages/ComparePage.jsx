@@ -1,9 +1,8 @@
-import { Breadcrumbs, Button, Divider, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import React from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import CompareProductCard from '../components/buildPageComponents/CompareProductCard';
 import SelectBuildProductModal from '../components/buildPageComponents/SelectBuildProductModal';
-import { reverseCategoryName } from '../util/helpers';
 import { StoreContext } from '../util/store';
 
 const useStyles = makeStyles((theme) => ({

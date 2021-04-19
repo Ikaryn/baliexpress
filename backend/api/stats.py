@@ -20,7 +20,6 @@ class Stats(Resource):
         saleId = request.args.get('saleId')
 
         if productId is not None:
-
             print('Getting product stats attempt received')
             productId = int(productId)
             productStats = {}

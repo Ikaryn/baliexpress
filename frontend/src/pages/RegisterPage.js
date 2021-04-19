@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
-import {FormControl, InputLabel, Input, FormHelperText, Grid, OutlinedInput, Typography, Button} from '@material-ui/core'; 
+import {FormControl, InputLabel, FormHelperText, Grid, OutlinedInput, Typography, Button} from '@material-ui/core'; 
 
 const api = new API();
 
