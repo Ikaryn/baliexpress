@@ -143,7 +143,7 @@ class BuildPage(Resource):
         build['Storage'] = recommendStorage(StorageBudget, build['Motherboards'], storage)
         build['PC_Cooling'] = recommendPC_Cooling(CoolingBudget)
         if overclock == "true":
-            build["CPU_Cooling"] = recommendCPU_Cooling(CPU_CoolingBudget)
+            build["CPU_Cooling"] = recommendCPU_Cooling(CPU_CoolingBudget, build['CPU'], overclock)
         powerSum = 0
         for part in build:
             if type(build[part]) is dict:
