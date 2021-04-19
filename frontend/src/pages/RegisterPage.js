@@ -27,7 +27,7 @@ const Register = () => {
 
 
     function checkValidPhone (input) {
-        return /^[1-9]\d*$/.test(input);
+        return /^[0-9]\d*$/.test(input);
     }
     
     const handleLoginClick = () => {

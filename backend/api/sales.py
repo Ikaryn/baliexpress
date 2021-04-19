@@ -11,6 +11,7 @@ class Sales(Resource):
 
     # Getting sales
     # Url formats:
+    # Get a single sale: `sales?saleId=${saleId}`
     # Get all sales: `sales?all=true`
     # Get only the current sales: `sales?all=false`
     def get(self):
@@ -29,7 +30,7 @@ class Sales(Resource):
             return {'Error: Invalid api request'}
 
         for sale in sales:
-            print(sale)
+            # print(sale)
             saleProducts = []
 
             # Get associated productIds for the sale
@@ -62,8 +63,12 @@ class Sales(Resource):
         end = data.get('end')
         endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
+
         image = data.get('image')
-        image = image.split(',')[1]
+        if image is not None:
+            image = image.split(',')[1]
+        else:
+            return {'Error: No image'}, 400
         
         # Add the sale to the database
         saleId = db.addSale(name, startDate, endDate, products, image)
@@ -77,7 +82,7 @@ class Sales(Resource):
 
             # Get associated productIds for the sale
             item = db.getSale(sale['id'])
-            print("sale:", item)
+            # print("sale:", item)
             for saleProduct in item['products']:
 
                 # Get the actual product from the productIds
