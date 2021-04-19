@@ -68,6 +68,7 @@ CREATE TABLE Orders(
     state           text,
     country         text,
     postcode        text,
+    total           numeric(50, 2), 
     primary key (id),
     foreign key (userid) references Users(id)
 );

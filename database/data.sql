@@ -926,6 +926,15 @@ VALUES
 -- product 133 reviews
     (133, 4, 1, 'I saw one of these in Comoros and I bought one.', '2020-03-09');
 
+-- CPU Cooling
+INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
+VALUES
+    ('Corsair Dominator Platinum Airflow RGB LED Memory Fan Cooling CMDAF2', 'CPU_Cooling', 'CORSAIR', 103.63, '3 years', 'Dominator Platinum DRAM already has generous overclocking headroom, but to push it to extreme performance levels, you need active cooling.', 500, '2018-02-17');
+
+INSERT INTO CPU_Cooling(id, socket, power_use)
+VALUES
+    (134, 'AM4, AM3, AM2, FM2, FM1', '240');
+
 -- Sales
 INSERT INTO Sales (name, startdate, enddate)
 VALUES
