@@ -72,7 +72,33 @@ class Order(Resource):
         orderDate = datetime.today().strftime('%Y-%m-%d')
         userId = int(data.get('userId'))
         products = data.get('products')
+        builds = data.get('builds')
         shipping = data.get('shipping')
+
+        print(products)
+        
+        # Convert the product list of dicts to a complete dictionary
+        # productDict = {}
+        # for product in products:
+        #     productDict[product['productid']] = product['quantity']
+
+        # For each build, get the parts and add them to the above dictionary
+        for build in builds:
+            for field in build:
+
+                # Checking if the component has a product or is empty
+                if isinstance(build[field], dict):
+                    
+                    # Add to exisitng quantity if the product was already in the cart
+                    if str(build[field]['id']) in products:
+                        products[str(build[field]['id'])] += build['quantity']
+                    else:
+                        products[str(build[field]['id'])] = build['quantity']
+
+        # Convert back to list of dicts
+        # productList = [{'productid': key, 'quantity': productDict[key]} for key in productDict]
+
+        print(products)
 
         orderId = db.addOrder(  userId, 
                                 orderDate, 

@@ -20,22 +20,21 @@ const BuildProductCard = ({type}) => {
     const context = React.useContext(StoreContext)
     const [open, setOpen] = React.useState(false);
     const {build: [build, setBuild]} = context;
-    const [productInfo, setProductInfo] = React.useState(build[type]);
-    const [spec, setSpec] = React.useState(build[type].specs)
-    
+    const [productInfo, setProductInfo] = React.useState(build.parts[type]);
+    // const [spec, setSpec] = React.useState(build[type].specs)
+    console.log('rendering product card');
     const [redirect, setRedirect] = React.useState('')
     const classes = useStyles();
     
     
     
-    console.log(productInfo);
     
     // when user selects a product for the build, build state and productInfo state
     const handleCardUpdate = (type, product) => {
         
         // make a deep copy of build
         const updatedBuild = JSON.parse(JSON.stringify(build));
-        updatedBuild[type] = product;
+        updatedBuild.parts[type] = product;
         setBuild(updatedBuild);
         
         setProductInfo(product);
@@ -107,7 +106,7 @@ const BuildProductCard = ({type}) => {
                             <Typography variant="h6">Price</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h5">${productInfo.price}.00</Typography>
+                            <Typography variant="h5">${productInfo.price.toFixed(2)}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" xs={1} justify="center">

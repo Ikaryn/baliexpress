@@ -28,11 +28,15 @@ const UserBuildList = () => {
         // since saved builds may not have all parts filled out
         // populate the build with empty key/fields so it renders properly.
         build.parts.forEach((part) => {
-            editBuild[part.category] = part;
+            editBuild.parts[part.category] = part;
         })
         
+        editBuild.id = buildid;
+        editBuild.name = build.buildName;
+        editBuild.desc = build.buildDesc;
+        console.log(editBuild);
         setBuild(editBuild);
-        history.push(`/build/${userid}/${buildid}`);
+        history.push(`/build/${userid}/${buildid}/saved`);
     }
     
     const handleDelete = async (buildid) => {

@@ -1,10 +1,12 @@
-import { Button, Grid, makeStyles } from '@material-ui/core';
+import { Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
 import API from '../util/API';
 import { StoreContext } from '../util/store';
+import CartComponent from '../components/PaymentComponents/CartComponent';
+import DeliveryBlock from '../components/PaymentComponents/DeliveryBlock';
 
 const api = new API();
 
@@ -37,6 +39,17 @@ const PaymentPage = () => {
                                                                 'postcode': '',
                                                                 'state': '',
                                                                 'country': ''});
+    const [shippingPrice, setShippingPrice] = React.useState(0);
+                                                                
+    const calculateTotal = () => {
+        let total = 0;
+        for(const i in cart){
+            total += (parseInt(cart[i].price) * cart[i].quantity);
+        }
+        return total;
+    }
+    
+    const [price, setPrice] = React.useState(calculateTotal());
 
     React.useEffect(() => {
         (async () => {
@@ -158,12 +171,17 @@ const PaymentPage = () => {
 
             // Get the items from the cart, and put the id and quanity into a new dict
             const products = {};
-            cart.forEach(product => products[product.id] = product.quantity);
+            const builds = [];
+            cart.forEach(item => {
+                if (item.id) products[item.id] = item.quantity;
+                else builds.push(item);
+                });
 
             // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
                 products: products,
+                builds: builds,
                 shipping: shippingDetails
             };
 
@@ -190,32 +208,41 @@ const PaymentPage = () => {
 
         }
     }
+    
 
     return (
-        <Grid container direction="column" alignContent="center">   
-            <Grid item className={classes.block} xs={6}>
-                {user && 
-                    <ShippingBlock 
-                        shipping={shippingDetails} 
-                        errors={shippingErrors}
-                        setShippingDetails={setShippingDetails}
-                    />}
+        <Grid container direciton="row" alignItems="flex-start" justify="center">
+            <Grid container item direction="column" xs={6} alignItems="center">   
+                <Grid item className={classes.block} xs={12}>
+                    {user && 
+                        <ShippingBlock 
+                            shipping={shippingDetails} 
+                            errors={shippingErrors}
+                            setShippingDetails={setShippingDetails}
+                        />}
+                </Grid>
+                <Grid item className={classes.block} xs={12}>
+                    <DeliveryBlock setShippingPrice={setShippingPrice}/>
+                </Grid>
+                <Grid item className={classes.block} xs={12}>
+                    <PaymentBlock   
+                        payment={paymentDetails}
+                        errors={paymentErrors}
+                        setPaymentDetails={setPaymentDetails}
+                    />
+                </Grid>
+                <Grid item>
+                    <Button
+                        color="primary" 
+                        variant="contained"
+                        onClick={() => handleSubmit()}
+                    >
+                        Make Order
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid item className={classes.block} xs={6}>
-                <PaymentBlock   
-                    payment={paymentDetails}
-                    errors={paymentErrors}
-                    setPaymentDetails={setPaymentDetails}
-                />
-            </Grid>
-            <Grid item>
-                <Button
-                    color="primary" 
-                    variant="contained"
-                    onClick={() => handleSubmit()}
-                >
-                    Make Order
-                </Button>
+            <Grid item xs={4}>
+                <CartComponent totalPrice={price} shippingPrice={shippingPrice}/>
             </Grid>
         </Grid>
     )

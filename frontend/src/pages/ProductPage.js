@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, makeStyles, Paper, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Button, Divider, Grid, makeStyles, Paper, Snackbar, Tab, Tabs, Typography } from '@material-ui/core';
 import React from 'react';
 import amdryzen52600 from '../assets/amdryzen52600.jpg'
 import '../components/styles/product.css'
@@ -8,6 +8,7 @@ import API from '../util/API';
 import { useHistory } from 'react-router';
 import ReviewBlock from '../components/reviewComponents/ReviewBlock';
 import { StoreContext } from '../util/store';
+import Alert from '@material-ui/lab/Alert';
 
 const api = new API();
 
@@ -50,6 +51,7 @@ const ProductPage = () => {
     const history = useHistory();
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
+    
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const { category, pid } = useParams();
     const [value, setValue] = React.useState(0);
@@ -57,6 +59,7 @@ const ProductPage = () => {
     const [isAdmin, setIsAdmin] = React.useState(false);
     const [price, setPrice] = React.useState(0);
     const [quantity, setQuantity] = React.useState(1);
+    const [success, setSuccess] = React.useState(false);
     
     const classes = useStyles();
     // will be temporary to read in. (replace with values inside the product dict)
@@ -110,15 +113,30 @@ const ProductPage = () => {
         } else {
             found[0]['quantity'] += 1;
         }
+        setSuccess(true);
         setCart(newCart);
     }
+    
+    const handleQuantity = (direction) => {
+        if (direction === '+') {
+            if (quantity < productInfo.stock) {
+                setQuantity(quantity + 1);
+            }
+        } else {
+            if (quantity !== 1) {
+                setQuantity(quantity - 1);
+            }
+        }
+    
+    }
+    
     return (
         <div className="root" >
             <Grid container direction="column" className="light-text">
                 <Grid container item direction="row" className="product-info" >
                         <Grid item xs={3}>
                             <div className="product-image-container">
-                                <img src={productInfo.image === 1 ? amdryzen52600 : "data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
+                                <img src={"data:image/jpeg;base64,"+productInfo.image} alt="product" className="product-image"/>
                             </div>
                         </Grid>
                         <Grid container item direction="column" xs={7} alignItems="center" className="product-text-info">
@@ -153,19 +171,19 @@ const ProductPage = () => {
                                                 <Typography>Quantity:</Typography>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="outlined" onClick={() => {setQuantity(quantity - 1)}}>-</Button>
+                                                <Button variant="outlined" onClick={() => handleQuantity('-')}>-</Button>
                                             </Grid>
                                             <Grid item>
                                                 <Typography>{quantity}</Typography>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="outlined" onClick={() => {setQuantity(quantity + 1)}}>+</Button>
+                                                <Button variant="outlined" onClick={() => handleQuantity('+')}>+</Button>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid container item direction="column" xs={2}>
                                         <Grid item>
-                                            <Rating value={rating.rating}/>
+                                            <Rating value={rating.rating} readOnly/>
                                         </Grid>
                                         <Grid item>
                                             <Typography className="light-text" variant="h6">{rating.num} reviews</Typography>
@@ -237,6 +255,9 @@ const ProductPage = () => {
                     {productInfo.id && <ReviewBlock rating={rating} productId={productInfo.id} setRating={setRating}/>}
                 </Grid>
             </Grid>
+            <Snackbar open={success} autoHideDuration={2000} onClose={() => setSuccess(false)}>
+                <Alert severity="success">Successfully added product to cart.</Alert>
+            </Snackbar>
         </div>
     )
 }

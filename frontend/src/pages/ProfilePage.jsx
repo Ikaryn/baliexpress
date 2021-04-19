@@ -30,14 +30,14 @@ const ProfilePage = () => {
     const [open, setOpen] = React.useState(false);
     const context = React.useContext(StoreContext);
     const {userType: [,setUserType] } = context;
-    
-    // const [saleComponent, setSaleComponent] = React.useState('table');
+    const {cart: [,setCart]} = context;
     
     // when logout remove all of cookies
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
+        setCart([]);
         setUserType('guest')
         history.push('/');
     }
@@ -176,16 +176,16 @@ const ProfilePage = () => {
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={6}>
+                            <TabPanel value={value} index={3}>
                                 <SalePanel />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={7}>
+                            <TabPanel value={value} index={4}>
                                 <ReportedReviewsList/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 8 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>
