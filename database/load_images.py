@@ -1,6 +1,8 @@
 import os
 from base64 import b64encode
 import psycopg2
+import psycopg2.extras
+
 
 # Idk how to use it to connect to db, I just put it here lol
 def connect():
@@ -8,7 +10,7 @@ def connect():
     try:
         conn = psycopg2.connect(database="baliexpress",
             user="postgres",
-            password="iloverice12345"
+            password="PASSWORD"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -40,7 +42,7 @@ def getEncodedImage (name):
 try:
     # Get list of all products in database
     conn = connect()
-    cur = conn.cursor()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
     query = "SELECT id, name FROM Products"
     cur.execute(query)
