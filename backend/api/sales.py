@@ -63,7 +63,10 @@ class Sales(Resource):
         endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
         image = data.get('image')
-        image = image.split(',')[1]
+        if image is not None:
+            image = image.split(',')[1]
+        else:
+            return {'Error: No image', 400}
         
         # Add the sale to the database
         saleId = db.addSale(name, startDate, endDate, products, image)

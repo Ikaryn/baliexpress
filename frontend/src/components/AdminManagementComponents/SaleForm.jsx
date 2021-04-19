@@ -81,7 +81,7 @@ const SaleForm = ({setSaleComponent, setSales}) => {
     const [nameError, setNameError] = React.useState('');
     const [dateError, setDateError] = React.useState('');
     const [image, setImage] = React.useState(null);
-    
+    const [imageError, setImageError] = React.useState(false);
     const handleImageUpload = async (file) => {
         if(file.length > 0){
             console.log(file);
@@ -114,12 +114,18 @@ const SaleForm = ({setSaleComponent, setSales}) => {
             'products': saleProducts,
             'image': image,
         };
+        console.log(body);
         const response = await api.post('sales', body);
-        setSuccess(true);
-        setTimeout(() => {
-            setSaleComponent('table');
-        }, 1000)
-        setSales(response.sales)
+            console.log(response);
+            if(response) {
+                setSuccess(true);
+                setTimeout(() => {
+                    setSaleComponent('table');
+                }, 1000)
+                setSales(response.sales)
+            } else {
+                setImageError(true);
+            }
     }
     
     return (
@@ -171,6 +177,9 @@ const SaleForm = ({setSaleComponent, setSales}) => {
                 </Grid>
                 <Snackbar open={success} autoHideDuration={1000}>
                     <Alert severity="success">Sale created!</Alert>
+                </Snackbar>
+                <Snackbar open={imageError} autoHideDuration={5000} onClose={() => setImageError(false)}>
+                    <Alert severity="error">Please Provide an Image</Alert>
                 </Snackbar>
             </Grid>
     )

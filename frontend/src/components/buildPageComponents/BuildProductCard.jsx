@@ -106,7 +106,7 @@ const BuildProductCard = ({type}) => {
                             <Typography variant="h6">Price</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h5">${productInfo.price.toFixed(2)}</Typography>
+                            <Typography variant="h5">${Number(productInfo.price).toFixed(2)}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" xs={1} justify="center">

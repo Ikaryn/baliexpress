@@ -4,15 +4,14 @@ import { Card, CardActionArea, Select, Typography, CardContent, Button, MenuItem
 import { useHistory } from 'react-router';
 import { StoreContext } from '../../util/store';
 
-const api = new API();
 const CartItem = ({productInfo, setCartList, type}) => {
     
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
-    const history = useHistory();
-    const [removed, setRemoved] = React.useState(false);
     const [totalPrice, setTotalPrice] = React.useState(productInfo.quantity * productInfo.price);
     const [quantity, setQuantity] = React.useState(productInfo.quantity);
+    
+    console.log(productInfo);
     
     const handleRemove = () => {
         const updatedCart = JSON.parse(JSON.stringify(cart));        
@@ -37,11 +36,19 @@ const CartItem = ({productInfo, setCartList, type}) => {
     return (
         <Grid container item direction="row" spacing={1} justify="flex-end" alignItems="center">
             <Grid item xs={2}>
-                {type === 'product' && 
-                    <img src={"data:image/jpeg;base64,"+productInfo.image} 
-                    alt="product-thumbnail" 
-                    class="image"
-                />}
+                {type === 'product' ? 
+                    <img 
+                        src={"data:image/jpeg;base64,"+productInfo.image} 
+                        alt="product-thumbnail" 
+                        class="image"
+                    />
+                    :
+                    <img 
+                        src={"data:image/jpeg;base64,"+productInfo.parts.Cases.image}
+                        alt="product-thumbnail" 
+                        class="image"
+                    />
+                }
             </Grid>
             <Grid container item direction="column" xs={6}>
                 <Grid item>

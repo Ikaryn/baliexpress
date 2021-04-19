@@ -27,7 +27,7 @@ const Register = () => {
 
 
     function checkValidPhone (input) {
-        return /^[1-9]\d*$/.test(input);
+        return /^[0-9]\d*$/.test(input);
     }
     
     const handleLoginClick = () => {
@@ -66,23 +66,24 @@ const Register = () => {
             error = true;
         }
 
-        if (error) return;
-        
-        api.post('register', {
+        // if (error) return;
+        if (!error){
+            api.post('register', {
                 name: name,
                 email: email,
                 password: password,
                 phonenumber: phone,  
-        })
-        .then((res) =>{
-            console.log(res);
-            // history.push('/')
-            if (res.token) {
-                setRegisterMessage('Account successfully made!')
-            } else {
-                setRegisterMessage(res.error);
-            }
-        });
+            })
+            .then((res) =>{
+                console.log(res);
+                // history.push('/')
+                if (res.token) {
+                    setRegisterMessage('Account successfully made!')
+                } else {
+                    setRegisterMessage(res.error);
+                }
+            });
+        }
 
     }
 
@@ -99,7 +100,7 @@ const Register = () => {
                 <Typography className="light-text" variant="h1">Register</Typography>
                 <form>  
                 <Grid item>
-                    <FormControl error={nameError === '' ? false : true}>
+                    <FormControl error={nameError === '' ? false : true} fullWidth>
                         <InputLabel>Name</InputLabel>
                         <OutlinedInput 
                             fullWidth
@@ -109,7 +110,7 @@ const Register = () => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                <FormControl error={emailError === '' ? false : true}>
+                <FormControl error={emailError === '' ? false : true} fullWidth>
                         <InputLabel>Email</InputLabel>
                         <OutlinedInput 
                             fullWidth
@@ -119,7 +120,7 @@ const Register = () => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                <FormControl error={pwdError === '' ? false : true}>
+                <FormControl error={pwdError === '' ? false : true} fullWidth>
                         <InputLabel>Password</InputLabel>
                         <OutlinedInput 
                             fullWidth
@@ -130,7 +131,7 @@ const Register = () => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                <FormControl error={phoneError === '' ? false : true}>
+                <FormControl error={phoneError === '' ? false : true} fullWidth>
                         <InputLabel>Phone</InputLabel>
                         <OutlinedInput
                             fullWidth
