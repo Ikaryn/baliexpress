@@ -12,6 +12,7 @@ import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
 import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
 import UserOrderList from '../components/profilePage/UserOrderList';
+import AdminOrderList from '../components/profilePage/AdminOrderList';
 import SalePanel from '../components/AdminManagementComponents/SalePanel';
 import { StoreContext } from '../util/store';
 
@@ -132,6 +133,7 @@ const ProfilePage = () => {
                             {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
+                            {accInfo.isAdmin && <Tab label="View all orders" />}
                             {accInfo.isAdmin && <Tab label="View Users" />}     
                             {accInfo.isAdmin && <Tab label="Manage Sales" />}   
                             {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
@@ -170,22 +172,27 @@ const ProfilePage = () => {
                                 <AllProductList />
                             </TabPanel>
                         }
-                        {accInfo.isAdmin &&                     
+                        {accInfo.isAdmin &&
                             <TabPanel value={value} index={2}>
-                                <ViewUsers/>
+                                <AdminOrderList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
                             <TabPanel value={value} index={3}>
+                                <ViewUsers/>
+                            </TabPanel>
+                        }
+                        {accInfo.isAdmin &&                     
+                            <TabPanel value={value} index={4}>
                                 <SalePanel />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={4}>
+                            <TabPanel value={value} index={5}>
                                 <ReportedReviewsList/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>
