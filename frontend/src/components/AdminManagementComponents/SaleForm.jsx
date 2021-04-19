@@ -114,6 +114,7 @@ const SaleForm = ({setSaleComponent, setSales}) => {
             'products': saleProducts,
             'image': image,
         };
+        
         console.log(body);
         const response = await api.post('sales', body);
             console.log(response);

@@ -195,16 +195,6 @@ const PaymentPage = () => {
             if (response) {
                 setCart([]);
                 localStorage.setItem('orderId', response.orderId);
-                
-                // Update the user's profile details using the new shipping details if they changed them.
-                const shipBody = {
-                    streetaddress: shippingDetails['address'],
-                    city: shippingDetails['city'],
-                    postcode: shippingDetails['postcode'],
-                    state: shippingDetails['state'],
-                    country: shippingDetails['country']
-                }
-                await api.put(`profile?userId=${localStorage.getItem('userId')}`, shipBody);
                 history.push(`order`);
             }
 

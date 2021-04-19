@@ -1,4 +1,4 @@
-import { Button, Divider, Typography } from '@material-ui/core';
+import { Button, Divider, LinearProgress, Typography } from '@material-ui/core';
 import React from 'react';
 import SaleForm from './SaleForm';
 import SaleInformation from './SaleInformation';
@@ -12,7 +12,7 @@ const SalePanel = () => {
     const [sales, setSales] = React.useState([{}]);
     
     //used to pass in relevant sale data to saleInformation
-    const [saleIndex, setSaleIndex] = React.useState(0);
+    const [saleId, setSaleId] = React.useState(0);
 
     React.useEffect(() => {
         (async () => {
@@ -30,11 +30,11 @@ const SalePanel = () => {
             return <SaleForm setSaleComponent={setSaleComponent} setSales={setSales}/>
         }
         
-        return <SaleInformation saleInfo={sales[saleIndex]}/>
+        return <SaleInformation saleId={saleId}/>
     }
     
-    const redirectSaleDetails = (index) => {
-        setSaleIndex(index);
+    const redirectSaleDetails = (id) => {
+        setSaleId(id);
         setSaleComponent('details')
     
     }
@@ -67,6 +67,7 @@ const SalePanel = () => {
             </Button>
             <Divider />
             {renderSaleComponent()}
+            {!sales && <LinearProgress />}
         </div>
     )
 }

@@ -5,10 +5,17 @@ import ProductCard from '../components/ProductCard';
 import Checkbox from '@material-ui/core/Checkbox';
 import API from '../util/API';
 import { StoreContext } from '../util/store';
+import filterProducts from '../components/FilterProducts'
 
 const api = new API();
 
-const sortTypes = ['Popularity', 'Price-High', 'Price-Low'];
+const sortTypes = [ 'Popularity', 
+                    'Price-High', 
+                    'Price-Low', 
+                    'Newest', 
+                    'Product Name: A-Z',
+                    'Product Name: Z-A',
+                    '% Sale'];
 
 const ProductListPage = () => {
     const context = React.useContext(StoreContext);
@@ -34,23 +41,24 @@ const ProductListPage = () => {
                 })
             } else {
                 const p = await api.get(`product?category=${category}`);
+                console.log(p);
                 if (p.products) {
                     products = p.products;
                 }
             }
+
             let set = [];
-            let dict = {};
-            
+            let brandDict = {};
             
             for(const i in products){
                 if(!set.includes(products[i].brand)){
                     set.push(products[i].brand);
-                    dict[products[i].brand] = false;
+                    brandDict[products[i].brand] = false;
                 }
             }
             
             setBrandSet(set);
-            setCheckBoxState(dict);
+            setCheckBoxState(brandDict);
             setFilteredProducts(products);
             setProducts(products);
         })();
@@ -60,50 +68,99 @@ const ProductListPage = () => {
     React.useEffect(() => {
         (async () => {
             let newProducts = [...products];
-            const x = nameFilter.split(" ");
+            // const x = nameFilter.split(" ");
 
-            function test(string){
-                for(let i in x){
-                    if(string.toLowerCase().includes(x[i].toLowerCase())){
-                        return true;
-                    }
-                }
-                return false;
-            }
-            if(nameFilter !== ""){
-                newProducts = [...newProducts].filter(product => test(product.name));
-            }
+            // function test(string){
+            //     for(let i in x){
+            //         if(string.toLowerCase().includes(x[i].toLowerCase())){
+            //             return true;
+            //         }
+            //     }
+            //     return false;
+            // }
 
-            if(sortType === "Popularity"){
-                newProducts.sort((a, b) => a.stock - b.stock);
-            }else if(sortType === "Price-High"){
-                newProducts.sort((a, b) => b.price - a.price);
-            }else if(sortType === "Price-Low"){
-                newProducts.sort((a, b) => a.price - b.price);
+            // if(nameFilter !== ""){
+            //     newProducts = [...newProducts].filter(product => test(product.name));
+            // }
+
+            switch (sortType) {
+                case "Popularity":
+                    newProducts.sort((a, b) => a.sold - b.sold);
+                    break;
+                case "Price-High":
+                    newProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case "Price-Low":
+                    newProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case "Newest":
+                    newProducts.sort((a, b) => Date.parse(b.release_date) - Date.parse(a.release_date));
+                    break;
+                case "Product Name: A-Z":
+                    newProducts.sort((a, b) => {
+                        let textA = a.name.toUpperCase();
+                        let textB = b.name.toUpperCase();
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                    break;
+                case "Product Name: Z-A":
+                    newProducts.sort((a, b) => {
+                        let textA = a.name.toUpperCase();
+                        let textB = b.name.toUpperCase();
+                        return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+                    break;
+                case "% Sale":
+                    newProducts.sort((a, b) => {
+                        if (a.sale == null && b.sale != null) return 1;
+                        if (a.sale != null && b.sale == null) return -1;
+                        if (a.sale == null || b.sale == null) return 0;
+                        return (a.sale.salepercent > b.sale.salepercent);
+                    });
+                    break;
             }
 
             setFilteredProducts(newProducts);
         })();
     },[sortType, nameFilter, products]);
 
-    function changeCheckBox(s){
-        let dict = checkBoxState;
-        dict[s] = !dict[s];
-        let string = "";
-        let first = false;
-        for(let x in dict){
-            if(dict[x]){
-                if(!first){
-                    string += x;
-                    first = true;
-                }else{
-                    string += " " + x; 
-                }
-            }
-        }
-        setNameFilter(string);
-        setCheckBoxState(dict);
+    // function changeCheckBox(s){
+    //     let dict = checkBoxState;
+    //     dict[s] = !dict[s];
+    //     let string = "";
+    //     let first = false;
+    //     for(let x in dict){
+    //         if(dict[x]){
+    //             if(!first){
+    //                 string += x;
+    //                 first = true;
+    //             }else{
+    //                 string += " " + x; 
+    //             }
+    //         }
+    //     }
+    //     setNameFilter(string);
+    //     setCheckBoxState(dict);
+    // }
+
+    function handleBrandFilter (brand) {
+
+        // Get the current check box state and change it
+        let brands = checkBoxState;
+        brands[brand] = !brands[brand];
+
+        // Get the chosen/ticked filters
+        let chosen = [];
+        Object.keys(brands).forEach(brand => {if(brands[brand]) chosen.push(brand)});
+
+        // Apply the filters and refresh
+        let filtered = filterProducts('brand', chosen, products);
+        setFilteredProducts(filtered);
+        setCheckBoxState(brands);
     }
+
+    function handleStockFilter (field) {
+        
+    }
+
     return (
         <div className="root">
             <Grid container direction="row" className='product-list-page-container'>
@@ -118,7 +175,7 @@ const ProductListPage = () => {
                                 {brandSet.map((s) => (
                                     <Typography key={s}>
                                         <Checkbox
-                                            onChange={() => {changeCheckBox(s)}}
+                                            onChange={() => {handleBrandFilter(s)}}
                                         />
                                         {s}
                                     </Typography>
