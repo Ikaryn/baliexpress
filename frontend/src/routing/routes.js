@@ -26,6 +26,7 @@ const routes = [
     <PublicRoute key="route-sale-products" component={ProductListPage} path="/sales" exact/>,
     <PublicRoute key="route-categories" component={ProductListPage} path="/product/:category" exact/>,
     <PublicRoute key="route-compare" component={ComparePage} path="/build/compare/:category" exact />,
+    <PublicRoute key="route-build" component={BuildPage} path="/build/:uid/:bid/:saved" exact />,
     <PublicRoute key="route-build" component={BuildPage} path="/build/:uid/:bid" exact />,
     <PublicRoute key="route-build" component={BuildPage} path="/build/custom" exact />,
     <PublicRoute key="route-build" component={BuildPage} path="/build" exact />,

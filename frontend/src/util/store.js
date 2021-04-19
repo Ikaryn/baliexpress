@@ -8,18 +8,22 @@ export default ({ children }) => {
     
     
     const [build, setBuild] = React.useState({
+        'id': 0,
         'name': 'Your Custom Built PC',
         'desc': '',
-        'Cases': '', 
-        'Motherboards':'', 
-        'CPU':'',
-        'Graphics_Cards':'', 
-        'Memory': '',
-        'Storage': '',
-        'PSU': '', 
-        'CPU_Cooling':'',
+        'parts': {
+                    'Cases': '', 
+                    'Motherboards':'', 
+                    'CPU':'',
+                    'Graphics_Cards':'', 
+                    'Memory': '',
+                    'Storage': '',
+                    'PSU': '', 
+                    'CPU_Cooling':'',
+                },
         'price': 0,
         });
+        
     const [cart, setCart] = React.useState([]);
     const [comparedProduct, setComparedProduct] = React.useState({});
     const [userType, setUserType] = React.useState('guest');

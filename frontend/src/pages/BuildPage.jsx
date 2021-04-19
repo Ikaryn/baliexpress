@@ -27,14 +27,13 @@ const useStyles = makeStyles((theme) => ({
 
 const BuildPage = () => {
     
-    // const [build, setBuild] = React.useState(buildTemplate);
     const context = React.useContext(StoreContext)
-    const { build: [build, setBuild]} = context;
-    console.log(build);
+    const { build: [build]} = context;
     const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
-    const [buildNumber, setBuildNumber] = React.useState(0);
+    // const [buildNumber, setBuildNumber] = React.useState(0);
     const [buildName, setBuildName] = React.useState('Your Custom Built PC');
+    const [buildDesc, setBuildDesc] = React.useState('');
     // modal states
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -43,27 +42,20 @@ const BuildPage = () => {
     const classes = useStyles();
     const [builtByCompany, setBuiltByCompany] = React.useState(false)
     
-    // will change later.
-    // generate a random unique identifer for a build
-    // need to check if this is an existing build or not.
-    React.useEffect(() => {
-        console.log('setting build string');
-        setBuildNumber(generateBuildString());
-    },[])
     
+    // generate and calculate the build price
     React.useEffect(() => {
-        const newPrice = Object.keys(build).reduce((previous, key) => {
-            if(build[key].price){
-                previous.price += Number(build[key].price);
+        let newPrice = Object.keys(build.parts).reduce((previous, key) => {
+            if(build.parts[key].price){
+                previous.price += Number(build.parts[key].price);
             }
             return previous;
         }, { price: 0 });
-        console.log(newPrice);
         if (builtByCompany){
-            newPrice += 50
+            newPrice.price += 50
         }
         setBuildPrice(newPrice.price);
-    },[build])
+    },[build, builtByCompany])
     
     
     
@@ -86,6 +78,7 @@ const BuildPage = () => {
         setOpen(true);
     }
     
+    console.log(build)
     
     return (
     <div className={classes.root}>
@@ -95,7 +88,7 @@ const BuildPage = () => {
             </Grid>
             <Grid container item direction="row">
                 <Grid container item direction="column" xs={12} spacing={3}>
-                    {Object.keys(build).map((category) => (
+                    {Object.keys(build.parts).map((category) => (
                         <Grid item key={`${category}-card`}>
                             <BuildProductCard type={category} />
                         </Grid>
@@ -105,18 +98,9 @@ const BuildPage = () => {
         </Grid>
         <AppBar position="fixed" color="primary" className={classes.footerBar}>
             <Grid container direction="row" alignItems="center" justify="space-around">
-                <Grid container item direction="row" xs={2}>
-                    <Typography className="light-text" >Build Number: {`${buildNumber}`}</Typography>
-                </Grid>
-                <Grid item xs={1}>
-                    <Typography className="light-text" variant="h3">${buildPrice}</Typography>
-                </Grid>
-                <Grid container item direction="row" xs={3}>
-                    <Grid item xs={6}>
-                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild}>Save build</Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
+                <Grid container item direction="column" xs={2}>
+                    <Grid item>
+                        <Typography className="light-text" >Build Number: {`${build.id}`}</Typography>
                     </Grid>
                     <Grid item>
                         <FormControlLabel
@@ -127,12 +111,23 @@ const BuildPage = () => {
                         />
                     </Grid>
                 </Grid>
+                <Grid item xs={1}>
+                    <Typography className="light-text" variant="h3">${buildPrice.toFixed(2)}</Typography>
+                </Grid>
+                <Grid container item direction="row" xs={3}>
+                    <Grid item xs={6}>
+                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild}>Save build</Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
+                    </Grid>
+                </Grid>
                 <Grid item xs={3}>
                     <Typography className="light-text" variant="caption">Dispatch will take 7-10 Business Days. If opted to be built, it will take an extra 7 business days.</Typography>
                 </Grid>
             </Grid>
             <Modal open={open} onClose={() => {setOpen(false)}}>
-                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} />
+                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} edit={build.id === 0}/>
             </Modal>
         </AppBar>
         <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>

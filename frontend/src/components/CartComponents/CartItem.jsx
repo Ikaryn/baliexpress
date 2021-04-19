@@ -36,7 +36,7 @@ const CartItem = ({productInfo, setCartList, type}) => {
     }
     return (
         <Grid container item direction="row" spacing={1} justify="flex-end" alignItems="center">
-            <Grid item xs={1}>
+            <Grid item xs={2}>
                 {type === 'product' && 
                     <img src={"data:image/jpeg;base64,"+productInfo.image} 
                     alt="product-thumbnail" 
@@ -45,16 +45,21 @@ const CartItem = ({productInfo, setCartList, type}) => {
             </Grid>
             <Grid container item direction="column" xs={6}>
                 <Grid item>
-                    <Typography variant="h6">
+                    <Typography variant="caption">
                         {productInfo.name ? productInfo.name : productInfo.buildname}
                     </Typography>
                 </Grid>
-                <Grid container item direction="row" alignItems="center">
-                    <Grid item xs={2}>
+                <Grid container item direction="row" alignItems="center" spacing={3}>
+                    <Grid item xs={4}>
                         <Typography>Quantity: </Typography>
                     </Grid>
-                    <Grid item xs={2}>
-                        <TextField value={quantity} variant="outlined" onChange={(event) => {handleQuantity(event.target.value)}}/>
+                    <Grid item xs={4}>
+                        <TextField 
+                            value={quantity} 
+                            variant="outlined"
+                            onChange={(event) => {handleQuantity(event.target.value)}}
+                            size='small'
+                        />
                     </Grid>
                 </Grid>    
             </Grid>

@@ -77,3 +77,12 @@ Wrote the initial PaymentPage, along side with the Payment components.
 Brainstormed with Darryl Liu and Marcus Lee on the chatbot functionality. 
 I wrote the functionality of the chatbot. I rewrote the cart, and added more functionality to it. 
 Added more polish to product and list pages. Fixed bugs with Build Page.  -All by myself
+
+Week 10.
+
+Darryl, Marcus, and Joanna had a meeting in the morning to discuss the demo. During our run through we discovered a bunch of bugs.
+I had spent the monday finishing as much of the backlogged tickets we created during the demo.
+
+I encountered some technical problems surrounding the build page. I had to refactor the way it worked to handle
+editting and saving build. But since the build page has 3 entry points, and all of them had different ways of interacting with
+the build page, I had to standardize the way the build object is created and set.

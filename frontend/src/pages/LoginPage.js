@@ -78,14 +78,14 @@ const Login = () => {
             </Grid>
             <form>
                 <Grid item>
-                    <FormControl error={emailError === '' ? false : true}>
+                    <FormControl error={emailError === '' ? false : true} fullWidth>
                         <InputLabel>Email Address</InputLabel>
                         <OutlinedInput id="user-login-email" onChange={event => setEmail(event.target.value)} value={email}/>
                         <FormHelperText>{emailError}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <FormControl error={pwdError === '' ? false : true}>
+                    <FormControl error={pwdError === '' ? false : true} fullWidth>
                         <InputLabel>Password</InputLabel>
                         <OutlinedInput type="password" id="user-login-password" onChange={event => setPassword(event.target.value)} value={password}/>
                         <FormHelperText>{pwdError}</FormHelperText>
