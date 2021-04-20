@@ -625,6 +625,14 @@ def getBuild(buildID):
 # return an empty list. if an error has occured, returns None.
 # build dictionary: {id, name, description, parts:({productID, quantity}, etc)}
 def getUsersBuilds(userID):
+    # create function to convert decimal type numbers to floats
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )
+    psycopg2.extensions.register_type(decimalToFloat)
+    
     try:
         # connect to database
         conn = connect()
