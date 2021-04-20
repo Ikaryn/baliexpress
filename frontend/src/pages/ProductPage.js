@@ -108,10 +108,16 @@ const ProductPage = () => {
                 "image": productInfo.image,
                 "price": price,
                 "quantity": quantity,
-                "category": productInfo.category
+                "category": productInfo.category,
+                "stock": productInfo.stock,
             });
         } else {
-            found[0]['quantity'] += 1;
+            let newQuantity = Number(found[0]['quantity']) + quantity;
+            if(newQuantity > productInfo.stock) {
+                newQuantity = productInfo.stock;
+            }
+            
+            found[0]['quantity'] = newQuantity;
         }
         setSuccess(true);
         setCart(newCart);

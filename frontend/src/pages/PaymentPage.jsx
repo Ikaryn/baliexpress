@@ -175,14 +175,16 @@ const PaymentPage = () => {
             cart.forEach(item => {
                 if (item.id) products[item.id] = item.quantity;
                 else builds.push(item);
-                });
+            });
 
             // Send the api call to make a new order
             const body = {
                 userId: localStorage.getItem('userId'),
                 products: products,
                 builds: builds,
-                shipping: shippingDetails
+                shipping: shippingDetails,
+                shippingPrice: shippingPrice,
+                total: price
             };
 
             const response = await api.post(`order`, body);
@@ -193,16 +195,6 @@ const PaymentPage = () => {
             if (response) {
                 setCart([]);
                 localStorage.setItem('orderId', response.orderId);
-                
-                // Update the user's profile details using the new shipping details if they changed them.
-                const shipBody = {
-                    streetaddress: shippingDetails['address'],
-                    city: shippingDetails['city'],
-                    postcode: shippingDetails['postcode'],
-                    state: shippingDetails['state'],
-                    country: shippingDetails['country']
-                }
-                await api.put(`profile?userId=${localStorage.getItem('userId')}`, shipBody);
                 history.push(`order`);
             }
 

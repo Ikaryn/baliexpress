@@ -69,7 +69,7 @@ const CartComponent = ({totalPrice, shippingPrice}) => {
                     <Typography>Subtotal</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{calculateTotal().toFixed(2)}</Typography>
+                    <Typography>${calculateTotal().toFixed(2)}</Typography>
                 </Grid>
             </Grid>
             <Grid container item direction="row" justify="space-between">
@@ -77,16 +77,16 @@ const CartComponent = ({totalPrice, shippingPrice}) => {
                     <Typography>Shipping</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{shippingPrice.toFixed(2)}</Typography>
+                    <Typography>${shippingPrice.toFixed(2)}</Typography>
                 </Grid>
             </Grid>
             <Divider />
             <Grid container item direction="row" justify="space-between">
                 <Grid item>
-                    <Typography>Total:</Typography>
+                    <Typography variant="h6">Total:</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{(shippingPrice+calculateTotal()).toFixed(2)}</Typography>
+                    <Typography>${(shippingPrice+calculateTotal()).toFixed(2)}</Typography>
                 </Grid>
             </Grid>
         </Grid>

@@ -11,13 +11,36 @@ class Sales(Resource):
 
     # Getting sales
     # Url formats:
+    # Get a single sale: `sales?saleId=${saleId}`
     # Get all sales: `sales?all=true`
     # Get only the current sales: `sales?all=false`
     def get(self):
 
         allSales = request.args.get('all')
+        saleId = request.args.get('saleId')
 
-        if allSales == 'true':
+        if saleId is not None:
+            print('Get sale attempt received')
+            sale = db.getSale(saleId)
+
+            products = []
+
+            # Get associated productIds for the sale
+            for item in sale['products']:
+                # Get the actual product from the productIds
+                product = db.getProduct(item['productid'])
+                product['salepercent'] = item['salepercent']
+                product['saleSold'] = item['sold']
+                products.append(product)
+
+            # Format appropriate fields for JSON serialization
+            sale['productList'] = boolDateToString(products)
+            sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
+            sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
+
+            return {'sale': sale}
+
+        elif allSales == 'true':
             print('Get all sales attempt received')
             sales = db.getAllSales()
 
@@ -25,25 +48,27 @@ class Sales(Resource):
             print('Get current sales attempt received')
             sales = db.getAllCurrentSales()
 
+            for sale in sales:
+                # print(sale)
+                saleProducts = []
+
+                # Get associated productIds for the sale
+                item = db.getSale(sale['id'])
+                for saleProduct in item['products']:
+
+                    # Get the actual product from the productIds
+                    product = db.getProduct(saleProduct['productid'])
+                    saleProducts.append(product)
+
+                # # Format appropriate fields for JSON serialization
+                sale['productList'] = boolDateToString(saleProducts)
+
         else:
             return {'Error: Invalid api request'}
 
         for sale in sales:
-            print(sale)
-            saleProducts = []
 
-            # Get associated productIds for the sale
-            item = db.getSale(sale['id'])
-            # print("sale:", item)
-            print('in Sales')
-            for saleProduct in item['products']:
-
-                # Get the actual product from the productIds
-                product = db.getProduct(saleProduct['productid'])
-                saleProducts.append(product)
-
-            # Format appropriate fields for JSON serialization
-            sale['productList'] = boolDateToString(saleProducts)
+            # # Format appropriate fields for JSON serialization
             sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
             sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
     
@@ -62,8 +87,12 @@ class Sales(Resource):
         end = data.get('end')
         endDate = datetime.strptime(end, '%Y-%m-%d').date()
         products = data.get('products')
+
         image = data.get('image')
-        image = image.split(',')[1]
+        if image is not None:
+            image = image.split(',')[1]
+        else:
+            return {'Error: No image'}, 400
         
         # Add the sale to the database
         saleId = db.addSale(name, startDate, endDate, products, image)
@@ -73,19 +102,19 @@ class Sales(Resource):
         # Return list of all sales to the frontend
         sales = db.getAllSales()
         for sale in sales:
-            saleProducts = []
+            # saleProducts = []
 
-            # Get associated productIds for the sale
-            item = db.getSale(sale['id'])
-            print("sale:", item)
-            for saleProduct in item['products']:
+            # # Get associated productIds for the sale
+            # item = db.getSale(sale['id'])
+            # # print("sale:", item)
+            # for saleProduct in item['products']:
 
-                # Get the actual product from the productIds
-                product = db.getProduct(saleProduct['productid'])
-                product['release_date'] = product['release_date'].strftime('%Y-%m-%d')
-                saleProducts.append(product)
+            #     # Get the actual product from the productIds
+            #     product = db.getProduct(saleProduct['productid'])
+            #     product['release_date'] = product['release_date'].strftime('%Y-%m-%d')
+            #     saleProducts.append(product)
 
-            sale['productList'] = saleProducts
+            # sale['productList'] = saleProducts
 
             sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
             sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
