@@ -44,7 +44,7 @@ CREATE TABLE Users(
 
 CREATE TABLE Products(
     id              int GENERATED ALWAYS AS IDENTITY,
-    name            varchar(150) NOT NULL,
+    name            varchar(85) NOT NULL,
     category        Categories NOT NULL,
     brand           text,
     price           numeric(50, 2) NOT NULL,
