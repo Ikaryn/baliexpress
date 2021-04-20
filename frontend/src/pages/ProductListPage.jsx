@@ -26,19 +26,27 @@ const ProductListPage = () => {
     const [sortType, setSortType] = React.useState(sortTypes[0]);
     const [brandSet, setBrandSet] = React.useState([]);
     const [checkBoxState, setCheckBoxState] = React.useState({});
-    let {category} = useParams();
+    let {category, search} = useParams();
     
     React.useEffect(() => {
         (async () => {
             let products = [];
             // set the products determined by if viewing sale products or just normal products
             if(!category) {
-                // loop through each sale 
-                sales.forEach((sale) => {
-                    sale.productList.forEach((product) => {
-                        products.push(product);
+                if(search) {
+                    console.log('search')
+                    const res = await api.get(`search?query=${search}`);
+                    console.log(res.results);
+                    products = res.results;
+                } else {
+                    console.log('sale')
+                    // loop through each sale 
+                    sales.forEach((sale) => {
+                        sale.productList.forEach((product) => {
+                            products.push(product);
+                        })
                     })
-                })
+                }
             } else {
                 const p = await api.get(`product?category=${category}`);
                 console.log(p);
@@ -63,7 +71,7 @@ const ProductListPage = () => {
             setProducts(products);
         })();
         
-    },[category, sales]);
+    },[category, sales, search]);
 
     React.useEffect(() => {
         (async () => {
@@ -116,6 +124,8 @@ const ProductListPage = () => {
                         return (a.sale.salepercent > b.sale.salepercent);
                     });
                     break;
+                default:
+                    break;
             }
 
             setFilteredProducts(newProducts);
@@ -160,6 +170,17 @@ const ProductListPage = () => {
     function handleStockFilter (field) {
         
     }
+    
+    const generateHeader = () => {
+        if(category) {
+            return "Product category: " + category
+        }
+        if(search) {
+            return "Search results for: "+ search;
+        }
+        return 'On sale products'
+    
+    }
 
     return (
         <div className="root">
@@ -187,22 +208,27 @@ const ProductListPage = () => {
                 <Grid container item direction="column"  xs={9}>
                     <Grid container item>
                         <Paper className="product-list-sort-tab">
-                            <Grid container item direction="row">
-                                <Grid item>
-                                    <Typography variant="h6">Sort by:</Typography>
+                            <Grid container item direction="row" spacing={1} alignItems="center">
+                                <Grid container item direction="row" xs={4}>
+                                    <Grid item>
+                                        <Typography variant="h6">Sort by:</Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <TextField 
+                                            select
+                                            value={sortType} 
+                                            onChange={(event) =>{setSortType(event.target.value)}}
+                                            >
+                                            {sortTypes.map((s) => (
+                                                <MenuItem key={s} value={s}>
+                                                    {s}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <TextField 
-                                        select
-                                        value={sortType} 
-                                        onChange={(event) =>{setSortType(event.target.value)}}
-                                    >
-                                        {sortTypes.map((s) => (
-                                            <MenuItem key={s} value={s}>
-                                                {s}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
+                                <Grid item xs={8}>
+                                    <Typography variant="h3">{generateHeader()}</Typography>
                                 </Grid>
                             </Grid>
                         </Paper>

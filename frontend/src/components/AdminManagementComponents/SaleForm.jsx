@@ -41,12 +41,12 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
         setSaleProducts(newSaleProducts);
     }
     
+    // handle a product getting removed from the sale in the form.
     const handleRemove = (product) => {
-        console.log(products[0]);
-        console.log(saleProducts[0]);
         const tempProductList = JSON.parse(JSON.stringify(products));
         const tempSaleProducts = JSON.parse(JSON.stringify(saleProducts));
-        console.log(product)
+        
+        //filter the product lists for the product we want to remove.
         const newProductList = tempProductList.filter((p) => p.id !== product.id);
         const newSaleProducts = tempSaleProducts.filter((p) => p.productId !== product.id);
 
@@ -55,6 +55,7 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
         
     }
     
+    // calculate the sale price of the product dynamically.
     const calculateSalePrice = (product) => {
         const tempProduct = saleProducts.filter((p) => p.productId === product.id);
         if (tempProduct[0]) {
