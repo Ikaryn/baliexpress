@@ -1,4 +1,4 @@
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper } from '@material-ui/core';
+import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { convertCategoryName } from '../util/helpers';
@@ -48,7 +48,12 @@ const ProductMenuButton = () => {
                                     {categories.map((c) => (
                                         <MenuItem key={c} onClick={() => handleMenuButtonclick(c)}>{c}</MenuItem>
                                     ))}
-                                    <MenuItem color="secondary" onClick={() => {setOpen(false); history.push('/sales')}}>On Sale</MenuItem>
+                                    <MenuItem onClick={() => {setOpen(false); history.push('/sales')}}>
+                                    <Typography color="secondary">
+                                        On Sale
+                                    </Typography>
+                                    
+                                    </MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
