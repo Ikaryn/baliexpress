@@ -63,6 +63,8 @@ class BuildPage(Resource):
         data = request.json
         newBuild = data.get('build')
         buildID = newBuild['id']
+        buildName = data.get('buildName')
+        buildDescription = data.get('buildDesc')
 
         savedBuild = db.getBuild(buildID)
 
@@ -88,6 +90,8 @@ class BuildPage(Resource):
                     
                     # Add the new part to the build
                     db.addPartToBuild(buildID, newBuild['parts'][part]['id'], 1)
+        
+        db.updateBuildDetails(buildID, buildName, buildDescription)
 
     # Takes input from a build form to determine the usage, budget,
     # preferred storage format, and whether the user wants to overclock.
@@ -102,17 +106,17 @@ class BuildPage(Resource):
         # The budget is broken up into segments for the various components
         # the split is defined by the intended usage for the computer as these
         # activities have different needs
-        if usage == "Gaming":
+        if usage == "gaming":
             # Gaming heavily prioritises the GPU and the CPU
-            GPUBudget = 0.5 * budget
+            GPUBudget = 0.4 * budget
             CPUBudget = 0.2 * budget
-            MotherboardBudget = 0.06 * budget
-            MemoryBudget = 0.06 * budget
+            MotherboardBudget = 0.1 * budget
+            MemoryBudget = 0.08 * budget
             StorageBudget = 0.06 * budget
-            PSUBudget = 0.04 * budget
-            CaseBudget = 0.04 * budget
+            PSUBudget = 0.06 * budget
+            CaseBudget = 0.06 * budget
             CoolingBudget = 0.04 * budget
-        elif usage == "Animation":
+        elif usage == "animation":
             # Animation also heavily prioritiese the CPU and GPU but has more interest in RAM
             GPUBudget = 0.5 * budget
             CPUBudget = 0.2 * budget
@@ -122,7 +126,7 @@ class BuildPage(Resource):
             PSUBudget = 0.05 * budget
             CaseBudget = 0.04 * budget
             CoolingBudget = 0.05 * budget
-        elif usage == "Video":
+        elif usage == "video":
             # Video work requires a stronger CPU and has less emphasis on a Graphics Card
             GPUBudget = 0.32 * budget
             CPUBudget = 0.32 * budget
@@ -132,7 +136,7 @@ class BuildPage(Resource):
             PSUBudget = 0.06 * budget
             CaseBudget = 0.05 * budget
             CoolingBudget = 0.03 * budget
-        elif usage == "Business":
+        elif usage == "business":
             # Business PC's are typically lower budget and therefore have a more even spread
             # accross the various parts
             GPUBudget = 0.2 * budget
@@ -143,7 +147,7 @@ class BuildPage(Resource):
             PSUBudget = 0.7 * budget
             CaseBudget = 0.05 * budget
             CoolingBudget = 0.04 * budget
-        elif usage == "Art":
+        elif usage == "art":
             # Art requires a strong GPU but has less need for a CPU and more need for RAM
             GPUBudget = 0.42 * budget
             CPUBudget = 0.16 * budget
@@ -306,7 +310,7 @@ def recommendGPU(budget, usage, overclock):
 
 def recommendMotherboard(budget, usage, CPU, GPU):
     Motherboards = db.getAllProducts('Motherboards')
-    
+    print("Motherboard budget: ", budget)
     currentPrice = 10000
     currentRating = -1
     
@@ -465,8 +469,8 @@ def recommendCase(budget, GPU):
     currentPrice = 10000
     
     for case in cases:
-        # Check the case is in stock
-        if case['stock'] > 0:
+        # Check the case is in stock and in the budget
+        if case['stock'] > 0 and case['price'] <= budget:
             
             averageRating = getAverageProductRating(case['id'])
 
