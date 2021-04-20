@@ -41,6 +41,28 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
         setSaleProducts(newSaleProducts);
     }
     
+    const handleRemove = (product) => {
+        console.log(products[0]);
+        console.log(saleProducts[0]);
+        const tempProductList = JSON.parse(JSON.stringify(products));
+        const tempSaleProducts = JSON.parse(JSON.stringify(saleProducts));
+        console.log(product)
+        const newProductList = tempProductList.filter((p) => p.id !== product.id);
+        const newSaleProducts = tempSaleProducts.filter((p) => p.productId !== product.id);
+
+        setProducts(newProductList);
+        setSaleProducts(newSaleProducts);
+        
+    }
+    
+    const calculateSalePrice = (product) => {
+        const tempProduct = saleProducts.filter((p) => p.productId === product.id);
+        if (tempProduct[0]) {
+            return (product.price - (product.price * (tempProduct[0]['sale %']/100)));
+        }
+        return product.price;
+    }
+    
     return (
         <Grid container item direction="column" spacing={3}>
             <Typography variant="h4">Sale Products</Typography>
@@ -50,12 +72,20 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
                 </Paper>
             </Grid>
             {products.map((product) => (
-                <Grid container direction="row" spacing={4}>
+                <Grid container direction="row" spacing={4} alignItems="center">
                     <Grid item xs={2}>
                         <img className="image" src={"data:image/jpeg;base64,"+product.image} alt={product.name} />
                     </Grid>
-                    <Grid item xs={8}>
-                        <Typography>{product.name}</Typography>
+                    <Grid container direction="column" item xs={8}>
+                        <Grid item>
+                            <Typography>{product.name}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">Original Price: ${product.price.toFixed(2)}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">Sale Price: ${calculateSalePrice(product).toFixed(2)}</Typography>
+                        </Grid>
                     </Grid>
                     <Grid item xs={2}>
                         <FormControl>
@@ -64,6 +94,14 @@ const SaleProductList = ({saleProducts, setSaleProducts}) => {
                                 onChange={(event) => handleChange(product, event.target.value)}
                             />
                         </FormControl>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            fullWidth
+                            onClick={() => handleRemove(product)}
+                        >
+                            Remove
+                        </Button>
                     </Grid>
                 </Grid>
             ))}
