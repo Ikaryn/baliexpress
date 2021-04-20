@@ -8,7 +8,6 @@ import amdryzen52600 from '../assets/amdryzen52600.jpg'
 const useStyles = makeStyles(() => ({
     productCardContainer: {
         height: '100%',
-        
     },
     productInfoContainer: {
         height: '50%',
@@ -27,10 +26,20 @@ const useStyles = makeStyles(() => ({
     saleOverlay: {
         position: 'absolute',
         top: '3em'
+    },
+    cardContainer: {
+        maxHeight: '600px',
+    },
+    outOfStockOverlay: {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        opacity: '0.7',
+        top: '0',
     }
 }))
 
-const ProductCard = ({pid, name, price, image, category, sale}) => {
+const ProductCard = ({pid, name, price, image, category, sale, stock}) => {
     
     const classes = useStyles();
     const history = useHistory();
@@ -48,9 +57,8 @@ const ProductCard = ({pid, name, price, image, category, sale}) => {
     const handleClick = () => {
         history.push(`/product/${category}/${pid}`)
     }
-    
     return (
-        <Card>
+        <Card className={classes.cardContainer}>
             <CardActionArea onClick={() => handleClick()} className={classes.productCardContainer} >
             <Grid container item direction="column" className={classes.productCardContainer}>
                     <Grid item>
@@ -60,6 +68,15 @@ const ProductCard = ({pid, name, price, image, category, sale}) => {
                                     {sale &&<Typography className={classes.saleNewPrice}>-{sale.salepercent}%</Typography>}
                                 </Paper>
                                 <img src={"data:image/jpeg;base64,"+image} alt="product-thumbnail" className="image"/>
+                                {stock === 0 &&
+                                    <Paper className={classes.outOfStockOverlay}>
+                                            <Grid container justify="center" alignItems="center" spacing={0}>
+                                                <Grid item xs={5}>
+                                                    <Typography align="center" variant="h3">Out of Stock</Typography>
+                                                </Grid>
+                                            </Grid>
+                                    </Paper>
+                                }
                             </div>
                         </CardMedia>
                     </Grid>

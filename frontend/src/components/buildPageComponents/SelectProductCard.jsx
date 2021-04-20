@@ -1,7 +1,9 @@
-import { Button, Card, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardMedia, Grid, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { StoreContext } from '../../util/store';
+
+
 const SelectProductCard = ({setOpen, productInfo, setProduct, redirect}) => {
     
     const history = useHistory();
@@ -29,9 +31,9 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, redirect}) => {
     }
 
     return (
-        <Card>
-            <Grid container direction="row">
-                    <Grid item xs={2}>
+        <Paper variant="outlined">
+            <Grid container direction="row" justify="center" alignItems="center">
+                    <Grid item xs={1}>
                         <CardMedia>
                             <img 
                             src={"data:image/jpeg;base64,"+productInfo.image} 
@@ -60,7 +62,7 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, redirect}) => {
                         </Grid>
                     </Grid>
             </Grid>
-        </Card>
+        </Paper>
     )
 
 }

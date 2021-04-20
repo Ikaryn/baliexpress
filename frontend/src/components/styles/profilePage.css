@@ -37,8 +37,9 @@
 }
 
 .select-product-modal {
-    margin: 15%;
+    margin: 8% 25%;
     padding: 2em;
+    width: 50%;
 }
 
 .modal-button-container {
