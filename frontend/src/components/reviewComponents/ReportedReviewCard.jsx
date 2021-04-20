@@ -29,6 +29,14 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
         setReviews(newReviews)
     }
 
+    const handleDismiss = (reviewid) => {
+        const body = {reviewId: reviewid};
+        api.delete('review/reports', body);
+        const tempReviews = JSON.parse(JSON.stringify(reviews));
+        const newReviews = tempReviews.filter(tempR => tempR.reviewid !== reviewid);
+        setReviews(newReviews)
+    }
+
     return (
         <Grid container>
             <Grid item>
@@ -53,14 +61,25 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item>
-                <Button 
-                color="primary" 
-                variant="contained"
-                onClick={() => {handleRemove(reportedReview.reviewid)}}
-                >
-                    Remove Review
-                </Button>
+            <Grid container direction="row">
+                <Grid item>
+                    <Button 
+                    color="primary" 
+                    variant="contained"
+                    onClick={() => {handleRemove(reportedReview.reviewid)}}
+                    >
+                        Remove Review
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button 
+                    color="primary" 
+                    variant="contained"
+                    onClick={() => {handleDismiss(reportedReview.reviewid)}}
+                    >
+                        Dismiss
+                    </Button>
+                </Grid>
             </Grid>
             <Snackbar open={success} autoHideDuration={1000}>
                 <Alert severity="success">This review has been deleted</Alert>
