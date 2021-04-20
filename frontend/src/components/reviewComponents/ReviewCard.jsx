@@ -50,14 +50,17 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
 
 
     const [voteStatus, setVoteStatus] = React.useState({'up': false, 'down': false})
-    const history = useHistory();
-    const [isAdmin, setIsAdmin] = React.useState(false);
+    const [isAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const [reportReason, setReportReason] = React.useState("");
     const [success, setSucccess] = React.useState(false);
     const [reportError, setReportError] = React.useState(false);
-    const [reviewNumber, setReviewNumber] = React.useState(review.score);
-
+    const [reviewNumber, setReviewNumber] = React.useState(0);
+    
+    React.useEffect(() => {
+        setReviewNumber(review.score)
+    },[review.score]);
+    
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
         const value = type === 'down' ? -1 : 1;
@@ -65,9 +68,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
 
         let up = voteStatus.up;
         let down = voteStatus.down;
-
         switch (type) {
-
             // If upvote was clicked...
             case 'up':
                 // If already upvoted
@@ -81,7 +82,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
                     up = true;
                     down = false;
                     setReviewNumber(() => {
-                        if(reviewNumber == 0){
+                        if(reviewNumber === 0){
                             return reviewNumber + 1 >= 0 ? reviewNumber + 1 : 0;
                         }
                         return reviewNumber + 2 >= 0 ? reviewNumber + 2 : 0;
@@ -110,7 +111,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
                 } else if (voteStatus['down']) {
                     await api.delete('review/vote', body);
                     down = false;
-                    setReviewNumber(reviewNumber + 1 >= 0 && reviewNumber != 0 ? reviewNumber + 1 : 0);          
+                    setReviewNumber(reviewNumber + 1 >= 0 && reviewNumber !== 0 ? reviewNumber + 1 : 0);          
                 // If not voted yet
                 } else {
                     await api.post('review/vote', body);
