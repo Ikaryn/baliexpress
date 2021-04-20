@@ -11,8 +11,8 @@ def connect():
     #        password=credentials.password
     try:
         conn = psycopg2.connect(database="baliexpress",
-            user="postgres",
-            password="Jordan4763"
+        user=credentials.user,
+        password=credentials.password
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
@@ -652,7 +652,10 @@ def getUsersBuilds(userID):
         print ("An error has occured in getUsersBuilds()")
         print(error)
     finally:
-        conn.close()
+        # close connecction to database
+        if (conn):
+            cur.close()
+            conn.close()
         return builds
 
 # deletes a part from a build

@@ -60,6 +60,7 @@ const ProductPage = () => {
     const [price, setPrice] = React.useState(0);
     const [quantity, setQuantity] = React.useState(1);
     const [success, setSuccess] = React.useState(false);
+    const [priceSaleDisplay, setPriceSaleDisplay] = React.useState(0);
     
     const classes = useStyles();
     // will be temporary to read in. (replace with values inside the product dict)
@@ -73,12 +74,14 @@ const ProductPage = () => {
         (async () => {
             const products = await api.get(`product?category=${category}`);
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
+            setPriceSaleDisplay(product[0].price);
             let productPrice = product[0].price;
-            console.log(product[0]);
             if (product[0].sale) {
                 productPrice = (product[0].price - (product[0].price * (product[0].sale.salepercent / 100))).toFixed(2);
             }
-            setPrice(productPrice);
+            setPriceSaleDisplay(productPrice);
+            setPrice(product[0].price)
+            console.log(productPrice);
             setProductInfo(product[0]);
         })();
         
@@ -110,6 +113,7 @@ const ProductPage = () => {
                 "quantity": quantity,
                 "category": productInfo.category,
                 "stock": productInfo.stock,
+                "sale": productInfo.sale,
             });
         } else {
             let newQuantity = Number(found[0]['quantity']) + quantity;
@@ -164,7 +168,7 @@ const ProductPage = () => {
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography variant="h5" className={classes.saleNewPrice}>
-                                                        ${price} On Sale!
+                                                        ${priceSaleDisplay} On Sale!
                                                     </Typography>
                                                 </Grid>
                                             </Grid>

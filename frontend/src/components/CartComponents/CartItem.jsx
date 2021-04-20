@@ -1,17 +1,23 @@
 import React from 'react';
-import API from '../../util/API';
-import { Card, CardActionArea, Select, Typography, CardContent, Button, MenuItem, OutlinedInput, Grid, TextField} from '@material-ui/core';
-import { useHistory } from 'react-router';
+import { Typography, Button, Grid, makeStyles} from '@material-ui/core';
 import { StoreContext } from '../../util/store';
 
+const useStyles = makeStyles(() => ({
+    saleOldPrice: {
+        textDecoration: 'line-through',
+    },
+    saleNewPrice: {
+        color: 'rgb(255, 77, 77)',
+        fontWeight: 'bold',
+    },
+
+}))
 const CartItem = ({productInfo, setCartList, type}) => {
-    
+    const classes = useStyles();
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
     const [totalPrice, setTotalPrice] = React.useState(productInfo.quantity * productInfo.price);
     const [quantity, setQuantity] = React.useState(productInfo.quantity);
-    
-    console.log(productInfo);
     
     const handleRemove = () => {
         const updatedCart = JSON.parse(JSON.stringify(cart));        
@@ -85,7 +91,6 @@ const CartItem = ({productInfo, setCartList, type}) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                {/* </Grid>     */}
             </Grid>
             <Grid container item direction="column" xs={3}>
                 <Grid item>
@@ -94,9 +99,14 @@ const CartItem = ({productInfo, setCartList, type}) => {
                     </Button>
                 </Grid>
                 <Grid item>
-                    <Typography>
+                    <Typography className={productInfo.sale && classes.saleOldPrice}>
                         Price: ${totalPrice}
                     </Typography>
+                    {productInfo.sale && 
+                        <Typography className={classes.saleNewPrice} variant="h6">
+                            ${((productInfo.price - (productInfo.price * (productInfo.sale.salepercent / 100))) *productInfo.quantity).toFixed(2)}
+                        </Typography>
+                    }
                 </Grid>
             </Grid>
         </Grid>

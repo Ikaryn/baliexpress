@@ -23,7 +23,7 @@ const UserBuildList = () => {
     
     const handleRedirect = (userid, buildid, build) => {
         
-        const editBuild = buildTemplate;
+        const editBuild = JSON.parse(JSON.stringify(buildTemplate));
         
         // since saved builds may not have all parts filled out
         // populate the build with empty key/fields so it renders properly.
@@ -32,11 +32,11 @@ const UserBuildList = () => {
         })
         
         editBuild.id = buildid;
-        editBuild.name = build.buildName;
-        editBuild.desc = build.buildDesc;
-        console.log(editBuild);
+        editBuild.name = build.buildname;
+        editBuild.desc = build.description;
+        console.log(build);
         setBuild(editBuild);
-        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit'}});
+        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit', name: build.buildName}});
     }
     
     const handleDelete = async (buildid) => {

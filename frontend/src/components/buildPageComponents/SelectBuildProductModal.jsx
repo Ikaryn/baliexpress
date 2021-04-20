@@ -1,4 +1,4 @@
-import { Button, Divider, FormControl, FormLabel, Grid, Input, InputAdornment, List, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
+import { Button, Checkbox, Divider, FormControl, FormControlLabel, FormLabel, Grid, Input, InputAdornment, List, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
 import React from 'react';
 import API from '../../util/API';
 import { convertCategoryName } from '../../util/helpers';
@@ -23,16 +23,18 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
     const [maxPrice, setMaxPrice] = React.useState(null);
     const [minPrice, setMinPrice] = React.useState(null);
     const [sortCriteria, setSortCriteria] = React.useState('Popularity');
+    const [showNoStockProducts, setShowNoStockProducts] = React.useState(false);
     const classes = useStyles();
-    console.log(products);
 
     // get all of the products in the category
     React.useEffect(() => {
         (async () => {
             // console.log(category);
             const response = await api.get(`product?category=${category}`);
+            const filteredProducts = response.products.filter((product) => (product.stock > 0));
+            
             setAllProducts(response.products);
-            setProducts(response.products);
+            setProducts(filteredProducts);
         })();
     },[category]);
 
@@ -112,6 +114,22 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
         setProducts(newSorted);
     }
 
+    // if user wants to see products with no stock
+    const handleShowStock = (checked) => {
+        setShowNoStockProducts(checked);
+        let returnProducts = JSON.parse(JSON.stringify(allProducts));
+        if (showNoStockProducts) {
+            console.log('hello')
+            returnProducts = returnProducts.filter((product) => (product.stock > 0));
+        }
+        setProducts(returnProducts)
+        // handleSort(sortCriteria);
+        // handleFilter(brand);
+        // handlePrice('upper', maxPrice);
+        // handlePrice('lower', minPrice);
+
+    } 
+
     return (
         <Grid container direction="column">
             <Paper className='select-product-modal'>
@@ -133,7 +151,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                                 ))}
                         </Select>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Typography>Filter by Price:</Typography>
                         <Grid container direction="row" spacing={1}>
                             <Grid item xs={3}>
@@ -165,7 +183,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <Typography>sort by:</Typography>
                         <Select  value={sortCriteria} onChange={(event) => {handleSort(event.target.value)}}>
                             <MenuItem value={'Popularity'}>Popularity</MenuItem>
@@ -173,19 +191,30 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                             <MenuItem value={'Price-Low'}>Price-Low</MenuItem>
                         </Select>
                     </Grid>
+                    <Grid item xs={2}> 
+                        <FormControlLabel
+                            control={
+                                <Checkbox 
+                                    checked={showNoStockProducts} 
+                                    onChange={(event) => {handleShowStock(event.target.checked)}}
+                                />
+                            }
+                            label="Show backorder Products"
+                          />
+                    </Grid>
                 </Grid>
                 <Divider />
                 <List className={classes.productListScrollable}>
                     <Grid container direction="column" alignContent="center">
                         {products.map((product) => (
                             <Grid item key={product.id} xs={12}>
-                                    <SelectProductCard 
-                                        setOpen={setOpen} 
-                                        productInfo={product} 
-                                        setProduct={setProduct}
-                                        setComparedProduct={setComparedProduct}
-                                        redirect={redirect}
-                                    />
+                                <SelectProductCard 
+                                    setOpen={setOpen} 
+                                    productInfo={product} 
+                                    setProduct={setProduct}
+                                    setComparedProduct={setComparedProduct}
+                                    redirect={redirect}
+                                />
                             </Grid>
                         ))}
                     </Grid>

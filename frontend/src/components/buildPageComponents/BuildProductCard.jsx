@@ -12,8 +12,13 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         width: '100%',
+    },
+    salePrice: {
+        fontWeight: 'bold',
+    },
+    oldSalePrice: {
+        textDecoration: 'line-through',
     }
-
 }));
 
 const BuildProductCard = ({type}) => {
@@ -21,11 +26,6 @@ const BuildProductCard = ({type}) => {
     const [open, setOpen] = React.useState(false);
     const {build: [build, setBuild]} = context;
     const [productInfo, setProductInfo] = React.useState(build.parts[type]);
-    // console.log(build.parts[type]);
-    // console.log(type)
-    // console.log(productInfo)
-    // const [spec, setSpec] = React.useState(build[type].specs)
-    console.log('rendering product card');
     const [redirect, setRedirect] = React.useState('')
     const classes = useStyles();
     
@@ -72,7 +72,7 @@ const BuildProductCard = ({type}) => {
                 </Grid>
                 :
                 <Grid item container direction="row" xs={9} spacing={4} className={classes.productInfoContainer}>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <img className={classes.image} src={"data:image/jpeg;base64,"+build.parts[type].image} alt={productInfo.name}/>
                     </Grid>
                     <Grid item xs={4}>
@@ -109,10 +109,14 @@ const BuildProductCard = ({type}) => {
                             <Typography variant="h6">Price</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h5">${Number(build.parts[type].price).toFixed(2)}</Typography>
+                            <Typography variant="h5" className={productInfo.sale && classes.oldSalePrice}>${Number(build.parts[type].price).toFixed(2)}</Typography>
+                            {productInfo.sale && 
+                            <Typography variant="h5" color="secondary" className={classes.salepercent}>
+                                ${(productInfo.price - (productInfo.price * (productInfo.sale.salepercent/100)).toFixed(2))}
+                            </Typography>}
                         </Grid>
                     </Grid>
-                    <Grid item container direction="column" xs={1} justify="center">
+                    <Grid item container direction="column" xs={2} justify="center">
                         <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('compare')}}>Compare</Button>
                         <Button color="primary" variant="contained" onClick={()=>{handleOpenModal('change')}}>Change</Button>
                         <Button color="secondary" variant="contained" onClick={()=>{handleCardUpdate(type, '')}}>Delete</Button>
