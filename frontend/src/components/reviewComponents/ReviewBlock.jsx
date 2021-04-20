@@ -273,7 +273,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
                         variant="contained" 
                         className={classes.standoutButton} 
                         onClick={()=>{handleReviewFormOpen()}}
-                        disabled={userType === 'guest'}
+                        disabled={userType.toLowerCase() === 'guest'}
                     >
                         {generateReviewButtonText()}
                     </Button>

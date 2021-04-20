@@ -54,6 +54,7 @@ const UserBuildList = () => {
                     <TableCell align="right">ID</TableCell>  
                     <TableCell align="right">Name</TableCell>
                     <TableCell align="right">Description</TableCell>
+                    <TableCell />
                 </TableRow>
             </TableHead>
             <TableBody>

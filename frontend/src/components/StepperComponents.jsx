@@ -2,6 +2,7 @@ import { FormControl, Grid, Input, InputLabel, Select, Typography, TextField } f
 import { DropzoneArea } from 'material-ui-dropzone';
 import React from 'react';
 import API from '../util/API';
+import { convertCategoryName } from '../util/helpers';
 
 const productCategories = ['CPU', 
 'CPU Cooling', 
@@ -65,7 +66,7 @@ const InputForm = ({product, changeValue}) => {
             <Select native value={product.category} onChange={(event) => {changeValue('category', event.target.value)}}>
                 {product.category === '' ? <option value="" disabled></option> : product.category}
                 {productCategories.map((category) => (
-                    <option value={category}>{category}</option>
+                    <option value={convertCategoryName(category)}>{category}</option>
                     ))}
             </Select>
         </FormControl>

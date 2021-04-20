@@ -46,21 +46,23 @@ const BuildPage = () => {
     
     // Generate a build if required 
     React.useEffect(() => {
-        console.log(history.location.state)
+        // set the build according to the entry point to the build page
         if (history.location.state.type === 'empty') {
             const newBuild = JSON.parse(JSON.stringify(buildTemplate));
-            // console.log(buildTemplate)
-            // console.log(newBuild)
             setBuild(newBuild);
+        //if its a custom built pc
         } else if (history.location.state.type.includes('custom')){
             //get the specs
-            console.log(history.location.state.count)
             const formResponse = history.location.state.specs;
+            // set the loading bar so it appears
             setLoadingBuild('loading');
+            // get the actual custom build
             api.get(`build?usage=${formResponse.usage}&&budget=${formResponse.budget}&&overclock=${formResponse.overclock}&&storage=${formResponse.storage}`)
             .then((res) => {
+                // flag to determine if theres an error/if backend couldnt find an appriopriate part
                 let flag = false;
                 let errorMessage = "Sorry, we couldn't find these products within your budget and usage : "
+                // loop through th e parts and see if theres any empty parts
                 Object.keys(res).forEach((part) => {
                     if(res[part] === '' && part !== 'CPU_Cooling'){
                         errorMessage += part + '';
@@ -110,7 +112,6 @@ const BuildPage = () => {
     const handleAddToCart = () => {
         const buildInfo = JSON.parse(JSON.stringify(build));
         buildInfo['price'] = buildPrice;
-        buildInfo['name'] = buildName;
         buildInfo['quantity'] = 1;
         buildInfo['builtByCompany'] = builtByCompany;
         
