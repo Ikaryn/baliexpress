@@ -135,37 +135,50 @@ class Reports(Resource):
         print("Get reports received")
         reports = db.getReports()
         reportedReviews = []
-        reportedReview = {
-            'productname': None,
-            'reviewid': None,
-            'reviewtext': "",
-            'harassment': 0,
-            'offensive': 0,
-            'irrelevant': 0
-        }
+
         for report in reports:
-            print ("Report = ",report)
+            reportedReview = {
+                'productname': None,
+                'reviewid': None,
+                'reviewtext': "",
+                'harassment': 0,
+                'offensive': 0,
+                'irrelevant': 0
+            }
+            
             review = db.getReview(report['reviewid'])
-            print("Review = ", review)
+
             reportedReview['reviewid'] = review['reviewid']
             reportedReview['reviewtext'] = review['reviewtext']
             product = db.getProduct(review['productid'])
             reportedReview['productname'] = product['name']
+
             if reportedReview not in reportedReviews:
+                print("^ was appended")
                 reportedReviews.append(reportedReview)
+
         for reported in reportedReviews:
             reviewReports = db.getReviewReports(reported['reviewid'])
             for reviewReport in reviewReports:
+                print("reviewReport = ", reviewReport)
                 reported[reviewReport['reason']] += 1
-            print(reported)
+        # print("reportedReviews = ",reportedReviews)
         return reportedReviews
         
     
     def post(self):
         print("Post report recieved")
+        
         data = request.json
-        print(data)
         reviewID = data.get('reviewID')
         reason = data.get('reason')
 
         db.reportReview(reviewID, reason)
+
+    def delete(self):
+        print("Delete reports received")
+        
+        data = request.json
+        reviewID = data.get('reviewId')
+
+        db.deleteReports(reviewID)

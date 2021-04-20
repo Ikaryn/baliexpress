@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 
 // const SmallProductView = ({pid, name, price, image, category, type, addProduct}) => {
-    const SmallProductView = ({productInfo, type, addProduct}) => {
+    const SmallProductView = ({productInfo, type, addProduct, setOpen}) => {
     const history = useHistory();
 
     const handleClick = () => {
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router';
         } else {
             history.push(`/product/${productInfo.category}/${productInfo.id}`)
         }
+        setOpen(false);
     }
     return (
         <Card className="product-card-container">

@@ -21,6 +21,7 @@ const SearchBar = ({type = 'search', addProduct}) => {
 
     function searchMore(){
         var searchStringTransform = search !== "" ? search.split(" ").join("+") : "";
+        setOpen(false);
         history.push(`/search/${searchStringTransform}`);
     }
 
@@ -65,6 +66,7 @@ const SearchBar = ({type = 'search', addProduct}) => {
                                                 productInfo={x}
                                                 type={type}
                                                 addProduct={addProduct}
+                                                setOpen={setOpen}
                                             />
                                         ))}
                                         {productOutput.length === 0 &&
