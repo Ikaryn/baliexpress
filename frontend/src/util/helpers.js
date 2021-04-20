@@ -6,7 +6,7 @@ export function fileToDataUrl(file) {
     if (!valid) {
         throw Error('provided file is not a png, jpg or jpeg image.');
     }
-    
+
     const reader = new FileReader();
     const dataUrlPromise = new Promise((resolve,reject) => {
         reader.onerror = reject;
@@ -28,26 +28,26 @@ export const productDesc = {
 }
 
 // export const buildTemplate = {
-//     'Cases': '', 
-//     'Motherboards':'', 
+//     'Cases': '',
+//     'Motherboards':'',
 //     'CPU':'',
-//     'Graphics_Cards':'', 
+//     'Graphics_Cards':'',
 //     'Memory': '',
 //     'Storage': '',
-//     'PSU': '', 
+//     'PSU': '',
 //     'CPU_Cooling':'',
 //     }
 
 export const allProductCategories = {
-    'Cases': '', 
-    'Motherboards':'', 
+    'Cases': '',
+    'Motherboards':'',
     'CPU':'',
-    'Graphics_Cards':'', 
+    'Graphics_Cards':'',
     'Memory': '',
     'Storage': '',
-    'PSU': '', 
+    'PSU': '',
     'CPU_Cooling':'',
-    
+
 }
 
 export const buildTemplate = {
@@ -55,13 +55,13 @@ export const buildTemplate = {
     'id': 0,
     'desc': '',
     'parts': {
-                'Cases': '', 
-                'Motherboards':'', 
+                'Cases': '',
+                'Motherboards':'',
                 'CPU':'',
-                'Graphics_Cards':'', 
+                'Graphics_Cards':'',
                 'Memory': '',
                 'Storage': '',
-                'PSU': '', 
+                'PSU': '',
                 'CPU_Cooling':'',
             },
     'price': 0,
@@ -69,7 +69,7 @@ export const buildTemplate = {
     }
 // function to convert category names in frontend to backend table names
 export function convertCategoryName(category) {
-    
+
     switch(category) {
         case "Case":
             return "Cases"
@@ -86,11 +86,11 @@ export function convertCategoryName(category) {
             return "CPU_Cooling"
         case "PC Cooling":
             return "PC_Cooling"
-        case 'Wifi Adaptors':
-            return 'Wifi_Adaptors'
+        case 'Wifi Adapters':
+            return 'Wifi_Adapters'
         default:
             return category;
-    
+
     }
 
 }
@@ -107,7 +107,7 @@ export function reverseCategoryName(category) {
             return "Power Supply";
         case "CPU_Cooling":
             return "CPU Cooling";
-        default: 
+        default:
             return category;
     }
 }
