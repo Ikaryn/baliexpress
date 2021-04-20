@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, TextField, Typography, Box } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
@@ -40,7 +40,8 @@ const EditProductPage = () => {
     const { category, pid } = useParams();
     const [productInfo, setProductInfo] = React.useState({'place':'holder'});
     const [image, setImage] = React.useState('');
-    
+    const [errorSubmit, setErrorSubmit] = React.useState(false);
+    const [errorItems, setErrorItems] = React.useState([]);    
     React.useEffect(() => {
         (async () => {
             const products = await api.get(`product?category=${category}`);
@@ -54,10 +55,18 @@ const EditProductPage = () => {
 
     async function updateItem(){
         if(window.confirm('Are you sure you want to edit this product?')){
-
-            const res = await api.put(`product`, productInfo);
-            console.log(res);
-            history.push(`/product/${category}/${pid}`);  
+            setErrorSubmit(false);
+            setErrorItems([]);
+            const err = ErrorCheck();
+            console.log(err);
+            if(err.length != 0){
+                setErrorSubmit(true);
+                setErrorItems(err);
+            }else{
+                const res = await api.put(`product`, productInfo);
+                console.log(res);
+                history.push(`/product/${category}/${pid}`);  
+            }
         }
     }
     async function removeItem(){
@@ -101,7 +110,30 @@ const EditProductPage = () => {
                         'description': "Description",
                         'warranty': "Warranty"
                     };
-    
+    function ErrorCheck() {
+        var arr = []
+        for(const item in productInfo){
+            if(item == "price" && !/^[0-9]+$/.test(productInfo[item])){
+                arr.push(item);
+            }else if(item == "stock" && !/^[0-9]+$/.test(productInfo[item])){
+                arr.push(item);
+            }
+        }
+        return arr;
+    }   
+    function makeErrorString(){
+        var x = "The following items are in incorrect format: ";
+        var first = true;
+        for(const item in errorItems){
+            if(first){
+                x = x.concat(errorItems[item]);
+                first = false;
+            }else{
+                x = x.concat(", ".concat(errorItems[item]));
+            }
+        }
+        return x;
+    } 
     return(
         <Grid container item direction="column" className="information-tab" className="light-text">
             <Grid container justify="center">
@@ -153,6 +185,9 @@ const EditProductPage = () => {
                 onChange={(file) => {handleImageUpload(file); }}
             
             />
+            <Box display={errorSubmit ? "" : "none"}>
+                <Typography style={{color: "red"}}>{makeErrorString()}</Typography>
+            </Box>            
             <Button onClick={() => {updateItem()}}>Update Item</Button>
             <Button onClick={() => {removeItem()}}>Remove Item</Button>
         </Grid>
