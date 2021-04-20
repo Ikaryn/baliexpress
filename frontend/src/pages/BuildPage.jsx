@@ -1,6 +1,7 @@
 import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
+import { useHistory } from 'react-router';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
 import SaveBuildModal from '../components/buildPageComponents/SaveBuildModal';
 import API from '../util/API';
@@ -38,10 +39,17 @@ const BuildPage = () => {
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const [successType, setSuccessType] = React.useState('');
-    
+    const history = useHistory();
     const classes = useStyles();
     const [builtByCompany, setBuiltByCompany] = React.useState(false)
     
+    console.log(history);
+    // Generate a build if required 
+    
+    // React.useEffect(() => {
+        
+    
+    // })
     
     // generate and calculate the build price
     React.useEffect(() => {
