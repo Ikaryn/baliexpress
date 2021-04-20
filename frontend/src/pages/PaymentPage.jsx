@@ -28,8 +28,8 @@ const PaymentPage = () => {
     const classes = useStyles();
     const history = useHistory();
     const [user, setUser] = React.useState(null);
-    const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'month':'', 'year':'', 'cvn':''});
-    const [paymentErrors, setPaymentErrors] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
+    const [paymentDetails, setPaymentDetails] = React.useState({'name': '', 'type': '', 'number': '', 'month':'', 'year':'', 'cvn':''});
+    const [paymentErrors, setPaymentErrors] = React.useState({'name': '', 'type': '', 'number': '', 'date':'', 'cvn':''});
     const [shippingDetails, setShippingDetails] = React.useState({  'address': '', 
                                                                     'city': '',
                                                                     'postcode': '',
@@ -139,6 +139,12 @@ const PaymentPage = () => {
         });
 
         // Check if any fields in the payment block are empty
+
+        if (paymentDetails.name === '') {
+            newPaymentErrors['name'] = "Please enter the cardholder's name";
+        } else if (!checkInputAlpha(paymentDetails.name)) {
+            newPaymentErrors['name'] = "Invalid cardholder name";
+        }
 
         if (paymentDetails.type === '') {
             newPaymentErrors['type'] = "Please select your card type";
