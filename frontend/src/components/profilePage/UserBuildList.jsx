@@ -36,7 +36,7 @@ const UserBuildList = () => {
         editBuild.desc = build.description;
         console.log(build);
         setBuild(editBuild);
-        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit', name: build.buildName}});
+        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit', name: build.buildName, count: 0}});
     }
     
     const handleDelete = async (buildid) => {
@@ -51,24 +51,26 @@ const UserBuildList = () => {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell align="right">ID</TableCell>  
-                    <TableCell align="right">Name</TableCell>
-                    <TableCell align="right">Description</TableCell>
+                    <TableCell align="left">ID</TableCell>  
+                    <TableCell align="left">Name</TableCell>
+                    <TableCell align="left">Description</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {!builds?
+                {!builds ?
                     <Grid container justify="center">
                         <Typography variant="h4">You have no saved builds!</Typography>
                     </Grid>
                 :   
                     builds.map((build) => (
                     <TableRow key={build.buildid}>
-                        <TableCell>{build.buildid}</TableCell>
-                        <TableCell>{build.buildname}</TableCell>
-                        <TableCell>{build.description}</TableCell>
+                        <TableCell align="left">{build.buildid}</TableCell>
+                        <TableCell align="left">{build.buildname}</TableCell>
+                        <TableCell align="left">{build.description}</TableCell>
                         <TableCell>
                             <Button variant="contained" color="primary" onClick={() => {handleRedirect(build.userid, build.buildid, build)}}>Edit Build</Button>
+                        </TableCell>
+                        <TableCell>
                             <Button variant="contained" color="secondary" onClick={() => {handleDelete(build.buildid)}}>Delete Build</Button>
                         </TableCell>
                     </TableRow>  

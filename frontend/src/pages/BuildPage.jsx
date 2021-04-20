@@ -1,4 +1,4 @@
-import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Checkbox, FormControlLabel, Grid, LinearProgress, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -41,33 +41,50 @@ const BuildPage = () => {
     const history = useHistory();
     const classes = useStyles();
     const [builtByCompany, setBuiltByCompany] = React.useState(false)
+    const [buildError, setBuildError] = React.useState({error: false, message: ''});
+    const [loadingBuild, setLoadingBuild] = React.useState('idle');
     
-    console.log(history);
     // Generate a build if required 
     React.useEffect(() => {
         console.log(history.location.state)
         if (history.location.state.type === 'empty') {
-            console.log('hello');
             const newBuild = JSON.parse(JSON.stringify(buildTemplate));
-            console.log(buildTemplate)
+            // console.log(buildTemplate)
+            // console.log(newBuild)
             setBuild(newBuild);
-        } else if (history.location.state.type === 'custom'){
+        } else if (history.location.state.type.includes('custom')){
+            //get the specs
+            console.log(history.location.state.count)
             const formResponse = history.location.state.specs;
+            setLoadingBuild('loading');
             api.get(`build?usage=${formResponse.usage}&&budget=${formResponse.budget}&&overclock=${formResponse.overclock}&&storage=${formResponse.storage}`)
             .then((res) => {
-                console.log(res);
+                let flag = false;
+                let errorMessage = "Sorry, we couldn't find these products within your budget and usage : "
+                Object.keys(res).forEach((part) => {
+                    if(res[part] === '' && part !== 'CPU_Cooling'){
+                        errorMessage += part + '';
+                        flag = true;
+                    }
+                })
+                if(flag) {
+                    setBuildError({error: true, message: errorMessage});
+                }
                 const newBuild = JSON.parse(JSON.stringify(build));
                 newBuild.parts = res;
                 newBuild.name = "Your Custom PC Build"
                 newBuild.id = 0;
                 setBuild(newBuild);
+        
+            })
+            .then(() => {
+                setLoadingBuild('done');
             })
         } else if (history.location.state.type === 'edit') {
             console.log(history.location.state.name)
             setBuildName(history.location.state.name);
         }
-    
-    },[history.location.state.type])
+    },[history.location.state.type, history.location.state.count])
     
     // generate and calculate the build price
     React.useEffect(() => {
@@ -93,7 +110,7 @@ const BuildPage = () => {
     const handleAddToCart = () => {
         const buildInfo = JSON.parse(JSON.stringify(build));
         buildInfo['price'] = buildPrice;
-        buildInfo['buildname'] = buildName;
+        buildInfo['name'] = buildName;
         buildInfo['quantity'] = 1;
         buildInfo['builtByCompany'] = builtByCompany;
         
@@ -112,10 +129,16 @@ const BuildPage = () => {
     
     return (
     <div className={classes.root}>
-        <Grid container alignItems="center" direction="column" spacing={3}>
+        <Grid container alignItems="center" direction="column" spacing={3} className="light-text">
             <Grid item>
                 <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
+            {loadingBuild === 'loading' && 
+                <Grid xs={12}>
+                    <LinearProgress />
+                    <Typography>Loading build...</Typography>
+                </Grid>
+            }
             <Grid container item direction="row">
                 <Grid container item direction="column" xs={12} spacing={3}>
                     {Object.keys(build.parts).map((category) => (
@@ -160,6 +183,9 @@ const BuildPage = () => {
                 <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} edit={build.id}/>
             </Modal>
         </AppBar>
+        <Snackbar open={buildError.error} autoHideDuration={10000} onClose={() => {setBuildError({error: false, message: ''})}}>
+            <Alert severity="warning">{buildError.message}</Alert>
+        </Snackbar>
         <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>
             <Alert severity="success">{successType === 'save' ? 'Build Successfully Saved!' : 'Build added to cart!'}</Alert>
         </Snackbar>

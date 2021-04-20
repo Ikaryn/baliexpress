@@ -27,17 +27,6 @@ export const productDesc = {
     "CPU": "The CPU (Central Processing Unit) is the part of a computer system that is commonly referred to as the 'brains' of a computer. The CPU is also known as the processor or microprocessor. The CPU is responsible for executing a sequence of stored instructions called a program ."
 }
 
-// export const buildTemplate = {
-//     'Cases': '',
-//     'Motherboards':'',
-//     'CPU':'',
-//     'Graphics_Cards':'',
-//     'Memory': '',
-//     'Storage': '',
-//     'PSU': '',
-//     'CPU_Cooling':'',
-//     }
-
 export const allProductCategories = {
     'Cases': '',
     'Motherboards':'',

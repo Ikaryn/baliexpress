@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
   
-const api = new API();
 
 const BuildModalForm = ({handleToggle, setOpen}) => {
     const classes = useStyles();
@@ -31,8 +30,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
     });
     
     const context = React.useContext(StoreContext);
-    const { build: [build, setBuild]} = context;
-    
+    const { count : [count ,setCount] } = context;
     
     const history = useHistory();
 
@@ -71,24 +69,25 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
     const handleRedirect = async (flag) => {
         if (flag === 'empty'){ 
             // setBuild(buildTemplate);
-            console.log('empty');
+            setCount(count + 1);
             handleToggle(false);
-            history.push({pathname:'/build', state: {type:'empty'}});
+            history.push({pathname:'/build', state: {type:'empty', count: count}});
         } else if (flag === 'build'){
             if (!errorHandler()) {
-                console.log('build')
+                setCount(count + 1);
                 handleToggle(false);
                 history.push({
                     pathname:'/build/custom', 
                     state: {
-                        type:'custom',
+                        type:'custom'+count,
                         specs: {
                             usage: usage, 
                             budget: budget, 
                             overclock: overclock,
                             storage: storage,
                             }
-                        }
+                        },
+                        count: count,
                     }
                 );
             }

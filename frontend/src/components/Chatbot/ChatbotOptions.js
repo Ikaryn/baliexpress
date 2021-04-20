@@ -7,11 +7,6 @@ const ChatbotOptions = (props) => {
             text: 'General Information', 
             handler: props.actionProvider.handleGeneralInfo,
             id: 1},
-        {
-            text: 'Help', 
-            handler: () => {}, 
-            id: 2
-        },
     ];
     
     const optionsMarkup = options.map((option) => (

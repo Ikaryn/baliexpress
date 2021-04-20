@@ -1,8 +1,8 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { StoreContext } from '../../util/store';
 import CartItem from './CartItem';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const useStyles = makeStyles(() => ({
     root: {
@@ -20,19 +20,19 @@ const useStyles = makeStyles(() => ({
 
 const CartContent = () => {
     const context = React.useContext(StoreContext);
-    const { cart: [cart, setCart] } = context;
+    const { cart: [cart,] } = context;
     
-    const history = useHistory();
+    // const history = useHistory();
     const classes = useStyles();
     console.log(cart);
     
-    const handleClick = () => {
-        history.push(`/payment`);
-    }
+    // const handleClick = () => {
+    //     history.push(`/payment`);
+    // }
     
     const generateCartContent = (product) => {
         console.log(product);
-        if (product.buildname) {
+        if (product.parts) {
             return (
                 <div>
                     <CartItem productInfo={product} type="build" />

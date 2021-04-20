@@ -27,7 +27,7 @@ export default ({ children }) => {
     const [cart, setCart] = React.useState([]);
     const [comparedProduct, setComparedProduct] = React.useState({});
     const [userType, setUserType] = React.useState('guest');
-    
+    const [count, setCount] = React.useState(0);
     const [sales, setSales] = React.useState([]);
     const store = {
         build: [build, setBuild],
@@ -35,6 +35,7 @@ export default ({ children }) => {
         comparedProduct: [comparedProduct, setComparedProduct],
         userType: [userType, setUserType],
         sales: [sales, setSales],
+        count: [count, setCount],
     };
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 

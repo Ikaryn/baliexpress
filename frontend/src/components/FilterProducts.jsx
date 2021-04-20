@@ -131,7 +131,7 @@ function categoryFilters (category) {
                                         'names': ['Mechanical Switches', 'Connectivity', 'Backlight']
                                         },
                     'Wifi_Adapters':    {
-                                        'price': ['0 -50', '50 or more'],
+                                        'price': ['0 - 50', '50 or more'],
                                         'specs': [],
                                         'names': []
                                         },

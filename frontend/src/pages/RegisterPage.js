@@ -78,7 +78,10 @@ const Register = () => {
                 console.log(res);
                 // history.push('/')
                 if (res.token) {
-                    setRegisterMessage('Account successfully made!')
+                    setRegisterMessage('Account successfully made! Redirecting you to the login page...')
+                    setTimeout(() => {
+                        history.push('/login');
+                    }, 2000);
                 } else {
                     setRegisterMessage(res.error);
                 }
