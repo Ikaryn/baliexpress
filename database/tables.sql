@@ -1,6 +1,6 @@
 DROP TYPE IF EXISTS Categories CASCADE;
 
-CREATE TYPE categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adapters');
+CREATE TYPE Categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adapters');
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
@@ -45,7 +45,7 @@ CREATE TABLE Users(
 CREATE TABLE Products(
     id              int GENERATED ALWAYS AS IDENTITY,
     name            varchar(150) NOT NULL,
-    category        categories NOT NULL,
+    category        Categories NOT NULL,
     brand           text,
     price           numeric(50, 2) NOT NULL,
     image           text,
@@ -212,7 +212,6 @@ CREATE TABLE Keyboards(
 CREATE TABLE Wifi_Adapters(
     id          int,
     socket      text,
-    power_use   numeric(50, 1),
     primary key (id),
     foreign key (id) references Products(id) on delete CASCADE
 );

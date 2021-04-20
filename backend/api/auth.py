@@ -34,6 +34,19 @@ class Login(Resource):
 
         return {'error':'Invalid Login Details'}
 
+    def get(self):
+        data = request.args
+
+        email = data.get('email')
+
+        userId, admin = db.getUserIDFromEmail(email)
+        print(userId)
+        if userId is None:
+            return {'exists':False}
+        else:
+            print('user exists')
+            return {'exists':True}
+
 class Register(Resource):
 
     # Registering a new account
