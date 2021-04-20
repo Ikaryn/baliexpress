@@ -54,8 +54,6 @@ const ProductListPage = () => {
                 }
             }
 
-            console.log(category);
-            console.log(categoryFilters(category));
             let fieldFilters = categoryFilters(category ? category : 'Sales');
 
             // Set up the filter boxes
@@ -219,11 +217,11 @@ const ProductListPage = () => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid container item direction="column"  xs={9}>
+                <Grid container item direction="column" xs={8}>
                     <Grid container item>
                         <Paper className="product-list-sort-tab">
                             <Grid container item direction="row" spacing={1} alignItems="center">
-                                <Grid container item direction="row" xs={4}>
+                                <Grid container item direction="row" xs={4} spacing={2}>
                                     <Grid item>
                                         <Typography variant="h6">Sort by:</Typography>
                                     </Grid>
@@ -232,28 +230,18 @@ const ProductListPage = () => {
                                             select
                                             value={sortType} 
                                             onChange={(event) =>{setSortType(event.target.value)}}
-                                            >
-                                            {sortTypes.map((s) => (
-                                                <MenuItem key={s} value={s}>
-                                                    {s}
+                                        >
+                                            {sortTypes.map((type) => (
+                                                <MenuItem key={type} value={type}>
+                                                    {type}
                                                 </MenuItem>
                                             ))}
                                         </TextField>
                                     </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <TextField 
-                                        select
-                                        value={sortType} 
-                                        onChange={(event) =>{setSortType(event.target.value)}}
-                                    >
-                                        {sortTypes.map((type) => (
-                                            <MenuItem key={type} value={type}>
-                                                {type}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid>
+                                    <Grid item>
+                                        <Typography variant="h3">{generateHeader()}</Typography>
+                                    </Grid>
                             </Grid>
                         </Paper>
                     </Grid>
@@ -267,6 +255,7 @@ const ProductListPage = () => {
                                     image={p.image}
                                     category={p.category}
                                     sale={p.sale}
+                                    stock={p.stock}
                                     />
                             </Grid>
                         ))}
