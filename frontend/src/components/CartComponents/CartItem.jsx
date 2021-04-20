@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Button, Grid, makeStyles} from '@material-ui/core';
 import { StoreContext } from '../../util/store';
-
+import BaliBuilt from '../../assets/BaliBuilt.png'
 const useStyles = makeStyles(() => ({
     saleOldPrice: {
         textDecoration: 'line-through',
@@ -12,13 +12,13 @@ const useStyles = makeStyles(() => ({
     },
 
 }))
-const CartItem = ({productInfo, setCartList, type}) => {
+const CartItem = ({productInfo, type}) => {
     const classes = useStyles();
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
     const [totalPrice, setTotalPrice] = React.useState(productInfo.quantity * productInfo.price);
     const [quantity, setQuantity] = React.useState(productInfo.quantity);
-    
+    console.log(cart);
     const handleRemove = () => {
         const updatedCart = JSON.parse(JSON.stringify(cart));        
         const newCart = updatedCart.filter(product => productInfo.id !== product.id);
@@ -63,7 +63,7 @@ const CartItem = ({productInfo, setCartList, type}) => {
                     />
                     :
                     <img 
-                        src={"data:image/jpeg;base64,"+productInfo.parts.Cases.image}
+                        src={BaliBuilt}
                         alt="product-thumbnail" 
                         class="image"
                     />

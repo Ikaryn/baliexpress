@@ -36,7 +36,7 @@ const UserBuildList = () => {
         editBuild.desc = build.description;
         console.log(build);
         setBuild(editBuild);
-        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit', name: build.buildName}});
+        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit', name: build.buildName, count: 0}});
     }
     
     const handleDelete = async (buildid) => {
@@ -57,7 +57,7 @@ const UserBuildList = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {!builds?
+                {!builds ?
                     <Grid container justify="center">
                         <Typography variant="h4">You have no saved builds!</Typography>
                     </Grid>
