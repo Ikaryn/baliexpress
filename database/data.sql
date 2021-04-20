@@ -752,14 +752,14 @@ VALUES
 -- Monitors
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
-    ('LG 24MK430H-B 24" FHD IPS Monitor, 5ms (GTG), HDMI, D-Sub, Radeon FreeSync, Split Screen, Black', 					'Monitors', 'LG', 		139.00, '3 years', 	'LG 24MK430H-B 24" FHD IPS LED panels allow you to enjoy life like picture quality with minimal colour variation.', 										800, '2018-05-20'),
-    ('AOC e1659Fwu 16-Inch Ultra Slim 1366x768 Res 200 cd/m2 Brightness USB 3.0-Powered Portable LED Monitor w/Case Black',	'Monitors', 'AOC', 		140.00, '5 years',	'The E1659FWU USB powered portable LED backlit monitor is a must-have laptop or desktop accessory.', 														1000, '2017-11-13'),
+    ('LG 24MK430H-B 24" FHD IPS Monitor', 					'Monitors', 'LG', 		139.00, '3 years', 	'LG 24MK430H-B 24" FHD IPS LED panels allow you to enjoy life like picture quality with minimal colour variation.', 										800, '2018-05-20'),
+    ('AOC e1659Fwu 16-Inch Ultra Slim Portable LED Monitor',	'Monitors', 'AOC', 		140.00, '5 years',	'The E1659FWU USB powered portable LED backlit monitor is a must-have laptop or desktop accessory.', 														1000, '2017-11-13'),
     ('AOC C24G2 23.6" 165Hz Full HD Curved Monitor with FreeSync', 															'Monitors', 'AOC', 		209.00, '1 year', 	'Introducing the AOC C24G2 – the casual gamer’s choice with smooth visuals and customization.', 															500, '2020-10-20'),
     ('Samsung 27 Inch Curved Gaming Monitor with 240Hz Refresh Rate,Dark Blue Gray', 										'Monitors', 'Samsung',	328.02, '3 years', 	'CURVED 27 inch monitor/ VA/ 4ms/ 240Hz/ 1500R/ 1920 x 1080/ 16: 9/ 16.7M/ 2 X HDMI 2.0, 1 X DP 1.2/ 3 year warranty', 										700, '2019-09-25'),
     ('Samsung 34" Flat Ultra WQHD Monitor,LS34J550', 																		'Monitors', 'Samsung', 	498.99, '5 years', 	'With its 34" ultra-wide screen and 21: 9 WQHD resolution, the SJ55W provides all the workspace you need to comfortably multi-task on a single screen.',	400, '2019-03-12'),
     ('Thinlerain 11.6 inch HDMI VGA Portable Monitor', 'Monitors', 'Thinlerain', 149.99, '3 years', 'Thinlerain 11.6 Inch HDMI VGA Portable Monitor with LED display is an Aluminium alloy based HD resolution gaming monitor. ', 800, '2020-05-06'),
     ('Samsung LC32R500FHEXXY 32 inch Curved Monitor, Dark Blue Gray', 'Monitors', 'Samsung', 353.00, '5 years', '3 sided thin bezel display, AMD Radeon FreeSync, 3000: 1 contrast ratio', 900, '2020-04-15'),
-    ('LG 32MP58HQ 32" FHD IPS Monitor, 5ms (GTG), HDMI, D-Sub, Screen Split, Sleek Cut Design, Black', 'Monitors', 'LG', 295.99, '3 years', 'LG 32MP58HQ IPS panel allows you to enjoy life like picture quality with minimal variation from wider viewing angles and boast excellent image reproduction.', 200, '2018-10-26'),
+    ('LG 32MP58HQ 32" FHD IPS Monitor', 'Monitors', 'LG', 295.99, '3 years', 'LG 32MP58HQ IPS panel allows you to enjoy life like picture quality with minimal variation from wider viewing angles and boast excellent image reproduction.', 200, '2018-10-26'),
     ('AOC G2490VX 23.8" 144Hz Full HD VA Gaming Monitor with 1ms R', 'Monitors', 'AOC', 192.95, '3 years', '23.8 inch VA, 144 Hz, Adaptive Sync, Low Blue Mode, Flicker Free Monitor The 24-inch G2490VX in the AOC G90 series of newly enhanced mainstream gaming monitors offers experienced gamers a ghost-, stutter- and tear-free gameplay experience in the tried and tested FHD (1920 x 1080) format they have come to trust, plus competitive features that include a VA panel, a fast refresh rate of 144Hz, plus a 1.0ms (MPRT) smart response time.', 200, '2020-11-16'),
     ('AOC 24G2 24" Frameless Gaming IPS Monitor', 'Monitors', 'AOC', 258.99, '3 years', 'aoc gaming 24G2 is in a class of its own, bringing brilliant colors of an IPS panel and the fast 1ms (MPRT) response time into one sleek battle machine for people who demand both uncompromising speed and image quality.', 10, '2019-08-20');
 
@@ -823,7 +823,7 @@ VALUES
     ('Microsoft U7Z-00005 Wireless MBL Mouse 1850 Win7/8 EN/XT/ZH/HI/KO/TH APAC Hdwr Black ', 'Mouses', 'Microsoft', 17.00, 'None', 'Enjoy the comfort of wireless movements for your data inputting or gaming with the Microsoft Wireless Mobile Mouse 1850, Black (U7Z-00005).', 750, '2017-09-01'),
     ('Lenovo 520 Mouse (Silver)', 'Mouses', 'Lenovo', 34.00, '1 year', 'Scroll through with speed and ease. Features 3 unique buttons—left-click, right-click and scroll wheel. Buttons will last to 3 million clicks and beyond.', 900, '2019-08-27'),
     ('Logitech Hyperion Fury FPS Gaming Mouse G402', 'Mouses', 'Logitech', 47.17, '3 years', 'Logitech Hyperion Fury FPS Gaming Mouse is sophisticated sensor technology for ultra-fast gaming.', 800, '2017-11-13'),
-    ('VicTsing Wireless Mouse Ergonomic Mice with [Nano Receiver] [5 Adjustable DPI Levels] [6 Buttons] for Computer Laptop Mac (Black)', 'Mouses', 'VicTsing', 14.44, 'None', ' Energy-saving If mouse is not used for over 8 minutes, it will turn to power saving mode to save energy.', 800, '2018-08-12');
+    ('VicTsing Wireless Mouse Ergonomic Mice', 'Mouses', 'VicTsing', 14.44, 'None', ' Energy-saving If mouse is not used for over 8 minutes, it will turn to power saving mode to save energy.', 800, '2018-08-12');
 
 INSERT INTO Mouses(id, connectivity, ambidextrous)
 VALUES
@@ -932,11 +932,11 @@ VALUES
     ('Corsair Dominator Platinum Airflow RGB LED Memory Fan Cooling CMDAF2', 'CPU_Cooling', 'CORSAIR', 103.63, '3 years', 'Dominator Platinum DRAM already has generous overclocking headroom, but to push it to extreme performance levels, you need active cooling.', 500, '2018-02-17'),
     ('Corsair CO-9050104-WW iCUE QL120 RGB, 120 mm RGB LED PWM Fans', 'CPU_Cooling', 'CORSAIR', 139.00, '1 year', 'Give your PC spectacular lighting from any angle with the CORSAIR iCUE QL120 RGB PWM White Triple Fan Kit, equipped with 102 individually addressable RGB LEDs – 34 in each fan – across four distinct light loops in a brilliant white housing.', 600, '2020-04-30'),
     ('GeeekPi 52Pi Low-Profile CPU Cooler', 'CPU_Cooling', 'GeekPi', 28.99, 'None', 'The 52Pi New Colorful Ice Tower Cooler is inspired by the single-stack tower-style heatsink and fan (HSF) assemblies which dominate the desktop PC market.', 400, '2019-09-14'),
-    ('Cooler Master A71C A.RGB 120mm addressable RGB PWM LED fan anodized black aluminium fins and copper core insert AMD AM4 socket cooler', 'CPU_Cooling', 'Cooler Master', 39.00, '4 years', 'The A71C is Cooler Master''s latest top-down AMD Ryzen socket CPU Air Cooler for compact PC builds Sporting Anodized black aluminum fins finish for a minimalistic look', 300, '2019-11-22'),
-    ('Cooler Master Hyper 212 RGB Black Edition CPU Cooler with Jet Black Nickel Plated Fins', 'CPU_Cooling', 'Cooler Master', 59.00, '3 Years', 'Cooler Master Hyper 212 RGB Black Edition Air Cooler offers better installation and great performance, easily one of the best air cooling solutions.', 700, '2018-12-27'),
+    ('Cooler Master A71C A.RGB 120mm addressable RGB PWM LED fan', 'CPU_Cooling', 'Cooler Master', 39.00, '4 years', 'The A71C is Cooler Master''s latest top-down AMD Ryzen socket CPU Air Cooler for compact PC builds Sporting Anodized black aluminum fins finish for a minimalistic look', 300, '2019-11-22'),
+    ('Cooler Master Hyper 212 RGB Black Edition CPU Cooler', 'CPU_Cooling', 'Cooler Master', 59.00, '3 Years', 'Cooler Master Hyper 212 RGB Black Edition Air Cooler offers better installation and great performance, easily one of the best air cooling solutions.', 700, '2018-12-27'),
     ('DEEPCOOL CPU Cooler GAMMAXX 400 BLUE LED GAMMAXX 400 BLUE LED LED', 'CPU_Cooling', 'Deepcool', 29.99, '1 year', 'The Deepcool Gammaxx 400 CPU Air Cooler comes with four heat pipes attached to a large heatsink and a 120mm blue LED fan to cool processors.', 200, '2018-02-18'),
     ('Noctua NH-U14S - Premium CPU Cooler with NF-A15 140mm Fan (Brown)', 'CPU_Cooling', 'noctua', 153.20, '5 years', 'The NH U14S is the 14cm top model of Noctua''s classic U series single tower CPU coolers, which have received more than 400 awards and recommendations from the international press.', 200, '2017-12-11'),
-    ('Cooler Master MasterLiquid ML120L RGB V2 Single 120mm Fan All-in-One CPU Water Cooler', 'CPU_Cooling', 'Cooler Master', 75.40, '1 year', 'THE PERFECT START - CoolerMaster MasterLiquid ML120L V2 RGB is an upgraded design based on the popular MasterLiquid Lite Series with improvements to many of the key design elements.', 400, '2020-9-11');
+    ('Cooler Master MasterLiquid ML120L RGB V2 Single 120mm Fan', 'CPU_Cooling', 'Cooler Master', 75.40, '1 year', 'THE PERFECT START - CoolerMaster MasterLiquid ML120L V2 RGB is an upgraded design based on the popular MasterLiquid Lite Series with improvements to many of the key design elements.', 400, '2020-9-11');
 
 INSERT INTO CPU_Cooling(id, socket, power_use)
 VALUES
@@ -952,11 +952,11 @@ VALUES
 -- PC cooling
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
-    ('Corsair CO-9050092-WW LL120 RGB, 120 mm RGB LED Fan With Lighting Node Pro', 'PC_Cooling', 'CORSAIR', 142.00, '3 years', 'From the manufacturer Dual RGB Lighting Loop Complete your CORSAIR LL RGB-cooled system with an additional fan, featuring 16 individually addressable RGB LEDs split between two separate light loops.', 900, '2019-01-07'),
+    ('Corsair CO-9050092-WW LL120 RGB, 120 mm RGB LED Fan', 'PC_Cooling', 'CORSAIR', 142.00, '3 years', 'From the manufacturer Dual RGB Lighting Loop Complete your CORSAIR LL RGB-cooled system with an additional fan, featuring 16 individually addressable RGB LEDs split between two separate light loops.', 900, '2019-01-07'),
     ('EZDIY-FAB White Moonlight 120mm RGB Case Fan with Fan Hub X and Remote', 'PC_Cooling', 'EZDIY-FAB', 71.59, 'None', 'Built for strong cooling.', 70, '2020-11-06'),
     ('EZDIY-FAB 3-Pack 120mm Dual Frame RGB PWM Fans for PC Case', 'PC_Cooling', 'EZDIY-FAB', 39.99, '1 year', 'A best choice of two ways to control the RGB lighting system by Hub Controller or by ARGB SYNC Motherboard Software', 900, '2018-12-18'),
-    ('ID-COOLING ZF-12025 Pastel 120mm Case Fan White LED PWM Fan for PC Case/CPU Cooler (Piglet Pink)', 'PC_Cooling', 'ID-COOLING', 117.99, '3 years', '【Wide Application】The standard 120mm cooling fan is designed to cool the pc case, radiator, and heatsink with white LED light.', 200, '2020-05-19'),
-    ('Corsair QL120 RGB, 120 mm, RGB LED Fan With Lighting Node Core - Black (Triple pack)', 'PC_Cooling', 'CORSAIR', 142.51, '4 years', 'Give your PC spectacular lighting from any angle with the Corsair iCUE QL120 RGB PWM triple fan kit, equipped with 102 individually addressable RGB LEDs', 800, '2019-11-14');
+    ('ID-COOLING ZF-12025 Pastel 120mm Case Fan White LED PWM Fan', 'PC_Cooling', 'ID-COOLING', 117.99, '3 years', '【Wide Application】The standard 120mm cooling fan is designed to cool the pc case, radiator, and heatsink with white LED light.', 200, '2020-05-19'),
+    ('Corsair QL120 RGB, 120 mm, RGB LED Fan With Lighting Node Core', 'PC_Cooling', 'CORSAIR', 142.51, '4 years', 'Give your PC spectacular lighting from any angle with the Corsair iCUE QL120 RGB PWM triple fan kit, equipped with 102 individually addressable RGB LEDs', 800, '2019-11-14');
 
 INSERT INTO PC_Cooling(id, num_fans, power_use)
 VALUES
@@ -972,8 +972,8 @@ VALUES
     ('EDUP WiFi 6 Card AX 3000Mbps PCIe Network Card AX200 802.11AX', 'Wifi_Adapters', 'EDUP', 49.95, '1 year', 'Professional Wifi 6 PCIE Card 802. 11ax Wireless Network Card for User', 100, '2020-02-27'),
     ('GIGABYTE Dual-Band WiFi 6 2x2 MIMO Wireless PCIe Adapter with Bluetooth 5', 'Wifi_Adapters', 'GIGABYTE', 69.00, '3 years', 'Better signal strength compared to traditional antenna design. AORUS Antenna with smart antenna function for the best WIFI signal transmitting.', 200, '2019-09-09'),
     ('TP-Link AC1300 PCIe WiFi PCIe Card(Archer T6E)', 'Wifi_Adapters', 'TP-Link', 69.00, '1 year', 'AC1300 PCIe Wi-Fi Card for desktop802. 11AC - The next generation of waft-link''s Archer T6E supports the next generation Wi-Fi standard - IEEE 802.', 600, '2017-10-27'),
-    ('EDUP PCIe WiFi 6 Card for Desktop PC, 3000Mbps 802.11AX Dual Band Wireless Bluetooth 5.1 Adapter', 'Wifi_Adapters', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
-    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth 5 PCIe Expansion Card', 'Wifi_Adapters', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
+    ('EDUP PCIe WiFi 6 Card', 'Wifi_Adapters', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
+    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth', 'Wifi_Adapters', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
 
 INSERT INTO Wifi_Adapters(id, socket)
 VALUES
