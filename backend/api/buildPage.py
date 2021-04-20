@@ -65,21 +65,28 @@ class BuildPage(Resource):
         buildID = newBuild['id']
 
         savedBuild = db.getBuild(buildID)
+
+        # Extract the names of the parts in the saved build
+        savedPartNames = []
+        for part in savedBuild['parts']:
+            savedPartNames.append(part['name'])
         
-        # Add any parts that are not in the old saved build to the build
+        # Remove any parts that are not in the updated build from the saved build
+        # and add any parts to the build that are in the updated build to the saved build
         for part in newBuild['parts']:
+            # Since components that are not selected are empty strings we check our part is a dict before attempting to save it
             if type(newBuild['parts'][part]) is dict:
                 category = newBuild['parts'][part]['category']
                 
-                if newBuild['parts'][part] not in savedBuild['parts']:
+                # Check if the new build part is in the saved build by comparing the names
+                if newBuild['parts'][part]['name'] not in savedPartNames:
                     
+                    # Match the category to find the part to remove and remove it
                     for savedPart in savedBuild['parts']:
                         if savedPart['category'] == category:
-                            print("removing part from build in db")
                             db.removePartFromBuild(buildID, savedPart['productid'])
-
-                    print(newBuild['parts'][part]['name'])
-                    print("Adding part with id ",newBuild['parts'][part]['id']," to build in db") 
+                    
+                    # Add the new part to the build
                     db.addPartToBuild(buildID, newBuild['parts'][part]['id'], 1)
 
     # Takes input from a build form to determine the usage, budget,
