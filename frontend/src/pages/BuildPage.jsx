@@ -29,6 +29,7 @@ const useStyles = makeStyles(() => ({
 const BuildPage = () => {
     
     const context = React.useContext(StoreContext)
+    const {userType: [userType]} = context;
     const { build: [build, setBuild]} = context;
     const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
@@ -94,6 +95,7 @@ const BuildPage = () => {
         buildInfo['price'] = buildPrice;
         buildInfo['buildname'] = buildName;
         buildInfo['quantity'] = 1;
+        buildInfo['builtByCompany'] = builtByCompany;
         
         const updatedCart = JSON.parse(JSON.stringify(cart));
         console.log(buildInfo);
@@ -144,7 +146,7 @@ const BuildPage = () => {
                 </Grid>
                 <Grid container item direction="row" xs={3}>
                     <Grid item xs={6}>
-                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild}>Save build</Button>
+                        <Button className={classes.standoutButton} variant="contained" onClick={handleSaveBuild} disabled={userType.toLowerCase() === 'guest'}>Save build</Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button className={classes.standoutButton} variant="contained" onClick={() => {handleAddToCart()}}>Add to Cart</Button>
