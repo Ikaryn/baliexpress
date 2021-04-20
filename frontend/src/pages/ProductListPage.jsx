@@ -240,7 +240,7 @@ const ProductListPage = () => {
                                     </Grid>
                                 </Grid>
                                     <Grid item>
-                                        <Typography variant="h3">{generateHeader()}</Typography>
+                                        {/*<Typography variant="h3">{generateHeader()}</Typography>*/}
                                     </Grid>
                             </Grid>
                         </Paper>
