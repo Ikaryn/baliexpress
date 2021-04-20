@@ -46,7 +46,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     }
 
     function checkInputNumber (input) {
-        return /^[1-9]\d*$/.test(input);
+        return /^[0-9]\d*$/.test(input);
     }
 
     function checkInputAlpha (input) {

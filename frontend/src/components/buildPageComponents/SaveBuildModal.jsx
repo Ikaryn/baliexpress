@@ -20,12 +20,12 @@ const useStyles = makeStyles(() => ({
 
 const SaveBuildModal = ({build, setSuccess, setOpen, edit}) => {
     
-    const [name, setName] = React.useState('');
+    const [name, setName] = React.useState(build.name);
     const [desc, setDesc] = React.useState('');
     const [error, setError] = React.useState({
         'name': '',
     })
-    
+    console.log(name);
     React.useEffect(() => {
         if(build.name) {
             setName(build.name);

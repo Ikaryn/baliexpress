@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
 
 const api = new API()
 
-const ReviewForm = ({productId}) => {
+const ReviewForm = ({productId, reviews, setReviews}) => {
     const [rating, setRating] = React.useState(0);
     const [comment, setComment] = React.useState('');
     const [submitted, setSubmitted] = React.useState(false);
@@ -50,9 +50,26 @@ const ReviewForm = ({productId}) => {
                                 comment: comment, 
                                 userId: localStorage.getItem('userId'), 
                                 productId: productId};
-            console.log(review);
             const response = await api.post('review', review);
-            console.log(response);
+            
+            const now = new Date();
+            const dateString = String(now.getFullYear() + '-' +now.getDate() + '-'+now.getMonth());
+            const userInfo = await api.get(`profile?userId=${localStorage.getItem('userId')}`)
+            const reviewToAdd = {
+                productId: productId,
+                reviewdate: dateString,
+                reviewId: response.reviewId,
+                score: 0,
+                userVote: 0,
+                userId: localStorage.getItem('userId'), 
+                username: userInfo.accountInfo.name,
+                reviewtext: comment,
+                rating: rating,
+                votes: {}
+            }
+            const updatedReviews = JSON.parse(JSON.stringify(reviews));
+            updatedReviews.push(reviewToAdd);
+            setReviews(updatedReviews);
         }
     }
 
