@@ -2,7 +2,7 @@ import psycopg2
 import psycopg2.extras
 from psycopg2.extensions import AsIs
 from datetime import datetime
-from . import credentials
+import credentials
 
 # creates a connection to the database
 def connect():
@@ -242,7 +242,7 @@ def getAllProducts(*args):
 
         # get product information
         products = []
-        productsQuery = "SELECT * FROM Products WHERE category = %s"
+        productsQuery = "SELECT * FROM Products WHERE category = %s AND discontinued = 'f'"
         specsQuery = "SELECT * FROM %s WHERE id = %s"
         for category in categories:
             # get information from Products table
@@ -302,7 +302,7 @@ def getProduct(id):
         cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
         # get product information from Products table
-        query = "SELECT * FROM Products WHERE id = %s"
+        query = "SELECT * FROM Products WHERE id = %s AND discontinued = 'f'"
         cur.execute(query, [id])
 
         # convert to dictionary
@@ -1431,4 +1431,3 @@ def getSalesForDate(cur, date):
     rows = cur.fetchall()
     sales = [{column:data for column, data in record.items()} for record in rows]
     return sales
-    
