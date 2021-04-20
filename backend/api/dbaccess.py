@@ -2,7 +2,7 @@ import psycopg2
 import psycopg2.extras
 from psycopg2.extensions import AsIs
 from datetime import datetime
-import credentials
+from . import credentials
 
 # creates a connection to the database
 def connect():
