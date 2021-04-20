@@ -18,11 +18,11 @@ class UserBuilds(Resource):
         data = request.args
         userId = data.get('userId')
         builds = db.getUsersBuilds(userId)
-        print(builds)
+        # print(builds)
         for build in builds:
-            print(build)
+            # print(build)
             for parts in build['parts']:
-                print(parts)
+                # print(parts)
                 parts['price'] = str(parts['price'])
                 releaseDate = parts['release_date'].strftime('%Y-%m-%d')
                 parts['release_date'] = releaseDate
@@ -61,20 +61,26 @@ class BuildPage(Resource):
     def put(self):
         print("Build put recieved")
         data = request.json
-        buildID = data.get('buildid')
         newBuild = data.get('build')
-        
+        buildID = newBuild['id']
+
         savedBuild = db.getBuild(buildID)
-        
-        # Remove any parts that are not used in the edited build
-        for part in savedBuild['parts']:
-            if part not in newBuild['parts']:
-                db.removePartFromBuild(buildID, part['productid'])
         
         # Add any parts that are not in the old saved build to the build
         for part in newBuild['parts']:
-            if part not in savedBuild['parts']:
-                db.addPartToBuild(buildID, part['productid'])
+            if type(newBuild['parts'][part]) is dict:
+                category = newBuild['parts'][part]['category']
+                
+                if newBuild['parts'][part] not in savedBuild['parts']:
+                    
+                    for savedPart in savedBuild['parts']:
+                        if savedPart['category'] == category:
+                            print("removing part from build in db")
+                            db.removePartFromBuild(buildID, savedPart['productid'])
+
+                    print(newBuild['parts'][part]['name'])
+                    print("Adding part with id ",newBuild['parts'][part]['id']," to build in db") 
+                    db.addPartToBuild(buildID, newBuild['parts'][part]['id'], 1)
 
     # Takes input from a build form to determine the usage, budget,
     # preferred storage format, and whether the user wants to overclock.
