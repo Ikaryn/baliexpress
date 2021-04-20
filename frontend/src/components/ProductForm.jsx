@@ -84,7 +84,7 @@ const ProductForm = ({type}) => {
         console.log(product);
         const newProduct = await api.post(`product`, product);
         console.log(newProduct);
-        history.push(`/product/${newProduct.product.category}/${newProduct.product.id}`); 
+        history.push(`/product/${newProduct.product.category}/${newProduct.product.id}`);
     }
  
     return (
