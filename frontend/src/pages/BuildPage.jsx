@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import BuildProductCard from '../components/buildPageComponents/BuildProductCard';
 import SaveBuildModal from '../components/buildPageComponents/SaveBuildModal';
 import API from '../util/API';
-import { generateBuildString } from '../util/helpers';
+import { buildTemplate } from '../util/helpers';
 import { StoreContext } from '../util/store';
 
 const api = new API();
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const BuildPage = () => {
     
     const context = React.useContext(StoreContext)
-    const { build: [build]} = context;
+    const { build: [build, setBuild]} = context;
     const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
     // const [buildNumber, setBuildNumber] = React.useState(0);
@@ -45,11 +45,26 @@ const BuildPage = () => {
     
     console.log(history);
     // Generate a build if required 
+    React.useEffect(() => {
+        console.log(history.location.state)
+        if (history.location.state.type === 'empty') {
+            console.log('empty')
+            setBuild(buildTemplate);
+        } else if (history.location.state.type === 'custom'){
+            console.log('custom');
+            const formResponse = history.location.state.specs;
+            api.get(`build?usage=${formResponse.usage}&&budget=${formResponse.budget}&&overclock=${formResponse.overclock}&&storage=${formResponse.storage}`)
+            .then((res) => {
+                console.log(res);
+                const newBuild = JSON.parse(JSON.stringify(build));
+                newBuild.parts = res;
+                newBuild.id = 0;
+                console.log(newBuild);
+                setBuild(newBuild);
+            })
+        }
     
-    // React.useEffect(() => {
-        
-    
-    // })
+    },[history.location.state.type])
     
     // generate and calculate the build price
     React.useEffect(() => {
@@ -135,7 +150,7 @@ const BuildPage = () => {
                 </Grid>
             </Grid>
             <Modal open={open} onClose={() => {setOpen(false)}}>
-                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} edit={build.id === 0}/>
+                <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} edit={build.id}/>
             </Modal>
         </AppBar>
         <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>

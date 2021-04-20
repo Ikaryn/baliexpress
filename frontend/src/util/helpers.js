@@ -52,6 +52,7 @@ export const allProductCategories = {
 
 export const buildTemplate = {
     'name': 'Your Custom Built PC',
+    'id': 0,
     'desc': '',
     'parts': {
                 'Cases': '', 
