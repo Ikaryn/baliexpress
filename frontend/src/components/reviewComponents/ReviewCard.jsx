@@ -212,7 +212,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
                                         <MenuItem value='offensive'>This review is offensive</MenuItem>
                                         <MenuItem value='irrelevant'>This review is irrelevant to the product</MenuItem>
                                     </Select>
-                                    <FormHelperText>{reportError ? 'Please provide a reasaon': ''}</FormHelperText>
+                                    <FormHelperText>{reportError ? 'Please provide a reason': ''}</FormHelperText>
                                 </FormControl>
                             </Grid>
                             <Grid container item direction="row" justify="center">
