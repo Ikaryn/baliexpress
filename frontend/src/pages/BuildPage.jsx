@@ -1,4 +1,4 @@
-import { AppBar, Button, Checkbox, FormControlLabel, Grid, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
+import { AppBar, Button, Checkbox, FormControlLabel, Grid, LinearProgress, makeStyles, Modal, Snackbar, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -42,7 +42,7 @@ const BuildPage = () => {
     const classes = useStyles();
     const [builtByCompany, setBuiltByCompany] = React.useState(false)
     const [buildError, setBuildError] = React.useState({error: false, message: ''});
-    
+    const [loadingBuild, setLoadingBuild] = React.useState('idle');
     
     // Generate a build if required 
     React.useEffect(() => {
@@ -56,6 +56,7 @@ const BuildPage = () => {
             //get the specs
             console.log(history.location.state.count)
             const formResponse = history.location.state.specs;
+            setLoadingBuild('loading');
             api.get(`build?usage=${formResponse.usage}&&budget=${formResponse.budget}&&overclock=${formResponse.overclock}&&storage=${formResponse.storage}`)
             .then((res) => {
                 let flag = false;
@@ -74,6 +75,10 @@ const BuildPage = () => {
                 newBuild.name = "Your Custom PC Build"
                 newBuild.id = 0;
                 setBuild(newBuild);
+        
+            })
+            .then(() => {
+                setLoadingBuild('done');
             })
         } else if (history.location.state.type === 'edit') {
             console.log(history.location.state.name)
@@ -124,10 +129,16 @@ const BuildPage = () => {
     
     return (
     <div className={classes.root}>
-        <Grid container alignItems="center" direction="column" spacing={3}>
+        <Grid container alignItems="center" direction="column" spacing={3} className="light-text">
             <Grid item>
                 <Typography className="light-text" variant="h2" >Custom PC Builder</Typography>
             </Grid>
+            {loadingBuild === 'loading' && 
+                <Grid xs={12}>
+                    <LinearProgress />
+                    <Typography>Loading build...</Typography>
+                </Grid>
+            }
             <Grid container item direction="row">
                 <Grid container item direction="column" xs={12} spacing={3}>
                     {Object.keys(build.parts).map((category) => (
@@ -172,7 +183,7 @@ const BuildPage = () => {
                 <SaveBuildModal build={build} setSuccess={setSuccess} setOpen={setOpen} edit={build.id}/>
             </Modal>
         </AppBar>
-        <Snackbar open={buildError.error} autoHideDuration={5000} onClose={() => {setBuildError({error: false, message: ''})}}>
+        <Snackbar open={buildError.error} autoHideDuration={10000} onClose={() => {setBuildError({error: false, message: ''})}}>
             <Alert severity="warning">{buildError.message}</Alert>
         </Snackbar>
         <Snackbar open={success} autoHideDuration={5000} onClose={() => {setSuccess(false)}}>
