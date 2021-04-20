@@ -63,6 +63,8 @@ class BuildPage(Resource):
         data = request.json
         newBuild = data.get('build')
         buildID = newBuild['id']
+        buildName = data.get('buildName')
+        buildDescription = data.get('buildDesc')
 
         savedBuild = db.getBuild(buildID)
 
@@ -88,6 +90,8 @@ class BuildPage(Resource):
                     
                     # Add the new part to the build
                     db.addPartToBuild(buildID, newBuild['parts'][part]['id'], 1)
+        
+        db.updateBuildDetails(buildID, buildName, buildDescription)
 
     # Takes input from a build form to determine the usage, budget,
     # preferred storage format, and whether the user wants to overclock.
