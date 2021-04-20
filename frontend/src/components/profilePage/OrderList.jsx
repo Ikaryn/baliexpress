@@ -1,7 +1,8 @@
 import API from '../../util/API';
 import React from 'react';
-import { Grid, CircularProgress, makeStyles, Divider, List, ListItem, Table, LinearProgress, TableContainer, TableRow, TableHead, TableCell, Button, TableBody, Paper, Typography } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Divider, TableSortLabel, List, ListItem, Table, LinearProgress, TableContainer, TableRow, TableHead, TableCell, Button, TableBody, Paper, Typography } from '@material-ui/core';
 // import LoadingComponent from '../LoadingComponent'
+import OrderTable from './OrderTable'
 
 const api = new API();
 
@@ -24,10 +25,6 @@ const useStyles = makeStyles(() => ({
 		'margin-bottom': '1em'
 	},
 
-    noOrder: {
-        'margin-top': '2em'
-    },
-
 }))
 
 const OrderList = ({admin}) => {
@@ -45,36 +42,7 @@ const OrderList = ({admin}) => {
             console.log(response);
             setOrders(response.orders);
         })();
-    },[])
-
-    const OrderTable = ({orders}) => {
-        return (
-            <Grid>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">Order Number</TableCell>  
-                                <TableCell align="left">Order Date</TableCell>
-                                <TableCell align="left">Total Cost</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {orders && orders.length > 0 && orders.map((order) => (
-                                <TableRow hover onClick={(event) => {setOrderSelected(true); setOrderId(order.id)}}>
-                                    <TableCell align="left">{order.id}</TableCell>
-                                    <TableCell align="left">{order.date}</TableCell>
-                                    <TableCell align="left">${order.total}</TableCell>
-                                </TableRow>  
-                            ))}
-                        </TableBody>
-                    </Table>
-                    {!orders && <LinearProgress />}
-                </TableContainer>
-                {orders && orders.length === 0 && <Typography align="center" className={classes.noOrder}>You have no orders yet</Typography>}
-            </Grid>
-        )
-    }
+    },[]);
 
     const OrderCard = ({orderId, admin}) => {
 
@@ -161,7 +129,7 @@ const OrderList = ({admin}) => {
 
     return (
         <Grid>
-            {!orderSelected ? <OrderTable orders={orders}/> : <OrderCard orderId={orderId} admin={admin}/>}
+            {!orderSelected ? <OrderTable orders={orders} setOrderSelected={setOrderSelected} setOrderId={setOrderId}/> : <OrderCard orderId={orderId} admin={admin}/>}
         </Grid>
     );
 
