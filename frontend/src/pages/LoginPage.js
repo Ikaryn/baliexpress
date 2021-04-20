@@ -1,9 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
-import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel, Input } from '@material-ui/core';
+import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel } from '@material-ui/core';
 import { StoreContext } from '../util/store';
-// import checkValidEmail from 'RegisterPage';
 
 const api = new API();
 
@@ -19,8 +18,8 @@ const Login = () => {
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
     
-    // const context = React.useContext(StoreContext);
-    // const { userId: [userId, setUserId] } = context;
+    const context = React.useContext(StoreContext);
+    const { userType: [, setUserType] } = context;
 
     const history = useHistory();
 
@@ -52,7 +51,8 @@ const Login = () => {
             localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.userId);
             // localStorage.setItem('isAdmin', response.)
-            history.push('')
+            response.admin === true ? setUserType('Admin') : setUserType('User');
+            history.push('');
         } else {
             setLoginError(response.error);
         }
@@ -78,14 +78,14 @@ const Login = () => {
             </Grid>
             <form>
                 <Grid item>
-                    <FormControl error={emailError === '' ? false : true}>
+                    <FormControl error={emailError === '' ? false : true} fullWidth>
                         <InputLabel>Email Address</InputLabel>
                         <OutlinedInput id="user-login-email" onChange={event => setEmail(event.target.value)} value={email}/>
                         <FormHelperText>{emailError}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <FormControl error={pwdError === '' ? false : true}>
+                    <FormControl error={pwdError === '' ? false : true} fullWidth>
                         <InputLabel>Password</InputLabel>
                         <OutlinedInput type="password" id="user-login-password" onChange={event => setPassword(event.target.value)} value={password}/>
                         <FormHelperText>{pwdError}</FormHelperText>

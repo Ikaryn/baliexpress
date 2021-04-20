@@ -1,4 +1,6 @@
-import { Avatar, Button, Divider, FormControl, FormHelperText, Grid, makeStyles, Modal, OutlinedInput, Paper, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Button, Divider, FormControl, FormHelperText, Grid, 
+        makeStyles, OutlinedInput, Paper, TextField, Typography 
+} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import API from '../../util/API';
@@ -16,13 +18,23 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const SaveBuildModal = ({build, setSuccess, setOpen}) => {
+const SaveBuildModal = ({build, setSuccess, setOpen, edit}) => {
     
     const [name, setName] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [error, setError] = React.useState({
         'name': '',
     })
+    
+    React.useEffect(() => {
+        if(build.name) {
+            setName(build.name);
+        }
+        if(build.desc) {
+            setDesc(build.desc);
+        }    
+    
+    },[build.desc, build.name]);
     
     const classes = useStyles();
     
@@ -45,9 +57,18 @@ const SaveBuildModal = ({build, setSuccess, setOpen}) => {
         };
         console.log(buildData);
         if(!errorHandler()){
-            api.post(`build`, buildData);
-            setOpen(false);
-            setSuccess(true);
+            console.log(edit);
+            if (edit) {
+                console.log('yo')
+                api.post('build', buildData);
+                setOpen(false);
+                setSuccess(true);
+            } else {   
+                console.log('ok')
+                api.put(`build`, buildData);
+                setOpen(false);
+                setSuccess(true);
+            }
         }
     }
     

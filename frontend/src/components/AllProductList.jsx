@@ -3,12 +3,15 @@ import React from 'react';
 import API from '../util/API';
 import { allProductCategories } from '../util/helpers';
 import AdminProductCard from './AdminProductCard';
+import ProductStats from './StatsComponents/ProductStats';
 
 const api = new API();
 
 const AllProductList = () => {
     
     const [products, setProducts] = React.useState([]);
+    const [productStatsOpen, setProductStatsOpen] = React.useState(false);
+    const [viewedProduct, setViewedProduct] = React.useState(null);
     
     React.useEffect(() => {
         (async () => {
@@ -26,15 +29,22 @@ const AllProductList = () => {
     },[]);
     return (
         <Grid container>
-            {products.map((prods) => (
-                <Grid container item>
-                    {prods.map((product) => (
-                        <Grid item>
-                            <AdminProductCard productInfo={product} />
-                        </Grid>)
-                    )}
+            {productStatsOpen ? 
+                <ProductStats setOpen={setProductStatsOpen} productInfo={viewedProduct} />
+            :
+                <Grid item>
+                <Typography variant="h3">All Products</Typography>
+                    {products.map((prods) => (
+                        <Grid container item>
+                        {prods.map((product) => (
+                            <Grid item>
+                                <AdminProductCard productInfo={product} setProduct={setViewedProduct} setOpen={setProductStatsOpen} />
+                            </Grid>
+                        ))}
+                        </Grid>
+                    ))}
                 </Grid>
-            ))}
+            }
         </Grid>      
         // "hello"
     );

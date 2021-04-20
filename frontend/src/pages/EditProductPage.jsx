@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 import React from 'react';
 import API from '../util/API';
@@ -31,9 +31,9 @@ const useStyles = makeStyles(() => ({
         'padding-bottom': '2em',
     }
 
-}))
+}));
 
-const EditProductPage = ({}) => {
+const EditProductPage = () => {
 
     const history = useHistory();
     const classes = useStyles();
@@ -98,7 +98,7 @@ const EditProductPage = ({}) => {
                         'brand': "Brand",
                         'price': "Price",
                         'stock': "Stock",
-                        'desc': "Description",
+                        'description': "Description",
                         'warranty': "Warranty"
                     };
     
@@ -109,7 +109,7 @@ const EditProductPage = ({}) => {
             </Grid>
             <Grid container direction="row" justify="center">
                 <Grid item container xs={6} alignContent="flex-start" justify="flex-end" className={classes.fieldsBox}>
-                    <Grid container justify="flex-end">
+                    <Grid container justify="center">
                         <Typography variant="h4">General Information</Typography>
                     </Grid>
                     <Grid item>
@@ -119,10 +119,10 @@ const EditProductPage = ({}) => {
                             </Grid>
                         ))}
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={9}>
                         {Object.keys(fields).map((label, value) => (
                             <Grid item container className={classes.field}>
-                                <TextField onChange={(event) => {changeValue(label, event.target.value)}} value={productInfo[label]} />
+                                <TextField onChange={(event) => {changeValue(label, event.target.value)}} value={productInfo[label]} fullWidth/>
                             </Grid>
                         ))}
                     </Grid>

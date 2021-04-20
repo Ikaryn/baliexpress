@@ -1,5 +1,6 @@
 backend/api/__pycache__/dbaccess.cpython-36.pyc
 backend/api/__pycache__/app.cpython-36.pyc
+credentials.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -131,7 +132,7 @@ dmypy.json
 .pyre/
 
 # credentials
-/backend/api/credentials.py
+backend/api/credentials.py
 
-#pycache
-/backend/api/__pycache__/
+# pycache
+backend/api/__pycache__/

@@ -1,68 +1,90 @@
-import { Paper, Typography, Grid, TextField, Button, Checkbox } from '@material-ui/core';
+import { Typography, Button, Checkbox, Grid, Divider, makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
 import API from '../util/API';
 import '../App.css';
-import CartItem from '../components/CartItem';
+import CartItem from '../components/CartComponents/CartItem';
+import { useHistory } from 'react-router';
+import { StoreContext } from '../util/store';
 
-const api = new API();
+const useStyles = makeStyles(() => ({
+    cartContainer: {
+        margin: '0 20%'
+    },
+    divider: {
+        width: '80%',
+    }
+}));
 
 const CartPage = () => {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    const [cartList, setCartList] = React.useState(cart);
-    const [prebuild, setPrebuild] = React.useState(false);
-    const [totalPrice, setTotalPrice] = React.useState(calcTotal());
 
+    const history = useHistory();
+    const classes = useStyles();
+    const context = React.useContext(StoreContext);
+    const {cart : [cart, setCart]} = context;
+    
+    // Calculate the final price in the cart.
     function calcTotal(){
-        var total = 0;
-        console.log(cart);
+        let total = 0;
         for(const i in cart){
-            total =+ parseInt(cart[i].price);
+            total += (parseInt(cart[i].price) * cart[i].quantity);
         }
         return total;
     }
-    function handleTotal(){
-        var total = 0;
-        const cart = JSON.parse(localStorage.getItem('cart'));
-        for(const i in cart){
-            total =+ parseInt(cart[i].price);
-        }
-        setTotalPrice(total);
-    }
-    /*
-    React.useEffect(() => {
-        (async () => {
-            const res = await api.get(`search?query=${search}`);
-            setProductOutput(res.results);
-            console.log(res.results);
-        })();
-    },[search])
-    */
+    
     return (
-        <div>
-            <div>
-                {cartList != null && cartList.map((x) => (
+        <Grid 
+            container 
+            className='light-text'
+        >
+            <Paper className={classes.cartContainer}>
+                    <Grid 
+            container 
+            direction="column" 
+            className='light-text'
+            alignItems="center"
+            spacing={3}
+        >
+            <Grid item>
+                <Typography variant="h3">Cart Checkout</Typography>
+            </Grid>
+            <hr className={classes.divider} />
+            {cart != null && cart.map((x) => (
+                <Grid item xs={12} >
                     <CartItem 
-                        productInfo={x}
-                    />
-                ))}                
-            </div>
-            <div>
-                <div>
-                    <Typography color="primary">
-                        Would you like to have your PC prebuilt?
-                        <Checkbox onChange={() => setPrebuild(!prebuild)}/>
-                    </Typography>
-                </div>
-                <div>
-                    <Typography color="primary">
-                        {"Checkout and Pay: "}
-                        <Button variant="contained" color="secondary">
-                            Checkout
+                        productInfo={x} 
+                        type={x.buildName ? 'build' : 'product'}
+                        setCartList={setCart}
+                        />
+                </Grid>
+            ))}
+            <hr className={classes.divider} />
+            <Grid item container direction="column" alignItems="center">
+                <Typography variant="h6">Shipping</Typography>
+                
+            </Grid>
+            <hr className={classes.divider} />
+            <Grid item container direction="row" justify="center">
+                <Grid item xs={3}>
+                    <Typography variant="h4">Total Price: ${calcTotal().toFixed(2)}</Typography>
+                </Grid>
+                <Grid item container direction="row" xs={2}  alignItems="center">
+                    <Grid item xs={7}>
+                        <Typography>Checkout and Pay:</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={() => history.push(`/payment`)}
+                            >
+                            Checkout        
                         </Button>
-                    </Typography>
-                </div>
-            </div>
-        </div>        
+                    </Grid>
+                </Grid>
+            </Grid>
+            </Grid>
+            </Paper>
+        </Grid>   
     )
 
 }

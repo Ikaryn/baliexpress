@@ -9,17 +9,6 @@ const ViewUsers = ({user}) => {
     async function handleSelectChange(event) {
         if(window.confirm('Are you sure you want to change ' + user.email + '\'s role?')){
             console.log(user.userId);
-            // const options = {
-            //     method: 'PUT',
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //         'Request-Type': 'admin status',
-            //     },
-            //     body: JSON.stringify({
-            //         admin: event.target.value,
-            //         userId: user.userId
-            //     })
-            // }
 
             const body = {
                             admin: event.target.value,
@@ -46,10 +35,10 @@ const ViewUsers = ({user}) => {
                         {"Name: " + user.name}
                     </Typography>
                     <Typography>
-                        {"Phone: " + user.phone}
+                        {"Phone: " + user.phonenumber}
                     </Typography>
                     <Typography>
-                        {"Address: " + user.streetAddress + ", " + 
+                        {"Address: " + user.streetaddress + ", " + 
                             user.city + ", " + 
                             user.postcode + ", " + 
                             user.country

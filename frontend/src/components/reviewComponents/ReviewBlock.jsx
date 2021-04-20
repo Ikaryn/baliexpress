@@ -1,9 +1,12 @@
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Button, Divider, Grid, Grow, LinearProgress, makeStyles, MenuItem, Paper, Select, Typography } from '@material-ui/core';
+import { Avatar, Button, Divider, Grid, Grow, LinearProgress,
+            makeStyles, MenuItem, Paper, Select, Typography 
+        } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import React from 'react';
 import ReviewCard from './ReviewCard';
 import ReviewForm from './ReviewForm';
 import API from '../../util/API';
+import { StoreContext } from '../../util/store';
 
 const api = new API()
 
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 // this component will display the data surrounding the ratings reviewers give.
-const BarPercentages = ({ratings}) => {
+const BarPercentages = ({ratings , setRating}) => {
 
     const [stars, setStars] = React.useState([]);
     const [overallRating, setOverallRating] = React.useState(0);
@@ -53,9 +56,11 @@ const BarPercentages = ({ratings}) => {
             }
         }
         
-        setOverallRating(Math.round(totalRating/ratings.length));
+        const rating = Math.round(totalRating/ratings.length)
+        setOverallRating(rating);
+        setRating({rating: rating, 'num': ratings.length});
         setStars(initStars);
-    }, [ratings])
+    }, [ratings, setRating])
     
 
     
@@ -122,7 +127,10 @@ const FeaturedReview = ({review}) => (
     </Grid>
 )
 
-const ReviewBlock = ({rating, productId}) => {
+const ReviewBlock = ({rating, productId, setRating}) => {
+    
+    const context = React.useContext(StoreContext);
+    const {userType: [userType]} = context;
     
     const [reviews, setReviews] = React.useState([{}])
     const [sort, setSort] = React.useState('popularity');
@@ -237,7 +245,7 @@ const ReviewBlock = ({rating, productId}) => {
             <Grid item container direction="row">
                 <Grid item container direction="column" xs={6}>
                     <Grid item>
-                        {reviews && <BarPercentages ratings={allReviews} />}
+                        {reviews && <BarPercentages ratings={allReviews} setRating={setRating}/>}
                     </Grid>
                 </Grid>
                 <Grid container item xs={6} direction="column">
@@ -245,7 +253,13 @@ const ReviewBlock = ({rating, productId}) => {
                         <Typography variant="h6" className="light-text">Featured Review</Typography>
                     </Grid>
                     <Grid item className={classes.featuredProductContainer}>
-                        {featuredReview &&<FeaturedReview review={featuredReview} />}
+                        {featuredReview ? 
+                            <FeaturedReview review={featuredReview}/>
+                        : 
+                            <Grid container justify="center" alignItems="center">
+                                <Typography>There are currently no reviews for this product</Typography>
+                            </Grid>
+                        }
                     </Grid>
                 </Grid>
             </Grid>
@@ -258,7 +272,7 @@ const ReviewBlock = ({rating, productId}) => {
                         variant="contained" 
                         className={classes.standoutButton} 
                         onClick={()=>{handleReviewFormOpen()}}
-                        disabled={localStorage.getItem('userId' ? false : true)}
+                        disabled={userType === 'guest'}
                     >
                         {generateReviewButtonText()}
                     </Button>
@@ -309,7 +323,7 @@ const ReviewBlock = ({rating, productId}) => {
                 className={reviewOpen ? '' : classes.closedReviewFormCardBlock}
             >
                 {reviews && reviews.map((review) => (
-                    <ReviewCard review={review} userId={localStorage.getItem('userId')}/>
+                    <ReviewCard review={review} userId={localStorage.getItem('userId')} reviews={reviews} setReviews={setReviews}/>
                 ))}
             </Grid>
         </Grid>

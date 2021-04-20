@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../util/API';
 import SearchIcon from '@material-ui/icons/Search';
 import SmallProductView from './SmallProductView';
-import { Button, ClickAwayListener, Grow, MenuItem, MenuList, Paper, Popper, Grid, InputBase, Typography } from '@material-ui/core';
+import { Button, ClickAwayListener, Grow, MenuList, Paper, Popper, Grid, InputBase, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import './styles/search.css';
 const api = new API();
@@ -30,13 +30,6 @@ const SearchBar = ({type = 'search', addProduct}) => {
                 setProductOutput([]);
                 return;
             }
-            // const options = {
-            //     method: 'GET',
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //         'Request-Type': 'quick search',
-            //     },
-            // }
             var searchStringTransform = search !== "" ? search.split(" ").join("+") : "";
             console.log(searchStringTransform);
             const res = await api.get(`search?query=${searchStringTransform}&quickSearch=${true}`);
@@ -45,7 +38,7 @@ const SearchBar = ({type = 'search', addProduct}) => {
         })();
     },[search])
     return(
-        <div>
+        <div style={{zIndex: '10'}}>
             <Grid container item direction="row" justify="space-between" alignItems="center">
                 <Grid item>
                     <InputBase ref={anchorRef} placeholder="Search products..." 

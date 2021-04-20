@@ -1,4 +1,4 @@
-import { Paper, Typography, Grid, TextField, Divider } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import React from 'react';
 import { useParams } from 'react-router';
 import ProductCard from '../components/ProductCard';
@@ -12,16 +12,8 @@ const SearchPage = () => {
 
     React.useEffect(() => {
         (async () => {
-            // const options = {
-            //     method: 'GET',
-            //     headers: { 
-            //         'Content-Type': 'application/json',
-            //         'Request-Type': 'search',
-            //     },
-            // }
             const res = await api.get(`search?query=${search}`);
             setProductOutput(res.results);
-            console.log(res.results);
         })();
     },[search])
     

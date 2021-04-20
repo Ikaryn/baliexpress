@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../../util/API';
+import { buildTemplate } from '../../util/helpers';
 import { StoreContext } from '../../util/store';
 
 
@@ -32,7 +33,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
     });
     
     const context = React.useContext(StoreContext);
-    const { build: [, setBuild]} = context;
+    const { build: [build, setBuild]} = context;
     
     
     const history = useHistory();
@@ -67,17 +68,22 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
         return isError;
     }
     
+    
+    // instead of handling setBuild here, push it to build page to set.
     const handleRedirect = async (flag) => {
         if (flag === 'empty'){ 
+            setBuild(buildTemplate);
             handleToggle(false);
             history.push('/build');
         } else if (flag === 'build'){
-            console.log(errorHandler());
             if (!errorHandler()) {
                 const res = await api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
-                console.log(usage, budget, overclock, storage)
                 console.log(res);
-                setBuild(res);
+                const newBuild = JSON.parse(JSON.stringify(build));
+                newBuild.parts = res;
+                newBuild.id = 0;
+                console.log(newBuild);
+                setBuild(newBuild);
                 handleToggle(false);
                 history.push('/build/custom');
             }

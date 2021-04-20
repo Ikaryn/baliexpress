@@ -20,8 +20,7 @@ class Login(Resource):
         attemptPass = data.get('password')
 
         # Attempt to get the relevant userId from database
-        userId = db.getUserIDFromEmail(email)
-
+        userId, admin = db.getUserIDFromEmail(email)
         if userId is None:
             return {'error':'Invalid Login Details'}
         else:
@@ -29,7 +28,7 @@ class Login(Resource):
             if (attemptPass == userPass):
                 print('Login successful')
                 t = secrets.token_hex()
-                return {'token': t, 'userId': userId}
+                return {'token': t, 'userId': userId, 'admin': admin}
             else:
                 return {'error':'Invalid Password'}
 
@@ -48,14 +47,14 @@ class Register(Resource):
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        phone_number = data.get('phone')
+        phonenumber = data.get('phonenumber')
 
         # Check if the email has already been registered
         existEmail = db.getUserIDFromEmail(email)
-        if existEmail is not None:
+        if existEmail[0] is not None:
             return {'error':'Email already registered'}
 
-        db.addUser(name, email, password, phone_number)
+        db.addUser(name, password, email, phonenumber)
 
         print("New Account registered")
 

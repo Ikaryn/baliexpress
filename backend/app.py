@@ -7,12 +7,14 @@ from api.buildPage import *
 from api.reviews import *
 from api.featured import *
 from api.auth import *
-# import api.user
-# import api.products
+from api.sales import *
+from api.order import *
+from api.stats import *
 
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
+
 api.add_resource(Login, '/login')
 api.add_resource(Register, '/register')
 api.add_resource(Profile,'/profile')
@@ -20,6 +22,10 @@ api.add_resource(Products, '/product')
 api.add_resource(Search, '/search')
 api.add_resource(Reviews, '/review')
 api.add_resource(Votes, '/review/vote')
+api.add_resource(Reports, '/review/reports')
 api.add_resource(Featured, '/featured')
 api.add_resource(BuildPage, '/build')
 api.add_resource(UserBuilds, '/userBuilds')
+api.add_resource(Sales, '/sales')
+api.add_resource(Order, '/order')
+api.add_resource(Stats, '/stats')

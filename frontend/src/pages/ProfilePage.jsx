@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Typography, Tab, Tabs, Box, AppBar, Modal, Divider } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, Tab, Tabs, Box, Modal } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -10,16 +10,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../components/styles/profilePage.css';
 import AllProductList from '../components/AllProductList';
 import UserBuildList from '../components/profilePage/UserBuildList';
-import SalesPanel from '../components/AdminManagementComponents/SalesPanel';
-import SaleForm from '../components/AdminManagementComponents/SaleForm';
-// import './App.css';
-const api = new API();
+import ReportedReviewsList from '../components/profilePage/ReportedReviewsList';
+import OrderList from '../components/profilePage/OrderList';
+import SalePanel from '../components/AdminManagementComponents/SalePanel';
+import { StoreContext } from '../util/store';
 
-const pageStatus = {
-    ACCINFO: 'accInfo',
-    ORDERS: 'orders',
-    BUILDS: 'builds'
-}
+const api = new API();
 
 const ProfilePage = () => {
 
@@ -31,16 +27,18 @@ const ProfilePage = () => {
     const [shippingInfo, setShippingInfo] = React.useState({
         streetaddress: '', city: '', state:'', postcode: '', country: ''
     });
-    const [isAdmin, setIsAdmin] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    
-    const [saleFormOpen, setSaleFormOpen] = React.useState(false);
+    const context = React.useContext(StoreContext);
+    const {userType: [,setUserType] } = context;
+    const {cart: [,setCart]} = context;
     
     // when logout remove all of cookies
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userId');
         localStorage.removeItem('isAdmin');
+        setCart([]);
+        setUserType('guest')
         history.push('/');
     }
     
@@ -129,59 +127,63 @@ const ProfilePage = () => {
                             orientation="vertical"
                             className={classes.tabs}
                             >
-                            <Tab label="Profile" />
-                            <Tab label="My Orders" />
-                            <Tab label="My Builds" />
+                            {!accInfo.isAdmin && <Tab label="Profile" />}
+                            {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
+                            <Tab label="View orders" />
                             {accInfo.isAdmin && <Tab label="View Users" />}     
-                            {accInfo.isAdmin && <Tab label="Manage Sales" />}    
+                            {accInfo.isAdmin && <Tab label="Manage Sales" />}   
+                            {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
                         </Tabs>
                     </Grid>
                     <Grid item xs={9}>
-                        <TabPanel value={value} index={0}>
-                            <ProfilePageAccountInfo
-                                accInfo={accInfo}
-                                shippingInfo={shippingInfo}
-                                />
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            My Orders
-                        </TabPanel>
+                        {/* Showing different options for users and admins:
+                            For users: Profile information, user's orders and their builds
+                            For admins: Adding products, manage products, all users and manage sales */}
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={0}>
+                                <ProfilePageAccountInfo
+                                    accInfo={accInfo}
+                                    shippingInfo={shippingInfo}
+                                    />
+                            </TabPanel>
+                        }
+                        {!accInfo.isAdmin &&
+                            <TabPanel value={value} index={1}>
+                                <UserBuildList />
+                            </TabPanel>      
+                        }
                         <TabPanel value={value} index={2}>
-                            <UserBuildList />
-                        </TabPanel>      
+                            <OrderList admin={accInfo.isAdmin}/>
+                        </TabPanel>
                         {accInfo.isAdmin && 
-                            <TabPanel value={value} index={3}>
+                            <TabPanel value={value} index={0}>
                                 <AddProduct/>
                             </TabPanel>   
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={4}>
+                            <TabPanel value={value} index={1}>
                                 <AllProductList />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={5}>
+                            <TabPanel value={value} index={3}>
                                 <ViewUsers/>
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={6}>
-                                <Typography variant="h3">Manage Sales</Typography>
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    onClick={() => {saleFormOpen ? setSaleFormOpen(false) : setSaleFormOpen(true)}}
-                                >
-                                    {saleFormOpen ? 'Back' : 'Create Sale'}
-                                </Button>
-                                <Divider />
-                                {saleFormOpen ? <SaleForm /> : <SalesPanel />}
+                            <TabPanel value={value} index={4}>
+                                <SalePanel />
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 7 : 3}>
+                        {accInfo.isAdmin &&
+                            <TabPanel value={value} index={5}>
+                                <ReportedReviewsList/>
+                            </TabPanel>
+                        }
+                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>

@@ -14,6 +14,7 @@ import BuildModalForm from './buildPageComponents/BuildModalForm';
 import { buildTemplate } from '../util/helpers';
 
 import API from '../util/API';
+import CartPopper from './CartComponents/CartPopper';
 const api = new API();
 
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +29,14 @@ const NavBar = () => {
     const context = React.useContext(StoreContext)
     const { build: [,setBuild] } = context;
     const [buildOpen, setBuildOpen] = React.useState(false);
-    const [loginStatus, setLoginStatus] = React.useState("");
-    const [currUser, setCurrUser] = React.useState("");
-    const [cartAmount, setCartAmount] = React.useState(JSON.parse(localStorage.getItem('cart')).length);
+    // const [loginStatus, setLoginStatus] = React.useState("");
+    const {userType: [userType, setUserType]} = context;
+    // const [currUser, setCurrUser] = React.useState("");
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
+    
+    
     // handle click of the profile icon
     // if user isnt logged in redirect to login page, otherwise send them to profile page
     const handleProfileClick = () => {
@@ -41,7 +44,6 @@ const NavBar = () => {
         if(!userId){
             history.push('/login');
         } else {
-            console.log(`user id is ${userId}`);
             history.push(`/profile/${userId}`);
         }
     }
@@ -52,21 +54,14 @@ const NavBar = () => {
     const handleBuildClick = () => {
         setBuild(buildTemplate);
         setBuildOpen(true);
-    
     }
+    
     React.useEffect(() => {
         (async () => {
-            const userId = await localStorage.getItem('userId');
-            setCurrUser(userId);
+            const userId = localStorage.getItem('userId');
+            // setCurrUser(userId);
             if(userId){
-                const options = {
-                    method: 'GET',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Request-Type': 'profile',
-                    },
-                }
-                const response = await api.makeAPIRequest(`profile?userId=${userId}`, options);
+                const response = await api.get(`profile?userId=${userId}`);
                 const userDetails = response.accountInfo;
                 const userAccInfo = {name: userDetails.name, 
                     email: userDetails.email, 
@@ -74,15 +69,26 @@ const NavBar = () => {
                     password: userDetails.password,
                     isAdmin: userDetails.admin}
                 if(userAccInfo.isAdmin){
-                    setLoginStatus(`Admin: (${userAccInfo.email})`);
+                    setUserType(`Admin`);
                 }else{
-                    setLoginStatus(`User: (${userAccInfo.email})`);
+                    setUserType(`User`);
                 }
             }else{
-                setLoginStatus("Guest");
+                setUserType("Guest");
             }
         })();
     },[])
+
+    const generateProfileText = () => {
+        console.log(userType);
+        if (userType === 'Admin') {
+            return 'Admin'
+        }
+        if(userType === 'User') {
+            return 'View Profile'
+        }
+        return 'Login';
+    }
 
     return (
         <header>
@@ -121,15 +127,16 @@ const NavBar = () => {
                             <AccountCircleIcon fontSize="large"/>
                         </IconButton>
                         <Typography className="login-status-text">
-                            {loginStatus}
+                            {generateProfileText()}
                         </Typography>
                     </Grid>
-                    <Grid item xs={1}>
+                    {/* <Grid item xs={1}>
                         <IconButton onClick={() => {history.push('/cart');}}>
                             <ShoppingCartIcon fontSize="large" />
                             <Typography>({cartAmount})</Typography>
                         </IconButton>
-                    </Grid>
+                    </Grid> */}
+                    <CartPopper />
                 </Grid>
             </AppBar>
         </header>

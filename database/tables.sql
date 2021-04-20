@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Review_Votes;
+DROP TABLE IF EXISTS Reports;
 DROP TABLE IF EXISTS Sales CASCADE;
 DROP TABLE IF EXISTS Sale_Products;
 
@@ -44,7 +45,7 @@ CREATE TABLE Users(
 
 CREATE TABLE Products(
     id              int GENERATED ALWAYS AS IDENTITY,
-    name            text NOT NULL,
+    name            varchar(150) NOT NULL,
     category        categories NOT NULL,
     brand           text,
     price           numeric(50, 2) NOT NULL,
@@ -54,6 +55,7 @@ CREATE TABLE Products(
     stock           int DEFAULT 0 CHECK (stock >= 0),
     release_date    date,
     sold            int DEFAULT 0,
+    discontinued    boolean DEFAULT 'f',
     primary key (id)
 );
 
@@ -61,6 +63,12 @@ CREATE TABLE Orders(
     id      int GENERATED ALWAYS AS IDENTITY,
     userid  integer NOT NULL,
     date    date NOT NULL,
+    streetaddress   text,
+    city            text,
+    state           text,
+    country         text,
+    postcode        text,
+    total           numeric(50, 2), 
     primary key (id),
     foreign key (userid) references Users(id)
 );
@@ -249,11 +257,20 @@ CREATE TABLE Review_Votes(
     foreign key (voterid) references Users(id) on delete CASCADE
 );
 
+CREATE TABLE Reports(
+    reportid    int GENERATED ALWAYS AS IDENTITY UNIQUE,
+    reviewid    int,
+    reason      text,
+    primary key (reportid),
+    foreign key (reviewid) references Reviews(reviewid) on delete CASCADE
+);
+
 CREATE TABLE Sales(
     id          int GENERATED ALWAYS AS IDENTITY,
     name        text,
     startdate   date NOT NULL,
     enddate     date NOT NULL,
+    image       text,
     primary key (id)
 );
 
