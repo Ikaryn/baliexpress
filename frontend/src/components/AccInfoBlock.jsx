@@ -38,7 +38,6 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         setEditPCode(shippingInfo.postcode);
         setEditCountry(shippingInfo.country);
         setEditState(shippingInfo.state);
-        
     },[accInfo, shippingInfo.streetaddress, shippingInfo.city, shippingInfo.country, shippingInfo.postcode, shippingInfo.state])
 
     function checkValidEmail (input) {
@@ -133,7 +132,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             case 'state':
                 return stateError;
             default:
-                return null;
+                return '';
         }
     }
 
