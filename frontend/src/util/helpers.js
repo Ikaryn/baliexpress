@@ -65,6 +65,7 @@ export const buildTemplate = {
                 'CPU_Cooling':'',
             },
     'price': 0,
+    'builtByCompany': false,
     }
 // function to convert category names in frontend to backend table names
 export function convertCategoryName(category) {
