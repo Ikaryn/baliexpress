@@ -1,4 +1,4 @@
-import { Button, Grid, Modal, Paper, Snackbar, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, Modal, Paper, Snackbar, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import API from '../util/API';
@@ -8,8 +8,17 @@ import ProductStats from './StatsComponents/ProductStats';
 
 const api = new API();
 
+const useStyles = makeStyles(() => ({
+    row: {
+            'margin-top': '1em',
+            'margin-bottom': '1em',
+    },
+
+  }));
+
 const AllProductList = () => {
     
+    const classes = useStyles();
     const [products, setProducts] = React.useState([]);
     const [productStatsOpen, setProductStatsOpen] = React.useState(false);
     const [viewedProduct, setViewedProduct] = React.useState(null);
@@ -79,19 +88,29 @@ const AllProductList = () => {
                     {discontinued &&
                         <Modal open={openModal} onClose={() => setOpenModal(false)}>
                             <Paper className="modal-container">
-                                <Typography variant="h5">Are you sure you want to discontinue this product?</Typography>
-                                <Grid container direction="row" alignItems="center">
-                                    <Grid item xs={4}>
-                                        <img src={"data:image/jpeg;base64," + discontinued.image} alt="product" class="product-card-image"/>
+                                <Grid container direction="column" alignItems="center">
+                                    <Grid item className={classes.row}>
+                                        <Typography variant="h5">Are you sure you want to discontinue this product?</Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
-                                        <Typography variant="h6">{discontinued.name}</Typography>
-                                        <Typography variant="h5">${discontinued.price}</Typography>
-                                        <Typography variant="h5">Stock: {discontinued.stock}</Typography>
+                                    <Grid item container direction="row" justify="space-evenly" alignItems="center" className={classes.row}>
+                                        <Grid item xs={4}>
+                                            <img src={"data:image/jpeg;base64," + discontinued.image} alt="product" class="product-card-image"/>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography variant="h6">{discontinued.name}</Typography>
+                                            <Typography variant="h5">${discontinued.price}</Typography>
+                                            <Typography variant="h5">Stock: {discontinued.stock}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item container direction="row" justify="center" className={classes.row}>
+                                        <Grid item xs={2}>
+                                            <Button variant="contained" color="primary" onClick={() => {setOpenModal(false); setDiscontinued(null)}}>Cancel</Button>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            <Button variant="contained" color="secondary" onClick={() => handleDiscontinue()}>Discontinue product</Button>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                                <Button variant="contained" color="primary" onClick={() => {setOpenModal(false); setDiscontinued(null)}}>Cancel</Button>
-                                <Button variant="contained" color="secondary" onClick={() => handleDiscontinue()}>Discontinue product</Button>
                             </Paper>    
                         </Modal>
                     }

@@ -14,11 +14,15 @@ const useStyles = makeStyles(() => ({
 
     title: {
         'padding': '0.5em'
+    },
+
+    disabled: {
+        'opacity': '0.7'
     }
 
 }))
 
-const ShippingBlock = ({shipping, errors, setShippingDetails, sameBilling, setBillingDetails}) => {
+const ShippingBlock = ({shipping, errors, setShippingDetails, sameBilling, setBillingDetails, shipped}) => {
 
     const classes = useStyles();
 
