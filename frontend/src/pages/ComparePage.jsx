@@ -25,9 +25,11 @@ const ComparePage = () => {
         history.goBack();
     }
     
+    
+    
     const exchangeHandler = () => {
         const updatedBuild = JSON.parse(JSON.stringify(build));
-        updatedBuild[category] = comparedProduct;
+        updatedBuild.parts[category] = comparedProduct;
         setBuild(updatedBuild);
         history.push('/build');
     }
@@ -47,7 +49,7 @@ const ComparePage = () => {
                     item xs={5} 
                     className={classes.productContainer}
                 >
-                    <CompareProductCard productInfo={build[category]} />    
+                    <CompareProductCard productInfo={build.parts[category]} />    
                 </Grid>
                 <Grid 
                     item 
