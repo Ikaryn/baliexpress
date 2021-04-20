@@ -19,11 +19,18 @@ const useStyles = makeStyles(() => ({
         marginLeft: '0.75em',
         border: '1px solid white',
         width: '70%',
+    },
+    deliveryOptionsCheckbox: {
+        marginLeft: '0.75em'
+    },
+    deliveryOptionsBlock: {
+        marginBottom: '1em',
+        marginTop: '0.5em'
     }
     
 }));
 
-const DeliveryBlock = ({setShippingPrice}) => {
+const DeliveryBlock = ({setShippingPrice, setShipped, setSameBilling}) => {
     const [delivery, setDelivery] = React.useState({
         checkedDelivery: true,
         checkedPickup: false
@@ -40,6 +47,8 @@ const DeliveryBlock = ({setShippingPrice}) => {
         if(type === 'pickup') {
             deliveryCheck.checkedDelivery = false;
             deliveryCheck.checkedPickup = true;
+            setShipped(false);
+            setSameBilling(false);
             if (value) {
                 deliveryCheck.checkedDelivery = true;
                 deliveryCheck.checkedPickup = false;
@@ -48,6 +57,7 @@ const DeliveryBlock = ({setShippingPrice}) => {
         } else {
             deliveryCheck.checkedDelivery = true;
             deliveryCheck.checkedPickup = false;
+            setShipped(true);
             if (value) {
                 deliveryCheck.checkedDelivery = false;
                 deliveryCheck.checkedPickup = true;
@@ -135,9 +145,9 @@ const DeliveryBlock = ({setShippingPrice}) => {
                     />
                 </Grid>
                 {delivery.checkedDelivery && 
-                    <Grid item container direction="column">
+                    <Grid item container direction="column" className={classes.deliveryOptionsBlock}>
                         <Grid container item direction="row" className={classes.deliveryOptionsContainer} alignItems="center">
-                            <Grid item>
+                            <Grid item className={classes.deliveryOptionsCheckbox}>
                                 <FormControlLabel 
                                     control={
                                         <Checkbox
@@ -153,7 +163,7 @@ const DeliveryBlock = ({setShippingPrice}) => {
                             </Grid>
                         </Grid>
                         <Grid container item direction="row" className={classes.deliveryOptionsContainer} alignItems="center">
-                            <Grid item >
+                            <Grid item  className={classes.deliveryOptionsCheckbox}>
                                 <FormControlLabel 
                                     
                                     control={
@@ -170,7 +180,7 @@ const DeliveryBlock = ({setShippingPrice}) => {
                             </Grid>
                         </Grid>
                         <Grid container item direction="row" className={classes.deliveryOptionsContainer} alignItems="center">
-                            <Grid item>
+                            <Grid item className={classes.deliveryOptionsCheckbox}>
                                 <FormControlLabel 
                                     control={
                                         <Checkbox

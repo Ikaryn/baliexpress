@@ -31,7 +31,7 @@ const OrderTable = ({orders, setOrderSelected, setOrderId}) => {
 
         const sorted = JSON.parse(JSON.stringify(orderList));
 
-        switch (orderBy) {
+        switch (cellId) {
             case "orderId":
                 sorted.sort((a, b) => !isAsc ? a.id - b.id : b.id - a.id);
                 break;
