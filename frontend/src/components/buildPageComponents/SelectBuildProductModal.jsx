@@ -32,7 +32,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
             // console.log(category);
             const response = await api.get(`product?category=${category}`);
             const filteredProducts = response.products.filter((product) => (product.stock > 0));
-            
+
             setAllProducts(response.products);
             setProducts(filteredProducts);
         })();
@@ -48,7 +48,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
         });
         return productBrands;
     }
-    
+
     // handle filter by price
     const handlePrice = (bound, value) => {
         // set the lower price bound
@@ -61,23 +61,23 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
         let filteredProducts = JSON.parse(JSON.stringify(allProducts));
         if (bound === 'lower') {
             // if the upper bound price then just find prices above the lower bound
-            if (!maxPrice) { 
+            if (!maxPrice) {
                 filteredProducts = filteredProducts.filter((p) => (Number(p.price) >= value))
             } else {
                 filteredProducts = filteredProducts.filter((p) => (p.price >= value && p.price <= maxPrice));
-            }   
+            }
         } else {
             if (!minPrice && value !== '') {
                 filteredProducts = filteredProducts.filter((p) => (p.price <= value))
             } else if (value !== '') {
                 filteredProducts = filteredProducts.filter((p) => (p.price <= value && p.price >= minPrice));
-            }   
+            }
         }
 
         setProducts(filteredProducts);
-        
+
     }
-    
+
     //handle filter by brands
     const handleFilter = (value) => {
         setBrand(value);
@@ -89,7 +89,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
         }
         setProducts(filteredProducts);
     }
-    
+
     const handleSort = (value) => {
         setSortCriteria(value);
         const newSorted = JSON.parse(JSON.stringify(products));
@@ -105,7 +105,7 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                 ));
                 break;
             // popularity
-            default: 
+            default:
                 newSorted.sort((a,b) => (
                     b.sold - a.sold
                 ))
@@ -128,14 +128,14 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
         // handlePrice('upper', maxPrice);
         // handlePrice('lower', minPrice);
 
-    } 
+    }
 
     return (
         <Grid container direction="column">
             <Paper className='select-product-modal'>
                 <Grid container item direction="row" justify="space-between">
                     <Grid item>
-                        <Typography variant="h4">{category}</Typography>
+                        <Typography variant="h4">{category.replace("_", " ")}</Typography>
                     </Grid>
                     <Grid item>
                         <Button onClick={()=>{setOpen(false)}}>X</Button>
@@ -191,11 +191,11 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                             <MenuItem value={'Price-Low'}>Price-Low</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item xs={2}> 
+                    <Grid item xs={2}>
                         <FormControlLabel
                             control={
-                                <Checkbox 
-                                    checked={showNoStockProducts} 
+                                <Checkbox
+                                    checked={showNoStockProducts}
                                     onChange={(event) => {handleShowStock(event.target.checked)}}
                                 />
                             }
@@ -208,9 +208,9 @@ const SelectBuildProductModal = ({category, setOpen, setProduct, setComparedProd
                     <Grid container direction="column" alignContent="center">
                         {products.map((product) => (
                             <Grid item key={product.id} xs={12}>
-                                <SelectProductCard 
-                                    setOpen={setOpen} 
-                                    productInfo={product} 
+                                <SelectProductCard
+                                    setOpen={setOpen}
+                                    productInfo={product}
                                     setProduct={setProduct}
                                     setComparedProduct={setComparedProduct}
                                     redirect={redirect}
