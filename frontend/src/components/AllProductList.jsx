@@ -26,7 +26,6 @@ const AllProductList = () => {
                 return productList.products;
                 
             }));
-            
             setProducts(productsInCategory);
         })();
 
@@ -39,12 +38,18 @@ const AllProductList = () => {
         console.log(response);
         if (response.message) {
 
-            const newProducts = products.filter((product) => product.id !== discontinuedId);
+            // For each category apply the filter to remove the discontinued product
+            let newProducts = []
+            products.forEach((category) => {
+                newProducts.push(category.filter((product) => product.id !== discontinuedId));
+            });
 
-            setProducts(newProducts);
+            console.log(products);
+        
             setOpenModal(false);
             setDiscontinuedId();
             setSuccess(true);
+            setProducts(newProducts);
         }
     }
 

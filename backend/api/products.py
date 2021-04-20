@@ -138,9 +138,7 @@ class Products(Resource):
         
         # Discontinue a product using its productId
         print('Discontinue product attempt received')
-        data = request.json
-
-        productId = data.get('id')
+        productId = request.args.get('productId')
         db.discontinueProduct(productId)
         return {'message': 'Product successfully discontinued'}
 
