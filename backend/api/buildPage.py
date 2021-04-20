@@ -128,14 +128,14 @@ class BuildPage(Resource):
             CaseBudget = 0.06 * budget
             CoolingBudget = 0.04 * budget
         elif usage == "animation":
-            # Animation also heavily prioritiese the CPU and GPU but has more interest in RAM
-            GPUBudget = 0.5 * budget
+            # Animation also heavily prioritises the CPU and GPU but has more interest in RAM
+            GPUBudget = 0.35 * budget
             CPUBudget = 0.2 * budget
-            MotherboardBudget = 0.06 * budget
-            MemoryBudget = 0.07 * budget
+            MotherboardBudget = 0.1 * budget
+            MemoryBudget = 0.12 * budget
             StorageBudget = 0.06 * budget
-            PSUBudget = 0.05 * budget
-            CaseBudget = 0.04 * budget
+            PSUBudget = 0.06 * budget
+            CaseBudget = 0.06 * budget
             CoolingBudget = 0.05 * budget
         elif usage == "video":
             # Video work requires a stronger CPU and has less emphasis on a Graphics Card
@@ -151,33 +151,33 @@ class BuildPage(Resource):
             # Business PC's are typically lower budget and therefore have a more even spread
             # accross the various parts
             GPUBudget = 0.2 * budget
-            CPUBudget = 0.3 * budget
+            CPUBudget = 0.25 * budget
             MotherboardBudget = 0.11 * budget
-            MemoryBudget = 0.11 * budget
+            MemoryBudget = 0.12 * budget
             StorageBudget = 0.12 * budget
             PSUBudget = 0.7 * budget
-            CaseBudget = 0.05 * budget
-            CoolingBudget = 0.04 * budget
+            CaseBudget = 0.08 * budget
+            CoolingBudget = 0.05 * budget
         elif usage == "art":
             # Art requires a strong GPU but has less need for a CPU and more need for RAM
-            GPUBudget = 0.42 * budget
+            GPUBudget = 0.35 * budget
             CPUBudget = 0.16 * budget
-            MotherboardBudget = 0.08 * budget
-            MemoryBudget = 0.08 * budget
+            MotherboardBudget = 0.1 * budget
+            MemoryBudget = 0.1 * budget
             StorageBudget = 0.8 * budget
-            PSUBudget = 0.6 * budget
+            PSUBudget = 0.07 * budget
             CaseBudget = 0.06 * budget
             CoolingBudget = 0.06 * budget
         else:
             # Catch all of a generic balanced PC build
-            GPUBudget = 0.4 * budget
+            GPUBudget = 0.3 * budget
             CPUBudget = 0.2 * budget
-            MotherboardBudget = 0.08 * budget
+            MotherboardBudget = 0.12 * budget
             MemoryBudget = 0.08 * budget
             StorageBudget = 0.09 * budget
-            PSUBudget = 0.05 * budget
-            CaseBudget = 0.05 * budget
-            CoolingBudget = 0.05 * budget
+            PSUBudget = 0.07 * budget
+            CaseBudget = 0.07 * budget
+            CoolingBudget = 0.07 * budget
 
         # The computer has different requirements if overclocking namely
         # a separate CPU Cooler

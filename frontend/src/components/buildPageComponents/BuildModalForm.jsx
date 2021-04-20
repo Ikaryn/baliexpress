@@ -130,7 +130,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Typography>Let us know how much you have to spend! This will allow us to create the most bang for your buck build.</Typography>
+                    <Typography>Let us know how much you have to spend! This will allow us to create the most bang for your buck build. We recommend a minimum budget of $1000</Typography>
                 </Grid>
                 <Grid item>
                     <FormControl className={classes.formControl}>
