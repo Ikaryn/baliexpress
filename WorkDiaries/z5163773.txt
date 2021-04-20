@@ -8,11 +8,11 @@ Week 2
 
 Lead a standup on monday to see where everyone was at and what they are working on.
 Created proposal document, and completed 90% of the background. 
-Started on the Recommendation System storyboard and product pages.
+Started on the Recommendation System storyboard and product pages. All of these I had designed myself.
 
 Week 3
 
-Finished storyboards for Recommendation System, Product pages and reviews, and Customer profile pages. 
+Finished storyboards for Recommendation System, Product pages and reviews, and Customer profile pages. All of these I had designed myself.
 Also compiled them into the product proposal page.
 
 Week 4
@@ -50,16 +50,19 @@ Converted website into a dark mode. Created the build PC page with relevant comp
 Initially with our dummy data, we had to improvise image strings. When we integrated the database all of this was completely lost. So we had to figure out a way to do this.
 At this time and point, the backend wasn't setup for the build-A-PC recommendation system, so I was only able to complete the skeleton of interaction.
 
+All of this was straight forward.
+
 For the next week, we had planned to finish off the recommendation system and its coupled components.
 
 Week 7
 
-Along side with Darryl Liu, we came up with the algorithm to calculate performance on the comparison page in DataVis.js. 
+I first tried to finish off the build page, then along side with Darryl Liu, we came up with the algorithm to calculate performance on the comparison page in DataVis.js. 
 I then wrote ComparePage.jsx, CompareProductCard.jsx. -All by myself. Started the framework for Reviews. 
 Created ReviewBlock.jsx, ReviewCard.jsx, ReviewForm.jsx - all by myself.
 
 Alot of the obstacles I had faced was around calculating performance values, and creating actual performance weightings. This was overcome by getting help from
-some of the more knowledgable group members like Darryl Liu.
+some of the more knowledgable group members like Darryl Liu. The Compare Page presented some difficulties as I wanted to reuse the modal for select build product, and
+select compare product. But that was solved after passing in states. 
 
 Next week was our demo, so it was important to finish off the rest of the tickets assigned.
 
@@ -71,6 +74,12 @@ Added some helper text in BuildPCForm, and in build product cards.
 Implemented edit builds, users builds, and save Build PCs for frontend and backend(only for edit and save). 
 I wrote the frontend Sales Components, ProductSaleCard.jsx, SaleForm.jsx, SalePanel.jsx -All by myself.
 
+All of these components were pretty straight forward
+
+We then had the demo, and a meeting for Retro B. We had then delegated the last sprints tickets to the group.
+
+I had planned to get started on the chatbot in the beginning of the week.
+
 Week 9.
 
 Wrote the initial PaymentPage, along side with the Payment components. 
@@ -78,11 +87,24 @@ Brainstormed with Darryl Liu and Marcus Lee on the chatbot functionality.
 I wrote the functionality of the chatbot. I rewrote the cart, and added more functionality to it. 
 Added more polish to product and list pages. Fixed bugs with Build Page.  -All by myself
 
+Thee chatbot had alot of technical problems as it uses class components, and I learnt React with functional components. Luckily in the tutorials
+given by the developer, it provides chatbot functionality that combines both class and functional components. So I just had to study
+class components abit, then it worked out. Another problem was that I wasn't able to extend the functionality of the chatbot, to include what we had originally planned.
+We would have to handle message parsing in a sort of tree structure. Which is something that is outside of my abilities, and with not enough time to do it properly.
+Luckily the base foundation of the chatbot is there, so it won't have that much impact.
+
+We had planned to have a meeting the start of the next week to discuss the demo.
+
 Week 10.
 
-Darryl, Marcus, and Joanna had a meeting in the morning to discuss the demo. During our run through we discovered a bunch of bugs.
-I had spent the monday finishing as much of the backlogged tickets we created during the demo.
+Darryl, Marcus, and Joanna had a meeting in the morning to discuss the demo. During our run through we discovered a bunch of bugs that we made into backlog tickets in jira.
+
+I had spent the monday finishing as much of the backlogged tickets we created during the demo. This had included handling all of the sale prices, creating sorting/filtering
+in select build product modal, adding build products to cart and payment page, and much more.
 
 I encountered some technical problems surrounding the build page. I had to refactor the way it worked to handle
 editting and saving build. But since the build page has 3 entry points, and all of them had different ways of interacting with
-the build page, I had to standardize the way the build object is created and set.
+the build page, I had to standardize the way the build object is created and set. I also problems with how the build page should interact with
+refreshing the page, using the form on the same page, and accessing the page via edit. For creating a new custom build, and accessing a saved version
+of the build, it works fine. But because of the way that the state works with the library I use, its difficult to reset the page with an empty template
+that has some components filled out. It's something small, if the user wants a fresh template they can either refresh the page, or just remove the added products.

@@ -6,8 +6,6 @@ import API from '../../util/API';
 import { buildTemplate } from '../../util/helpers';
 import { StoreContext } from '../../util/store';
 
-
-
 const useStyles = makeStyles((theme) => ({
     formControl: {
         minWidth: 220,

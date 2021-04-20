@@ -52,6 +52,7 @@ const PaymentPage = () => {
                                                                 'country': ''});
     const [shippingPrice, setShippingPrice] = React.useState(0);
     const [sameBilling, setSameBilling] = React.useState(false);
+    const [shipped, setShipped] = React.useState(true);
                                                                 
     const calculateTotal = () => {
         let total = 0;
@@ -103,22 +104,24 @@ const PaymentPage = () => {
         let error = false;
 
         // Check for any empty fields, and the associated input types are correct, e.g. numbers only for postcode
-        Object.keys(shippingDetails).forEach(field => {
-            if (shippingDetails[field] === '') {
-                newShippingErrors[field] = field.charAt(0).toUpperCase() + field.slice(1) + ' cannot be empty';
-                error = true;
-            } else if (field === 'city' || field === 'state' || field === 'country'){
-                if (!checkInputAlpha(shippingDetails[field])) {
-                    newShippingErrors[field] = 'Invalid ' + field;
+        if (shipped) {
+            Object.keys(shippingDetails).forEach(field => {
+                if (shippingDetails[field] === '') {
+                    newShippingErrors[field] = field.charAt(0).toUpperCase() + field.slice(1) + ' cannot be empty';
                     error = true;
+                } else if (field === 'city' || field === 'state' || field === 'country'){
+                    if (!checkInputAlpha(shippingDetails[field])) {
+                        newShippingErrors[field] = 'Invalid ' + field;
+                        error = true;
+                    };
+                } else if (field === 'postcode') {
+                    if (!checkInputNumber(shippingDetails[field])) {
+                        newShippingErrors[field] = 'Invalid ' + field;
+                        error = true;
+                    };
                 };
-            } else if (field === 'postcode') {
-                if (!checkInputNumber(shippingDetails[field])) {
-                    newShippingErrors[field] = 'Invalid ' + field;
-                    error = true;
-                };
-            };
-        });
+            });
+        }
 
         // Check for any empty fields, and the associated input types are correct, e.g. numbers only for postcode
         Object.keys(billingDetails).forEach(field => {
@@ -139,7 +142,6 @@ const PaymentPage = () => {
         });
 
         // Check if any fields in the payment block are empty
-
         if (paymentDetails.name === '') {
             newPaymentErrors['name'] = "Please enter the cardholder's name";
         } else if (!checkInputAlpha(paymentDetails.name)) {
@@ -241,24 +243,29 @@ const PaymentPage = () => {
 
         }
     }
-    
 
     return (
         <Grid container direciton="row" alignItems="flex-start" justify="center">
             <Grid container item direction="column" xs={6} alignItems="center">   
                 <Grid item className={classes.block} xs={12}>
-                    {user && 
+                    <DeliveryBlock 
+                        setShippingPrice={setShippingPrice} 
+                        setShipped={setShipped}
+                        setSameBilling={setSameBilling}
+                    />
+                </Grid>
+                {user && shipped && 
+                    <Grid item className={classes.block} xs={12}>
                         <ShippingBlock 
                             shipping={shippingDetails} 
                             errors={shippingErrors}
                             sameBilling={sameBilling}
                             setShippingDetails={setShippingDetails}
                             setBillingDetails={setBillingDetails}
-                        />}
-                </Grid>
-                <Grid item className={classes.block} xs={12}>
-                    <DeliveryBlock setShippingPrice={setShippingPrice}/>
-                </Grid>
+                            shipped={shipped}
+                        />
+                    </Grid>
+                }
                 <Grid item className={classes.block} xs={12}>
                     <BillingAddressBlock 
                         shipping={shippingDetails}
@@ -267,6 +274,7 @@ const PaymentPage = () => {
                         sameBilling={sameBilling}
                         setBillingDetails={setBillingDetails}
                         setSameBilling={setSameBilling}
+                        shipped={shipped}
                     />
                 </Grid>
                 <Grid item className={classes.block} xs={12}>

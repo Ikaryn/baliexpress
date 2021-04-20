@@ -197,6 +197,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
                 break;
         }
         setReviews(sortedReviews);
+        console.log(reviews);
     
     }
     
@@ -311,7 +312,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
             <div>
                 <Grow in={reviewOpen}>
                     <Paper>
-                        <ReviewForm productId={productId}/>
+                        <ReviewForm productId={productId} reviews={reviews} setReviews={setReviews}/>
                     </Paper>
                 </Grow>
             </div>

@@ -73,12 +73,12 @@ const ProductPage = () => {
         (async () => {
             const products = await api.get(`product?category=${category}`);
             const product = products.products.filter((p) => Number(p.id) === Number(pid));
-            let productPrice = product[0].price;
-            console.log(product[0]);
-            if (product[0].sale) {
-                productPrice = (product[0].price - (product[0].price * (product[0].sale.salepercent / 100))).toFixed(2);
-            }
-            setPrice(productPrice);
+            // let productPrice = product[0].price;
+            // console.log(product[0]);
+            // if (product[0].sale) {
+            //     productPrice = (product[0].price - (product[0].price * (product[0].sale.salepercent / 100))).toFixed(2);
+            // }
+            setPrice(product[0].price);
             setProductInfo(product[0]);
         })();
         
@@ -110,6 +110,7 @@ const ProductPage = () => {
                 "quantity": quantity,
                 "category": productInfo.category,
                 "stock": productInfo.stock,
+                "sale": productInfo.sale,
             });
         } else {
             let newQuantity = Number(found[0]['quantity']) + quantity;

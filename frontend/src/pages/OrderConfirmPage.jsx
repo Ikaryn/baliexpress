@@ -62,10 +62,6 @@ const OrderConfirmPage = () => {
                 console.log(order);
                 localStorage.removeItem('orderId');
 				
-				// let sum = 0;
-				// products.forEach(product => (sum += product.price * product.quantity));
-				// setTotal(sum);
-
 
             // If there is no orderId (e.g. from someone manually accessing the url), then redirect to the homepage
             } else {
