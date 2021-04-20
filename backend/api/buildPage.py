@@ -68,11 +68,22 @@ class BuildPage(Resource):
 
         savedBuild = db.getBuild(buildID)
 
-        # Extract the names of the parts in the saved build
+        # Extract the names of the parts in the saved build and the new build
         savedPartNames = []
         for part in savedBuild['parts']:
             savedPartNames.append(part['name'])
+
+        newPartNames = []
+        for part in newBuild['parts']:
+            if type(newBuild['parts'][part]) is dict:
+                newPartNames.append(newBuild['parts'][part]['name'])
+
+        # This section handles removing parts
+        for savedPart in savedBuild['parts']:
+            if savedPart['name'] not in newPartNames:
+                db.removePartFromBuild(buildID, savedPart['productid'])
         
+        # This section handles swapping parts and adding new parts
         # Remove any parts that are not in the updated build from the saved build
         # and add any parts to the build that are in the updated build to the saved build
         for part in newBuild['parts']:

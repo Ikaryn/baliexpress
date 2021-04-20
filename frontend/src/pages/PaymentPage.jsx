@@ -216,8 +216,8 @@ const PaymentPage = () => {
             const products = {};
             const builds = [];
             cart.forEach(item => {
-                if (item.id) products[item.id] = item.quantity;
-                else builds.push(item);
+                if (item.parts) builds.push(item);
+                else products[item.id] = item.quantity;
             });
 
             // Send the api call to make a new order
@@ -229,6 +229,8 @@ const PaymentPage = () => {
                 shippingPrice: shippingPrice,
                 total: price
             };
+
+            console.log(body);
 
             const response = await api.post(`order`, body);
             console.log(response);

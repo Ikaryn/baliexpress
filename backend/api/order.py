@@ -88,10 +88,15 @@ class Order(Resource):
                 if isinstance(build['parts'][field], dict):
                     
                     # Add to exisitng quantity if the product was already in the cart
-                    if str(build['parts'][field]['id']) in products:
-                        products[str(build['parts'][field]['id'])] += build['quantity']
+                    if ('id' in build['parts'][field]):
+                        productid = str(build['parts'][field]['id'])
                     else:
-                        products[str(build['parts'][field]['id'])] = build['quantity']
+                        productid = str(build['parts'][field]['productid'])
+
+                    if productid in products:
+                        products[productid] += build['quantity']
+                    else:
+                        products[productid] = build['quantity']
 
         # Convert back to list of dicts
         # productList = [{'productid': key, 'quantity': productDict[key]} for key in productDict]

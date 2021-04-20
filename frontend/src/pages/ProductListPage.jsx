@@ -197,7 +197,7 @@ const ProductListPage = () => {
             <Grid container direction="row">
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
                     <Grid className="product-list-filter-container">
-                        <Grid item className="filter-header">
+                        <Grid item>
                                 <Typography variant="h4">Narrow your search</Typography>
                         </Grid>
                         <Grid item container direction="column">
