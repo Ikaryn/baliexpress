@@ -198,14 +198,15 @@ const ProductListPage = () => {
             <Grid container direction="row">
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
                     <Grid className="product-list-filter-container">
-                        <Grid item>
+                        <Grid item className="filter-header">
                                 <Typography variant="h4">Narrow your search</Typography>
-                                <Divider />
                         </Grid>
                         <Grid item container direction="column">
                             {filterBoxes && labels && Object.keys(filterBoxes).map((filter) => 
                                 <Grid item>
-                                    <Typography variant="h5">{labels[filter]}:</Typography>
+                                    <Grid item className="filter-header">
+                                        <Typography variant="h5">{labels[filter]}:</Typography>
+                                    </Grid>
                                     {Object.keys(filterBoxes[filter]).map((value) =>
                                         <Typography>
                                             <Checkbox onChange={() => handleFilterChange(filter, value)} />
@@ -245,7 +246,7 @@ const ProductListPage = () => {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid container item direction="row" spacing={3} alignItems="flex-start" className="parent-product-card">
+                    <Grid container item direction="row" spacing={3}>
                         {filteredProducts.map((p) => (
                             <Grid container item xs={3} key={p.name + p.id}>
                                 <ProductCard 

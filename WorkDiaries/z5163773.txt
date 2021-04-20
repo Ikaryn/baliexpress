@@ -85,4 +85,7 @@ I had spent the monday finishing as much of the backlogged tickets we created du
 
 I encountered some technical problems surrounding the build page. I had to refactor the way it worked to handle
 editting and saving build. But since the build page has 3 entry points, and all of them had different ways of interacting with
-the build page, I had to standardize the way the build object is created and set.
+the build page, I had to standardize the way the build object is created and set. I also problems with how the build page should interact with
+refreshing the page, using the form on the same page, and accessing the page via edit. For creating a new custom build, and accessing a saved version
+of the build, it works fine. But because of the way that the state works with the library I use, its difficult to reset the page with an empty template
+that has some components filled out. It's something small, if the user wants a fresh template they can either refresh the page, or just remove the added products.

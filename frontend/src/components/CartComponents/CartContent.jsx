@@ -1,14 +1,20 @@
-import { Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { StoreContext } from '../../util/store';
 import CartItem from './CartItem';
 import { useHistory } from 'react-router';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
     },
     emptyCart: {
         padding: '2em'
+    },
+    productListScrollable: {
+        maxHeight: 300,
+        overflow: 'auto',
+        overflowX: 'hidden',
     }
 }))
 
@@ -16,52 +22,57 @@ const CartContent = () => {
     const context = React.useContext(StoreContext);
     const { cart: [cart, setCart] } = context;
     
-    const [totalPrice, setTotalPrice] = React.useState(0);
     const history = useHistory();
     const classes = useStyles();
     console.log(cart);
-    
-    React.useEffect(() => {
-        let totalPrice = 0;
-        cart.forEach(product => {
-            totalPrice += (product.price * product.quantity);
-        })
-        setTotalPrice(totalPrice);
-    },[cart]);
     
     const handleClick = () => {
         history.push(`/payment`);
     }
     
+    const generateCartContent = (product) => {
+        console.log(product);
+        if (product.buildname) {
+            return (
+                <div>
+                    <CartItem productInfo={product} type="build" />
+                    <Accordion>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                            <Typography>View parts</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Grid container direction='column'>
+                                {Object.keys(product.parts).map((part) => 
+                                    (product.parts[part] && 
+                                        <Grid container direction="row" justify="space-between">
+                                            <Grid item xs={10}>
+                                                <Typography variant="caption">{product.parts[part].name}</Typography>        
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <Typography variant="caption">${Number(product.parts[part].price).toFixed(2)}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                ))}
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
+                
+            )
+        }
+        return <CartItem productInfo={product} type="product"/>
+    }
+    
     return (
-    <Grid>
+    <Grid className={classes.productListScrollable}>
         {cart.length === 0 ? 
             <Grid container item justify="center" className={classes.emptyCart}>
                 <Typography>Cart is empty!</Typography>
             </Grid>
             :
-            cart.map((product) => {
-                if (product.buildname) {
-                    return <CartItem productInfo={product} type="build" />
-                }
-                return <CartItem productInfo={product} type="product"/>
-        })}
+            cart.map((product) => (generateCartContent(product)))
+        }
         <Divider />
-        <Grid container justify="space-around" direction="row">
-            <Grid item>
-                <Typography variant="h5">Total Price: ${totalPrice}</Typography>
-            </Grid>
-            <Grid item>
-                <Button 
-                    disabled={cart.length === 0}
-                    variant="contained" 
-                    color="primary"
-                    onClick={handleClick}
-                >
-                    Checkout
-                </Button>
-            </Grid>
-        </Grid>
     </Grid>
     )
                         

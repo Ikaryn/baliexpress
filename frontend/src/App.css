@@ -46,6 +46,14 @@ body {
   }
 }
 
+.sale-price {
+  font-weight: bold;
+}
+
+.old-sale-price {
+  text-decoration: line-through;
+}
+
 .profile-page-container {
   margin-left: 10%;
   width: 80%;

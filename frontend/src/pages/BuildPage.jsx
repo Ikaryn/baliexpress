@@ -10,9 +10,9 @@ import { StoreContext } from '../util/store';
 
 const api = new API();
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
-        marginBottom: '10%',
+        margin: '0 10% 5% 10%'
     },
     footerBar: {
         top: 'auto',
@@ -32,9 +32,7 @@ const BuildPage = () => {
     const { build: [build, setBuild]} = context;
     const { cart: [cart, setCart] } = context;
     const [buildPrice, setBuildPrice] = React.useState(0);
-    // const [buildNumber, setBuildNumber] = React.useState(0);
     const [buildName, setBuildName] = React.useState('Your Custom Built PC');
-    const [buildDesc, setBuildDesc] = React.useState('');
     // modal states
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -48,10 +46,11 @@ const BuildPage = () => {
     React.useEffect(() => {
         console.log(history.location.state)
         if (history.location.state.type === 'empty') {
-            console.log('empty')
-            setBuild(buildTemplate);
+            console.log('hello');
+            const newBuild = JSON.parse(JSON.stringify(buildTemplate));
+            console.log(buildTemplate)
+            setBuild(newBuild);
         } else if (history.location.state.type === 'custom'){
-            console.log('custom');
             const formResponse = history.location.state.specs;
             api.get(`build?usage=${formResponse.usage}&&budget=${formResponse.budget}&&overclock=${formResponse.overclock}&&storage=${formResponse.storage}`)
             .then((res) => {
@@ -59,9 +58,11 @@ const BuildPage = () => {
                 const newBuild = JSON.parse(JSON.stringify(build));
                 newBuild.parts = res;
                 newBuild.id = 0;
-                console.log(newBuild);
                 setBuild(newBuild);
             })
+        } else if (history.location.state.type === 'edit') {
+            console.log(history.location.state.name)
+            setBuildName(history.location.state.name);
         }
     
     },[history.location.state.type])
@@ -69,8 +70,13 @@ const BuildPage = () => {
     // generate and calculate the build price
     React.useEffect(() => {
         let newPrice = Object.keys(build.parts).reduce((previous, key) => {
+            console.log(build.parts[key])
             if(build.parts[key].price){
-                previous.price += Number(build.parts[key].price);
+                if(build.parts[key].sale) {
+                    previous.price = Number(build.parts[key].price) * ( 1 - Number(build.parts[key].sale.salepercent)/100);    
+                } else {
+                    previous.price += Number(build.parts[key].price);
+                }
             }
             return previous;
         }, { price: 0 });
@@ -100,8 +106,6 @@ const BuildPage = () => {
         setSuccessType('save');
         setOpen(true);
     }
-    
-    console.log(build)
     
     return (
     <div className={classes.root}>
