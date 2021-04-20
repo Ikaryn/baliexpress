@@ -27,6 +27,13 @@
     max-width: 40%;
 }
 
+.forgot-password-modal-container {
+    margin: 20% 39%;
+    padding: 1em;
+    min-width: 20%;
+    max-width: 40%  
+}
+
 .login-status-text{
     color: white;
 }

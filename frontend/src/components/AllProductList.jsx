@@ -115,7 +115,7 @@ const AllProductList = () => {
                         </Modal>
                     }
                 </Grid>
-                <Snackbar open={success} autoHideDuration={1000} onClose={() => setSuccess(false)}>
+                <Snackbar open={success} autoHideDuration={3000} onClose={() => setSuccess(false)}>
                     <Alert severity="success">Product has been discontinued</Alert>
                 </Snackbar>
                 </Grid>
