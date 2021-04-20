@@ -33,16 +33,18 @@ const ProductListPage = () => {
             // set the products determined by if viewing sale products or just normal products
             if(!category) {
                 if(search) {
-                    console.log('search')
                     const res = await api.get(`search?query=${search}`);
                     console.log(res.results);
                     products = res.results;
                 } else {
-                    console.log('sale')
                     // loop through each sale
+                    let productids = [];
                     sales.forEach((sale) => {
                         sale.productList.forEach((product) => {
-                            products.push(product);
+                            if (!productids.includes(product.id)) {
+                                productids.push(product.id);
+                                products.push(product);
+                            }
                         })
                     })
                 }
@@ -240,7 +242,7 @@ const ProductListPage = () => {
                                     </Grid>
                                 </Grid>
                                     <Grid item>
-                                        {/*<Typography variant="h3">{generateHeader()}</Typography>*/}
+                                        <Typography variant="h3">{generateHeader()}</Typography>
                                     </Grid>
                             </Grid>
                         </Paper>

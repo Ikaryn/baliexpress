@@ -53,7 +53,7 @@ const BuildProductCard = ({type}) => {
             <Grid container item direction="row" spacing={1}>
                 <Grid container item xs={2} direction="column" justify="center" alignItems="center">
                     <Grid item>
-                        <Typography align="center" variant="h5">{type}</Typography>
+                        <Typography align="center" variant="h5">{type.replace("_", " ")}</Typography>
                     </Grid>
                     <Grid item>
                         <Tooltip title={<Typography>{productDesc[type]}</Typography>}>
