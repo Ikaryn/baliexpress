@@ -57,7 +57,7 @@ VALUES
     (9,		8,	16,	3.6,	5,		'LGA 1151',	FALSE,	TRUE,	95),
     (10,	6,	12,	3.3,	4.8,	'LGA 1200',	TRUE,	FALSE,	65),
     (11,	18,	36,	2.6,	4.2,	'LGA 2066',	FALSE,	TRUE,	165),
-    (12,	32,	64,	3.7,	4.5,	'TRX40',	FALSE,	TRUE,	280);
+    (12,	32,	64,	3.7,	4.5,	'AM4',	FALSE,	TRUE,	280);
 
 -- CPU reviews
 INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
