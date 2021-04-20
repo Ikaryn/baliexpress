@@ -21,6 +21,9 @@ const BuildProductCard = ({type}) => {
     const [open, setOpen] = React.useState(false);
     const {build: [build, setBuild]} = context;
     const [productInfo, setProductInfo] = React.useState(build.parts[type]);
+    // console.log(build.parts[type]);
+    // console.log(type)
+    // console.log(productInfo)
     // const [spec, setSpec] = React.useState(build[type].specs)
     console.log('rendering product card');
     const [redirect, setRedirect] = React.useState('')
@@ -61,7 +64,7 @@ const BuildProductCard = ({type}) => {
                 <Grid item>
                     <Divider orientation="vertical" />
                 </Grid>
-                {productInfo === '' || !productInfo ? 
+                {build.parts[type] === '' || !build.parts[type] ? 
                 <Grid container item xs={9} alignItems="center" justify="center">
                     <Grid item>     
                         <Button color="primary" variant="contained" onClick={() => {setOpen(true)}}>Select a Part</Button>
@@ -70,7 +73,7 @@ const BuildProductCard = ({type}) => {
                 :
                 <Grid item container direction="row" xs={9} spacing={4} className={classes.productInfoContainer}>
                     <Grid item xs={3}>
-                        <img className={classes.image} src={"data:image/jpeg;base64,"+productInfo.image} alt={productInfo.name}/>
+                        <img className={classes.image} src={"data:image/jpeg;base64,"+build.parts[type].image} alt={productInfo.name}/>
                     </Grid>
                     <Grid item xs={4}>
                         <Accordion>
@@ -79,13 +82,13 @@ const BuildProductCard = ({type}) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Grid container item direction="column">
-                                {Object.keys(productInfo.specs).map((spec, index) => (
-                                    <Grid container item direction="row" key={`${productInfo.name}-product-card` + index}>
+                                {Object.keys(build.parts[type].specs).map((spec, index) => (
+                                    <Grid container item direction="row" key={`${build.parts[type].name}-product-card` + index}>
                                         <Grid item>
                                             <Typography>{spec}:</Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Typography>{productInfo.specs[spec]}</Typography>
+                                            <Typography>{build.parts[type].specs[spec]}</Typography>
                                         </Grid>
                                     </Grid>
                                 ))}
@@ -98,7 +101,7 @@ const BuildProductCard = ({type}) => {
                             <Typography variant="h6">Product Name</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography>{productInfo.name}</Typography>
+                            <Typography>{build.parts[type].name}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" xs={2}>
@@ -106,7 +109,7 @@ const BuildProductCard = ({type}) => {
                             <Typography variant="h6">Price</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant="h5">${Number(productInfo.price).toFixed(2)}</Typography>
+                            <Typography variant="h5">${Number(build.parts[type].price).toFixed(2)}</Typography>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" xs={1} justify="center">

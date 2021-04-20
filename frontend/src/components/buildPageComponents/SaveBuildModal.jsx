@@ -58,7 +58,7 @@ const SaveBuildModal = ({build, setSuccess, setOpen, edit}) => {
         console.log(buildData);
         if(!errorHandler()){
             console.log(edit);
-            if (edit) {
+            if (edit === 0) {
                 console.log('yo')
                 api.post('build', buildData);
                 setOpen(false);

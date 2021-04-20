@@ -16,7 +16,7 @@ const SalesTable = ({sales, setSaleComponent}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sales.map((sale, index) => (
+                        {sales.map((sale) => (
                             <TableRow key={sale.name+sale.id}>
                                 <TableCell>{sale.id}</TableCell>
                                 <TableCell>{sale.name}</TableCell>
@@ -26,7 +26,7 @@ const SalesTable = ({sales, setSaleComponent}) => {
                                     <Button 
                                         variant="contained" 
                                         color="primary"
-                                        onClick={() => {setSaleComponent(index)}}
+                                        onClick={() => {setSaleComponent(sale.id)}}
                                     >
                                         View details
                                     </Button>

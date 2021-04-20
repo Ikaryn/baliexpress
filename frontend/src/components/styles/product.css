@@ -25,7 +25,6 @@
     padding: 1em 1em;
     background-color: rgb(189, 189, 189);
     border-radius: 0.2em;
-    height: 500px;
     
 }
 
@@ -48,6 +47,11 @@
 .product-card-image-container {
     height:70%;
 } */
+
+.parent-product-card {
+    height: 500px
+    
+}
 
 .product-card-image {
     width: 100%;

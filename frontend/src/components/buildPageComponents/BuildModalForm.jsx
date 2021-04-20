@@ -72,20 +72,27 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
     // instead of handling setBuild here, push it to build page to set.
     const handleRedirect = async (flag) => {
         if (flag === 'empty'){ 
-            setBuild(buildTemplate);
+            // setBuild(buildTemplate);
+            console.log('empty');
             handleToggle(false);
-            history.push('/build');
+            history.push({pathname:'/build', state: {type:'empty'}});
         } else if (flag === 'build'){
             if (!errorHandler()) {
-                const res = await api.get(`build?usage=${usage}&&budget=${budget}&&overclock=${overclock}&&storage=${storage}`)
-                console.log(res);
-                const newBuild = JSON.parse(JSON.stringify(build));
-                newBuild.parts = res;
-                newBuild.id = 0;
-                console.log(newBuild);
-                setBuild(newBuild);
+                console.log('build')
                 handleToggle(false);
-                history.push('/build/custom');
+                history.push({
+                    pathname:'/build/custom', 
+                    state: {
+                        type:'custom',
+                        specs: {
+                            usage: usage, 
+                            budget: budget, 
+                            overclock: overclock,
+                            storage: storage,
+                            }
+                        }
+                    }
+                );
             }
         }
     }

@@ -103,6 +103,7 @@ def getPassword(id):
 # returns the corresponding user id for a given email
 # returns ID if successful, None otherwise
 def getUserIDFromEmail(email):
+
     try:
         # connect to database
         conn = connect()

@@ -1,6 +1,6 @@
 import API from '../../util/API';
 import React from 'react';
-import { Grid, makeStyles, Divider, List, ListItem, Table, LinearProgress, TableContainer, TableRow, TableHead, TableCell, Button, TableBody, Paper, Typography } from '@material-ui/core';
+import { Grid, CircularProgress, makeStyles, Divider, List, ListItem, Table, LinearProgress, TableContainer, TableRow, TableHead, TableCell, Button, TableBody, Paper, Typography } from '@material-ui/core';
 // import LoadingComponent from '../LoadingComponent'
 
 const api = new API();
@@ -95,7 +95,7 @@ const OrderList = ({admin}) => {
 
         return (
             <Grid>
-                {order && 
+                {order ? 
                     <Grid container>
                         <Grid item>
                             <Button variant="contained" onClick={(event) => setOrderSelected(false)}>Back to Orders</Button>
@@ -154,7 +154,7 @@ const OrderList = ({admin}) => {
                             <Typography variant="h6">Total: ${order.total}</Typography>
                         </Grid>
                     </Grid>
-                }
+                : <CircularProgress />}
             </Grid>
         )
     }

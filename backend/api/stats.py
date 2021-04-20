@@ -88,6 +88,7 @@ class Stats(Resource):
             # Initliase all units sold for each day of the sale to 0
             while curDate <= endDate:
                 saleStats[curDate.strftime('%Y-%m-%d')] = 0
+                curDate += timedelta(days=1)
 
             # Get all the productIds for products associated with the sale
             saleProducts = []
@@ -107,6 +108,6 @@ class Stats(Resource):
             stats = []
             for key in saleStats:
                 # stats.append({'date': key, 'sold': saleStats[key]})
-                stats.append({'x': key, 'y': saleStates[key]})
+                stats.append({'x': key, 'y': saleStats[key]})
             
             return {'stats': stats}

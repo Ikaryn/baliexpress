@@ -12,10 +12,8 @@ const SearchPage = () => {
 
     React.useEffect(() => {
         (async () => {
-
             const res = await api.get(`search?query=${search}`);
             setProductOutput(res.results);
-            console.log(res.results);
         })();
     },[search])
     
