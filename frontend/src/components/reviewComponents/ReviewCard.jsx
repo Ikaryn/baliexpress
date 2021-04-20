@@ -249,7 +249,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
             </Paper>
 
             {success &&
-            <Snackbar open={success} autoHideDuration={1000}>
+            <Snackbar open={success} autoHideDuration={1000} onClose={() => setSucccess(false)}>
                 <Alert severity="success">This review has been reported</Alert>
             </Snackbar>
             }
