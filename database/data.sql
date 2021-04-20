@@ -117,7 +117,7 @@ VALUES
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
     VALUES
     ('MSI MAG B550M Mortar WiFi AM4 mATX Motherboard', 				'Motherboards',	'MSI',		239,	'3 years',	'Conquer the battlefield',															2500, '2016-07-02'),
-    ('Gigabyte Z490I Aorus Ultra LGA 1200 ITX Motherboard',			'Motherboards',	'Gigabyte',	389, 	'3 years',	'Soar to new heights',																2000, '2017-10-25'),
+    ('Gigabyte Z490I Aorus Ultra LGA 1200 ITX Motherboard',			'Motherboards',	'Gigabyte',	8000, 	'3 years',	'Soar to new heights',																2000, '2017-10-25'),
     ('Gigabyte B550 Aorus Master AM4 ATX Motherboard',				'Motherboards',	'Gigabyte',	299,	'3 years',	'Ultimate power design',															1500, '2017-11-18'),
     ('Asus ROG Strix X570-E Gaming AM4 ATX Motherboard',			'Motherboards',	'Asus',		419,	'5 years',	'Build a formidable weapon above the rest',											1000, '2019-07-25'),
     ('ASRock Z390 Pro4 ATX LGA1151 Motherboard',					'Motherboards',	'ASRock',	115,	'1 year',	'Reliable productivity',															500, '2010-10-24'),
