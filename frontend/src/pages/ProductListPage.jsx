@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import Checkbox from '@material-ui/core/Checkbox';
 import API from '../util/API';
 import { StoreContext } from '../util/store';
-import filterProducts from '../components/FilterProducts'
+import { filterProducts, categoryFilters } from '../components/FilterProducts'
 
 const api = new API();
 
@@ -22,10 +22,9 @@ const ProductListPage = () => {
     const { sales: [sales] } = context;
     const [products, setProducts] = React.useState([]);
     const [filteredProducts, setFilteredProducts] = React.useState([]);
-    const [nameFilter, setNameFilter] = React.useState("");
+    const [labels, setLabels] = React.useState(null);
     const [sortType, setSortType] = React.useState(sortTypes[0]);
-    const [brandSet, setBrandSet] = React.useState([]);
-    const [checkBoxState, setCheckBoxState] = React.useState({});
+    const [filterBoxes, setFilterBoxes] = React.useState(null);
     let {category} = useParams();
     
     React.useEffect(() => {
@@ -47,20 +46,63 @@ const ProductListPage = () => {
                 }
             }
 
-            let set = [];
-            let brandDict = {};
+            console.log(category);
+            console.log(categoryFilters(category));
+            let fieldFilters = categoryFilters(category ? category : 'Sales');
+
+            // Set up the filter boxes
+            let filterLabels = {'stock': ['In stock', 'Out of stock'],
+                                'price': fieldFilters['price'],
+                                };
             
-            for(const i in products){
-                if(!set.includes(products[i].brand)){
-                    set.push(products[i].brand);
-                    brandDict[products[i].brand] = false;
-                }
+            // Get the specific filters for the category
+            let sets = {'brand': []};
+            fieldFilters['specs'].forEach(field => sets[field] = []);
+            
+            // Map from db variables to labels
+            let filterNames =   {   
+                                'stock': 'Stock',
+                                'price': 'Price',
+                                'brand': 'Brand'
+                                }
+        
+            for (let i in fieldFilters['specs']) {
+                filterNames[fieldFilters['specs'][i]] = fieldFilters['names'][i]
             }
+
+            // For each product, if they have a unique value for the filter, add it to the set
+            for(const i in products){
+                Object.keys(sets).forEach(field => {
+                    if (field === 'brand') {
+                        if (!sets['brand'].includes(products[i].brand)) sets['brand'].push(products[i].brand);
+                    } else if (field === 'category') {
+                        if (!sets['category'].includes(products[i].category)) sets['category'].push(products[i].category);
+                    } else if (!sets[field].includes(products[i]['specs'][field])) {
+                        sets[field].push(products[i]['specs'][field]);
+                    }
+
+                });
+            }
+
+            Object.keys(sets).forEach(field => {
+                filterLabels[field] = sets[field].sort();
+            })
+
+            let filterBoxes = {};
+            console.log(filterLabels);
+
+            Object.keys(filterLabels).forEach((filter, label) => {
+                let checkBoxes = {};
+                filterLabels[filter].forEach(value => checkBoxes[value] = false);
+                filterBoxes[filter] = checkBoxes;
+            });
+
+            console.log(filterBoxes);
             
-            setBrandSet(set);
-            setCheckBoxState(brandDict);
+            setFilterBoxes(filterBoxes);
             setFilteredProducts(products);
             setProducts(products);
+            setLabels(filterNames);
         })();
         
     },[category, sales]);
@@ -68,20 +110,6 @@ const ProductListPage = () => {
     React.useEffect(() => {
         (async () => {
             let newProducts = [...products];
-            // const x = nameFilter.split(" ");
-
-            // function test(string){
-            //     for(let i in x){
-            //         if(string.toLowerCase().includes(x[i].toLowerCase())){
-            //             return true;
-            //         }
-            //     }
-            //     return false;
-            // }
-
-            // if(nameFilter !== ""){
-            //     newProducts = [...newProducts].filter(product => test(product.name));
-            // }
 
             switch (sortType) {
                 case "Popularity":
@@ -120,69 +148,55 @@ const ProductListPage = () => {
 
             setFilteredProducts(newProducts);
         })();
-    },[sortType, nameFilter, products]);
+    },[sortType, products]);
 
-    // function changeCheckBox(s){
-    //     let dict = checkBoxState;
-    //     dict[s] = !dict[s];
-    //     let string = "";
-    //     let first = false;
-    //     for(let x in dict){
-    //         if(dict[x]){
-    //             if(!first){
-    //                 string += x;
-    //                 first = true;
-    //             }else{
-    //                 string += " " + x; 
-    //             }
-    //         }
-    //     }
-    //     setNameFilter(string);
-    //     setCheckBoxState(dict);
-    // }
-
-    function handleBrandFilter (brand) {
+    function handleFilterChange (filter, value) {
 
         // Get the current check box state and change it
-        let brands = checkBoxState;
-        brands[brand] = !brands[brand];
+        let filters = filterBoxes;
+        filters[filter][value] = !filters[filter][value];
 
         // Get the chosen/ticked filters
-        let chosen = [];
-        Object.keys(brands).forEach(brand => {if(brands[brand]) chosen.push(brand)});
+        let fields = [];
+        let queries = [];
+        Object.keys(filters).forEach(filter => {
+            fields.push(filter);
+            let query = []
+            Object.keys(filters[filter]).forEach(value => {
+                if (filters[filter][value]) query.push(value);
+            })
+            queries.push(query);
+        })
 
         // Apply the filters and refresh
-        let filtered = filterProducts('brand', chosen, products);
+        let filtered = filterProducts(fields, queries, products);
         setFilteredProducts(filtered);
-        setCheckBoxState(brands);
-    }
-
-    function handleStockFilter (field) {
-        
+        setFilterBoxes(filters);
     }
 
     return (
         <div className="root">
             <Grid container direction="row" className='product-list-page-container'>
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
-                    <div className="product-list-filter-container">
+                    <Grid className="product-list-filter-container">
                         <Grid item>
                                 <Typography variant="h4">Narrow your search</Typography>
                                 <Divider />
                         </Grid>
-                        <Grid item>
-                            <Typography variant="h5">Brand:
-                                {brandSet.map((s) => (
-                                    <Typography key={s}>
-                                        <Checkbox
-                                            onChange={() => {handleBrandFilter(s)}}
-                                        />
-                                        {s}
-                                    </Typography>
-                                ))}
-                            </Typography>
+                        <Grid item container direction="column">
+                            {filterBoxes && labels && Object.keys(filterBoxes).map((filter) => 
+                                <Grid item>
+                                    <Typography variant="h5">{labels[filter]}:</Typography>
+                                    {Object.keys(filterBoxes[filter]).map((value) =>
+                                        <Typography>
+                                            <Checkbox onChange={() => handleFilterChange(filter, value)} />
+                                            {value}
+                                        </Typography>)
+                                    }
+                                </Grid>
+                            )}
                         </Grid>
-                    </div>
+                    </Grid>
                 </Grid>
                 <Grid container item direction="column"  xs={9}>
                     <Grid container item>
@@ -197,9 +211,9 @@ const ProductListPage = () => {
                                         value={sortType} 
                                         onChange={(event) =>{setSortType(event.target.value)}}
                                     >
-                                        {sortTypes.map((s) => (
-                                            <MenuItem key={s} value={s}>
-                                                {s}
+                                        {sortTypes.map((type) => (
+                                            <MenuItem key={type} value={type}>
+                                                {type}
                                             </MenuItem>
                                         ))}
                                     </TextField>
