@@ -48,7 +48,7 @@ function filterProducts (fields, queries, products) {
                         if (product.price >= lower) {
                             if (upper === 'more') return true;
                             else if (product.price <= Number(upper)) return true;
-                        } 
+                        }
                         return false;
                     }
                 });
@@ -59,7 +59,7 @@ function filterProducts (fields, queries, products) {
                     return false;
                 });
                 break;
-            
+
         }
     }
 
@@ -70,22 +70,22 @@ function filterProducts (fields, queries, products) {
 
 function categoryFilters (category) {
 
-    let filters = { 'CPU':              {   
+    let filters = { 'CPU':              {
                                         'price': ['0 - 500', '500 - 1000', '1000 or more'],
                                         'specs': ['cores', 'socket', 'overclockable'],
                                         'names': ['Core Count', 'Socket', 'Overclockable']
                                         },
-                    'Motherboards':     {   
+                    'Motherboards':     {
                                         'price': ['0 - 200', '200 - 500', '500 or more'],
                                         'specs': ['cpu_socket', 'wifi', 'form_factor_supported'],
                                         'names': ['CPU Socket', 'Wifi Included', 'Form Factor']
                                         },
-                    'Storage':          {   
+                    'Storage':          {
                                         'price': ['0 - 100', '100 - 500', '500 or more'],
                                         'specs': ['format', 'form_factor'],
                                         'names': ['Format', 'Form Factor (Inches)']
                                         },
-                    'PSU':              {   
+                    'PSU':              {
                                         'price': ['0 - 200', '200 - 500', '500 or more'],
                                         'specs': ['wattage', 'power_efficiency', 'modularity'],
                                         'names': ['Wattage (W)', 'Power Efficiency', 'Modularity']
@@ -100,7 +100,7 @@ function categoryFilters (category) {
                                         'specs': [],
                                         'names': []
                                         },
-                    'Memory':           {   
+                    'Memory':           {
                                         'price': ['0 - 200', '200 - 500', '500 or more'],
                                         'specs': ['frequency', 'capacity'],
                                         'names': ['Frequency (MHz)', 'Capacity (GB)']
@@ -130,7 +130,7 @@ function categoryFilters (category) {
                                         'specs': ['mechanical', 'connectivity', 'backlight'],
                                         'names': ['Mechanical Switches', 'Connectivity', 'Backlight']
                                         },
-                    'Wifi_Adaptors':    {
+                    'Wifi_Adapters':    {
                                         'price': ['0 -50', '50 or more'],
                                         'specs': [],
                                         'names': []

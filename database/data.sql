@@ -57,7 +57,7 @@ VALUES
     (9,		8,	16,	3.6,	5,		'LGA 1151',	FALSE,	TRUE,	95),
     (10,	6,	12,	3.3,	4.8,	'LGA 1200',	TRUE,	FALSE,	65),
     (11,	18,	36,	2.6,	4.2,	'LGA 2066',	FALSE,	TRUE,	165),
-    (12,	32,	64,	3.7,	4.5,	'TRX40',	FALSE,	TRUE,	280);
+    (12,	32,	64,	3.7,	4.5,	'AM4',	FALSE,	TRUE,	280);
 
 -- CPU reviews
 INSERT INTO Reviews(productid, userid, rating, reviewtext, reviewdate)
@@ -570,7 +570,7 @@ VALUES
     (75, 20, 4, 'This case, does exactly what it''s suppose to do.', '2019-02-20'),
     (75, 4, 5, 'I tried to maim it but got nectarine all over it.', '2019-02-20'),
 -- product 76 reviews
-    (76, 19, 4, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
+    (76, 19, 1, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
 -- product 77 reviews
     (77, 16, 1, 'My co-worker Mohamed has one of these. He says it looks brown.', '2021-01-04'),
     (77, 22, 2, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2015-05-16'),
@@ -954,7 +954,7 @@ INSERT INTO Products(name, category, brand, price, warranty, description, stock,
 VALUES
     ('Corsair CO-9050092-WW LL120 RGB, 120 mm RGB LED Fan With Lighting Node Pro', 'PC_Cooling', 'CORSAIR', 142.00, '3 years', 'From the manufacturer Dual RGB Lighting Loop Complete your CORSAIR LL RGB-cooled system with an additional fan, featuring 16 individually addressable RGB LEDs split between two separate light loops.', 900, '2019-01-07'),
     ('EZDIY-FAB White Moonlight 120mm RGB Case Fan with Fan Hub X and Remote', 'PC_Cooling', 'EZDIY-FAB', 71.59, 'None', 'Built for strong cooling.', 70, '2020-11-06'),
-    ('EZDIY-FAB 3-Pack 120mm Dual Frame RGB PWM Fans for PC Case,Addressable RGB Case Fan with Fan Hubs,5V ARGB 3-pin Motherboard Sync,ASUS Aura Sync', 'PC_Cooling', 'EZDIY-FAB', 39.99, '1 year', 'A best choice of two ways to control the RGB lighting system by Hub Controller or by ARGB SYNC Motherboard Software', 900, '2018-12-18'),
+    ('EZDIY-FAB 3-Pack 120mm Dual Frame RGB PWM Fans for PC Case', 'PC_Cooling', 'EZDIY-FAB', 39.99, '1 year', 'A best choice of two ways to control the RGB lighting system by Hub Controller or by ARGB SYNC Motherboard Software', 900, '2018-12-18'),
     ('ID-COOLING ZF-12025 Pastel 120mm Case Fan White LED PWM Fan for PC Case/CPU Cooler (Piglet Pink)', 'PC_Cooling', 'ID-COOLING', 117.99, '3 years', '【Wide Application】The standard 120mm cooling fan is designed to cool the pc case, radiator, and heatsink with white LED light.', 200, '2020-05-19'),
     ('Corsair QL120 RGB, 120 mm, RGB LED Fan With Lighting Node Core - Black (Triple pack)', 'PC_Cooling', 'CORSAIR', 142.51, '4 years', 'Give your PC spectacular lighting from any angle with the Corsair iCUE QL120 RGB PWM triple fan kit, equipped with 102 individually addressable RGB LEDs', 800, '2019-11-14');
 
@@ -969,11 +969,11 @@ VALUES
 -- Wifi adapters
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
-    ('EDUP WiFi 6 Card AX 3000Mbps PCIe Network Card AX200 802.11AX', 'PC_Cooling', 'EDUP', 49.95, '1 year', 'Professional Wifi 6 PCIE Card 802. 11ax Wireless Network Card for User', 100, '2020-02-27'),
-    ('GIGABYTE Dual-Band WiFi 6 2x2 MIMO Wireless PCIe Adapter with Bluetooth 5', 'PC_Cooling', 'GIGABYTE', 69.00, '3 years', 'Better signal strength compared to traditional antenna design. AORUS Antenna with smart antenna function for the best WIFI signal transmitting.', 200, '2019-09-09'),
-    ('TP-Link AC1300 PCIe WiFi PCIe Card(Archer T6E)', 'PC_Cooling', 'TP-Link', 69.00, '1 year', 'AC1300 PCIe Wi-Fi Card for desktop802. 11AC - The next generation of waft-link''s Archer T6E supports the next generation Wi-Fi standard - IEEE 802.', 600, '2017-10-27'),
-    ('EDUP PCIe WiFi 6 Card for Desktop PC, 3000Mbps 802.11AX Dual Band Wireless Bluetooth 5.1 Adapter', 'PC_Cooling', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
-    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth 5 PCIe Expansion Card', 'PC_Cooling', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
+    ('EDUP WiFi 6 Card AX 3000Mbps PCIe Network Card AX200 802.11AX', 'Wifi_Adapters', 'EDUP', 49.95, '1 year', 'Professional Wifi 6 PCIE Card 802. 11ax Wireless Network Card for User', 100, '2020-02-27'),
+    ('GIGABYTE Dual-Band WiFi 6 2x2 MIMO Wireless PCIe Adapter with Bluetooth 5', 'Wifi_Adapters', 'GIGABYTE', 69.00, '3 years', 'Better signal strength compared to traditional antenna design. AORUS Antenna with smart antenna function for the best WIFI signal transmitting.', 200, '2019-09-09'),
+    ('TP-Link AC1300 PCIe WiFi PCIe Card(Archer T6E)', 'Wifi_Adapters', 'TP-Link', 69.00, '1 year', 'AC1300 PCIe Wi-Fi Card for desktop802. 11AC - The next generation of waft-link''s Archer T6E supports the next generation Wi-Fi standard - IEEE 802.', 600, '2017-10-27'),
+    ('EDUP PCIe WiFi 6 Card for Desktop PC, 3000Mbps 802.11AX Dual Band Wireless Bluetooth 5.1 Adapter', 'Wifi_Adapters', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
+    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth 5 PCIe Expansion Card', 'Wifi_Adapters', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
 
 INSERT INTO Wifi_Adapters(id, socket)
 VALUES

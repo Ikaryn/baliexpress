@@ -132,17 +132,15 @@ class Products(Resource):
 
         return
     
-    # Remove an existing product
+    # Discontinue an existing product
     # Url format: `product`
     def delete(self):
         
-        # Delete a product using its productId
-        print('Remove product attempt received')
-        data = request.json
-
-        productId = data.get('id')
-        db.deleteProduct(productId)
-        return {'message': 'product successfully removed'}
+        # Discontinue a product using its productId
+        print('Discontinue product attempt received')
+        productId = request.args.get('productId')
+        db.discontinueProduct(productId)
+        return {'message': 'Product successfully discontinued'}
 
 class Search (Resource):
 
