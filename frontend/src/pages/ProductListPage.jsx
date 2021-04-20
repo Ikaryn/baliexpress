@@ -95,7 +95,6 @@ const ProductListPage = () => {
             })
 
             let filterBoxes = {};
-            console.log(filterLabels);
 
             Object.keys(filterLabels).forEach((filter, label) => {
                 let checkBoxes = {};
@@ -180,6 +179,17 @@ const ProductListPage = () => {
         let filtered = filterProducts(fields, queries, products);
         setFilteredProducts(filtered);
         setFilterBoxes(filters);
+    }
+    
+    const generateHeader = () => {
+        if(category) {
+            return "Product category: " + category
+        }
+        if(search) {
+            return "Search results for: "+ search;
+        }
+        return 'On sale products'
+    
     }
 
     return (

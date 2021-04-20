@@ -26,7 +26,6 @@ const BuildProductCard = ({type}) => {
     const [open, setOpen] = React.useState(false);
     const {build: [build, setBuild]} = context;
     const [productInfo, setProductInfo] = React.useState(build.parts[type]);
-    console.log(productInfo);
     const [redirect, setRedirect] = React.useState('')
     const classes = useStyles();
     

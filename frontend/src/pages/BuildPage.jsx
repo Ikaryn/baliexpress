@@ -57,6 +57,7 @@ const BuildPage = () => {
                 console.log(res);
                 const newBuild = JSON.parse(JSON.stringify(build));
                 newBuild.parts = res;
+                newBuild.name = "Your Custom PC Build"
                 newBuild.id = 0;
                 setBuild(newBuild);
             })
