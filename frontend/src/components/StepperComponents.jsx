@@ -1,4 +1,4 @@
-import { FormControl, Grid, Input, InputLabel, Select, Typography } from '@material-ui/core';
+import { FormControl, Grid, Input, InputLabel, Select, Typography, TextField } from '@material-ui/core';
 import { DropzoneArea } from 'material-ui-dropzone';
 import React from 'react';
 import API from '../util/API';
@@ -19,13 +19,17 @@ const productCategories = ['CPU',
 
 const api = new API();
 
+function checkNum(val) {
+    return /^[0-9]+$/.test(val);
+}
+
 const InputForm = ({product, changeValue}) => {
     console.log(product);
     return (
     <Grid container spacing={3}>
         <Typography variant="h3">Product Information</Typography>
         <Grid item xs={12}>
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('name', event.target.value)}} 
                 placeholder="Title" 
                 value={product.name} 
@@ -33,7 +37,7 @@ const InputForm = ({product, changeValue}) => {
             />
         </Grid>
         <Grid item >
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('brand', event.target.value)}} 
                 placeholder="Brand" 
                 value={product.brand} 
@@ -41,14 +45,14 @@ const InputForm = ({product, changeValue}) => {
                 />
         </Grid>
         <Grid item>
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('price', event.target.value)}} 
                 placeholder="Price" 
-                value={product.price} 
+                value={product.price}
                 />
         </Grid>
         <Grid item xs={9}>
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('description', event.target.value)}} 
                 placeholder="Description" 
                 value={product.description} 
@@ -67,14 +71,14 @@ const InputForm = ({product, changeValue}) => {
         </FormControl>
         </Grid>
         <Grid item>
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('stock', event.target.value)}} 
                 placeholder="Stock" 
                 value={product.stock} 
                 />
         </Grid>
         <Grid item>
-            <Input 
+            <TextField 
                 onChange={(event) => {changeValue('warranty', event.target.value)}} 
                 placeholder="Warranty" 
                 value={product.warranty} 
@@ -102,7 +106,7 @@ const SpecsForm = ({product, changeValue}) => {
             {Object.keys(specs).map((key) => (
                 <Grid item > 
                     <Typography>{key}:</Typography>
-                    <Input value={product[key]} onChange={(event) => {changeValue(key, event.target.value)}} />
+                    <TextField value={product[key]} onChange={(event) => {changeValue(key, event.target.value)}} />
                 </Grid>
 
             ))}

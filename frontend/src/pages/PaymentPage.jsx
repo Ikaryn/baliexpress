@@ -1,5 +1,6 @@
-import { Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button, Divider, Grid, makeStyles, Paper, Snackbar, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import PaymentBlock from '../components/PaymentComponents/PaymentBlock';
 import ShippingBlock from '../components/PaymentComponents/ShippingBlock';
@@ -53,6 +54,7 @@ const PaymentPage = () => {
     const [shippingPrice, setShippingPrice] = React.useState(0);
     const [sameBilling, setSameBilling] = React.useState(false);
     const [shipped, setShipped] = React.useState(true);
+    const [deliveryError, setDeliveryError] = React.useState(false);
                                                                 
     const calculateTotal = () => {
         let total = 0;
@@ -183,6 +185,11 @@ const PaymentPage = () => {
             error = true;
         }
 
+        if (shipped && shippingPrice === 0) {
+            setDeliveryError(true);
+            error = true;
+        }
+
         // If either block has an error, display the errors, and do not continue with the purchase
         if (error) {
             setShippingErrors(newShippingErrors);
@@ -190,6 +197,7 @@ const PaymentPage = () => {
             setPaymentErrors(newPaymentErrors);
             return false; 
         };
+
 
         return true;
     }
@@ -216,8 +224,8 @@ const PaymentPage = () => {
             const products = {};
             const builds = [];
             cart.forEach(item => {
-                if (item.id) products[item.id] = item.quantity;
-                else builds.push(item);
+                if (item.parts) builds.push(item);
+                else products[item.id] = item.quantity;
             });
 
             // Send the api call to make a new order
@@ -229,6 +237,8 @@ const PaymentPage = () => {
                 shippingPrice: shippingPrice,
                 total: price
             };
+
+            console.log(body);
 
             const response = await api.post(`order`, body);
             console.log(response);
@@ -297,6 +307,9 @@ const PaymentPage = () => {
             <Grid item xs={4}>
                 <CartComponent totalPrice={price} shippingPrice={shippingPrice}/>
             </Grid>
+            <Snackbar open={deliveryError} autoHideDuration={1500} onClose={() => setDeliveryError(false)}>
+                <Alert severity="error">Please select a shipping option</Alert>
+            </Snackbar>
         </Grid>
     )
 }

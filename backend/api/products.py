@@ -93,7 +93,7 @@ class Products(Resource):
 
         productId = db.addProduct(newProduct)
         product = db.getProduct(productId)
-
+        
         releaseDate = product['release_date'].strftime('%Y-%m-%d')
         product['release_date'] = releaseDate
 

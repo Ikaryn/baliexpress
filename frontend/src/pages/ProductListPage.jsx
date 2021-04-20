@@ -9,10 +9,10 @@ import { filterProducts, categoryFilters } from '../components/FilterProducts'
 
 const api = new API();
 
-const sortTypes = [ 'Popularity', 
-                    'Price-High', 
-                    'Price-Low', 
-                    'Newest', 
+const sortTypes = [ 'Popularity',
+                    'Price-High',
+                    'Price-Low',
+                    'Newest',
                     'Product Name: A-Z',
                     'Product Name: Z-A',
                     '% Sale'];
@@ -26,7 +26,7 @@ const ProductListPage = () => {
     const [sortType, setSortType] = React.useState(sortTypes[0]);
     const [filterBoxes, setFilterBoxes] = React.useState(null);
     let {category, search} = useParams();
-    
+
     React.useEffect(() => {
         (async () => {
             let products = [];
@@ -39,7 +39,7 @@ const ProductListPage = () => {
                     products = res.results;
                 } else {
                     console.log('sale')
-                    // loop through each sale 
+                    // loop through each sale
                     sales.forEach((sale) => {
                         sale.productList.forEach((product) => {
                             products.push(product);
@@ -60,18 +60,18 @@ const ProductListPage = () => {
             let filterLabels = {'stock': ['In stock', 'Out of stock'],
                                 'price': fieldFilters['price'],
                                 };
-            
+
             // Get the specific filters for the category
             let sets = {'brand': []};
             fieldFilters['specs'].forEach(field => sets[field] = []);
-            
+
             // Map from db variables to labels
-            let filterNames =   {   
+            let filterNames =   {
                                 'stock': 'Stock',
                                 'price': 'Price',
                                 'brand': 'Brand'
                                 }
-        
+
             for (let i in fieldFilters['specs']) {
                 filterNames[fieldFilters['specs'][i]] = fieldFilters['names'][i]
             }
@@ -103,13 +103,13 @@ const ProductListPage = () => {
             });
 
             console.log(filterBoxes);
-            
+
             setFilterBoxes(filterBoxes);
             setFilteredProducts(products);
             setProducts(products);
             setLabels(filterNames);
         })();
-        
+
     },[category, sales, search]);
 
     React.useEffect(() => {
@@ -159,7 +159,7 @@ const ProductListPage = () => {
 
     const generateHeader = () => {
         if(category) {
-            return "Product category: " + category
+            return "Product category: " + category.replace("_", " ")
         }
         if(search) {
             return "Search results for: "+ search;
@@ -197,11 +197,11 @@ const ProductListPage = () => {
             <Grid container direction="row">
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
                     <Grid className="product-list-filter-container">
-                        <Grid item className="filter-header">
+                        <Grid item>
                                 <Typography variant="h4">Narrow your search</Typography>
                         </Grid>
                         <Grid item container direction="column">
-                            {filterBoxes && labels && Object.keys(filterBoxes).map((filter) => 
+                            {filterBoxes && labels && Object.keys(filterBoxes).map((filter) =>
                                 <Grid item>
                                     <Grid item className="filter-header">
                                         <Typography variant="h5">{labels[filter]}:</Typography>
@@ -226,9 +226,9 @@ const ProductListPage = () => {
                                         <Typography variant="h6">Sort by:</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <TextField 
+                                        <TextField
                                             select
-                                            value={sortType} 
+                                            value={sortType}
                                             onChange={(event) =>{setSortType(event.target.value)}}
                                         >
                                             {sortTypes.map((type) => (
@@ -240,7 +240,7 @@ const ProductListPage = () => {
                                     </Grid>
                                 </Grid>
                                     <Grid item>
-                                        <Typography variant="h3">{generateHeader()}</Typography>
+                                        {/*<Typography variant="h3">{generateHeader()}</Typography>*/}
                                     </Grid>
                             </Grid>
                         </Paper>
@@ -248,7 +248,7 @@ const ProductListPage = () => {
                     <Grid container item direction="row" spacing={3}>
                         {filteredProducts.map((p) => (
                             <Grid container item xs={3} key={p.name + p.id}>
-                                <ProductCard 
+                                <ProductCard
                                     pid={p.id}
                                     name={p.name}
                                     price={p.price}
@@ -263,7 +263,7 @@ const ProductListPage = () => {
                 </Grid>
             </Grid>
         </div>
-            
+
     )
 
 }

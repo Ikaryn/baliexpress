@@ -56,7 +56,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
     const [reportReason, setReportReason] = React.useState("");
     const [success, setSucccess] = React.useState(false);
     const [reportError, setReportError] = React.useState(false);
-
+    const [reviewNumber, setReviewNumber] = React.useState(review.score);
 
     const handleVotes = async (type) => {
         // DON'T FORGET TO HANDLE COLOUR CHANGE
@@ -65,7 +65,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
 
         let up = voteStatus.up;
         let down = voteStatus.down;
-        
+
         switch (type) {
 
             // If upvote was clicked...
@@ -74,15 +74,23 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
                 if (voteStatus['up']) {
                     await api.delete('review/vote', body);
                     up = false;
+                    setReviewNumber(reviewNumber - 1 >= 0 ? reviewNumber - 1 : 0);
                 // If already downvoted
                 } else if (voteStatus['down']) {
                     await api.put('review/vote', body);
                     up = true;
-                    down = false;     
+                    down = false;
+                    setReviewNumber(() => {
+                        if(reviewNumber == 0){
+                            return reviewNumber + 1 >= 0 ? reviewNumber + 1 : 0;
+                        }
+                        return reviewNumber + 2 >= 0 ? reviewNumber + 2 : 0;
+                    })
                 // If not voted yet
                 } else {
                     await api.post('review/vote', body);
                     up = true;
+                    setReviewNumber(reviewNumber + 1 >= 0 ? reviewNumber + 1 : 0);
                 }
                 break;
             // If downvote was clicked...
@@ -92,14 +100,22 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
                     await api.put('review/vote', body);
                     up = false;
                     down = true;
+                    setReviewNumber(() => {
+                        if(reviewNumber <= 1){
+                            return reviewNumber - 1 >= 0 ? reviewNumber - 1 : 0;
+                        }
+                        return reviewNumber - 2 >= 0 ? reviewNumber - 2 : 0;
+                    })
                 // If already downvoted
                 } else if (voteStatus['down']) {
                     await api.delete('review/vote', body);
-                    down = false;            
+                    down = false;
+                    setReviewNumber(reviewNumber + 1 >= 0 && reviewNumber != 0 ? reviewNumber + 1 : 0);          
                 // If not voted yet
                 } else {
                     await api.post('review/vote', body);
                     down = true;
+                    setReviewNumber(reviewNumber - 1 >= 0 ? reviewNumber - 1 : 0);
                 }
                 break;
         }
@@ -120,7 +136,6 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
         }
 
         setVoteStatus({'up': up, 'down': down});
-
     },[review.userVote])
 
     const handleReport = () => {
@@ -171,7 +186,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
             </Grid>
             <Grid container item direction="row" alignItems="center">
                 <Grid item xs={4}>
-                    <Typography >{review.score} other people found this helpful</Typography>
+                    <Typography >{reviewNumber} other people found this helpful</Typography>
                 </Grid>
                 <Grid container item direction="row" xs={8} alignItems="center" justify="flex-end">
                     <Grid item xs={6}>
@@ -249,7 +264,7 @@ const ReviewCard = ({review, userId, reviews, setReviews}) => {
             </Paper>
 
             {success &&
-            <Snackbar open={success} autoHideDuration={1000}>
+            <Snackbar open={success} autoHideDuration={1000} onClose={() => setSucccess(false)}>
                 <Alert severity="success">This review has been reported</Alert>
             </Snackbar>
             }

@@ -22,6 +22,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
     const [emailError, setEmailError] = React.useState('')
     const [pwdError, setPwdError] = React.useState('')
     const [phoneError, setPhoneError] = React.useState('')
+    const [addrError, setAddrError] = React.useState('')
     const [cityError, setCityError] = React.useState('')
     const [pCodeError, setPCodeError] = React.useState('')
     const [countryError, setCountryError] = React.useState('')
@@ -124,6 +125,8 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
                 return emailError;
             case 'phonenumber':
                 return phoneError;
+            case 'streetaddress':
+                return addrError;
             case 'city':
                 return cityError;
             case 'postcode':
@@ -144,6 +147,7 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
         setNameError('');
         setEmailError('');
         setPhoneError('');
+        setAddrError('');
         setCityError('');
         setPCodeError('');
         setCountryError('');
@@ -186,7 +190,6 @@ const AccInfoblock = ({editComponent, accInfo, shippingInfo, setEditComponent}) 
             setStateError('Invalid state name');
             error = true;
         }
-
 
 
         if (error) return;
