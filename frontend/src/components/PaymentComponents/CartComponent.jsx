@@ -106,7 +106,7 @@ const CartComponent = ({totalPrice, shippingPrice}) => {
                                             <Typography>{product.parts[part].name}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography className={product.sale && classes.saleOldPrice}>${product.parts[part].price.toFixed(2)}</Typography>
+                                            <Typography className={product.sale && classes.saleOldPrice}>${Number(product.parts[part].price).toFixed(2)}</Typography>
                                             {product.sale && 
                                                 <Typography className={classes.saleNewPrice} variant="h6">
                                                     ${((product.price * (1-(product.sale.salepercent / 100))) *product.quantity).toFixed(2)}

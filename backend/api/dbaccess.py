@@ -669,7 +669,7 @@ def getUsersBuilds(userID):
         if (conn):
             cur.close()
             conn.close()
-        return build
+        return builds
 
 # deletes a part from a build
 # returns 1 if successful, 0 otherwise

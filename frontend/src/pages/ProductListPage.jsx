@@ -191,17 +191,6 @@ const ProductListPage = () => {
         setFilteredProducts(filtered);
         setFilterBoxes(filters);
     }
-    
-    const generateHeader = () => {
-        if(category) {
-            return "Product category: " + category
-        }
-        if(search) {
-            return "Search results for: "+ search;
-        }
-        return 'On sale products'
-    
-    }
 
     return (
         <div className="root">
