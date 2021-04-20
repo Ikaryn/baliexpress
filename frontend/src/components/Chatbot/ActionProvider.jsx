@@ -40,7 +40,7 @@ class ActionProvider {
     // print out returns info
     handleReturns = () => {
         const message = this.createChatBotMessage(
-            "We do not accept returns. If you have a problem with a product, please contact the manufactoring company."
+            "We do not accept returns. If you have a problem with a product, please contact the manufacturing company."
         );
         this.updateChatbotState(message);
         
