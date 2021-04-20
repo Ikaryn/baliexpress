@@ -117,7 +117,7 @@ VALUES
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
     VALUES
     ('MSI MAG B550M Mortar WiFi AM4 mATX Motherboard', 				'Motherboards',	'MSI',		239,	'3 years',	'Conquer the battlefield',															2500, '2016-07-02'),
-    ('Gigabyte Z490I Aorus Ultra LGA 1200 ITX Motherboard',			'Motherboards',	'Gigabyte',	389, 	'3 years',	'Soar to new heights',																2000, '2017-10-25'),
+    ('Gigabyte Z490I Aorus Ultra LGA 1200 ITX Motherboard',			'Motherboards',	'Gigabyte',	80, 	'3 years',	'Soar to new heights',																2000, '2017-10-25'),
     ('Gigabyte B550 Aorus Master AM4 ATX Motherboard',				'Motherboards',	'Gigabyte',	299,	'3 years',	'Ultimate power design',															1500, '2017-11-18'),
     ('Asus ROG Strix X570-E Gaming AM4 ATX Motherboard',			'Motherboards',	'Asus',		419,	'5 years',	'Build a formidable weapon above the rest',											1000, '2019-07-25'),
     ('ASRock Z390 Pro4 ATX LGA1151 Motherboard',					'Motherboards',	'ASRock',	115,	'1 year',	'Reliable productivity',															500, '2010-10-24'),
@@ -535,16 +535,16 @@ VALUES
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
     ('MSI MAG Forge 100R RGB TG Mid Tower ATX Case', 						'Cases',	'MSI',				99,		'1 year',	'Beyond the power',																			300, '2017-02-08'),
-    ('Silverstone Sugo Series Mesh Mini ITX Case - Pink',					'Cases',	'Silverstone',		69,		'1 year',	'Truly compact',																			5000, '2017-03-03'),
+    ('Silverstone Sugo Series Mesh Mini ITX Case - Pink',					'Cases',	'Silverstone',		69,		'1 year',	'Truly compact',																			0, '2017-03-03'),
     ('MSI MAG Vampiric 010X ARGB TG Mid Tower ATX Case',					'Cases',	'MSI',				79,		'2 years',	'First blood in shadow',																	170, '2018-04-24'),
     ('CoolerMaster MasterBox Q300P, mATX RGB Lighting Control',				'Cases',	'Cooler Master',	119,	'1 year',	'High flexibility for system building',														200, '2014-02-23'),
     ('AZZA Apollo 430 ARGB Tempered Glass ATX Case - Black',				'Cases',	'AZZA',				79,		'1 year',	'Mid tower gaming case with style',															300, '2016-10-11'),
     ('AZZA Iris 330 ARGB Tempered Glass ATX Case',							'Cases',	'AZZA',				69,		'1 year',	'Standard mid tower ATX case, with extra bell and whistles',								250, '2019-10-17'),
     ('Thermaltake View 71 Tempered Glass Snow Edition Full Tower Chassis',	'Cases',	'Thermaltake',		255,	'1 year',	'Thermaltake premium',																		150, '2020-03-31'),
-    ('be quiet! Dark Base Pro 900 E-ATX Case Rev 2 - Black',				'Cases',	'be quiet!',		345,	'3 years',	'The perfect case for all who expect the highest standards when it comes to modularity',	100, '2020-07-02'),
+    ('be quiet! Dark Base Pro 900 E-ATX Case Rev 2 - Black',				'Cases',	'be quiet!',		345,	'3 years',	'The perfect case for all who expect the highest standards when it comes to modularity',	1000, '2020-07-02'),
     ('Thermaltake S100 Snow Edition Tempered Glass Micro ATX Case - White',	'Cases',	'Thermaltake',		89,		'1 year',	'Slim and compact design',																	150, '2010-08-07'),
-    ('Cooler Master MasterBox NR200P TG Mini ITX Case',						'Cases',	'Cooler Master',	149,	'2 years',	'Big features, small sie',																	80, '2010-08-31'),
-    ('Fractal Design Node 304 Mini ITX Case - Black',						'Cases',	'Fractal Design',	129,	'2 years',	'Unique modular interior for outstanding configurability',									75, '2011-03-21');
+    ('Cooler Master MasterBox NR200P TG Mini ITX Case',						'Cases',	'Cooler Master',	149,	'2 years',	'Big features, small sie',																	200, '2010-08-31'),
+    ('Fractal Design Node 304 Mini ITX Case - Black',						'Cases',	'Fractal Design',	129,	'2 years',	'Unique modular interior for outstanding configurability',									2000, '2011-03-21');
 
 INSERT INTO Cases(id, colour, size, motherboard_support)
 VALUES
@@ -570,7 +570,7 @@ VALUES
     (75, 20, 4, 'This case, does exactly what it''s suppose to do.', '2019-02-20'),
     (75, 4, 5, 'I tried to maim it but got nectarine all over it.', '2019-02-20'),
 -- product 76 reviews
-    (76, 19, 4, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
+    (76, 19, 1, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
 -- product 77 reviews
     (77, 16, 1, 'My co-worker Mohamed has one of these. He says it looks brown.', '2021-01-04'),
     (77, 22, 2, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2015-05-16'),
