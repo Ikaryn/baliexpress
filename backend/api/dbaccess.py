@@ -2,7 +2,7 @@ import psycopg2
 import psycopg2.extras
 from psycopg2.extensions import AsIs
 from datetime import datetime
-from . import credentials
+import credentials
 
 # creates a connection to the database
 def connect():
@@ -237,16 +237,15 @@ def getAllProducts(*args):
 
         # create list of categories to return
         if not args:
-            categories = getCategories(cur)
+            categories = ['Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adapters']
         else:
             categories = args
-
         # check for current sales
         sales = getCurrentSales(cur)
 
         # get product information
         products = []
-        productsQuery = "SELECT * FROM Products WHERE category = %s"
+        productsQuery = "SELECT * FROM Products WHERE category = %s AND discontinued = 'f'"
         specsQuery = "SELECT * FROM %s WHERE id = %s"
         for category in categories:
             # get information from Products table
@@ -258,7 +257,6 @@ def getAllProducts(*args):
 
             for product in newProducts:
                 # get specs for each product from relevant category table
-
                 cur.execute(specsQuery, (AsIs(category), product['id']))
                 record = cur.fetchone()
                 specs = {column:data for column, data in record.items()}
@@ -306,7 +304,7 @@ def getProduct(id):
         cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
         # get product information from Products table
-        query = "SELECT * FROM Products WHERE id = %s"
+        query = "SELECT * FROM Products WHERE id = %s AND discontinued = 'f'"
         cur.execute(query, [id])
 
         # convert to dictionary
@@ -1445,7 +1443,10 @@ def getCategoryFromID(cur, id):
 
 # get all product categories
 def getCategories(cur):
-    query =	"SELECT unnest(enum_range(NULL::Categories));"
+    query =	"SELECT unnest(enum_range(NULL::Categories))::text;"
+    print('aldksfjalsdkjf')
+    rows = cur.fetchall()
+    print(rows)
     categories = []
     while True:
         t = cur.fetchone()

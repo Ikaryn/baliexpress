@@ -969,11 +969,11 @@ VALUES
 -- Wifi adapters
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
 VALUES
-    ('EDUP WiFi 6 Card AX 3000Mbps PCIe Network Card AX200 802.11AX', 'PC_Cooling', 'EDUP', 49.95, '1 year', 'Professional Wifi 6 PCIE Card 802. 11ax Wireless Network Card for User', 100, '2020-02-27'),
-    ('GIGABYTE Dual-Band WiFi 6 2x2 MIMO Wireless PCIe Adapter with Bluetooth 5', 'PC_Cooling', 'GIGABYTE', 69.00, '3 years', 'Better signal strength compared to traditional antenna design. AORUS Antenna with smart antenna function for the best WIFI signal transmitting.', 200, '2019-09-09'),
-    ('TP-Link AC1300 PCIe WiFi PCIe Card(Archer T6E)', 'PC_Cooling', 'TP-Link', 69.00, '1 year', 'AC1300 PCIe Wi-Fi Card for desktop802. 11AC - The next generation of waft-link''s Archer T6E supports the next generation Wi-Fi standard - IEEE 802.', 600, '2017-10-27'),
-    ('EDUP PCIe WiFi 6 Card for Desktop PC, 3000Mbps 802.11AX Dual Band Wireless Bluetooth 5.1 Adapter', 'PC_Cooling', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
-    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth 5 PCIe Expansion Card', 'PC_Cooling', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
+    ('EDUP WiFi 6 Card AX 3000Mbps PCIe Network Card AX200 802.11AX', 'Wifi_Adapters', 'EDUP', 49.95, '1 year', 'Professional Wifi 6 PCIE Card 802. 11ax Wireless Network Card for User', 100, '2020-02-27'),
+    ('GIGABYTE Dual-Band WiFi 6 2x2 MIMO Wireless PCIe Adapter with Bluetooth 5', 'Wifi_Adapters', 'GIGABYTE', 69.00, '3 years', 'Better signal strength compared to traditional antenna design. AORUS Antenna with smart antenna function for the best WIFI signal transmitting.', 200, '2019-09-09'),
+    ('TP-Link AC1300 PCIe WiFi PCIe Card(Archer T6E)', 'Wifi_Adapters', 'TP-Link', 69.00, '1 year', 'AC1300 PCIe Wi-Fi Card for desktop802. 11AC - The next generation of waft-link''s Archer T6E supports the next generation Wi-Fi standard - IEEE 802.', 600, '2017-10-27'),
+    ('EDUP PCIe WiFi 6 Card for Desktop PC, 3000Mbps 802.11AX Dual Band Wireless Bluetooth 5.1 Adapter', 'Wifi_Adapters', 'EDUP', 69.99, '6 years', 'AX WiFi Card WiFi 6 Dual Band 3000 Mbps AX200 PCIE Wireless WiFi Card with Bluetooth 5.1 MU-MIMO OFDMA Ultra-Low LatencySupoort Win 10 64bit only', 800, '2020-08-26'),
+    ('Gigabyte GC-Wbax200 2x2 802.11Ax Dual Band WiFi + Bluetooth 5 PCIe Expansion Card', 'Wifi_Adapters', 'Gigabyte', 74.83, '1 year', 'Intel Wi-Fi 6 AX200 module built-in up to 2400Mbps connection speed (theoretical) 802.11Abgn+acr2+ax(pre-standard) MIMO 2tx2R Bluetooth 5.0 MU-MIMO TX/RX paired with a or us high Performance 2tx2R antenna PCIe x1 interface Card', 900, '2019-07-23');
 
 INSERT INTO Wifi_Adapters(id, socket)
 VALUES
