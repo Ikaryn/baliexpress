@@ -570,7 +570,7 @@ VALUES
     (75, 20, 4, 'This case, does exactly what it''s suppose to do.', '2019-02-20'),
     (75, 4, 5, 'I tried to maim it but got nectarine all over it.', '2019-02-20'),
 -- product 76 reviews
-    (76, 19, 4, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
+    (76, 19, 1, 'i use it centenially when i''m in my greenhouse.', '2019-05-31'),
 -- product 77 reviews
     (77, 16, 1, 'My co-worker Mohamed has one of these. He says it looks brown.', '2021-01-04'),
     (77, 22, 2, 'The box this comes in is 3 meter by 5 foot and weights 11 kilogram.', '2015-05-16'),

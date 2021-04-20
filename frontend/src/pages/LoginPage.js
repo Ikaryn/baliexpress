@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
-import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel, Modal, Paper, makeStyles } from '@material-ui/core';
+import { Button, Grid, Typography, FormHelperText , OutlinedInput, FormControl, InputLabel, Modal, Paper, makeStyles, Snackbar } from '@material-ui/core';
 import { StoreContext } from '../util/store';
+import Alert from '@material-ui/lab/Alert';
 
 const api = new API();
 
@@ -24,7 +25,11 @@ const Login = () => {
     const [emailError, setEmailError] = React.useState('');
     const [pwdError, setPwdError] = React.useState('');
     const [loginError, setLoginError] = React.useState('');
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const [failure, setFailure] = React.useState(false);
+    const [forgotEmail, setForgotEmail] = React.useState('')
+    
     
     const context = React.useContext(StoreContext);
     const { userType: [, setUserType] } = context;
@@ -72,8 +77,25 @@ const Login = () => {
         history.push('/register');
     }
     
-    const handleForgotPassword = () => {
+    const handleForgotPassword = async () => {
+        let error = false;
 
+        if (forgotEmail === '' || !checkValidEmail(forgotEmail)) {
+            setEmailError('Please enter a valid email address');
+            error = true;
+        }
+        if (error) return;
+
+        const response = await api.get(`login?email=${forgotEmail}`);
+        console.log(response)
+        const exists = response.exists;
+
+        if (exists) {
+            setSuccess(true);
+            setOpen(false);
+        } else {
+            setEmailError('Email does not exist')
+        }
     }
 
     return (
@@ -111,7 +133,7 @@ const Login = () => {
             
             <Typography variant="body1" color="secondary">{loginError}</Typography>
             </Grid>
-            {/* <Grid item>    
+            <Grid item>    
                 <Modal open={open} onClose={() => {setOpen(false)}}>
                     <Grid container classname={classes.forgotPasswordModal}>
                         <Paper>
@@ -119,7 +141,7 @@ const Login = () => {
                             <Grid item>
                                 <FormControl error={emailError === '' ? false : true} fullWidth>
                                     <InputLabel>Email Address</InputLabel>
-                                    <OutlinedInput id="user-login-email" onChange={event => setEmail(event.target.value)} value={email}/>
+                                    <OutlinedInput id="user-login-email" onChange={event => setForgotEmail(event.target.value)} value={forgotEmail}/>
                                     <FormHelperText>{emailError}</FormHelperText>
                                 </FormControl>
                             </Grid>
@@ -134,7 +156,12 @@ const Login = () => {
                         </Paper>
                     </Grid>
                 </Modal>
-            </Grid> */}
+            </Grid>
+            <Grid item>
+                <Snackbar open={success} autoHideDuration={1000}>
+                    <Alert severity="success">An email has been sent to recover your password</Alert>
+                </Snackbar>
+            </Grid>
         </main>
         
         
