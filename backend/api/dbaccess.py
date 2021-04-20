@@ -108,6 +108,7 @@ def getUserIDFromEmail(email):
         # connect to database
         conn = connect()
         cur = conn.cursor()
+        print(email)
 
         # query Users table for ID
         query = "SELECT id, admin FROM Users WHERE email = %s"
@@ -1638,7 +1639,6 @@ def getSalesForDate(cur, date):
 #addSale("fully sick sale", "2021-01-01", "2021-12-31", [{'productid': 1, 'salepercent': 10}])
 #print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
 #print(getAllOrders())
-#print(getProduct(1))
 #print(addOrder(1, '2021-01-01', {1: 10}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
 #print(getProduct(1))
 #print(getReview(1))

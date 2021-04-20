@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 
 }))
 
-const ShippingBlock = ({shipping, errors, setShippingDetails}) => {
+const ShippingBlock = ({shipping, errors, setShippingDetails, sameBilling, setBillingDetails}) => {
 
     const classes = useStyles();
 
@@ -26,6 +26,7 @@ const ShippingBlock = ({shipping, errors, setShippingDetails}) => {
         const newShippingDetails = JSON.parse(JSON.stringify(shipping));
         newShippingDetails[key] = value;
         setShippingDetails(newShippingDetails);
+        if (sameBilling) setBillingDetails(newShippingDetails);
     }
 
     return (
