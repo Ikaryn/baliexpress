@@ -48,7 +48,7 @@ const ProductMenuButton = () => {
                                     {categories.map((c) => (
                                         <MenuItem key={c} onClick={() => handleMenuButtonclick(c)}>{c}</MenuItem>
                                     ))}
-                                    <MenuItem color="secondary" onClick={() => history.push('/sales')}>On Sale</MenuItem>
+                                    <MenuItem color="secondary" onClick={() => {setOpen(false); history.push('/sales')}}>On Sale</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
