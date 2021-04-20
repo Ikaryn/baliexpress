@@ -4,10 +4,10 @@ import { useHistory } from 'react-router';
 import { convertCategoryName } from '../util/helpers';
 
 const categories = [
-'CPU', 
-'Motherboards', 
-'Storage', 
-'Power Supplies', 
+'CPU',
+'Motherboards',
+'Storage',
+'Power Supplies',
 'CPU Cooling',
 'PC Cooling',
 'Memory',
@@ -16,14 +16,14 @@ const categories = [
 'Monitors',
 'Mouses',
 'Keyboards',
-'Wifi Adaptors',
+'Wifi Adapters',
 ];
 
 const ProductMenuButton = () => {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const history = useHistory();
-    
+
     const handleToggle = () => {
         open ? setOpen(false) : setOpen(true);
     }
