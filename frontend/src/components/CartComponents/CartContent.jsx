@@ -32,7 +32,7 @@ const CartContent = () => {
     
     const generateCartContent = (product) => {
         console.log(product);
-        if (product.name) {
+        if (product.parts) {
             return (
                 <div>
                     <CartItem productInfo={product} type="build" />

@@ -24,6 +24,9 @@ class MessageParser {
         this.actionProvider.handleContactInfo();
       }
       
+      if(lowerCaseMessage.includes("product specifications")) {
+          this.actionProvider.generateProductSpecs();
+      }
       if(lowerCaseMessage.includes("product")) {
         this.actionProvider.handleProductEntryPoint();
       }
@@ -31,7 +34,16 @@ class MessageParser {
       if(lowerCaseMessage.includes("returns")) {
         this.actionProvider.handleReturns();
       }
-      console.log(brands);
+      
+      if(lowerCaseMessage.includes("warranty")) {
+        this.actionProvider.generateProductWarranty();
+      }
+      if(lowerCaseMessage.includes("description")) {
+        this.actionProvider.generateProductDesc();
+      }
+      if(lowerCaseMessage.includes("shipping info")) {
+        this.actionProvider.generateProductShippingInfo();
+      }
       
       const found = brands.find(brand => lowerCaseMessage.includes(brand));
       if(found) {

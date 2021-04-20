@@ -9,14 +9,20 @@ const ProductDescription = (props) => {
 
     React.useEffect(() => {
         (async () => {
-            const response = await api.get(`search?query=${props.productInfo}`);
-            setState((state) => {
-                return {...state, productDesc: response.results[0].description}});
+            if(props.productInfo) {
+                const response = await api.get(`search?query=${props.productInfo}`);
+                setState((state) => {
+                    return {...state, productDesc: response.results[0].description}});
+                }
         })();
     },[])
     
     const renderDescription = () => {
-        return props.productDesc
+        if(props.productDesc) {
+            return props.productDesc
+        } else {
+            return "Please Specify a product first."
+        }
     }
 
     console.log(props.productDesc);

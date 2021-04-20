@@ -18,10 +18,13 @@ const ProductWarranty = (props) => {
     },[])
     
     const renderWarranty = () => {
-        return props.productWarranty
+        if(props.productWarranty) {
+            return props.productWarranty;
+        } else {
+            return "Please Specify a product first.";
+        }
     }
 
-    console.log(props.productWarranty);
     
     return (
         <div>
