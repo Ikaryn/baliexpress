@@ -8,11 +8,22 @@ const api = new API()
 
 const useStyles = makeStyles(() => ({
     title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    
+    productname: {
         fontWeight: 'bold'
     },
 
     underline: {
         textDecoration: 'underline'
+    },
+
+    card: {
+        border: '1px solid grey',
+        paddingBottom: '1em',
+        paddingLeft: '1em',
     },
 }))
 
@@ -38,9 +49,12 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
     }
 
     return (
-        <Grid container>
+        <Grid container direction="column" className={classes.card}>
             <Grid item>
-                <Typography className={classes.title} >{reportedReview.productname}</Typography>
+                <Typography className={classes.title}>Reported Review</Typography>
+            </Grid>
+            <Grid item>
+                <Typography className={classes.productname} >{reportedReview.productname}</Typography>
             </Grid>
             <Grid item>
                 <Typography>"{reportedReview.reviewtext}"</Typography>
