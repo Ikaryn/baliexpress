@@ -1,9 +1,9 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import psycopg2.extras
-import credentials
+#import credentials
 from datetime import datetime
-from . import credentials
+#from . import credentials
 
 def connect():
     conn = None
@@ -11,8 +11,8 @@ def connect():
     #        password=credentials.password
     try:
         conn = psycopg2.connect(database="baliexpress",
-            user=credentials.user,
-            password=credentials.password
+            user="postgres",
+            password="Jordan4763"
         )
         conn.set_client_encoding('UTF8')
     except Exception as e:
