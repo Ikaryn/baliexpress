@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
 
-const AdminProductCard = ({productInfo, setProduct, setOpen, setOpenModal, setDiscontinuedId}) => {
+const AdminProductCard = ({productInfo, setProduct, setOpen, setOpenModal, setDiscontinued}) => {
     
     const history = useHistory();
 
@@ -31,7 +31,7 @@ const AdminProductCard = ({productInfo, setProduct, setOpen, setOpenModal, setDi
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
                     <Button fullWidth variant="contained" color="primary" onClick={handleRedirect}>View Sale Data</Button>
-                    <Button fullWidth variant="contained" color="secondary" onClick={() => {setOpenModal(true); setDiscontinuedId(productInfo.id)}}>Discontinue Product</Button>
+                    <Button fullWidth variant="contained" color="secondary" onClick={() => {setOpenModal(true); setDiscontinued(productInfo)}}>Discontinue Product</Button>
                 </Grid>
             </Grid>
         </Card>
