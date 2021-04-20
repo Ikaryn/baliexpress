@@ -4,9 +4,9 @@ import {
     useHistory,
   } from 'react-router-dom';
 import NewProductFeature from '../components/featuredProductComponents/NewProductFeature';
-import { Button, CardActionArea, Grid, makeStyles, Modal, 
-        Paper, Table, TableBody, TableCell, TableContainer, 
-        TableRow, Typography } 
+import { Button, CardActionArea, Grid, makeStyles, Modal,
+        Paper, Table, TableBody, TableCell, TableContainer,
+        TableRow, Typography }
         from '@material-ui/core';
 import BuildPcImage from '../assets/BuildPcImage.png';
 import MinorFeaturedProductCards from '../components/featuredProductComponents/MinorFeaturedProductCards';
@@ -48,10 +48,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const categories = [
-    'CPU', 
-    'Motherboards', 
-    'Storage', 
-    'Power Supplies', 
+    'CPU',
+    'Motherboards',
+    'Storage',
+    'Power Supplies',
     'CPU Cooling',
     'PC Cooling',
     'Memory',
@@ -60,16 +60,16 @@ const categories = [
     'Monitors',
     'Mouses',
     'Keyboards',
-    'Wifi Adaptors'
+    'Wifi Adapters'
 ];
-    
-    
+
+
 
 const HomePage = () => {
     const history = useHistory();
     const classes = useStyles();
     const context = React.useContext(StoreContext);
-    
+
     const [products, setProducts] = React.useState(null);
     const [buildOpen, setBuildOpen] = React.useState(false);
     const { sales: [sales, setSales] } = context;
@@ -81,7 +81,7 @@ const HomePage = () => {
             setProducts(response);
         })();
     },[])
-    
+
     // get sales
     React.useEffect(() => {
         api.get('sales?all=false')
@@ -89,7 +89,7 @@ const HomePage = () => {
             setSales(data.sales);
         })
     },[setSales])
-    
+
     // if there are no sales currently, this should just be the banner.
     const generateAdvertisements = () => {
         const ads = [<img src={BaliexpressBanner} alt="baliexpress-banner"/>];
@@ -100,10 +100,10 @@ const HomePage = () => {
                 </CardActionArea>
             )
         })
-        
+
         return ads;
     }
-    
+
     return (
         <Grid container direction="column" alignItems="center" justify="center">
             <Grid container item className={classes.upperContentContainer} justify="center">
@@ -113,10 +113,10 @@ const HomePage = () => {
                     </Grid>
                 :
                 <Grid item>
-                    <Carousel 
-                        autoPlay={true} 
-                        interval={4000} 
-                        indicatorContainerProps={{style: {position: 'absolute', bottom: '0.5em'}}}    
+                    <Carousel
+                        autoPlay={true}
+                        interval={4000}
+                        indicatorContainerProps={{style: {position: 'absolute', bottom: '0.5em'}}}
                     >
                         {generateAdvertisements()}
                     </Carousel>
@@ -160,7 +160,7 @@ const HomePage = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Modal 
+            <Modal
                 open={buildOpen}
                 onClose={() => {setBuildOpen(false)}}
             >
