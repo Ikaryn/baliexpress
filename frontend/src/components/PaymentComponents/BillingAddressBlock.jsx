@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 
 }))
 
-const BillingAddressBlock = ({shipping, billing, errors, sameBilling, setBillingDetails, setSameBilling}) => {
+const BillingAddressBlock = ({shipping, billing, errors, sameBilling, setBillingDetails, setSameBilling, shipped}) => {
 
     const classes = useStyles();
     const [sameAsShipping, setSameAsShipping] = React.useState(sameBilling);
@@ -44,6 +44,9 @@ const BillingAddressBlock = ({shipping, billing, errors, sameBilling, setBilling
 
     }
 
+    React.useEffect(() => {
+        if (!shipped) setSameAsShipping(false);
+    })
 
     return (
 
@@ -95,14 +98,16 @@ const BillingAddressBlock = ({shipping, billing, errors, sameBilling, setBilling
                         </FormControl> 
                     </Grid>
                 </Grid>
-                <Grid item className={classes.field}>
-                    <FormControl>
-                        <FormControlLabel
-                            label="Same as Shipping Address"
-                            control={<Checkbox checked={sameAsShipping} onChange={() => handleCheckboxChange()}/>}
-                        />
-                    </FormControl>
-                </Grid>
+                {shipped &&
+                    <Grid item className={classes.field}>
+                        <FormControl>
+                            <FormControlLabel
+                                label="Same as Shipping Address"
+                                control={<Checkbox checked={sameAsShipping} onChange={() => handleCheckboxChange()}/>}
+                            />
+                        </FormControl>
+                    </Grid>
+                }
             </Paper>
         </Grid>
     )
