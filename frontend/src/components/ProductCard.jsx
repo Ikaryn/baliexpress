@@ -8,6 +8,7 @@ import amdryzen52600 from '../assets/amdryzen52600.jpg'
 const useStyles = makeStyles(() => ({
     productCardContainer: {
         height: '100%',
+        
     },
     productInfoContainer: {
         height: '50%',

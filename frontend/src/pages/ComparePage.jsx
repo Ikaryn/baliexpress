@@ -22,14 +22,16 @@ const ComparePage = () => {
     const [open, setOpen] = React.useState(false);
     
     const redirectHandler = () => {
-        history.goBack();
+        history.push({pathname:'/build', state: {type: 'exchange'}});
     }
+    
+    
     
     const exchangeHandler = () => {
         const updatedBuild = JSON.parse(JSON.stringify(build));
-        updatedBuild[category] = comparedProduct;
+        updatedBuild.parts[category] = comparedProduct;
         setBuild(updatedBuild);
-        history.push('/build');
+        history.push({pathname:'/build', state: {type: 'exchange'}});
     }
     
     const reselectHandler = () => {
@@ -47,7 +49,7 @@ const ComparePage = () => {
                     item xs={5} 
                     className={classes.productContainer}
                 >
-                    <CompareProductCard productInfo={build[category]} />    
+                    <CompareProductCard productInfo={build.parts[category]} />    
                 </Grid>
                 <Grid 
                     item 

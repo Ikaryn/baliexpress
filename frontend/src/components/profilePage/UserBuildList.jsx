@@ -1,6 +1,6 @@
 import React from 'react';
 import API from '../../util/API';
-import {  Button, Paper,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import {  Button, Grid, Paper,  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import { StoreContext } from '../../util/store';
 import { buildTemplate } from '../../util/helpers';
@@ -36,7 +36,7 @@ const UserBuildList = () => {
         editBuild.desc = build.buildDesc;
         console.log(editBuild);
         setBuild(editBuild);
-        history.push(`/build/${userid}/${buildid}/saved`);
+        history.push({pathname:`/build/${userid}/${buildid}/saved`, state:{type:'edit'}});
     }
     
     const handleDelete = async (buildid) => {
@@ -57,7 +57,12 @@ const UserBuildList = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {builds && builds.map((build) => (
+                {!builds?
+                    <Grid container justify="center">
+                        <Typography variant="h4">You have no saved builds!</Typography>
+                    </Grid>
+                :   
+                    builds.map((build) => (
                     <TableRow key={build.buildid}>
                         <TableCell>{build.buildid}</TableCell>
                         <TableCell>{build.buildname}</TableCell>
