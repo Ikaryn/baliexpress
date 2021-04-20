@@ -25,7 +25,7 @@ const ProductListPage = () => {
     const [labels, setLabels] = React.useState(null);
     const [sortType, setSortType] = React.useState(sortTypes[0]);
     const [filterBoxes, setFilterBoxes] = React.useState(null);
-    let {category} = useParams();
+    let {category, search} = useParams();
     
     React.useEffect(() => {
         (async () => {
@@ -197,7 +197,7 @@ const ProductListPage = () => {
 
     return (
         <div className="root">
-            <Grid container direction="row" className='product-list-page-container'>
+            <Grid container direction="row">
                 <Grid container item direction="column" wrap='nowrap' xs={3}>
                     <Grid className="product-list-filter-container">
                         <Grid item>
@@ -257,9 +257,9 @@ const ProductListPage = () => {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid container item direction="row" spacing={3} xs>
+                    <Grid container item direction="row" spacing={3} alignItems="flex-start" className="parent-product-card">
                         {filteredProducts.map((p) => (
-                            <Grid container item xs={3} style={{display: 'flex'}} key={p.name + p.id}>
+                            <Grid container item xs={3} key={p.name + p.id}>
                                 <ProductCard 
                                     pid={p.id}
                                     name={p.name}
