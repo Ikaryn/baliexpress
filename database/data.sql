@@ -761,7 +761,7 @@ VALUES
     ('Samsung LC32R500FHEXXY 32 inch Curved Monitor, Dark Blue Gray', 'Monitors', 'Samsung', 353.00, '5 years', '3 sided thin bezel display, AMD Radeon FreeSync, 3000: 1 contrast ratio', 900, '2020-04-15'),
     ('LG 32MP58HQ 32" FHD IPS Monitor, 5ms (GTG), HDMI, D-Sub, Screen Split, Sleek Cut Design, Black', 'Monitors', 'LG', 295.99, '3 years', 'LG 32MP58HQ IPS panel allows you to enjoy life like picture quality with minimal variation from wider viewing angles and boast excellent image reproduction.', 200, '2018-10-26'),
     ('AOC G2490VX 23.8" 144Hz Full HD VA Gaming Monitor with 1ms R', 'Monitors', 'AOC', 192.95, '3 years', '23.8 inch VA, 144 Hz, Adaptive Sync, Low Blue Mode, Flicker Free Monitor The 24-inch G2490VX in the AOC G90 series of newly enhanced mainstream gaming monitors offers experienced gamers a ghost-, stutter- and tear-free gameplay experience in the tried and tested FHD (1920 x 1080) format they have come to trust, plus competitive features that include a VA panel, a fast refresh rate of 144Hz, plus a 1.0ms (MPRT) smart response time.', 200, '2020-11-16'),
-    ('AOC 24G2 24" Frameless Gaming IPS Monitor, FHD 1080P, 1ms 144Hz, Freesync, HDMI/DP/VGA, Height Adjustable, 3-Year Zero Dead Pixel Guarantee', 'Monitors', 'AOC', 258.99, '3 years', 'aoc gaming 24G2 is in a class of its own, bringing brilliant colors of an IPS panel and the fast 1ms (MPRT) response time into one sleek battle machine for people who demand both uncompromising speed and image quality.', 10, '2019-08-20');
+    ('AOC 24G2 24" Frameless Gaming IPS Monitor', 'Monitors', 'AOC', 258.99, '3 years', 'aoc gaming 24G2 is in a class of its own, bringing brilliant colors of an IPS panel and the fast 1ms (MPRT) response time into one sleek battle machine for people who demand both uncompromising speed and image quality.', 10, '2019-08-20');
 
 INSERT INTO Monitors(id, size, resolution, refresh_rate, aspect_ratio, panel_type)
 VALUES
@@ -770,7 +770,7 @@ VALUES
     (110, '23.6"', '1920 x 1080', '144 Hz', '16:9', 'LED'),
     (111, '27"', '1920 x 1080', '144 Hz', '16:9', 'LCD'),
     (112, '34"', '3440 x 1440', '144 Hz', '21:9', 'LCD'),
-    (113, '11.6"', '1920 X 1080', '75 Hz', '16:9', 'LED'),
+    (113, '11.6"', '1920 x 1080', '75 Hz', '16:9', 'LED'),
     (114, '32"', '1920 x 1080', '240 Hz', '16:9', 'LCD'),
     (115, '32"', '1920 x 1080', '144 Hz', '16:9', 'LCD'),
     (116, '23.8"', '1920 x 1080', '144 Hz', '16:9', 'LED'),

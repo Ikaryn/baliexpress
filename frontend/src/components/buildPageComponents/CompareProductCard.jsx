@@ -26,16 +26,22 @@ const CompareProductCard = ({productInfo, type}) => {
     
     const [performance, setPerformanace] = React.useState(generatePerformanceState());
     
+    React.useEffect(() => {
+            setPerformanace(productComparison.generateProductPerformance(productInfo));
+    },[productInfo])
     
     return (
         <Grid container item direction="column" justify="space-between">
             <Grid item>
                 <Typography className="light-text" variant='h6'>{productInfo.name}</Typography>
             </Grid>
-            <Grid container item direction="column" spacing={2}>
-                <Grid item >
-                    <img className={classes.image} src={"data:image/jpeg;base64,"+ productInfo.image} alt={productInfo.name} />
+            <Grid container item direction="column" spacing={2} alignItems="center">
+                <Grid container direction="row" item xs={5}>
+                    <Grid item>
+                        <img className={classes.image} src={"data:image/jpeg;base64,"+ productInfo.image} alt={productInfo.name} />
+                    </Grid>
                 </Grid>
+                <Divider />
                 {performance && <Grid container item direction="column" >
                     <Grid item>
                         <Typography variant="h5" className="light-text">Performance</Typography>

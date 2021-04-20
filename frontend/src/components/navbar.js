@@ -52,7 +52,6 @@ const NavBar = () => {
     }
     
     const handleBuildClick = () => {
-        setBuild(buildTemplate);
         setBuildOpen(true);
     }
     
@@ -77,10 +76,9 @@ const NavBar = () => {
                 setUserType("Guest");
             }
         })();
-    },[])
+    },[setUserType])
 
     const generateProfileText = () => {
-        console.log(userType);
         if (userType === 'Admin') {
             return 'Admin'
         }

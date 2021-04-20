@@ -7,6 +7,7 @@ import API from '../util/API';
 import { StoreContext } from '../util/store';
 import CartComponent from '../components/PaymentComponents/CartComponent';
 import DeliveryBlock from '../components/PaymentComponents/DeliveryBlock';
+import BillingAddressBlock from '../components/PaymentComponents/BillingAddressBlock';
 
 const api = new API();
 
@@ -27,8 +28,8 @@ const PaymentPage = () => {
     const classes = useStyles();
     const history = useHistory();
     const [user, setUser] = React.useState(null);
-    const [paymentDetails, setPaymentDetails] = React.useState({'type': '', 'number': '', 'month':'', 'year':'', 'cvn':''});
-    const [paymentErrors, setPaymentErrors] = React.useState({'type': '', 'number': '', 'date':'', 'cvn':''});
+    const [paymentDetails, setPaymentDetails] = React.useState({'name': '', 'type': '', 'number': '', 'month':'', 'year':'', 'cvn':''});
+    const [paymentErrors, setPaymentErrors] = React.useState({'name': '', 'type': '', 'number': '', 'date':'', 'cvn':''});
     const [shippingDetails, setShippingDetails] = React.useState({  'address': '', 
                                                                     'city': '',
                                                                     'postcode': '',
@@ -39,7 +40,18 @@ const PaymentPage = () => {
                                                                 'postcode': '',
                                                                 'state': '',
                                                                 'country': ''});
+    const [billingDetails, setBillingDetails] = React.useState({  'address': '', 
+                                                                    'city': '',
+                                                                    'postcode': '',
+                                                                    'state': '',
+                                                                    'country': ''});
+    const [billingErrors, setBillingErrors] = React.useState({'address': '', 
+                                                                'city': '',
+                                                                'postcode': '',
+                                                                'state': '',
+                                                                'country': ''});
     const [shippingPrice, setShippingPrice] = React.useState(0);
+    const [sameBilling, setSameBilling] = React.useState(false);
                                                                 
     const calculateTotal = () => {
         let total = 0;
@@ -81,11 +93,12 @@ const PaymentPage = () => {
     }
 
     // Check for any errors in both the shipping and payment blocks
-    const checkErrors = (newShippingErrors, newPaymentErrors) => {
+    const checkErrors = (newShippingErrors, newBillingErrors, newPaymentErrors) => {
 
         console.log("Checking for errors...")
         console.log("Shipping Info:", shippingDetails);
         console.log("Payment Info:", paymentDetails);
+        console.log("Billing Address:", billingDetails);
 
         let error = false;
 
@@ -107,7 +120,31 @@ const PaymentPage = () => {
             };
         });
 
+        // Check for any empty fields, and the associated input types are correct, e.g. numbers only for postcode
+        Object.keys(billingDetails).forEach(field => {
+            if (billingDetails[field] === '') {
+                newBillingErrors[field] = field.charAt(0).toUpperCase() + field.slice(1) + ' cannot be empty';
+                error = true;
+            } else if (field === 'city' || field === 'state' || field === 'country'){
+                if (!checkInputAlpha(billingDetails[field])) {
+                    newBillingErrors[field] = 'Invalid ' + field;
+                    error = true;
+                };
+            } else if (field === 'postcode') {
+                if (!checkInputNumber(billingDetails[field])) {
+                    newBillingErrors[field] = 'Invalid ' + field;
+                    error = true;
+                };
+            };
+        });
+
         // Check if any fields in the payment block are empty
+
+        if (paymentDetails.name === '') {
+            newPaymentErrors['name'] = "Please enter the cardholder's name";
+        } else if (!checkInputAlpha(paymentDetails.name)) {
+            newPaymentErrors['name'] = "Invalid cardholder name";
+        }
 
         if (paymentDetails.type === '') {
             newPaymentErrors['type'] = "Please select your card type";
@@ -147,6 +184,7 @@ const PaymentPage = () => {
         // If either block has an error, display the errors, and do not continue with the purchase
         if (error) {
             setShippingErrors(newShippingErrors);
+            setBillingErrors(newBillingErrors);
             setPaymentErrors(newPaymentErrors);
             return false; 
         };
@@ -159,12 +197,15 @@ const PaymentPage = () => {
         // Reset the errors for both shipping and payment
         const newShippingErrors = JSON.parse(JSON.stringify(shippingErrors));
         Object.keys(shippingErrors).forEach(field => newShippingErrors[field]='');
+
+        const newBillingErrors = JSON.parse(JSON.stringify(billingErrors));
+        Object.keys(billingErrors).forEach(field => newBillingErrors[field]='');
         
         const newPaymentErrors = JSON.parse(JSON.stringify(paymentErrors));
         Object.keys(paymentErrors).forEach(field => newPaymentErrors[field]='');
 
         // Check if there are any errors in either block
-        if (!checkErrors(newShippingErrors, newPaymentErrors)) {
+        if (!checkErrors(newShippingErrors, newBillingErrors, newPaymentErrors)) {
             console.log('There was an error');
         } else {
             console.log('No errors were found');
@@ -210,11 +251,23 @@ const PaymentPage = () => {
                         <ShippingBlock 
                             shipping={shippingDetails} 
                             errors={shippingErrors}
+                            sameBilling={sameBilling}
                             setShippingDetails={setShippingDetails}
+                            setBillingDetails={setBillingDetails}
                         />}
                 </Grid>
                 <Grid item className={classes.block} xs={12}>
                     <DeliveryBlock setShippingPrice={setShippingPrice}/>
+                </Grid>
+                <Grid item className={classes.block} xs={12}>
+                    <BillingAddressBlock 
+                        shipping={shippingDetails}
+                        billing={billingDetails}
+                        errors={billingErrors}
+                        sameBilling={sameBilling}
+                        setBillingDetails={setBillingDetails}
+                        setSameBilling={setSameBilling}
+                    />
                 </Grid>
                 <Grid item className={classes.block} xs={12}>
                     <PaymentBlock   

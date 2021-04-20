@@ -108,6 +108,7 @@ def getUserIDFromEmail(email):
         # connect to database
         conn = connect()
         cur = conn.cursor()
+        print(email)
 
         # query Users table for ID
         query = "SELECT id, admin FROM Users WHERE email = %s"
@@ -624,6 +625,14 @@ def getBuild(buildID):
 # return an empty list. if an error has occured, returns None.
 # build dictionary: {id, name, description, parts:({productID, quantity}, etc)}
 def getUsersBuilds(userID):
+    # create function to convert decimal type numbers to floats
+    decimalToFloat = psycopg2.extensions.new_type(
+        psycopg2.extensions.DECIMAL.values,
+        'decimalToFloat',
+        lambda num, cur: float(num) if num is not None else None
+    )
+    psycopg2.extensions.register_type(decimalToFloat)
+    
     try:
         # connect to database
         conn = connect()
@@ -1630,7 +1639,6 @@ def getSalesForDate(cur, date):
 #addSale("fully sick sale", "2021-01-01", "2021-12-31", [{'productid': 1, 'salepercent': 10}])
 #print(addOrder(2, '2021-04-04', {1: 5, 10: 11}))
 #print(getAllOrders())
-#print(getProduct(1))
 #print(addOrder(1, '2021-01-01', {1: 10}, '343 fake road', 'Toronto', 'ONT', 'Canada', '666'))
 #print(getProduct(1))
 #print(getReview(1))

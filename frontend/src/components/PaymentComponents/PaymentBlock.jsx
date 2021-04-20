@@ -1,4 +1,4 @@
-import { Checkbox, FormControl, FormLabel, FormControlLabel, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, OutlinedInput, Paper, Select, TextField, Typography } from '@material-ui/core';
+import { Checkbox, FormControl, FormLabel, Input, FormControlLabel, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, OutlinedInput, Paper, Select, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import VisaLogo from '../../assets/Visa.png'
 import MasterCardLogo from '../../assets/Mastercard.png'
@@ -53,6 +53,15 @@ const PaymentBlock = ({payment, errors, setPaymentDetails}) => {
             <Paper variant="outlined">
                 <Grid item className={classes.title}>
                     <Typography variant="h4">Payment Method</Typography>
+                </Grid>
+                <Grid item container direction="column" xs={4} className={classes.input}>
+                    <Grid item>
+                        <Typography>Cardholder Name</Typography>
+                    </Grid>
+                    <FormControl error={errors.name === '' ? false : true}>
+                        <Input value={payment.name} onChange={(event) => {handleChange('name', event.target.value)}} />
+                        <FormHelperText>{errors.name}</FormHelperText>
+                    </FormControl>
                 </Grid>
                 <Grid container item direction="row" xs={11} className={classes.input} justify="space-between">
                     <Grid item xs={3}>
