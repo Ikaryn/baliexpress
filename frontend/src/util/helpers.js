@@ -36,7 +36,7 @@ export const allProductCategories = {
     'Storage': '',
     'PSU': '',
     'CPU_Cooling':'',
-
+    "PC_Cooling":'',
 }
 
 export const buildTemplate = {
@@ -52,6 +52,7 @@ export const buildTemplate = {
                 'Storage': '',
                 'PSU': '',
                 'CPU_Cooling':'',
+                'PC_Cooling':'',
             },
     'price': 0,
     'builtByCompany': false,

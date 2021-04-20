@@ -51,10 +51,9 @@ const UserBuildList = () => {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell align="right">ID</TableCell>  
-                    <TableCell align="right">Name</TableCell>
-                    <TableCell align="right">Description</TableCell>
-                    <TableCell />
+                    <TableCell align="left">ID</TableCell>  
+                    <TableCell align="left">Name</TableCell>
+                    <TableCell align="left">Description</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -65,11 +64,13 @@ const UserBuildList = () => {
                 :   
                     builds.map((build) => (
                     <TableRow key={build.buildid}>
-                        <TableCell>{build.buildid}</TableCell>
-                        <TableCell>{build.buildname}</TableCell>
-                        <TableCell>{build.description}</TableCell>
+                        <TableCell align="left">{build.buildid}</TableCell>
+                        <TableCell align="left">{build.buildname}</TableCell>
+                        <TableCell align="left">{build.description}</TableCell>
                         <TableCell>
                             <Button variant="contained" color="primary" onClick={() => {handleRedirect(build.userid, build.buildid, build)}}>Edit Build</Button>
+                        </TableCell>
+                        <TableCell>
                             <Button variant="contained" color="secondary" onClick={() => {handleDelete(build.buildid)}}>Delete Build</Button>
                         </TableCell>
                     </TableRow>  
