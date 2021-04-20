@@ -19,7 +19,7 @@ const ProductStats = ({setOpen, productInfo}) => {
             const options = {
                 zoomEnabled: true,
                 title: {
-                    text: 'Product sold over',
+                    text: 'Product sold from 1st Jan 2020',
                 },
                 axisY: {
                     title: 'Units Sold'

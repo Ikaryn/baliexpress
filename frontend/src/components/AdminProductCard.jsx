@@ -1,8 +1,9 @@
-import { Button, Card, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, CardMedia, Grid, Modal, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router';
+import API from '../util/API';
 
-const AdminProductCard = ({productInfo, setProduct, setOpen}) => {
+const AdminProductCard = ({productInfo, setProduct, setOpen, setOpenModal, setDiscontinuedId}) => {
     
     const history = useHistory();
 
@@ -26,10 +27,11 @@ const AdminProductCard = ({productInfo, setProduct, setOpen}) => {
                         <Typography variant="h5">Stock: {productInfo.stock}</Typography>
                     </CardContent>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/edit-product/${productInfo.category}/${productInfo.id}`)}}>Edit Product</Button>
                     <Button fullWidth variant="contained" color="primary" onClick={() => {history.push(`/product/${productInfo.category}/${productInfo.id}`)}}>View Product</Button>
                     <Button fullWidth variant="contained" color="primary" onClick={handleRedirect}>View Sale Data</Button>
+                    <Button fullWidth variant="contained" color="secondary" onClick={() => {setOpenModal(true); setDiscontinuedId(productInfo.id)}}>Discontinue Product</Button>
                 </Grid>
             </Grid>
         </Card>
