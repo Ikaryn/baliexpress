@@ -19,6 +19,15 @@ def connect():
 
     return conn
 
+def getSalesForDate(cur, date):
+    query = "SELECT id, name FROM Sales WHERE startdate <= %s AND enddate >= %s"
+    cur.execute(query, (date, date))
+    rows = cur.fetchall()
+    sales = [{column:data for column, data in record.items()} for record in rows]
+    return sales
+
+
+
 start = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d")
 end = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d")
 date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-start).days)]
@@ -26,23 +35,52 @@ date_generated = [start + datetime.timedelta(days=x) for x in range(0, (end-star
 conn = connect()
 cur = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
 
-
+# get users
 query = "select * from Users where admin = 'f'"
 cur.execute(query)
 rows = cur.fetchall()
 users = [{column:data for column, data in record.items()} for record in rows]
 
+# get products
+query = "select id, price from Products"
+cur.execute(query)
+rows = cur.fetchall()
+products = [{column:data for column, data in record.items()} for record in rows]
+
+
+
 orders = ""
 current_order = 1
-products = list(range(1, 134))
 for date in date_generated:
+    sales = getSalesForDate(cur, date)
+    saleProducts = []
+    for sale in sales:
+        query = "select * from Sale_Products where saleid = %s"
+        cur.execute(query, [sale['id']])
+        rows = cur.fetchall()
+        saleProducts = saleProducts + [{column:data for column, data in record.items()} for record in rows]
+
     random.shuffle(users)
     for x in range(random.randint(0, 5)):
+        total = 0
         # generate products dictionary
         order_items = {}
         random.shuffle(products)
         for y in range(random.randint(1, 10)):
-            order_items[products[y]] = random.randint(1, 5)
-        orders = orders + "addOrder(" +  str(users[x]['id']) + ", '" + date.strftime("%Y-%m-%d") + "', " + str(order_items) + ", '" + "', '".join((users[x]['streetaddress'], users[x]['city'], users[x]['state'], users[x]['country'], users[x]['postcode'])) + "')\n"
+            quantity = random.randint(1, 5)
+            order_items[products[y]['id']] = quantity
+            # work out sale price if on sale
+            price = products[y]['price']
+            for saleProduct in saleProducts:
+                if saleProduct['productid'] == products[y]['id']:
+                    print("PRICE WAS")
+                    print(price)
+                    print(saleProduct['salepercent'])
+                    price = float(price) - float(price) * (float(saleProduct['salepercent'])/100)
+                    print("PRICE IS NOW")
+                    print(price)
+            total = total + float(quantity) * float(price)
+
+        orders = orders + "addOrder(" +  str(users[x]['id']) + ", '" + date.strftime("%Y-%m-%d") + "', {:.2f}, ".format(total) + str(order_items) + ", '" + "', '".join((users[x]['streetaddress'], users[x]['city'], users[x]['state'], users[x]['country'], users[x]['postcode'])) + "')\n"
 
 print(orders)

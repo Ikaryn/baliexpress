@@ -1,7 +1,6 @@
 DROP TYPE IF EXISTS Categories CASCADE;
 
-CREATE TYPE categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adaptors');
-
+CREATE TYPE categories AS ENUM ('Cases', 'CPU_Cooling', 'PC_Cooling', 'CPU', 'Graphics_Cards', 'Memory', 'Mouses', 'Monitors', 'Motherboards', 'PSU', 'Storage', 'Keyboards', 'Wifi_Adapters');
 DROP TABLE IF EXISTS Users CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS Orders CASCADE;
@@ -18,7 +17,7 @@ DROP TABLE IF EXISTS PSU;
 DROP TABLE IF EXISTS Monitors;
 DROP TABLE IF EXISTS Mouses;
 DROP TABLE IF EXISTS Keyboards;
-DROP TABLE IF EXISTS Wifi_Adaptors;
+DROP TABLE IF EXISTS Wifi_Adapters;
 DROP TABLE IF EXISTS Builds CASCADE;
 DROP TABLE IF EXISTS BuildParts;
 DROP TABLE IF EXISTS Reviews CASCADE;
@@ -68,7 +67,7 @@ CREATE TABLE Orders(
     state           text,
     country         text,
     postcode        text,
-    total           numeric(50, 2), 
+    total           numeric(50, 2),
     primary key (id),
     foreign key (userid) references Users(id)
 );
@@ -210,7 +209,7 @@ CREATE TABLE Keyboards(
 );
 
 
-CREATE TABLE Wifi_Adaptors(
+CREATE TABLE Wifi_Adapters(
     id          int,
     socket      text,
     power_use   numeric(50, 1),

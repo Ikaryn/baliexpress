@@ -165,7 +165,7 @@ const ReviewBlock = ({rating, productId, setRating}) => {
         setReviews(filteredReviews);
     }
     
-    const handleSort = async (value) => {
+    const handleSort = (value) => {
         setSort(value);
         const sortedReviews = JSON.parse(JSON.stringify(reviews));
         
