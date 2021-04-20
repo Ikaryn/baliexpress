@@ -1,0 +1,41 @@
+Week 1
+
+Formed group. We chose project 5 - e-commerce. Van made the Jira account. On Thursday, we met up to plan the report and divide up writing tasks. We decided which languages to use for our project - Python mostly.
+
+Week 2
+We started the week by holding a standup meeting on Monday to see how everyone was progressing with their parts of the assignment and to see what everyone was planning on working on next. The rest of the week was spent continuing to work on the proposal. I continued to work on the user stories and adding more acceptance criteria.
+
+Week 3
+We finished off the report and got it submitted.
+
+Next week, I’m planning on setting up the database and implementing some basic functions.
+
+Week 4
+We began working on the actual code. I began working on setting up the database for our project. The biggest difficulty I encountered was trying to work out how to share the database between group mates, since I could not store the database itself on GitHub. I also needed a method that would be easy to understand for people who have never worked with databases before, since only one group member has. I decided that the best method would be to store a backup of the database on the GitHub repo, and the rest of the group could “restore” from this backup in order to update their local database.
+
+I didn’t manage to get many actual functions implemented, so I want to focus on that next week so that everyone else’s code can actually interact with the database.
+
+Week 5
+I continued setting up the database, and began implementing Psycopg2 functions that allowed people to interact with the database. However, I wasn’t able to implement them in time for the first demo, and the demo had to go ahead without database implementation. I spent the rest of the week working on implementing functions that would allow the existing code to interface with the database - which meant adding, editing and removing users and products.
+
+Next week I’m planning on working on the build a PC system.
+
+Week 6
+Implemented the database side of our Build a PC system, including creating and deleting builds, and adding and removing parts from builds.  I also implemented functions for adding and getting a specific review for a product. Darryl specs for a bunch of products, and I added all of them to the database.
+
+Next week I want to finish off reviews, and also start working on orders.
+
+Week 7
+Added the remaining functions for reviews - deleting and getting reviews for a specific product. I also added voting on reviews. I also added functions for adding and deleting orders.
+
+Next week I want to do some refactoring of my database code, because I’ve been learning better ways of doing things than how I did them in the first functions I wrote.
+
+Week 8
+Refactored code and removed a bunch of unused functions. I added a bunch of reviews to the database as well as up and down votes for the reviews so that reviews could be tested properly. I updated getBuild and getUsersBuilds to also return all information on the products in the build, so that it could be displayed without having to do additional queries on the database. I also implemented functions for adding and deleting sales, and adding products to sales. I tweaked getAllProducts and get products so that they would return sale data for a product as well. I optimised updateUser so that you only need to pass in the values that are being updated, rather than passing in all fields regardless of whether they’re actually being updated or not.
+
+Since I’ve implemented most functions for the database, I’m going to spend next week improving on what’s already there, as well as tweaking things depending on what my other group members need.
+
+Week 9
+Implemented the database side of reporting a review. Made various tweaks to the database - added ‘sold’ count and discontinued field to all products, a count for how many of each items is sold during a sale, address fields to orders, image field to sales, and more products. AddOrder now updates stock count, and added a function for deleting all reports for a review. I added a bunch of sales and order data to the database for testing and demo purposes.
+
+Next week I’ll be working on getting everything ready for submission, as well as my part of the report. 
