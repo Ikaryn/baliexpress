@@ -158,6 +158,17 @@ const ProductListPage = () => {
         })();
     },[sortType, products]);
 
+    const generateHeader = () => {
+        if(category) {
+            return "Product category: " + category
+        }
+        if(search) {
+            return "Search results for: "+ search;
+        }
+        return 'On sale products'
+
+    }
+
     function handleFilterChange (filter, value) {
 
         // Get the current check box state and change it
