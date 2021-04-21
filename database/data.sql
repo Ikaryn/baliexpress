@@ -940,14 +940,14 @@ VALUES
 
 INSERT INTO CPU_Cooling(id, socket, power_use)
 VALUES
-    (134, 'AMD', '240'),
-    (135, 'USB 2 0 and SATA', '52'),
-    (136, 'USB', '5'),
-    (137, 'AMD', '240'),
-    (138, '4-Pin', '52'),
-    (139, 'Intel', '12'),
-    (140, 'Intel, AMD', '12'),
-    (141, '4-Pin', '12');
+    (134, 'AM4', '240'),
+    (135, 'LGA 1200', '52'),
+    (136, 'LGA 1151', '5'),
+    (137, 'AM4', '240'),
+    (138, 'LGA 2066', '52'),
+    (139, 'LGA 1200', '12'),
+    (140, 'LGA 1151', '12'),
+    (141, 'AM4', '12');
 
 -- PC cooling
 INSERT INTO Products(name, category, brand, price, warranty, description, stock, release_date)
