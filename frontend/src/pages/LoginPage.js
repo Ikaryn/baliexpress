@@ -13,8 +13,9 @@ function checkValidEmail (input) {
 
 const useStyles = makeStyles(() => ({
     forgotPasswordModal: {
-        marginTop: '50%',
-        marginLeft: '50%',
+        marginTop: '35%',
+        marginLeft: '35%',
+        width: '100px'
     },
 }))
 
@@ -133,32 +134,30 @@ const Login = () => {
             
             <Typography variant="body1" color="secondary">{loginError}</Typography>
             </Grid>
-            <Grid item>    
-                <Modal open={open} onClose={() => {setOpen(false)}}>
-                    <Grid container classname={classes.forgotPasswordModal}>
-                        <Paper>
-                            <Typography classname="light-text">Enter your account email</Typography>
+            <Modal open={open} onClose={() => {setOpen(false)}}>
+                <Grid container classname={classes.forgotPasswordModal}>
+                    <Paper className="forgot-password-modal-container">
+                        <Typography classname="light-text">Enter your account email</Typography>
+                        <Grid item>
+                            <FormControl error={emailError === '' ? false : true} fullWidth>
+                                <InputLabel>Email Address</InputLabel>
+                                <OutlinedInput id="user-login-email" onChange={event => setForgotEmail(event.target.value)} value={forgotEmail}/>
+                                <FormHelperText>{emailError}</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                        <Grid container direction="row">
                             <Grid item>
-                                <FormControl error={emailError === '' ? false : true} fullWidth>
-                                    <InputLabel>Email Address</InputLabel>
-                                    <OutlinedInput id="user-login-email" onChange={event => setForgotEmail(event.target.value)} value={forgotEmail}/>
-                                    <FormHelperText>{emailError}</FormHelperText>
-                                </FormControl>
+                                <Button color="primary" variant="contained" onClick={() => setOpen(false)}>Cancel</Button>
                             </Grid>
-                            <Grid container direction="row">
-                                <Grid item>
-                                    <Button color="primary" variant="contained" onClick={() => setOpen(false)}>Cancel</Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button color="primary" variant="contained" onClick={() => handleForgotPassword()}>Submit</Button>
-                                </Grid> 
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                </Modal>
-            </Grid>
+                            <Grid item>
+                                <Button color="primary" variant="contained" onClick={() => handleForgotPassword()}>Submit</Button>
+                            </Grid> 
+                        </Grid>
+                    </Paper>
+                </Grid>
+            </Modal>
             <Grid item>
-                <Snackbar open={success} autoHideDuration={1000}>
+                <Snackbar open={success} autoHideDuration={3000} onClose={() => setSuccess(false)}>
                     <Alert severity="success">An email has been sent to recover your password</Alert>
                 </Snackbar>
             </Grid>

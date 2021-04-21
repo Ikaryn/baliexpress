@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import API from '../util/API';
 import {FormControl, InputLabel, FormHelperText, Grid, OutlinedInput, Typography, Button} from '@material-ui/core'; 
+import { StoreContext } from '../util/store';
 
 const api = new API();
 
@@ -12,6 +13,8 @@ function checkValidEmail (input) {
 const Register = () => {
     
     const history = useHistory();
+    const context = React.useContext(StoreContext);
+    const { userType: [userType] } = context;
     
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -24,7 +27,10 @@ const Register = () => {
     const [phoneError, setPhoneError] = React.useState('')
 
     const [RegisterMessage, setRegisterMessage] = React.useState('');
-
+    
+    if(userType.toLowerCase() !== 'guest') {
+        history.push('/');
+    }
 
     function checkValidPhone (input) {
         return /^[0-9]\d*$/.test(input);

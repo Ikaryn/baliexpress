@@ -80,17 +80,10 @@ const ProductForm = ({type}) => {
     }
     const history = useHistory();
     const handleSubmit = async () => {
-        // const options = {
-        //     method: 'POST',
-        //     headers: { 
-        //         'Content-Type': 'application/json',
-        //         'request-type': 'edit product',
-        //     },
-        //     body: JSON.stringify(product)
-        // }
+
         const err = ErrorCheck()
         console.log(err)
-        if(err.length != 0){
+        if(err.length !== 0){
             setErrorSubmit(true);
             setErrorItems(err);
         }else{
@@ -103,9 +96,9 @@ const ProductForm = ({type}) => {
     function ErrorCheck() {
         var arr = []
         for(const item in product){
-            if(item == "price" && !/^[0-9]+$/.test(product[item])){
+            if(item === "price" && !/^[0-9]+$/.test(product[item])){
                 arr.push(item);
-            }else if(item == "stock" && !/^[0-9]+$/.test(product[item])){
+            }else if(item === "stock" && !/^[0-9]+$/.test(product[item])){
                 arr.push(item);
             }
         }

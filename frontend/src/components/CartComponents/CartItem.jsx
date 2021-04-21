@@ -72,7 +72,7 @@ const CartItem = ({productInfo, type}) => {
             <Grid container item direction="column" xs={7}>
                 <Grid item>
                     <Typography variant="caption">
-                        {productInfo.name ? productInfo.name : productInfo.buildname}
+                        {productInfo.name}
                     </Typography>
                 </Grid>
                 <Grid container item direction="row" alignItems="center" spacing={3}>

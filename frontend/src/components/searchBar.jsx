@@ -42,9 +42,12 @@ const SearchBar = ({type = 'search', addProduct}) => {
         <div style={{zIndex: '10'}}>
             <Grid container item direction="row" justify="space-between" alignItems="center">
                 <Grid item>
-                    <InputBase ref={anchorRef} placeholder="Search products..." 
+                    <InputBase 
+                        ref={anchorRef} 
+                        placeholder="Search products..." 
                         onClick={() => {setOpen(true)}} 
                         onChange={(event) => {handleToggle(event.target.value)}}
+                        fullWidth
                     />
                 </Grid>
                 <Grid item>

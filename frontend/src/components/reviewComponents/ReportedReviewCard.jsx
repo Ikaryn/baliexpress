@@ -1,4 +1,4 @@
-import { Grid, Snackbar, makeStyles, Typography, Button } from '@material-ui/core';
+import { Grid, Snackbar, makeStyles, Typography, Button, Paper } from '@material-ui/core';
 import React from 'react';
 import API from '../../util/API';
 import Alert from '@material-ui/lab/Alert';
@@ -8,12 +8,25 @@ const api = new API()
 
 const useStyles = makeStyles(() => ({
     title: {
+        // fontSize: 24,
+        fontWeight: 'bold',
+    },
+    
+    productname: {
         fontWeight: 'bold'
     },
 
     underline: {
         textDecoration: 'underline'
     },
+    card: {
+        border: '1px solid grey',
+        paddingBottom: '1em',
+        paddingLeft: '1em',
+    },
+    reviewQuote: {
+        padding: '1em',
+    }
 }))
 
 const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
@@ -38,12 +51,14 @@ const ReportedReviewCard = ({reportedReview, reviews, setReviews}) => {
     }
 
     return (
-        <Grid container>
-            <Grid item>
-                <Typography className={classes.title} >{reportedReview.productname}</Typography>
-            </Grid>
-            <Grid item>
-                <Typography>"{reportedReview.reviewtext}"</Typography>
+        <Grid container direction="column" className={classes.card}>
+                <Grid item>
+                    <Typography className={classes.productname} variant="h5">{reportedReview.productname}</Typography>
+                </Grid>
+            <Grid container item justify="center" className={classes.reviewQuote}>
+                <Grid item>
+                    <Typography>"{reportedReview.reviewtext}"</Typography>
+                </Grid>
             </Grid>
             <Grid container>
                 <Grid item>
