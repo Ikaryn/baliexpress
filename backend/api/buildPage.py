@@ -182,10 +182,10 @@ class BuildPage(Resource):
         # The computer has different requirements if overclocking namely
         # a separate CPU Cooler
         if overclock == "true":
-            CPU_CoolingBudget = 0.05 * budget
-            StorageBudget += -0.01 * budget
-            PSUBudget += -0.01 * budget
-            CaseBudget += -0.01 * budget
+            CPU_CoolingBudget = 0.08 * budget
+            StorageBudget += -0.02 * budget
+            PSUBudget += -0.02 * budget
+            CaseBudget += -0.02 * budget
             GPUBudget += -0.02 * budget
 
         # The build's parts are defined and then fed into recommender helper functions

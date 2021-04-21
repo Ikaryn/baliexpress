@@ -151,7 +151,7 @@ const BuildModalForm = ({handleToggle, setOpen}) => {
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Typography>Want to push your parts to the limit? Overclocking increases performance but reduces the lifespan of your components.</Typography>
+                    <Typography>Want to push your parts to the limit? Overclocking increases performance but reduces the lifespan of your components and is more expensive.</Typography>
                 </Grid>
                 <Grid item>
                     <FormControlLabel 
