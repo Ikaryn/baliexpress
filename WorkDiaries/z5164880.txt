@@ -1,0 +1,81 @@
+Week 1 
+
+Group formed. Created a Jira workspace. Together the whole team worked on the User Stories and allocated roles for the 
+proposal. I worked on the System architecture section, creating the diagram. Begun work on the description of external 
+actors and technologies/languages planned for use. The difficulty I faced was a misunderstanding of the kind of diagram 
+required which resulted in me spending time creating diagrams that were not used. However after the tutorial session I 
+had a better understanding thus the plan for next week is to continue to work on the proposal
+
+Week 2 
+
+Worked on proposal, my section and resposnibilites were the System Architecture (layer diagram, description of external 
+actors, and description of technologies planned for use) and the formatting of the proposal. The only difficulty I 
+experienced was in understanding the diagram in terms of the order of the layers. The plan for next week is to continue 
+to work on the proposal, in particular I will be working on the background section doing both research and helping to 
+write it up.
+
+Week 3
+
+Finished and submitted the proposal and begun work on the codebase, I was planned to work on the product page and product 
+lists. The first step of which was to research PC components to determine what specifications we would need and added 
+dummy product data to test the pages. The main difficulties we experienced was in the use of the api specifically an 
+understanding of how the frontend and backend use it to communicate. However, this was overcome with consultation of 
+more experienced group members. The plan for the next week is to add support for editing, adding, and removing products. 
+
+Week 4
+
+I implemented the backend functions for adding, editing, and removing products as planned however I was unable to test 
+these functions as the frontend for this functionality was not yet implemented. Therefore these functions are not yet 
+finished but need to be prior to the first progressive demo on Wednesday which places us behind schedule of where we 
+want to be, these functiuons need to be completed in order for the project to proceed. The plan for the next week is 
+to finish the products functionality and ensure they are completed before the demo and then assign new work for each 
+group members. 
+
+Week 5 
+
+For this week, I was assigned the build page and planned to spend this week doing research into the specs and technical 
+requirements of computers for a variety of uses, namely animation, art, business, gaming, and, video editing/rendering. 
+I was able to complete a large amount of this research and begin work on the build page backend wherein I started to 
+utilise the information learned from this research. The main obstacle was that it was difficult to find the various 
+needs of the different uses, this was overcome but took longer than expected. For the next week I plan to continue doing 
+my research and then continue work on the implementation of the backend. 
+
+Week 6
+
+For this week, I planned to continue my research and implementation of the backend. The difficulties I faced, were 
+largely related to my difficulties with the database, because of the age of my computer I had to find workarounds to 
+install the necessary PostgreSQL support apps to access the database which were resolved by updating my computers OS 
+and installing certain apps separately. I also had difficulties implementing the budget splits into the build page 
+recommendation system as well as difficulties with the inconsistencies from the database to the backend to the 
+frontend. The budgets were resolved with more research and a tweak to the recommendation system to only take the 
+lowest price item compatible with the system and that is well suited to the user's need. The inconsistencies mentioned 
+earlier were resolved by talking to other group members and working collaboratively to ensure the variables were 
+consistently named. This build page recommendation was not finished but this is planned as it is a significant 
+undertaking and is on track for the project. My plan for the next week is to finish the build page and then continue 
+to tweak and refine it.
+
+Week 7 
+
+For this week, as planned I continued to work on the build page recommendation system and once this was finished I 
+worked on the functionality surrounding the build page namely the save build functionality as well as debugging and 
+refining. This week the recommendation system for the build page was finished as well as the functionality for users 
+to save build. The main obstacle faced was in getting the build to load and send a functional and usable version of 
+the build to the frontend, this was overcome by working closely with Van who is developing the frontend for the build 
+page. Another major obstacle this week was the planning for the chatbot which we decided we would be unable to finish 
+prior to the demonstration next week, given I had planned to work on that next my plan has changed to the following. 
+My plan for the next week is to debug the build page should any problems occur and assist in any problems that arise 
+between now and the demo and then begin work on the backend for the chatbot. 
+
+Week 8 
+
+For this week, as planned I helped with debugging and pair programming prior to the demo and then afterwards was 
+assigned to the chatbot backend and to expand the functionality of the build PC recommendation system. I finished the 
+build PC recommendation system, implementing the review scores into the recommendation system where a better reviewed 
+item is weighted more heavily than one with lower reviews. The obstacle faced this week was the unfamiliarity with the 
+chatbot library and the inability to give it the expanded functionality we had planned which we have since decided on 
+a more basic version of the chatbot. Therefore, since there is no need for a complicated backend for the chatbot I am 
+now planning to work on the review system to create a report system where users can report reviews which can be viewed 
+by admins and reviews can be deleted by admins.
+
+Week 9 
+
