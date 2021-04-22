@@ -95,7 +95,9 @@ For the rest of the week, I worked on the initial code for managing sales on the
 the backend. This including getting sales, making new sales, and editing sales.
 
 Week 9:
-I worked on the payment system with Van. I wrote the frontend block for the shipping 
+This week I began to work in the frontend. The workload started to become much more unbalanced
+at this point with a lot more work needing to be done in the frontend compared to the
+backend. I worked on the payment system with Van. I wrote the frontend block for the shipping 
 information on the payment page while Van wrote the payment information block. I also 
 wrote the backend code for the payment which involved processing the frontend request 
 as a new order and adding the order to the database as well as getting the orders from the 
@@ -103,3 +105,26 @@ database to send to the frontend. I wrote an order confirmed page which shows af
 purchase was successful from the payment page and the order was placed. I connected the 
 payment page with the cart to properly create the order to send to the backend. I also wrote 
 a block in the profile page that allows users to view their orders.
+I also wrote the backend code for producing statistics for both individual products and sales.
+It was difficult on figuring out the best way for producing the statistics that we wanted to
+show in the frontend. We wanted to show the statistics as a graph with the amount of sales
+shown per day for a lifetime. Using orders that are already stored in the database I 
+managed to write an algorithm to iterate through the orders and add the units sold for a
+product for each date. I wrote a similar algorithm for making sale statistics with some
+parts changed as needed.
+During this week I also fixed a lot of minor bugs as we finalise the features implemented in
+our site.
+
+Week 10:
+This week I continued to fix bugs across the site, this included bugs in both the frontend
+and backend. The payment page that was made previously had quite a few items missing from 
+it and I implemented the additions. This included adding a billing address, a cardholder name,
+as well as logic to work with the delivery options block that Van had made for it. 
+I also added proper filtering to the product page. Now a product list page can be filtered by
+general information such as brand and price range as well as specifications specific
+to the product category such as socket type for CPUs. 
+I also added additonal sorting options for the product lists including name, newest and the 
+% sale. I also added sorting for the list of orders that can be used by users on their profile 
+page and for viewing all orders as the admin.
+I added a discontinue product function for the admin to use. I wrote the backend and frontend for
+the feature while Joanna wrote the database function for it.
