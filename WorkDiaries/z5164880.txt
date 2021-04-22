@@ -79,3 +79,11 @@ by admins and reviews can be deleted by admins.
 
 Week 9 
 
+For this week I completed the reported reviews as planned and assisted on debugging errors throughout the website, I
+also completed the forgot password functionality and updated the functionality of editing a saved build. The only
+issues I encountered were with my knowledge of Javascript being lower than was needed so I had to refer to a more
+experienced member of my group (Van) for some of my frontend work and together we were able to complete these 
+functionalities. The only things not finished are some error handlings and bugs to be worked out before the demo on
+Wednesday. My plan for the next week is to work on the code, adding comments and cleaning up functions as well as 
+debugging any errors that may occur, then to work on my sections of the report, namely the functionaities I helped to 
+develop and the overview section.
