@@ -1,8 +1,9 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
-import secrets, random
+import random, secrets
+
+from flask import Flask, request
 from flask_cors import CORS
-from flask_restful import Api
+from flask_restful import Api, Resource
+
 from . import dbaccess as db
 
 class Login(Resource):
@@ -33,19 +34,6 @@ class Login(Resource):
                 return {'error':'Invalid Password'}
 
         return {'error':'Invalid Login Details'}
-
-    def get(self):
-        data = request.args
-
-        email = data.get('email')
-
-        userId, admin = db.getUserIDFromEmail(email)
-        print(userId)
-        if userId is None:
-            return {'exists':False}
-        else:
-            print('user exists')
-            return {'exists':True}
 
 class Register(Resource):
 

@@ -1,9 +1,11 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
-from flask_cors import CORS
-from flask_restful import Api
-from . import dbaccess as db
 from datetime import datetime
+
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import Api, Resource
+
+from . import dbaccess as db
+
 
 # Helper function to attach all associated products to an order and format for JSON serialization
 def addProductsToOrder(order):
@@ -73,13 +75,6 @@ class Order(Resource):
         shipping = data.get('shipping')
         total = data.get('total') + data.get('shippingPrice')
 
-        print(products)
-        
-        # Convert the product list of dicts to a complete dictionary
-        # productDict = {}
-        # for product in products:
-        #     productDict[product['productid']] = product['quantity']
-
         # For each build, get the parts and add them to the above dictionary
         for build in builds:
             for field in build['parts']:
@@ -98,11 +93,7 @@ class Order(Resource):
                     else:
                         products[productid] = build['quantity']
 
-        # Convert back to list of dicts
-        # productList = [{'productid': key, 'quantity': productDict[key]} for key in productDict]
-
-        print(products)
-
+        # Add the order to the database
         orderId = db.addOrder(  userId, 
                                 orderDate,
                                 total, 
