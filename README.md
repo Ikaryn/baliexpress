@@ -19,7 +19,8 @@ Open capstone-project-3900-w11a-baliexpress/backend/api/credentials.py. On line 
 
 Backend setup
 =============
-### Install the latest version of python for your OS. This can be done through the link provided: https://www.python.org/downloads/
+### Install the latest version of python for your OS. 
+This can be done through the link provided: https://www.python.org/downloads/.
 Once the codebase is pulled from GitHub, navigate to the root directory that contains the file requirements.txt
 
 ### Recommended: Create a new virtual environment so that packages needed for the website are contained and isolated from the rest of your workspace
@@ -33,7 +34,8 @@ Once the codebase is pulled from GitHub, navigate to the root directory that con
 ### Install the necessary packages using the command “pip install -r requirements.txt”
 Once all the packages are installed, navigate to the backend folder using “cd backend” from the current directory.
 
-### If you have not set up the database yet using the instructions above, please do so now; the program will not function if the database has not yet been set up and running.
+### If you have not set up the database yet using the instructions above, please do so now 
+The program will not function if the database has not yet been set up and running.
 Enter the command “python run.py” and the backend for the website will now be running on your local port 5000.
 
 
