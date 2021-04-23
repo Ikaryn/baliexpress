@@ -114,6 +114,7 @@ const ProductListPage = () => {
 
     },[category, sales, search]);
 
+    // Apply sorting if one of the options is clicked on
     React.useEffect(() => {
         (async () => {
             let newProducts = [...products];
@@ -170,6 +171,7 @@ const ProductListPage = () => {
 
     }
 
+    // Apply the appropriate filters when a change occurs
     function handleFilterChange (filter, value) {
 
         // Get the current check box state and change it

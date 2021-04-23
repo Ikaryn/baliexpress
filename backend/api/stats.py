@@ -1,12 +1,12 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
+from datetime import date, datetime, timedelta
+
+from flask import Flask, request
 from flask_cors import CORS
-from flask_restful import Api
+from flask_restful import Api, Resource
+
 from . import dbaccess as db
-from datetime import datetime
 from .helpers import *
-from datetime import date
-from datetime import timedelta
+
 
 class Stats(Resource):
 
@@ -35,7 +35,7 @@ class Stats(Resource):
                 dateString = curDate.strftime('%Y-%m-%d')
                 productStats[dateString] = [0, '', '']
                 curDate += timedelta(days=1)
-            print('iterating through sales')
+
             # Attach the associated sale to the their dates in the list
             sales = db.getAllSales()
             for sale in sales:
@@ -51,7 +51,6 @@ class Stats(Resource):
                                 productStats[dateString] = [0, sale['name'], product['salepercent']]
                             cur += timedelta(days=1)
                             
-            print('iterating through orders')
             # Iterate through every order and to the date the quantity of the product bought
             orders = db.getAllOrders()       
             for order in orders:
@@ -63,7 +62,7 @@ class Stats(Resource):
                             productStats[orderDate][0] += product['quantity']
                         else:
                             productStats[orderDate][0] = product['quantity']
-            print('hello')
+
             # Format into a list of dicts for the frontend to process
             stats = []
             for key in productStats:
@@ -103,11 +102,10 @@ class Stats(Resource):
                     for product in order['products']:
                         if product['productid'] in saleProducts:
                             saleStats[order['date'].strftime('%Y-%m-%d')] += product['quantity']
-            print('yo')
+
             # Format into a list of dicts for the frontend to process
             stats = []
             for key in saleStats:
-                # stats.append({'date': key, 'sold': saleStats[key]})
                 stats.append({'x': key, 'y': saleStats[key]})
             
             return {'stats': stats}

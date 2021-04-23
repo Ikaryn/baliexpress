@@ -1,11 +1,13 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
-import secrets, random
-from flask_cors import CORS
-from flask_restful import Api
-from . import dbaccess as db
+import random, secrets
 from datetime import datetime
+
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import Api, Resource
+
+from . import dbaccess as db
 from .helpers import *
+
 
 class Sales(Resource):
 
@@ -102,19 +104,6 @@ class Sales(Resource):
         # Return list of all sales to the frontend
         sales = db.getAllSales()
         for sale in sales:
-            # saleProducts = []
-
-            # # Get associated productIds for the sale
-            # item = db.getSale(sale['id'])
-            # # print("sale:", item)
-            # for saleProduct in item['products']:
-
-            #     # Get the actual product from the productIds
-            #     product = db.getProduct(saleProduct['productid'])
-            #     product['release_date'] = product['release_date'].strftime('%Y-%m-%d')
-            #     saleProducts.append(product)
-
-            # sale['productList'] = saleProducts
 
             sale['startdate'] = sale['startdate'].strftime('%Y-%m-%d')
             sale['enddate'] = sale['enddate'].strftime('%Y-%m-%d')
@@ -128,13 +117,7 @@ class Sales(Resource):
 
         data = request.json
         saleId = data.get('saleId')
-        
-        # Placeholder function to get sale from database
-        # sale = db.getSale(int(saleId))
 
         for field in data:
             if field is not 'saleId':
                 sale[field] = data.get(field)
-
-        # Placeholder function to update sale
-        # db.updateSale(sale)

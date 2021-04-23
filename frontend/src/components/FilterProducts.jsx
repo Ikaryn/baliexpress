@@ -1,5 +1,6 @@
 import { string } from "prop-types"
 
+// Algorithm to apply all given filters 
 function filterProducts (fields, queries, products) {
 
     let filtered = products;
@@ -68,6 +69,7 @@ function filterProducts (fields, queries, products) {
 
 }
 
+// Filters that are specific for each category
 function categoryFilters (category) {
 
     let filters = { 'CPU':              {

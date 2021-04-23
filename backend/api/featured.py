@@ -1,9 +1,10 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
-from flask_cors import CORS
-from flask_restful import Api
-from . import dbaccess as db
 from operator import itemgetter
+
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import Api, Resource
+
+from . import dbaccess as db
 from .helpers import *
 
 
