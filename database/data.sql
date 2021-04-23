@@ -134,7 +134,7 @@ INSERT INTO Products(name, category, brand, price, warranty, description, stock,
 INSERT INTO Motherboards(id, cpu_socket, memory_slots, wifi, form_factor_supported, pcie_slots, pcie_type, sata_slots, power_use)
 VALUES
     (13,	'AM4',	    4,	TRUE,	'mATX',		2,	3,	6,	60),
-    (14,	'LGA 1200',	2,	TRUE,	'ITX',		1,	2, 	4,	65),
+    (14,	'LGA 1200',	2,	TRUE,	'ITX',		1,	4, 	4,	65),
     (15,	'AM4',	    4,	TRUE,	'ATX',		2,	4, 	6,	75),
     (16,	'AM4',	    4,	TRUE,	'ATX',		4,	4, 	8,	80),
     (17,	'LGA 1151',	4,	TRUE,	'ATX',		2,	1, 	6,	50),
