@@ -1,10 +1,10 @@
-from flask import Flask, request, Response
-from flask_restful import Resource
-import secrets, random
-from flask_cors import CORS
-from flask_restful import Api
-from . import dbaccess as db
+import random, secrets
 
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import Api, Resource
+
+from . import dbaccess as db
 
 class Profile(Resource):
 

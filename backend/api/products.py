@@ -1,11 +1,12 @@
-
-from flask import Flask, request, Response
-from flask_restful import Resource
-from flask_cors import CORS
-from flask_restful import Api
-from . import dbaccess as db
 from datetime import datetime
+
+from flask import Flask, request
+from flask_cors import CORS
+from flask_restful import Api, Resource
+
+from . import dbaccess as db
 from .helpers import *
+
 
 # Returns a list of products that fit a certain query with a string
 # args is either just the query string, or the query string and desired
