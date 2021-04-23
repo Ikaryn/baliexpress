@@ -1,0 +1,32 @@
+
+Week 1 
+Formation of groups, worked on user stories with team, started storyboards.
+
+Week 2 
+Finishing off storyboards and proposal.
+
+Week 3
+
+Created skeletons for the pages I was assigned to do on the frontend. Started a bit of my assigned tasks. Setting up
+PostgreSQL, flask and reactJS.
+
+Week 4
+Finished adding, editing and removing products for frontend.
+
+Week 5 
+Assigned sorting, filtering, searching, product navigation for frontend. Researched tools and libraries. Retrospective A team write up.
+
+Week 6
+Worked on my sprint 2 tasks. Played around with search functionality, not completed yet but almost there. Discussed with Darryl about how the frontend and backend of these functionalities would look like.
+
+Week 7 
+Finished all of sorting, filtering, searching and product navigation.
+
+Week 8 
+Assigned doing the frontend for cart. Finished doing cart page.
+
+Week 9
+Touched up on cart, cleaned up code. Retrospective B write up.
+
+Week 10
+Spent some time to write my sections of the report. Rehearsed and practiced demo.
