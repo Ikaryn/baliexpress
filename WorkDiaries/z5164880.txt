@@ -87,3 +87,7 @@ functionalities. The only things not finished are some error handlings and bugs 
 Wednesday. My plan for the next week is to work on the code, adding comments and cleaning up functions as well as 
 debugging any errors that may occur, then to work on my sections of the report, namely the functionaities I helped to 
 develop and the overview section.
+
+Week 10
+
+As planned, all code was commented, cleaned up, and debugged and the report is written. 

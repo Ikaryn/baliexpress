@@ -129,11 +129,13 @@ class Votes(Resource):
             return {'status': 'Vote successfully removed'}
 
 class Reports(Resource):
+    # Getting all reported reviews
     def get(self):
         print("Get reports received")
         reports = db.getReports()
         reportedReviews = []
 
+        #Define the information needed for a reported review
         for report in reports:
             reportedReview = {
                 'productname': None,
@@ -144,26 +146,29 @@ class Reports(Resource):
                 'irrelevant': 0
             }
             
+            # Get the original report and extract the relevant information 
             review = db.getReview(report['reviewid'])
-
             reportedReview['reviewid'] = review['reviewid']
             reportedReview['reviewtext'] = review['reviewtext']
+
+            #Get the product name
             product = db.getProduct(review['productid'])
             reportedReview['productname'] = product['name']
 
+            # Add this reported review to the List if it is not already in the list
             if reportedReview not in reportedReviews:
-                print("^ was appended")
                 reportedReviews.append(reportedReview)
 
+        # Sum up how many times a review was reported for each of the reasons
         for reported in reportedReviews:
             reviewReports = db.getReviewReports(reported['reviewid'])
             for reviewReport in reviewReports:
                 print("reviewReport = ", reviewReport)
                 reported[reviewReport['reason']] += 1
-        # print("reportedReviews = ",reportedReviews)
+        
         return reportedReviews
         
-    
+    # Add a report to a review
     def post(self):
         print("Post report recieved")
         
@@ -173,6 +178,7 @@ class Reports(Resource):
 
         db.reportReview(reviewID, reason)
 
+    # Delete all reports of a review
     def delete(self):
         print("Delete reports received")
         
