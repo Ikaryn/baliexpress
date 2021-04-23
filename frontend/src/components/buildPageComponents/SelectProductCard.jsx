@@ -65,7 +65,7 @@ const SelectProductCard = ({setOpen, productInfo, setProduct, redirect}) => {
                 </Grid>
                 <Grid item container direction="column" xs={3} justify="center" alignItems="center">
                     <Grid item>
-                        <Typography variant="h5" className={productInfo.sale && classes.oldSalePrice}>${productInfo.price}.00</Typography>
+                        <Typography variant="h5" className={productInfo.sale && classes.oldSalePrice}>${Number(productInfo.price).toFixed(2)}</Typography>
                         {productInfo.sale && 
                             <Typography variant="h5" color="secondary" className={classes.salepercent}>
                                 ${(productInfo.price - (productInfo.price * (productInfo.sale.salepercent/100)).toFixed(2))}
