@@ -131,8 +131,7 @@ const ProfilePage = () => {
                             {!accInfo.isAdmin && <Tab label="My Builds" />}
                             {accInfo.isAdmin && <Tab label="Add Product" />}
                             {accInfo.isAdmin && <Tab label="View all Products" />}
-                            <Tab label="View orders" />
-                            {accInfo.isAdmin && <Tab label="View Users" />}     
+                            <Tab label="View orders" />   
                             {accInfo.isAdmin && <Tab label="Manage Sales" />}   
                             {accInfo.isAdmin && <Tab label="Reported Reviews" />} 
                             <Button color="secondary" onClick={handleOpen}>Logout</Button>
@@ -170,20 +169,15 @@ const ProfilePage = () => {
                         }
                         {accInfo.isAdmin &&                     
                             <TabPanel value={value} index={3}>
-                                <ViewUsers/>
-                            </TabPanel>
-                        }
-                        {accInfo.isAdmin &&                     
-                            <TabPanel value={value} index={4}>
                                 <SalePanel />
                             </TabPanel>
                         }
                         {accInfo.isAdmin &&
-                            <TabPanel value={value} index={5}>
+                            <TabPanel value={value} index={4}>
                                 <ReportedReviewsList/>
                             </TabPanel>
                         }
-                        <TabPanel value={value} index={accInfo.isAdmin ? 6 : 3}>
+                        <TabPanel value={value} index={accInfo.isAdmin ? 5 : 3}>
                             Logout
                         </TabPanel>                        
                     </Grid>
